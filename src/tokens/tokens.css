@@ -1,0 +1,142 @@
+/* ==========================================================================
+   ASDLC Meta-DesignSystem — Lumen-Inspired Design Tokens
+   Dark-first (:root) + explicit light theme ([data-theme="light"])
+   ========================================================================== */
+
+:root {
+  color-scheme: dark light;
+
+  /* Canvas & Surfaces (Dark default: Obsidian) */
+  --color-bg: #08080b;
+  --color-surface: #111116;
+  --color-surface-elevated: #18181f;
+  --color-card: rgba(255, 255, 255, 0.04);
+  --color-card-hover: rgba(255, 255, 255, 0.07);
+  --color-overlay: rgba(0, 0, 0, 0.75);
+
+  /* Ambient Glow */
+  --glow-rose: rgba(244, 63, 94, 0.08);
+  --glow-amber: rgba(251, 146, 60, 0.05);
+
+  /* Borders & Hairlines */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.22);
+  --color-focus-ring: #f43f5e;
+
+  /* Foreground Text Hierarchy (WCAG AA >= 4.5:1 on --color-bg and --color-surface) */
+  --color-fg: #ededed;
+  --color-fg-secondary: #a1a1aa;
+  --color-fg-muted: #8e8e98;
+
+  /* Brand & Status Accents */
+  --color-accent: #f43f5e;
+  --color-accent-hover: #fb7185;
+  --color-accent-fg: #08080b;
+  --color-info: #38bdf8;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #f87171;
+  --color-danger-fg: #08080b;
+
+  /* Typography */
+  --font-sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.875rem;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Radii */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-normal: 220ms;
+  --duration-shimmer: 1400ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Canvas & Surfaces (Paper) */
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f4f4f5;
+  --color-card: rgba(9, 9, 11, 0.03);
+  --color-card-hover: rgba(9, 9, 11, 0.06);
+  --color-overlay: rgba(9, 9, 11, 0.55);
+
+  /* Ambient Glow */
+  --glow-rose: rgba(225, 29, 72, 0.06);
+  --glow-amber: rgba(217, 119, 6, 0.04);
+
+  /* Borders & Hairlines */
+  --color-border: rgba(9, 9, 11, 0.10);
+  --color-border-hover: rgba(9, 9, 11, 0.24);
+  --color-focus-ring: #e11d48;
+
+  /* Foreground Text Hierarchy (WCAG AA >= 4.5:1 on --color-bg and --color-surface) */
+  --color-fg: #09090b;
+  --color-fg-secondary: #52525b;
+  --color-fg-muted: #5c5c66;
+
+  /* Brand & Status Accents */
+  --color-accent: #e11d48;
+  --color-accent-hover: #be123c;
+  --color-accent-fg: #ffffff;
+  --color-info: #0369a1;
+  --color-success: #047857;
+  --color-warning: #b45309;
+  --color-danger: #dc2626;
+  --color-danger-fg: #ffffff;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(9, 9, 11, 0.06);
+  --shadow-md: 0 4px 14px rgba(9, 9, 11, 0.08);
+  --shadow-lg: 0 12px 32px rgba(9, 9, 11, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-shimmer: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
