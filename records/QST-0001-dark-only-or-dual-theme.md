@@ -1,8 +1,9 @@
 ---
 id: QST-0001
 title: Should the design system remain strictly dark-first like Lumen or also ship a light theme token preset?
-status: open
+status: answered
 blocks: [REQ-0002]
+answered_by: FCT-0003
 ---
 
 ## Statement

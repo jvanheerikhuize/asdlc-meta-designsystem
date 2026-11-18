@@ -2,7 +2,7 @@
 id: REQ-0006
 title: Agents working in any repository can consult a structured catalog of tokens, components, and usage rules
 status: provisional
-because: [ASM-0003]
+because: [FCT-0005, ASM-0003]
 ---
 
 ## Statement

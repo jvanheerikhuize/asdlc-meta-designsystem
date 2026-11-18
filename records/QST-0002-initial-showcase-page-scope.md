@@ -1,8 +1,9 @@
 ---
 id: QST-0002
 title: Which Showcase Page blueprint should validate the initial Organism and Template composition?
-status: open
+status: answered
 blocks: [REQ-0005]
+answered_by: FCT-0004
 ---
 
 ## Statement
