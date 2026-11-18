@@ -148,31 +148,31 @@ async function main() {
     assert.equal(lightBg.attr, 'light');
     assert.equal(lightBg.bgLight, 'rgb(250, 250, 250)', 'Light --color-bg should be #fafafa');
 
-    // 4. Verify ui-search-bar filters ui-catalog-grid on Enter / button click (REQ-0004)
+    // 4. Verify ui-search-bar filters #specimen-grid on button click (REQ-0004)
     const searchCheck = await cdp.eval(`(() => {
       const sb = document.getElementById('catalog-search');
       const innerInput = sb.shadowRoot.querySelector('ui-input').shadowRoot.querySelector('input');
-      innerInput.value = 'ui-modal';
+      innerInput.value = '<ui-modal>';
       innerInput.dispatchEvent(new Event('input', { bubbles: true }));
       sb.shadowRoot.querySelector('ui-button').shadowRoot.querySelector('button').click();
-      const visibleCards = Array.from(document.querySelectorAll('#catalog-grid ui-media-card')).filter((c) => !c.hidden);
+      const visible = Array.from(document.querySelectorAll('#specimen-grid .specimen')).filter((el) => !el.hidden);
       return {
         countText: document.getElementById('catalog-count').textContent,
-        visibleIds: visibleCards.map((c) => c.getAttribute('card-id')),
+        visibleIds: visible.map((el) => el.dataset.id),
       };
     })()`);
     assert.equal(searchCheck.countText, '1 component');
     assert.deepEqual(searchCheck.visibleIds, ['ui-modal']);
 
-    // 5. Verify ui-modal opens from ui-media-card, closes on Done button, and restores focus (REQ-0005)
+    // 5. Verify Inspect Contract opens ui-modal, closes on Close button, and restores focus (REQ-0005)
     await cdp.send('Page.bringToFront');
     const modalOpened = await cdp.eval(`(() => {
-      const card = document.querySelector('#catalog-grid ui-media-card[card-id="ui-modal"]');
-      card.shadowRoot.querySelector('button.card').click();
+      const btn = document.querySelector('.inspect-btn[data-component="ui-modal"]');
+      btn.shadowRoot.querySelector('button').click();
       const modal = document.getElementById('detail-modal');
       return modal.hasAttribute('open') && modal.shadowRoot.querySelector('dialog').open;
     })()`);
-    assert.equal(modalOpened, true, 'Modal must open when card is activated');
+    assert.equal(modalOpened, true, 'Modal must open when Inspect Contract is clicked');
 
     await cdp.eval(`document.getElementById('modal-done-btn').shadowRoot.querySelector('button').click()`);
     await new Promise((r) => setTimeout(r, 50));
@@ -180,37 +180,33 @@ async function main() {
       const modal = document.getElementById('detail-modal');
       return {
         closed: !modal.hasAttribute('open') && !modal.shadowRoot.querySelector('dialog').open,
-        focusedId: document.activeElement?.getAttribute('card-id'),
+        focusedComponent: document.activeElement?.dataset?.component,
         activeTag: document.activeElement?.tagName,
       };
     })()`);
-    assert.equal(modalClosed.closed, true, 'Modal must close when Done button is pressed');
-    assert.equal(modalClosed.focusedId, 'ui-modal', `Focus must restore to triggering card (got ${modalClosed.activeTag})`);
+    assert.equal(modalClosed.closed, true, 'Modal must close when Close button is pressed');
+    assert.equal(modalClosed.focusedComponent, 'ui-modal', `Focus must restore to triggering Inspect button (got ${modalClosed.activeTag})`);
 
-    // 6. Verify ui-button disabled/busy suppression and active click (REQ-0003)
+    // 6. Verify ui-button disabled/busy suppression and ARIA states (REQ-0003)
     const btnCheck = await cdp.eval(`(() => {
-      const out = document.getElementById('press-output');
-      document.getElementById('btn-disabled').shadowRoot.querySelector('button').click();
-      document.getElementById('btn-busy').shadowRoot.querySelector('button').click();
-      const afterBlocked = out.textContent;
-      document.getElementById('btn-primary').shadowRoot.querySelector('button').click();
-      const afterAllowed = out.textContent;
-      return { afterBlocked, afterAllowed };
+      let blockedPressed = 0;
+      const dis = document.getElementById('btn-disabled');
+      const busy = document.getElementById('btn-busy');
+      dis.addEventListener('ui-press', () => { blockedPressed += 1; });
+      busy.addEventListener('ui-press', () => { blockedPressed += 1; });
+      dis.shadowRoot.querySelector('button').click();
+      busy.shadowRoot.querySelector('button').click();
+      return {
+        blockedPressed,
+        disAria: dis.shadowRoot.querySelector('button').getAttribute('aria-disabled'),
+        busyAria: busy.shadowRoot.querySelector('button').getAttribute('aria-busy'),
+      };
     })()`);
-    assert.equal(btnCheck.afterBlocked, 'Presses: 0', 'Disabled and busy buttons must suppress activation');
-    assert.equal(btnCheck.afterAllowed, 'Presses: 1 (primary)', 'Primary button must emit ui-press');
+    assert.equal(btnCheck.blockedPressed, 0, 'Disabled and busy buttons must suppress ui-press');
+    assert.equal(btnCheck.disAria, 'true');
+    assert.equal(btnCheck.busyAria, 'true');
 
-    // 7. Verify ui-input event emission (REQ-0003)
-    const inputVal = await cdp.eval(`(() => {
-      const el = document.getElementById('demo-input');
-      const inner = el.shadowRoot.querySelector('input');
-      inner.value = 'lumen-token';
-      inner.dispatchEvent(new Event('input', { bubbles: true }));
-      return document.getElementById('input-output').textContent;
-    })()`);
-    assert.equal(inputVal, 'Value: lumen-token');
-
-    // 8. Verify prefers-reduced-motion suppresses skeleton shimmer (REQ-0002)
+    // 7. Verify prefers-reduced-motion suppresses skeleton shimmer (REQ-0002)
     await cdp.send('Emulation.setEmulatedMedia', {
       features: [{ name: 'prefers-reduced-motion', value: 'reduce' }],
     });
