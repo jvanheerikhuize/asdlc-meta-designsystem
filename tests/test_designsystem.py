@@ -93,7 +93,10 @@ class DesignSystemTest(unittest.TestCase):
             self.assertGreaterEqual(danger_ratio, 4.5, f"{theme_name} danger-fg contrast {danger_ratio:.2f}:1")
 
     def test_foundational_atoms_encapsulation_and_exports(self):  # REQ-0003
-        expected = ["ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton"]
+        expected = [
+            "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
+            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
+        ]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in expected:
             atom_path = ROOT / "src" / "atoms" / f"{tag}.js"
@@ -108,18 +111,21 @@ class DesignSystemTest(unittest.TestCase):
             "ui-field": "ui-input",
             "ui-search-bar": "ui-search",
             "ui-media-card": "ui-select",
+            "ui-stat-tile": "ui-dot",
+            "ui-callout": "ui-icon",
+            "ui-code-block": "ui-copy",
         }
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag, event_name in expected.items():
             code = (ROOT / "src" / "molecules" / f"{tag}.js").read_text(encoding="utf-8")
             self.assertIn(f"customElements.define('{tag}'", code)
             self.assertIn(f"./molecules/{tag}.js", index_js)
-            if tag != "ui-field":
+            if tag not in ("ui-field", "ui-stat-tile", "ui-callout"):
                 self.assertIn(event_name, code)
 
     def test_organisms_and_templates_compose_lower_tiers(self):  # REQ-0005
         organisms = ["ui-navbar", "ui-modal", "ui-catalog-grid"]
-        templates = ["page-shell", "catalog-layout"]
+        templates = ["page-shell", "catalog-layout", "detail-layout"]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in organisms:
             code = (ROOT / "src" / "organisms" / f"{tag}.js").read_text(encoding="utf-8")
@@ -148,9 +154,10 @@ class DesignSystemTest(unittest.TestCase):
         documented_tags = {c["tag"]: c for c in catalog["components"]}
         expected_tags = {
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-field", "ui-search-bar", "ui-media-card",
+            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
+            "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout", "ui-code-block",
             "ui-navbar", "ui-modal", "ui-catalog-grid",
-            "page-shell", "catalog-layout",
+            "page-shell", "catalog-layout", "detail-layout",
         }
         self.assertEqual(set(documented_tags.keys()), expected_tags)
         for tag, entry in documented_tags.items():

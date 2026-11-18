@@ -4,8 +4,10 @@
   "version": "0.1.0",
   "spec": "SPC-0001",
   "entrypoint": "src/index.js",
-  "entrypointExports": ["UiButton", "UiInput", "UiLabel", "UiBadge", "UiIcon", "UiSkeleton", "TOKENS_URL", "ATOMS", "ensureTokens(doc = document)"],
+  "publishedEntrypoint": "https://jvanheerikhuize.github.io/asdlc-meta-designsystem/showcase/src/index.js",
+  "entrypointExports": ["UiButton", "UiInput", "UiLabel", "UiBadge", "UiIcon", "UiSkeleton", "UiChip", "UiProgress", "UiTextarea", "UiSelect", "UiDot", "UiCheckbox", "UiField", "UiSearchBar", "UiMediaCard", "UiStatTile", "UiCallout", "UiCodeBlock", "UiNavbar", "UiModal", "UiCatalogGrid", "PageShell", "CatalogLayout", "DetailLayout", "TOKENS_URL", "ATOMS", "MOLECULES", "ORGANISMS", "TEMPLATES", "ensureTokens(doc = document)"],
   "tokensStylesheet": "src/tokens/tokens.css",
+  "publishedTokensUrl": "https://jvanheerikhuize.github.io/asdlc-meta-designsystem/showcase/src/tokens/tokens.css",
   "tokensScope": "Defines CSS custom properties on :root and [data-theme='light'] plus reduced-motion rules; does not style body or bundle @font-face files.",
   "architecture": {
     "tiers": ["tokens", "atoms", "molecules", "organisms", "templates", "pages"],
@@ -356,6 +358,193 @@
       "parts": ["hero", "toolbar", "grid"],
       "accessibility": "Structures catalog sections in semantic <section> landmarks.",
       "example": "<catalog-layout><div slot=\"hero\">...</div><ui-catalog-grid slot=\"grid\"></ui-catalog-grid></catalog-layout>"
+    },
+    {
+      "tag": "ui-chip",
+      "tier": "atoms",
+      "module": "src/atoms/ui-chip.js",
+      "className": "UiChip",
+      "description": "Toggleable filter pill Atom with pressed state and ui-toggle event.",
+      "attributes": {
+        "pressed": { "type": "boolean", "default": false },
+        "disabled": { "type": "boolean", "default": false },
+        "variant": { "type": "enum", "values": ["default", "accent"], "default": "default" }
+      },
+      "slots": ["default"],
+      "events": [
+        { "name": "ui-toggle", "detail": { "pressed": "boolean" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["chip"],
+      "accessibility": "Uses delegatesFocus: true over native <button> with aria-pressed synchronization.",
+      "example": "<ui-chip pressed>active</ui-chip>"
+    },
+    {
+      "tag": "ui-progress",
+      "tier": "atoms",
+      "module": "src/atoms/ui-progress.js",
+      "className": "UiProgress",
+      "description": "Progress/readiness bar Atom with semantic color variants.",
+      "attributes": {
+        "value": { "type": "number", "default": 0 },
+        "max": { "type": "number", "default": 100 },
+        "variant": { "type": "enum", "values": ["success", "accent", "warning", "danger"], "default": "success" },
+        "aria-label": { "type": "string", "default": null }
+      },
+      "slots": [],
+      "events": [],
+      "parts": ["track", "fill"],
+      "accessibility": "Exposes role='progressbar' with aria-valuenow, aria-valuemin, and aria-valuemax.",
+      "example": "<ui-progress value=\"80\" aria-label=\"Readiness\"></ui-progress>"
+    },
+    {
+      "tag": "ui-textarea",
+      "tier": "atoms",
+      "module": "src/atoms/ui-textarea.js",
+      "className": "UiTextarea",
+      "description": "Multi-line text input Atom encapsulating native <textarea>.",
+      "attributes": {
+        "value": { "type": "string", "default": "" },
+        "placeholder": { "type": "string", "default": "" },
+        "rows": { "type": "number", "default": 3 },
+        "disabled": { "type": "boolean", "default": false },
+        "readonly": { "type": "boolean", "default": false },
+        "required": { "type": "boolean", "default": false },
+        "invalid": { "type": "boolean", "default": false },
+        "name": { "type": "string", "default": "" },
+        "aria-label": { "type": "string", "default": null }
+      },
+      "slots": [],
+      "events": [
+        { "name": "ui-input", "detail": { "value": "string" }, "bubbles": true, "composed": true },
+        { "name": "ui-change", "detail": { "value": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["textarea"],
+      "accessibility": "Uses delegatesFocus: true over native <textarea> and syncs aria-invalid.",
+      "example": "<ui-textarea aria-label=\"Statement\" rows=\"3\" placeholder=\"Describe behaviour…\"></ui-textarea>"
+    },
+    {
+      "tag": "ui-select",
+      "tier": "atoms",
+      "module": "src/atoms/ui-select.js",
+      "className": "UiSelect",
+      "description": "Native <select> Atom driven by JSON options attribute/property.",
+      "attributes": {
+        "options": { "type": "json", "default": "[]" },
+        "value": { "type": "string", "default": "" },
+        "disabled": { "type": "boolean", "default": false },
+        "invalid": { "type": "boolean", "default": false },
+        "name": { "type": "string", "default": "" },
+        "aria-label": { "type": "string", "default": null }
+      },
+      "slots": [],
+      "events": [
+        { "name": "ui-change", "detail": { "value": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["select"],
+      "accessibility": "Uses delegatesFocus: true over native <select> and syncs aria-invalid.",
+      "example": "<ui-select aria-label=\"Status\" options='[\"open\",\"active\"]'></ui-select>"
+    },
+    {
+      "tag": "ui-dot",
+      "tier": "atoms",
+      "module": "src/atoms/ui-dot.js",
+      "className": "UiDot",
+      "description": "Semantic status dot Atom (done, wait, bad, info, off).",
+      "attributes": {
+        "status": { "type": "enum", "values": ["done", "wait", "bad", "info", "off"], "default": "off" },
+        "label": { "type": "string", "default": null }
+      },
+      "slots": [],
+      "events": [],
+      "parts": ["dot"],
+      "accessibility": "Decorative (aria-hidden='true') by default; sets role='img' and aria-label when label is provided.",
+      "example": "<ui-dot status=\"done\" label=\"Verified\"></ui-dot>"
+    },
+    {
+      "tag": "ui-stat-tile",
+      "tier": "molecules",
+      "module": "src/molecules/ui-stat-tile.js",
+      "className": "UiStatTile",
+      "description": "KPI metric tile Molecule displaying value, label, and optional <ui-dot>.",
+      "attributes": {
+        "value": { "type": "string", "default": "0" },
+        "label": { "type": "string", "default": "" },
+        "status": { "type": "enum", "values": ["done", "wait", "bad", "info", "off"], "default": null },
+        "variant": { "type": "enum", "values": ["neutral", "accent", "success", "warning", "danger"], "default": "neutral" }
+      },
+      "slots": [],
+      "events": [],
+      "parts": ["tile", "value", "dot", "label"],
+      "accessibility": "Renders semantic <strong> metric value paired with descriptive label text.",
+      "example": "<ui-stat-tile value=\"23\" label=\"Records\" status=\"done\" variant=\"success\"></ui-stat-tile>"
+    },
+    {
+      "tag": "ui-callout",
+      "tier": "molecules",
+      "module": "src/molecules/ui-callout.js",
+      "className": "UiCallout",
+      "description": "Left-accented status/action banner Molecule composing <ui-icon>.",
+      "attributes": {
+        "variant": { "type": "enum", "values": ["info", "success", "warning", "danger"], "default": "info" },
+        "title": { "type": "string", "default": "" }
+      },
+      "slots": ["default"],
+      "events": [],
+      "parts": ["callout", "icon", "title", "body"],
+      "accessibility": "Uses role='note' with semantic variant icon.",
+      "example": "<ui-callout variant=\"warning\" title=\"Open Question\">Needs clarification.</ui-callout>"
+    },
+    {
+      "tag": "ui-code-block",
+      "tier": "molecules",
+      "module": "src/molecules/ui-code-block.js",
+      "className": "UiCodeBlock",
+      "description": "Monospace code preview Molecule composing <ui-button> and <ui-icon> for clipboard copy.",
+      "attributes": {
+        "language": { "type": "string", "default": "html" }
+      },
+      "slots": ["default"],
+      "events": [
+        { "name": "ui-copy", "detail": { "text": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["container", "header", "language", "copy-button", "pre"],
+      "accessibility": "Provides accessible Copy button with aria-label and visual confirmation state.",
+      "example": "<ui-code-block language=\"html\">&lt;ui-badge&gt;active&lt;/ui-badge&gt;</ui-code-block>"
+    },
+    {
+      "tag": "ui-checkbox",
+      "tier": "atoms",
+      "module": "src/atoms/ui-checkbox.js",
+      "className": "UiCheckbox",
+      "description": "Checkbox Atom encapsulating native <input type='checkbox'> with checked, disabled, and indeterminate states.",
+      "attributes": {
+        "checked": { "type": "boolean", "default": false },
+        "disabled": { "type": "boolean", "default": false },
+        "indeterminate": { "type": "boolean", "default": false },
+        "name": { "type": "string", "default": "" },
+        "value": { "type": "string", "default": "on" },
+        "aria-label": { "type": "string", "default": null }
+      },
+      "slots": ["default"],
+      "events": [
+        { "name": "ui-change", "detail": { "checked": "boolean", "value": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["label", "checkbox"],
+      "accessibility": "Uses delegatesFocus: true over native <input type='checkbox'> wrapped in <label>.",
+      "example": "<ui-checkbox value=\"FCT-0001\" checked>FCT-0001</ui-checkbox>"
+    },
+    {
+      "tag": "detail-layout",
+      "tier": "templates",
+      "module": "src/templates/detail-layout.js",
+      "className": "DetailLayout",
+      "description": "Two-column detail Template pairing primary content with a metadata sidebar.",
+      "attributes": {},
+      "slots": ["default", "aside"],
+      "events": [],
+      "parts": ["grid", "main", "aside"],
+      "accessibility": "Uses semantic <aside> landmark for secondary metadata.",
+      "example": "<detail-layout><article>Main</article><dl slot=\"aside\">Meta</dl></detail-layout>"
     }
   ]
 }

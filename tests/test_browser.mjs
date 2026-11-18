@@ -122,9 +122,10 @@ async function main() {
     const showcase = await cdp.eval(`(() => {
       const tags = [
         'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',
-        'ui-field', 'ui-search-bar', 'ui-media-card',
+        'ui-chip', 'ui-progress', 'ui-textarea', 'ui-select', 'ui-dot', 'ui-checkbox',
+        'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block',
         'ui-navbar', 'ui-modal', 'ui-catalog-grid',
-        'page-shell', 'catalog-layout',
+        'page-shell', 'catalog-layout', 'detail-layout',
       ];
       const defined = tags.every((t) => Boolean(customElements.get(t)));
       const shadows = tags.every((t) => Boolean(document.querySelector(t)?.shadowRoot));
@@ -132,8 +133,8 @@ async function main() {
       const bgDark = getComputedStyle(document.body).backgroundColor;
       return { defined, shadows, backHref, bgDark };
     })()`);
-    assert.equal(showcase.defined, true, 'All 14 components must be defined');
-    assert.equal(showcase.shadows, true, 'All 14 components must have Shadow DOM');
+    assert.equal(showcase.defined, true, 'All 24 components must be defined');
+    assert.equal(showcase.shadows, true, 'All 24 components must have Shadow DOM');
     assert.equal(showcase.backHref, '../');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
 
