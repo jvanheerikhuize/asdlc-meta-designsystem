@@ -345,12 +345,12 @@
         <div slot="toolbar" class="row" style="width: 100%; justify-content: space-between;">
           <div class="row" id="tier-filters">
             <ui-button class="tier-btn" data-tier="all" variant="primary" size="sm">All Tiers</ui-button>
-            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms (12)</ui-button>
+            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms (13)</ui-button>
             <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm">Molecules (6)</ui-button>
             <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms (3)</ui-button>
             <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates (3)</ui-button>
           </div>
-          <span class="muted" id="catalog-count">24 components</span>
+          <span class="muted" id="catalog-count">25 components</span>
         </div>
 
         <div slot="grid" class="specimen-grid" id="specimen-grid">
@@ -599,6 +599,23 @@
           <div class="specimen-foot">
             <span class="muted">event: ui-change</span>
             <ui-button class="inspect-btn" data-component="ui-checkbox" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="atoms" data-id="ui-slider">
+          <div class="specimen-head">
+            <h3>&lt;ui-slider&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Range slider encapsulating native &lt;input type="range"&gt; for timeline scrubbers and volume.</p>
+          <div class="preview">
+            <ui-slider min="0" max="100" value="64" aria-label="Seek timeline"></ui-slider>
+            <ui-slider min="0" max="1" step="0.05" value="0.8" variant="neutral" aria-label="Volume"></ui-slider>
+          </div>
+          <pre><code>&lt;ui-slider min="0" max="100" value="64" aria-label="Volume"&gt;&lt;/ui-slider&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">events: ui-input, ui-change</span>
+            <ui-button class="inspect-btn" data-component="ui-slider" variant="secondary" size="sm">Inspect Contract</ui-button>
           </div>
         </article>
 

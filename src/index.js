@@ -10,6 +10,7 @@ export { UiTextarea } from './atoms/ui-textarea.js';
 export { UiSelect } from './atoms/ui-select.js';
 export { UiDot } from './atoms/ui-dot.js';
 export { UiCheckbox } from './atoms/ui-checkbox.js';
+export { UiSlider } from './atoms/ui-slider.js';
 
 export { UiField } from './molecules/ui-field.js';
 export { UiSearchBar } from './molecules/ui-search-bar.js';
@@ -41,6 +42,7 @@ export const ATOMS = [
   'ui-select',
   'ui-dot',
   'ui-checkbox',
+  'ui-slider',
 ];
 
 export const MOLECULES = [
