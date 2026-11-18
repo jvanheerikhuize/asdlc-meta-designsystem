@@ -2,7 +2,7 @@
 id: REQ-0004
 title: Molecules compose Atoms into single-purpose interactive groups with slot and event contracts
 status: provisional
-because: [FCT-0001, ASM-0001]
+because: [FCT-0001, FCT-0007]
 ---
 
 ## Statement

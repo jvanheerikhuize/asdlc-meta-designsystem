@@ -1,8 +1,8 @@
 ---
 id: REQ-0002
 title: Visual token foundation provides Lumen-inspired dark surfaces, typography, spacing, and reduced-motion rules
-status: provisional
-because: [FCT-0002, FCT-0003, ASM-0002]
+status: active
+because: [FCT-0002, FCT-0003, FCT-0008]
 ---
 
 ## Statement

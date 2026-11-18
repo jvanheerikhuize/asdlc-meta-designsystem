@@ -1,7 +1,8 @@
 ---
 id: ASM-0002
 title: Lumen-inspired surface and accent tokens maintain accessible contrast across general-purpose application pages
-status: open
+status: validated
+promoted_to: FCT-0008
 confidence: 0.8
 ---
 

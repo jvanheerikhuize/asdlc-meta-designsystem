@@ -1,8 +1,8 @@
 ---
 id: REQ-0003
 title: Foundational Atoms encapsulate style, expose reactive state, and enforce keyboard accessibility
-status: provisional
-because: [FCT-0001, ASM-0001]
+status: active
+because: [FCT-0001, FCT-0007]
 ---
 
 ## Statement
