@@ -1,8 +1,8 @@
 ---
 id: REQ-0007
 title: Published site hosts both the specification dashboard and the live design-system Showcase website
-status: provisional
-because: [FCT-0004, FCT-0006, ASM-0001]
+status: active
+because: [FCT-0004, FCT-0006, FCT-0007]
 ---
 
 ## Statement

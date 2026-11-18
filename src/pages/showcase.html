@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>ASDLC Design System — Showcase</title>
+  <link rel="stylesheet" href="./src/tokens/tokens.css">
+  <script type="module" src="./src/index.js"></script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      font-size: var(--text-md);
+      line-height: var(--leading-normal);
+      color: var(--color-fg);
+      background-color: var(--color-bg);
+      background-image:
+        radial-gradient(60% 45% at 15% 0%, var(--glow-rose), transparent 70%),
+        radial-gradient(50% 40% at 85% 0%, var(--glow-amber), transparent 70%);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: var(--space-3) var(--space-6);
+      background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-lg);
+      color: var(--color-fg);
+      text-decoration: none;
+    }
+
+    .brand span {
+      color: var(--color-accent);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      color: var(--color-fg-secondary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      transition: border-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+    }
+
+    .nav-link:hover {
+      color: var(--color-fg);
+      border-color: var(--color-border-hover);
+    }
+
+    .nav-link:focus-visible {
+      outline: 2px solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6) var(--space-12);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-10);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      line-height: var(--leading-tight);
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 66ch;
+      color: var(--color-fg-secondary);
+    }
+
+    .section-title {
+      margin: 0 0 var(--space-4);
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      line-height: var(--leading-tight);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: var(--text-md);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: var(--space-3);
+    }
+
+    .swatch {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+
+    .swatch-chip {
+      height: 2.25rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+    }
+
+    .muted {
+      color: var(--color-fg-muted);
+      font-size: var(--text-sm);
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+      gap: var(--space-2);
+    }
+
+    .icon-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-fg-secondary);
+    }
+
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-6);
+      text-align: center;
+      color: var(--color-fg-muted);
+      font-size: var(--text-sm);
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./">
+      <ui-icon name="layers" size="md"></ui-icon>
+      ASDLC <span>Design System</span>
+    </a>
+    <nav class="actions" aria-label="Showcase navigation">
+      <a class="nav-link" href="../" data-testid="back-to-dashboard">
+        <ui-icon name="arrow-left" size="sm"></ui-icon>
+        Spec Dashboard
+      </a>
+      <ui-button id="theme-toggle" variant="secondary" size="sm" aria-label="Toggle color theme">
+        <ui-icon name="sun" size="sm"></ui-icon>
+        <span id="theme-label">Light Mode</span>
+      </ui-button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="row">
+        <ui-badge variant="accent">SPC-0001</ui-badge>
+        <ui-badge variant="info">Zero-Build Web Components</ui-badge>
+        <ui-badge variant="success">WCAG AA Verified</ui-badge>
+      </div>
+      <h1>Lumen-Inspired Tokens &amp; Foundational Atoms</h1>
+      <p>
+        Dark-first obsidian surfaces, hairline borders, and encapsulated native Web Components with zero external runtime dependencies.
+      </p>
+    </section>
+
+    <section aria-labelledby="tokens-heading">
+      <h2 id="tokens-heading" class="section-title">Design Tokens</h2>
+      <div class="swatches">
+        <div class="swatch"><div class="swatch-chip" style="background: var(--color-bg)"></div>--color-bg</div>
+        <div class="swatch"><div class="swatch-chip" style="background: var(--color-surface)"></div>--color-surface</div>
+        <div class="swatch"><div class="swatch-chip" style="background: var(--color-surface-elevated)"></div>--color-surface-elevated</div>
+        <div class="swatch"><div class="swatch-chip" style="background: var(--color-card)"></div>--color-card</div>
+        <div class="swatch"><div class="swatch-chip" style="background: var(--color-accent)"></div>--color-accent</div>
+        <div class="swatch"><div class="swatch-chip" style="background: var(--color-info)"></div>--color-info</div>
+        <div class="swatch"><div class="swatch-chip" style="background: var(--color-success)"></div>--color-success</div>
+        <div class="swatch"><div class="swatch-chip" style="background: var(--color-warning)"></div>--color-warning</div>
+      </div>
+    </section>
+
+    <section aria-labelledby="atoms-heading">
+      <h2 id="atoms-heading" class="section-title">Foundational Atoms</h2>
+      <div class="grid">
+        <article class="card">
+          <h3><span>&lt;ui-button&gt;</span><ui-badge>Interactive</ui-badge></h3>
+          <div class="row">
+            <ui-button id="btn-primary" variant="primary">Primary</ui-button>
+            <ui-button variant="secondary">Secondary</ui-button>
+            <ui-button variant="ghost">Ghost</ui-button>
+            <ui-button variant="danger">Danger</ui-button>
+          </div>
+          <div class="row">
+            <ui-button size="sm" variant="secondary">Small</ui-button>
+            <ui-button size="md" variant="secondary">Medium</ui-button>
+            <ui-button size="lg" variant="secondary">Large</ui-button>
+          </div>
+          <div class="row">
+            <ui-button id="btn-disabled" disabled>Disabled</ui-button>
+            <ui-button id="btn-busy" busy>Saving…</ui-button>
+          </div>
+          <p class="muted" id="press-output">Presses: 0</p>
+        </article>
+
+        <article class="card">
+          <h3><span>&lt;ui-input&gt; &amp; &lt;ui-label&gt;</span><ui-badge>Form</ui-badge></h3>
+          <div class="field">
+            <ui-label for="demo-input" required>Project Identifier</ui-label>
+            <ui-input id="demo-input" placeholder="e.g. asdlc-meta-designsystem" required></ui-input>
+          </div>
+          <div class="field">
+            <ui-label for="invalid-input" size="sm">Invalid State</ui-label>
+            <ui-input id="invalid-input" value="bad value" invalid aria-label="Invalid example"></ui-input>
+          </div>
+          <div class="field">
+            <ui-label for="disabled-input" size="sm">Disabled State</ui-label>
+            <ui-input id="disabled-input" value="Read-only locked" disabled aria-label="Disabled example"></ui-input>
+          </div>
+          <p class="muted" id="input-output">Value: —</p>
+        </article>
+
+        <article class="card">
+          <h3><span>&lt;ui-badge&gt;</span><ui-badge>Status</ui-badge></h3>
+          <div class="row">
+            <ui-badge variant="neutral">neutral</ui-badge>
+            <ui-badge variant="accent">accent</ui-badge>
+            <ui-badge variant="info">info</ui-badge>
+            <ui-badge variant="success">success</ui-badge>
+            <ui-badge variant="warning">warning</ui-badge>
+          </div>
+          <div class="row">
+            <ui-badge size="md" variant="accent">Medium Pill</ui-badge>
+            <ui-badge size="md" variant="success">Verified</ui-badge>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><span>&lt;ui-skeleton&gt;</span><ui-badge>Loading</ui-badge></h3>
+          <div class="row">
+            <ui-skeleton variant="circle" width="2.5rem" height="2.5rem"></ui-skeleton>
+            <div style="flex: 1">
+              <ui-skeleton variant="text" lines="2"></ui-skeleton>
+            </div>
+          </div>
+          <ui-skeleton variant="rect" height="4rem"></ui-skeleton>
+        </article>
+      </div>
+
+      <article class="card" style="margin-top: var(--space-4)">
+        <h3><span>&lt;ui-icon&gt;</span><ui-badge>12 Built-in Icons</ui-badge></h3>
+        <div class="icon-grid">
+          <div class="icon-cell"><ui-icon name="search" size="lg"></ui-icon>search</div>
+          <div class="icon-cell"><ui-icon name="sun" size="lg"></ui-icon>sun</div>
+          <div class="icon-cell"><ui-icon name="moon" size="lg"></ui-icon>moon</div>
+          <div class="icon-cell"><ui-icon name="check" size="lg"></ui-icon>check</div>
+          <div class="icon-cell"><ui-icon name="alert" size="lg"></ui-icon>alert</div>
+          <div class="icon-cell"><ui-icon name="info" size="lg"></ui-icon>info</div>
+          <div class="icon-cell"><ui-icon name="arrow-right" size="lg"></ui-icon>arrow-right</div>
+          <div class="icon-cell"><ui-icon name="arrow-left" size="lg"></ui-icon>arrow-left</div>
+          <div class="icon-cell"><ui-icon name="sparkles" size="lg"></ui-icon>sparkles</div>
+          <div class="icon-cell"><ui-icon name="code" size="lg"></ui-icon>code</div>
+          <div class="icon-cell"><ui-icon name="layers" size="lg"></ui-icon>layers</div>
+          <div class="icon-cell"><ui-icon name="external" size="lg"></ui-icon>external</div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    ASDLC Meta-DesignSystem · <a href="../" style="color: var(--color-accent)">Return to Specification Dashboard</a>
+  </footer>
+
+  <script type="module">
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('theme-toggle');
+    const themeLabel = document.getElementById('theme-label');
+
+    toggleBtn.addEventListener('ui-press', () => {
+      const isLight = root.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        root.removeAttribute('data-theme');
+        themeLabel.textContent = 'Light Mode';
+      } else {
+        root.setAttribute('data-theme', 'light');
+        themeLabel.textContent = 'Dark Mode';
+      }
+    });
+
+    let presses = 0;
+    const pressOutput = document.getElementById('press-output');
+    document.addEventListener('ui-press', (e) => {
+      if (e.target.id === 'theme-toggle') return;
+      presses += 1;
+      pressOutput.textContent = `Presses: ${presses} (${e.detail.variant})`;
+    });
+
+    const demoInput = document.getElementById('demo-input');
+    const inputOutput = document.getElementById('input-output');
+    demoInput.addEventListener('ui-input', (e) => {
+      inputOutput.textContent = `Value: ${e.detail.value || '—'}`;
+    });
+  </script>
+</body>
+</html>

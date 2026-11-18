@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "asdlc-meta-designsystem",
+  "version": "0.1.0",
+  "spec": "SPC-0001",
+  "entrypoint": "src/index.js",
+  "entrypointExports": ["UiButton", "UiInput", "UiLabel", "UiBadge", "UiIcon", "UiSkeleton", "TOKENS_URL", "ATOMS", "ensureTokens(doc = document)"],
+  "tokensStylesheet": "src/tokens/tokens.css",
+  "tokensScope": "Defines CSS custom properties on :root and [data-theme='light'] plus reduced-motion rules; does not style body or bundle @font-face files.",
+  "architecture": {
+    "tiers": ["tokens", "atoms", "molecules", "organisms", "templates", "pages"],
+    "rule": "Unidirectional dependencies only: lower tiers MUST NOT import or depend on higher tiers."
+  },
+  "themes": {
+    "default": "dark (:root)",
+    "light": "[data-theme=\"light\"]"
+  },
+  "tokens": {
+    "canvasAndSurfaces": [
+      { "name": "--color-bg", "dark": "#08080b", "light": "#fafafa", "role": "Primary page canvas" },
+      { "name": "--color-surface", "dark": "#111116", "light": "#ffffff", "role": "Elevated container surface" },
+      { "name": "--color-surface-elevated", "dark": "#18181f", "light": "#f4f4f5", "role": "Higher elevation surface" },
+      { "name": "--color-card", "dark": "rgba(255, 255, 255, 0.04)", "light": "rgba(9, 9, 11, 0.03)", "role": "Translucent card surface" },
+      { "name": "--color-card-hover", "dark": "rgba(255, 255, 255, 0.07)", "light": "rgba(9, 9, 11, 0.06)", "role": "Translucent card hover surface" },
+      { "name": "--color-overlay", "dark": "rgba(0, 0, 0, 0.75)", "light": "rgba(9, 9, 11, 0.55)", "role": "Modal/dialog backdrop" }
+    ],
+    "ambientGlow": [
+      { "name": "--glow-rose", "dark": "rgba(244, 63, 94, 0.08)", "light": "rgba(225, 29, 72, 0.06)", "role": "Top ambient rose highlight" },
+      { "name": "--glow-amber", "dark": "rgba(251, 146, 60, 0.05)", "light": "rgba(217, 119, 6, 0.04)", "role": "Secondary ambient amber highlight" }
+    ],
+    "borders": [
+      { "name": "--color-border", "dark": "rgba(255, 255, 255, 0.08)", "light": "rgba(9, 9, 11, 0.10)", "role": "Default hairline border" },
+      { "name": "--color-border-hover", "dark": "rgba(255, 255, 255, 0.22)", "light": "rgba(9, 9, 11, 0.24)", "role": "Hover/active hairline border" },
+      { "name": "--color-focus-ring", "dark": "#f43f5e", "light": "#e11d48", "role": "Keyboard focus outline" }
+    ],
+    "foreground": [
+      { "name": "--color-fg", "dark": "#ededed", "light": "#09090b", "role": "Primary text" },
+      { "name": "--color-fg-secondary", "dark": "#a1a1aa", "light": "#52525b", "role": "Secondary text" },
+      { "name": "--color-fg-muted", "dark": "#8e8e98", "light": "#5c5c66", "role": "Muted/caption text" }
+    ],
+    "accents": [
+      { "name": "--color-accent", "dark": "#f43f5e", "light": "#e11d48", "role": "Primary brand accent" },
+      { "name": "--color-accent-hover", "dark": "#fb7185", "light": "#be123c", "role": "Primary brand accent hover" },
+      { "name": "--color-accent-fg", "dark": "#08080b", "light": "#ffffff", "role": "Text on --color-accent" },
+      { "name": "--color-info", "dark": "#38bdf8", "light": "#0369a1", "role": "Informational status" },
+      { "name": "--color-success", "dark": "#10b981", "light": "#047857", "role": "Success status" },
+      { "name": "--color-warning", "dark": "#f59e0b", "light": "#b45309", "role": "Warning status" },
+      { "name": "--color-danger", "dark": "#f87171", "light": "#dc2626", "role": "Danger/error status" },
+      { "name": "--color-danger-fg", "dark": "#08080b", "light": "#ffffff", "role": "Text on --color-danger" }
+    ],
+    "typography": [
+      { "name": "--font-sans", "value": "'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", "role": "Body sans-serif stack" },
+      { "name": "--font-display", "value": "'Bricolage Grotesque', 'Geist', system-ui, sans-serif", "role": "Display heading stack" },
+      { "name": "--font-mono", "value": "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", "role": "Monospace stack" },
+      { "name": "--text-xs", "value": "0.75rem", "role": "Extra-small type" },
+      { "name": "--text-sm", "value": "0.875rem", "role": "Small type" },
+      { "name": "--text-md", "value": "1rem", "role": "Base type" },
+      { "name": "--text-lg", "value": "1.125rem", "role": "Large type" },
+      { "name": "--text-xl", "value": "1.375rem", "role": "Extra-large type" },
+      { "name": "--text-2xl", "value": "1.875rem", "role": "Display type" },
+      { "name": "--leading-tight", "value": "1.2", "role": "Tight line height" },
+      { "name": "--leading-normal", "value": "1.5", "role": "Normal line height" }
+    ],
+    "spacing": [
+      { "name": "--space-1", "value": "0.25rem" },
+      { "name": "--space-2", "value": "0.5rem" },
+      { "name": "--space-3", "value": "0.75rem" },
+      { "name": "--space-4", "value": "1rem" },
+      { "name": "--space-5", "value": "1.25rem" },
+      { "name": "--space-6", "value": "1.5rem" },
+      { "name": "--space-8", "value": "2rem" },
+      { "name": "--space-10", "value": "2.5rem" },
+      { "name": "--space-12", "value": "3rem" }
+    ],
+    "radii": [
+      { "name": "--radius-sm", "value": "0.375rem" },
+      { "name": "--radius-md", "value": "0.5rem" },
+      { "name": "--radius-lg", "value": "0.75rem" },
+      { "name": "--radius-xl", "value": "1rem" },
+      { "name": "--radius-full", "value": "9999px" }
+    ],
+    "shadows": [
+      { "name": "--shadow-sm", "dark": "0 1px 2px rgba(0, 0, 0, 0.35)", "light": "0 1px 2px rgba(9, 9, 11, 0.06)" },
+      { "name": "--shadow-md", "dark": "0 4px 14px rgba(0, 0, 0, 0.45)", "light": "0 4px 14px rgba(9, 9, 11, 0.08)" },
+      { "name": "--shadow-lg", "dark": "0 12px 32px rgba(0, 0, 0, 0.6)", "light": "0 12px 32px rgba(9, 9, 11, 0.12)" }
+    ],
+    "motion": [
+      { "name": "--duration-fast", "value": "120ms", "reducedMotion": "0ms" },
+      { "name": "--duration-normal", "value": "220ms", "reducedMotion": "0ms" },
+      { "name": "--duration-shimmer", "value": "1400ms", "reducedMotion": "0ms" },
+      { "name": "--ease-standard", "value": "cubic-bezier(0.2, 0.8, 0.2, 1)" }
+    ]
+  },
+  "components": [
+    {
+      "tag": "ui-button",
+      "tier": "atoms",
+      "module": "src/atoms/ui-button.js",
+      "className": "UiButton",
+      "description": "Interactive button Atom encapsulating native <button> with variant, size, disabled, and busy states.",
+      "attributes": {
+        "variant": { "type": "enum", "values": ["primary", "secondary", "ghost", "danger"], "default": "primary" },
+        "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "md" },
+        "disabled": { "type": "boolean", "default": false },
+        "busy": { "type": "boolean", "default": false },
+        "type": { "type": "enum", "values": ["button", "submit", "reset"], "default": "button" },
+        "aria-label": { "type": "string", "default": null }
+      },
+      "slots": ["default"],
+      "events": [
+        { "name": "ui-press", "detail": { "variant": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["button"],
+      "accessibility": "Uses Shadow DOM delegatesFocus: true over native <button>. Suppresses click/keyboard activation and sets aria-disabled='true' when disabled or busy; sets aria-busy='true' when busy; displays visible :focus-visible ring.",
+      "example": "<ui-button variant=\"primary\" size=\"md\">Save Changes</ui-button>"
+    },
+    {
+      "tag": "ui-input",
+      "tier": "atoms",
+      "module": "src/atoms/ui-input.js",
+      "className": "UiInput",
+      "description": "Text input Atom encapsulating native <input> with reactive value and validation state.",
+      "attributes": {
+        "type": { "type": "string", "default": "text" },
+        "value": { "type": "string", "default": "" },
+        "placeholder": { "type": "string", "default": "" },
+        "disabled": { "type": "boolean", "default": false },
+        "readonly": { "type": "boolean", "default": false },
+        "required": { "type": "boolean", "default": false },
+        "invalid": { "type": "boolean", "default": false },
+        "name": { "type": "string", "default": "" },
+        "aria-label": { "type": "string", "default": null }
+      },
+      "slots": [],
+      "events": [
+        { "name": "ui-input", "detail": { "value": "string" }, "bubbles": true, "composed": true },
+        { "name": "ui-change", "detail": { "value": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["input"],
+      "accessibility": "Uses delegatesFocus: true over native <input>. Syncs aria-invalid from the invalid attribute and forwards aria-label.",
+      "example": "<ui-input type=\"email\" placeholder=\"name@example.com\" required></ui-input>"
+    },
+    {
+      "tag": "ui-label",
+      "tier": "atoms",
+      "module": "src/atoms/ui-label.js",
+      "className": "UiLabel",
+      "description": "Form label Atom with optical cap-height alignment and optional required indicator.",
+      "attributes": {
+        "for": { "type": "string", "default": null },
+        "required": { "type": "boolean", "default": false },
+        "size": { "type": "enum", "values": ["md", "sm"], "default": "md" }
+      },
+      "slots": ["default"],
+      "events": [],
+      "parts": ["label"],
+      "accessibility": "Renders a native <label> inside Shadow DOM; marks the visual asterisk aria-hidden='true'.",
+      "example": "<ui-label for=\"email\" required>Email Address</ui-label>"
+    },
+    {
+      "tag": "ui-badge",
+      "tier": "atoms",
+      "module": "src/atoms/ui-badge.js",
+      "className": "UiBadge",
+      "description": "Status and metadata pill badge Atom.",
+      "attributes": {
+        "variant": { "type": "enum", "values": ["neutral", "accent", "info", "success", "warning"], "default": "neutral" },
+        "size": { "type": "enum", "values": ["sm", "md"], "default": "sm" }
+      },
+      "slots": ["default"],
+      "events": [],
+      "parts": ["badge"],
+      "accessibility": "Non-interactive inline status indicator; pair with clear text content.",
+      "example": "<ui-badge variant=\"success\">active</ui-badge>"
+    },
+    {
+      "tag": "ui-icon",
+      "tier": "atoms",
+      "module": "src/atoms/ui-icon.js",
+      "className": "UiIcon",
+      "description": "Built-in vector icon Atom.",
+      "attributes": {
+        "name": { "type": "enum", "values": ["search", "sun", "moon", "check", "alert", "info", "arrow-right", "arrow-left", "sparkles", "code", "layers", "external"], "default": "sparkles" },
+        "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "md" },
+        "label": { "type": "string", "default": null }
+      },
+      "slots": [],
+      "events": [],
+      "parts": ["icon"],
+      "accessibility": "Decorative by default (aria-hidden='true'). When label is provided, exposes role='img' and aria-label.",
+      "example": "<ui-icon name=\"sparkles\" size=\"md\" label=\"Featured\"></ui-icon>"
+    },
+    {
+      "tag": "ui-skeleton",
+      "tier": "atoms",
+      "module": "src/atoms/ui-skeleton.js",
+      "className": "UiSkeleton",
+      "description": "Loading placeholder Atom with shimmer animation and reduced-motion static fallback.",
+      "attributes": {
+        "variant": { "type": "enum", "values": ["text", "rect", "circle"], "default": "text" },
+        "width": { "type": "string", "default": "100%" },
+        "height": { "type": "string", "default": "1rem" },
+        "lines": { "type": "number", "default": 1 }
+      },
+      "slots": [],
+      "events": [],
+      "parts": ["skeleton"],
+      "accessibility": "Sets aria-busy='true' on the host and aria-hidden='true' on visual shimmer bones; disables shimmer under prefers-reduced-motion: reduce.",
+      "example": "<ui-skeleton variant=\"text\" lines=\"3\"></ui-skeleton>"
+    }
+  ]
+}

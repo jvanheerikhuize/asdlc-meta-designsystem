@@ -1,7 +1,8 @@
 ---
 id: ASM-0001
 title: Encapsulated native components styled via shared design tokens scale across all five tiers without external UI frameworks
-status: open
+status: validated
+promoted_to: FCT-0007
 confidence: 0.85
 ---
 
