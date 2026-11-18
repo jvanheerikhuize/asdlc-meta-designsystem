@@ -5,11 +5,14 @@ Machine-readable source of truth: [`catalog.json`](catalog.json).
 
 ## Quick Start (Zero-Build ESM)
 
-For separate repositories (such as `asdlc-meta-specs`), import directly from the published GitHub Pages origin (or vendor `src/`):
+Declare `Design-System: asdlc-meta-designsystem@latest` (auto-updating default) or `Design-System: asdlc-meta-designsystem@v0.1.0` (pinned release) in your repository's `TECH_STACK.md`, and import from the matching GitHub Pages channel:
 
 ```html
-<link rel="stylesheet" href="https://jvanheerikhuize.github.io/asdlc-meta-designsystem/showcase/src/tokens/tokens.css">
-<script type="module" src="https://jvanheerikhuize.github.io/asdlc-meta-designsystem/showcase/src/index.js"></script>
+<!-- Unpinned (@latest — updates automatically when asdlc-meta-designsystem main deploys): -->
+<link rel="stylesheet" href="https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/tokens/tokens.css">
+<script type="module" src="https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/index.js"></script>
+
+<!-- Or pinned (@v0.1.0): replace /latest/ with /v0.1.0/ -->
 
 <ui-label for="q" required>Search</ui-label>
 <ui-input id="q" aria-label="Search" placeholder="Filter records…"></ui-input>
