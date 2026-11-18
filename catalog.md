@@ -5,9 +5,11 @@ Machine-readable source of truth: [`catalog.json`](catalog.json).
 
 ## Quick Start (Zero-Build ESM)
 
+For separate repositories (such as `asdlc-meta-specs`), import directly from the published GitHub Pages origin (or vendor `src/`):
+
 ```html
-<link rel="stylesheet" href="/path/to/src/tokens/tokens.css">
-<script type="module" src="/path/to/src/index.js"></script>
+<link rel="stylesheet" href="https://jvanheerikhuize.github.io/asdlc-meta-designsystem/showcase/src/tokens/tokens.css">
+<script type="module" src="https://jvanheerikhuize.github.io/asdlc-meta-designsystem/showcase/src/index.js"></script>
 
 <ui-label for="q" required>Search</ui-label>
 <ui-input id="q" aria-label="Search" placeholder="Filter records…"></ui-input>
@@ -47,6 +49,12 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-badge>` | `variant` (`neutral`\|`accent`\|`info`\|`success`\|`warning`), `size` (`sm`\|`md`) | default | — | `badge` |
 | `<ui-icon>` | `name` (`search`, `sun`, `moon`, `check`, `alert`, `info`, `arrow-right`, `arrow-left`, `sparkles`, `code`, `layers`, `external`), `size` (`sm`\|`md`\|`lg`), `label` | — | — | `icon` |
 | `<ui-skeleton>` | `variant` (`text`\|`rect`\|`circle`), `width`, `height`, `lines` | — | — | `skeleton` |
+| `<ui-chip>` | `pressed`, `disabled`, `variant` (`default`\|`accent`) | default | `ui-toggle` | `chip` |
+| `<ui-progress>` | `value`, `max`, `variant` (`success`\|`accent`\|`warning`\|`danger`), `segments` (JSON), `aria-label` | — | — | `track`, `fill`, `segment` |
+| `<ui-textarea>` | `value`, `placeholder`, `rows`, `disabled`, `readonly`, `required`, `invalid`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `textarea` |
+| `<ui-select>` | `options` (JSON array), `value`, `disabled`, `invalid`, `name`, `aria-label` | — | `ui-change` | `select` |
+| `<ui-dot>` | `status` (`done`\|`wait`\|`bad`\|`info`\|`off`), `label` | — | — | `dot` |
+| `<ui-checkbox>` | `checked`, `disabled`, `indeterminate`, `name`, `value`, `aria-label` | default | `ui-change` | `label`, `checkbox` |
 
 ## Molecules (`src/molecules/`)
 
@@ -55,6 +63,9 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-field>` | `label`, `name`, `value`, `placeholder`, `type`, `required`, `invalid`, `disabled`, `hint`, `error` | — | `ui-input`, `ui-change` | `label`, `input`, `hint` |
 | `<ui-search-bar>` | `value`, `placeholder`, `button-label`, `aria-label`, `disabled` | — | `ui-search` | `bar`, `input`, `button` |
 | `<ui-media-card>` | `card-id`, `title`, `subtitle`, `badge`, `badge-variant`, `meta` | default | `ui-select` | `card`, `badge`, `title`, `subtitle`, `meta` |
+| `<ui-stat-tile>` | `value`, `label`, `status`, `variant` (`neutral`\|`accent`\|`success`\|`warning`\|`danger`) | — | — | `tile`, `value`, `dot`, `label` |
+| `<ui-callout>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title` | default | — | `callout`, `icon`, `title`, `body` |
+| `<ui-code-block>` | `language` | default | `ui-copy` | `container`, `header`, `language`, `copy-button`, `pre` |
 
 ## Organisms (`src/organisms/`)
 
@@ -70,4 +81,5 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | :--- | :--- | :--- | :--- | :--- |
 | `<page-shell>` | — | `header`, default, `footer` | — | `main`, `footer` |
 | `<catalog-layout>` | — | `hero`, `toolbar`, `grid`, `modal` | — | `hero`, `toolbar`, `grid` |
+| `<detail-layout>` | — | default, `aside` | — | `grid`, `main`, `aside` |
 
