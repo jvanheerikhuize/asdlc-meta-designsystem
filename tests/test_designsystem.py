@@ -44,13 +44,21 @@ def _parse_tokens(css_text: str) -> tuple[dict[str, str], dict[str, str]]:
 
 class DesignSystemTest(unittest.TestCase):
     def test_unidirectional_atom_dependencies_and_zero_external_imports(self):  # REQ-0001
-        atoms_dir = ROOT / "src" / "atoms"
-        atom_files = sorted(atoms_dir.glob("ui-*.js"))
-        self.assertEqual(len(atom_files), 6)
-        for path in atom_files:
-            src = path.read_text(encoding="utf-8")
-            imports = re.findall(r"^\s*import\s+.*?(?:from\s+)?['\"]([^'\"]+)['\"]", src, re.M)
-            self.assertEqual(imports, [], f"{path.name} must have zero external/cross-tier imports, got {imports}")
+        tier_order = {"atoms": 1, "molecules": 2, "organisms": 3, "templates": 4}
+        for tier, rank in tier_order.items():
+            for path in sorted((ROOT / "src" / tier).glob("*.js")):
+                src = path.read_text(encoding="utf-8")
+                imports = re.findall(r"^\s*import\s+.*?(?:from\s+)?['\"]([^'\"]+)['\"]", src, re.M)
+                for imp in imports:
+                    self.assertTrue(imp.startswith("../"), f"{tier}/{path.name} must not import external {imp}")
+                    target_tier = imp.split("/")[1]
+                    self.assertIn(target_tier, ("tokens", *tier_order.keys()))
+                    if target_tier in tier_order:
+                        self.assertLess(
+                            tier_order[target_tier],
+                            rank,
+                            f"{tier}/{path.name} cannot import higher/same tier {imp}",
+                        )
 
     def test_lumen_tokens_wcag_aa_contrast_and_reduced_motion(self):  # REQ-0002
         css_path = ROOT / "src" / "tokens" / "tokens.css"
@@ -95,6 +103,36 @@ class DesignSystemTest(unittest.TestCase):
             self.assertIn(f"customElements.define('{tag}'", code)
             self.assertIn(f"./atoms/{tag}.js", index_js)
 
+    def test_molecules_compose_atoms_and_emit_semantic_events(self):  # REQ-0004
+        expected = {
+            "ui-field": "ui-input",
+            "ui-search-bar": "ui-search",
+            "ui-media-card": "ui-select",
+        }
+        index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
+        for tag, event_name in expected.items():
+            code = (ROOT / "src" / "molecules" / f"{tag}.js").read_text(encoding="utf-8")
+            self.assertIn(f"customElements.define('{tag}'", code)
+            self.assertIn(f"./molecules/{tag}.js", index_js)
+            if tag != "ui-field":
+                self.assertIn(event_name, code)
+
+    def test_organisms_and_templates_compose_lower_tiers(self):  # REQ-0005
+        organisms = ["ui-navbar", "ui-modal", "ui-catalog-grid"]
+        templates = ["page-shell", "catalog-layout"]
+        index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
+        for tag in organisms:
+            code = (ROOT / "src" / "organisms" / f"{tag}.js").read_text(encoding="utf-8")
+            self.assertIn(f"customElements.define('{tag}'", code)
+            self.assertIn(f"./organisms/{tag}.js", index_js)
+        modal_code = (ROOT / "src" / "organisms" / "ui-modal.js").read_text(encoding="utf-8")
+        self.assertIn("<dialog", modal_code)
+        self.assertIn("showModal()", modal_code)
+        for tag in templates:
+            code = (ROOT / "src" / "templates" / f"{tag}.js").read_text(encoding="utf-8")
+            self.assertIn(f"customElements.define('{tag}'", code)
+            self.assertIn(f"./templates/{tag}.js", index_js)
+
     def test_agent_consultable_catalog_and_global_skill(self):  # REQ-0006
         catalog = json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))
         catalog_md = (ROOT / "catalog.md").read_text(encoding="utf-8")
@@ -108,7 +146,12 @@ class DesignSystemTest(unittest.TestCase):
         self.assertEqual(set(dark.keys()), documented_tokens)
 
         documented_tags = {c["tag"]: c for c in catalog["components"]}
-        expected_tags = {"ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton"}
+        expected_tags = {
+            "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
+            "ui-field", "ui-search-bar", "ui-media-card",
+            "ui-navbar", "ui-modal", "ui-catalog-grid",
+            "page-shell", "catalog-layout",
+        }
         self.assertEqual(set(documented_tags.keys()), expected_tags)
         for tag, entry in documented_tags.items():
             for field in ("tier", "module", "attributes", "slots", "events", "parts", "accessibility", "example"):

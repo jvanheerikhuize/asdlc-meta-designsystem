@@ -120,21 +120,26 @@ async function main() {
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/showcase/` });
     await new Promise((r) => setTimeout(r, 600));
     const showcase = await cdp.eval(`(() => {
-      const tags = ['ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton'];
+      const tags = [
+        'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',
+        'ui-field', 'ui-search-bar', 'ui-media-card',
+        'ui-navbar', 'ui-modal', 'ui-catalog-grid',
+        'page-shell', 'catalog-layout',
+      ];
       const defined = tags.every((t) => Boolean(customElements.get(t)));
       const shadows = tags.every((t) => Boolean(document.querySelector(t)?.shadowRoot));
       const backHref = document.querySelector('[data-testid="back-to-dashboard"]')?.getAttribute('href');
       const bgDark = getComputedStyle(document.body).backgroundColor;
       return { defined, shadows, backHref, bgDark };
     })()`);
-    assert.equal(showcase.defined, true, 'All 6 Atoms must be defined');
-    assert.equal(showcase.shadows, true, 'All 6 Atoms must have Shadow DOM');
+    assert.equal(showcase.defined, true, 'All 14 components must be defined');
+    assert.equal(showcase.shadows, true, 'All 14 components must have Shadow DOM');
     assert.equal(showcase.backHref, '../');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
 
-    // 3. Verify theme toggle propagates across Shadow DOM (ASM-0001, REQ-0002)
+    // 3. Verify ui-navbar theme toggle propagates across Shadow DOM (ASM-0001, REQ-0002)
     const lightBg = await cdp.eval(`(() => {
-      document.getElementById('theme-toggle').shadowRoot.querySelector('button').click();
+      document.getElementById('navbar').shadowRoot.getElementById('theme-btn').shadowRoot.querySelector('button').click();
       return {
         attr: document.documentElement.getAttribute('data-theme'),
         bgLight: getComputedStyle(document.body).backgroundColor,
@@ -143,7 +148,46 @@ async function main() {
     assert.equal(lightBg.attr, 'light');
     assert.equal(lightBg.bgLight, 'rgb(250, 250, 250)', 'Light --color-bg should be #fafafa');
 
-    // 4. Verify ui-button disabled/busy suppression and active click (REQ-0003)
+    // 4. Verify ui-search-bar filters ui-catalog-grid on Enter / button click (REQ-0004)
+    const searchCheck = await cdp.eval(`(() => {
+      const sb = document.getElementById('catalog-search');
+      const innerInput = sb.shadowRoot.querySelector('ui-input').shadowRoot.querySelector('input');
+      innerInput.value = 'ui-modal';
+      innerInput.dispatchEvent(new Event('input', { bubbles: true }));
+      sb.shadowRoot.querySelector('ui-button').shadowRoot.querySelector('button').click();
+      const visibleCards = Array.from(document.querySelectorAll('#catalog-grid ui-media-card')).filter((c) => !c.hidden);
+      return {
+        countText: document.getElementById('catalog-count').textContent,
+        visibleIds: visibleCards.map((c) => c.getAttribute('card-id')),
+      };
+    })()`);
+    assert.equal(searchCheck.countText, '1 component');
+    assert.deepEqual(searchCheck.visibleIds, ['ui-modal']);
+
+    // 5. Verify ui-modal opens from ui-media-card, closes on Done button, and restores focus (REQ-0005)
+    await cdp.send('Page.bringToFront');
+    const modalOpened = await cdp.eval(`(() => {
+      const card = document.querySelector('#catalog-grid ui-media-card[card-id="ui-modal"]');
+      card.shadowRoot.querySelector('button.card').click();
+      const modal = document.getElementById('detail-modal');
+      return modal.hasAttribute('open') && modal.shadowRoot.querySelector('dialog').open;
+    })()`);
+    assert.equal(modalOpened, true, 'Modal must open when card is activated');
+
+    await cdp.eval(`document.getElementById('modal-done-btn').shadowRoot.querySelector('button').click()`);
+    await new Promise((r) => setTimeout(r, 50));
+    const modalClosed = await cdp.eval(`(() => {
+      const modal = document.getElementById('detail-modal');
+      return {
+        closed: !modal.hasAttribute('open') && !modal.shadowRoot.querySelector('dialog').open,
+        focusedId: document.activeElement?.getAttribute('card-id'),
+        activeTag: document.activeElement?.tagName,
+      };
+    })()`);
+    assert.equal(modalClosed.closed, true, 'Modal must close when Done button is pressed');
+    assert.equal(modalClosed.focusedId, 'ui-modal', `Focus must restore to triggering card (got ${modalClosed.activeTag})`);
+
+    // 6. Verify ui-button disabled/busy suppression and active click (REQ-0003)
     const btnCheck = await cdp.eval(`(() => {
       const out = document.getElementById('press-output');
       document.getElementById('btn-disabled').shadowRoot.querySelector('button').click();
@@ -156,7 +200,7 @@ async function main() {
     assert.equal(btnCheck.afterBlocked, 'Presses: 0', 'Disabled and busy buttons must suppress activation');
     assert.equal(btnCheck.afterAllowed, 'Presses: 1 (primary)', 'Primary button must emit ui-press');
 
-    // 5. Verify ui-input event emission (REQ-0003)
+    // 7. Verify ui-input event emission (REQ-0003)
     const inputVal = await cdp.eval(`(() => {
       const el = document.getElementById('demo-input');
       const inner = el.shadowRoot.querySelector('input');
@@ -166,7 +210,7 @@ async function main() {
     })()`);
     assert.equal(inputVal, 'Value: lumen-token');
 
-    // 6. Verify prefers-reduced-motion suppresses skeleton shimmer (REQ-0002)
+    // 8. Verify prefers-reduced-motion suppresses skeleton shimmer (REQ-0002)
     await cdp.send('Emulation.setEmulatedMedia', {
       features: [{ name: 'prefers-reduced-motion', value: 'reduce' }],
     });
@@ -185,7 +229,7 @@ async function main() {
     if (cdp) cdp.close();
     if (chrome) chrome.kill('SIGKILL');
     server.kill('SIGKILL');
-    rmSync(userDataDir, { recursive: true, force: true });
+    rmSync(userDataDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
   }
 }
 
