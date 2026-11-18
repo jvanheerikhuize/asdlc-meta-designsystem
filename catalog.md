@@ -47,3 +47,27 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-badge>` | `variant` (`neutral`\|`accent`\|`info`\|`success`\|`warning`), `size` (`sm`\|`md`) | default | — | `badge` |
 | `<ui-icon>` | `name` (`search`, `sun`, `moon`, `check`, `alert`, `info`, `arrow-right`, `arrow-left`, `sparkles`, `code`, `layers`, `external`), `size` (`sm`\|`md`\|`lg`), `label` | — | — | `icon` |
 | `<ui-skeleton>` | `variant` (`text`\|`rect`\|`circle`), `width`, `height`, `lines` | — | — | `skeleton` |
+
+## Molecules (`src/molecules/`)
+
+| Tag | Attributes | Slots | Events | Parts |
+| :--- | :--- | :--- | :--- | :--- |
+| `<ui-field>` | `label`, `name`, `value`, `placeholder`, `type`, `required`, `invalid`, `disabled`, `hint`, `error` | — | `ui-input`, `ui-change` | `label`, `input`, `hint` |
+| `<ui-search-bar>` | `value`, `placeholder`, `button-label`, `aria-label`, `disabled` | — | `ui-search` | `bar`, `input`, `button` |
+| `<ui-media-card>` | `card-id`, `title`, `subtitle`, `badge`, `badge-variant`, `meta` | default | `ui-select` | `card`, `badge`, `title`, `subtitle`, `meta` |
+
+## Organisms (`src/organisms/`)
+
+| Tag | Attributes | Slots | Events | Parts |
+| :--- | :--- | :--- | :--- | :--- |
+| `<ui-navbar>` | `theme` (`dark`\|`light`) | `brand`, `nav`, `search`, `actions` | `ui-theme-change` | `header`, `theme-button` |
+| `<ui-modal>` | `title`, `open` | default, `footer` | `ui-open`, `ui-close` | `dialog`, `title`, `close`, `body`, `footer` |
+| `<ui-catalog-grid>` | `loading`, `empty`, `empty-text` | default | — | `skeletons`, `grid`, `empty` |
+
+## Templates (`src/templates/`)
+
+| Tag | Attributes | Slots | Events | Parts |
+| :--- | :--- | :--- | :--- | :--- |
+| `<page-shell>` | — | `header`, default, `footer` | — | `main`, `footer` |
+| `<catalog-layout>` | — | `hero`, `toolbar`, `grid`, `modal` | — | `hero`, `toolbar`, `grid` |
+
