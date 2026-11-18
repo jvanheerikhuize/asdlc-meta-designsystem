@@ -5,6 +5,17 @@ export { UiBadge } from './atoms/ui-badge.js';
 export { UiIcon } from './atoms/ui-icon.js';
 export { UiSkeleton } from './atoms/ui-skeleton.js';
 
+export { UiField } from './molecules/ui-field.js';
+export { UiSearchBar } from './molecules/ui-search-bar.js';
+export { UiMediaCard } from './molecules/ui-media-card.js';
+
+export { UiNavbar } from './organisms/ui-navbar.js';
+export { UiModal } from './organisms/ui-modal.js';
+export { UiCatalogGrid } from './organisms/ui-catalog-grid.js';
+
+export { PageShell } from './templates/page-shell.js';
+export { CatalogLayout } from './templates/catalog-layout.js';
+
 export const TOKENS_URL = new URL('./tokens/tokens.css', import.meta.url).href;
 
 export const ATOMS = [
@@ -14,6 +25,23 @@ export const ATOMS = [
   'ui-badge',
   'ui-icon',
   'ui-skeleton',
+];
+
+export const MOLECULES = [
+  'ui-field',
+  'ui-search-bar',
+  'ui-media-card',
+];
+
+export const ORGANISMS = [
+  'ui-navbar',
+  'ui-modal',
+  'ui-catalog-grid',
+];
+
+export const TEMPLATES = [
+  'page-shell',
+  'catalog-layout',
 ];
 
 /**

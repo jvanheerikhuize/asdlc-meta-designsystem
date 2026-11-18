@@ -25,20 +25,6 @@
         radial-gradient(50% 40% at 85% 0%, var(--glow-amber), transparent 70%);
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-4);
-      padding: var(--space-3) var(--space-6);
-      background: color-mix(in srgb, var(--color-surface) 82%, transparent);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-border);
-    }
-
     .brand {
       display: inline-flex;
       align-items: center;
@@ -52,13 +38,6 @@
 
     .brand span {
       color: var(--color-accent);
-    }
-
-    .actions {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      flex-wrap: wrap;
     }
 
     .nav-link {
@@ -83,15 +62,6 @@
     .nav-link:focus-visible {
       outline: 2px solid var(--color-focus-ring);
       outline-offset: 2px;
-    }
-
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: var(--space-8) var(--space-6) var(--space-12);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-10);
     }
 
     .hero {
@@ -207,46 +177,79 @@
       font-size: var(--text-xs);
       color: var(--color-fg-secondary);
     }
-
-    footer {
-      border-top: 1px solid var(--color-border);
-      padding: var(--space-6);
-      text-align: center;
-      color: var(--color-fg-muted);
-      font-size: var(--text-sm);
-    }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="./">
-      <ui-icon name="layers" size="md"></ui-icon>
-      ASDLC <span>Design System</span>
-    </a>
-    <nav class="actions" aria-label="Showcase navigation">
-      <a class="nav-link" href="../" data-testid="back-to-dashboard">
+  <page-shell>
+    <ui-navbar id="navbar" slot="header">
+      <a class="brand" slot="brand" href="./">
+        <ui-icon name="layers" size="md"></ui-icon>
+        ASDLC <span>Design System</span>
+      </a>
+      <a class="nav-link" slot="nav" href="../" data-testid="back-to-dashboard">
         <ui-icon name="arrow-left" size="sm"></ui-icon>
         Spec Dashboard
       </a>
-      <ui-button id="theme-toggle" variant="secondary" size="sm" aria-label="Toggle color theme">
-        <ui-icon name="sun" size="sm"></ui-icon>
-        <span id="theme-label">Light Mode</span>
-      </ui-button>
-    </nav>
-  </header>
+      <ui-search-bar
+        id="catalog-search"
+        slot="search"
+        placeholder="Filter components…"
+        button-label="Filter"
+        aria-label="Filter design system catalog"
+      ></ui-search-bar>
+    </ui-navbar>
 
-  <main>
-    <section class="hero">
-      <div class="row">
-        <ui-badge variant="accent">SPC-0001</ui-badge>
-        <ui-badge variant="info">Zero-Build Web Components</ui-badge>
-        <ui-badge variant="success">WCAG AA Verified</ui-badge>
+    <catalog-layout>
+      <section class="hero" slot="hero">
+        <div class="row">
+          <ui-badge variant="accent">SPC-0001 + SPC-0002</ui-badge>
+          <ui-badge variant="info">5-Tier Atomic Design</ui-badge>
+          <ui-badge variant="success">WCAG AA Verified</ui-badge>
+        </div>
+        <h1>Lumen-Inspired Catalog Browser &amp; Component Showcase</h1>
+        <p>
+          Dark-first obsidian surfaces, hairline borders, and encapsulated native Web Components across Tokens, Atoms, Molecules, Organisms, and Templates.
+        </p>
+      </section>
+
+      <div slot="toolbar" class="row" style="width: 100%; justify-content: space-between;">
+        <div class="row" id="tier-filters">
+          <ui-button class="tier-btn" data-tier="all" variant="primary" size="sm">All Tiers</ui-button>
+          <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms</ui-button>
+          <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm">Molecules</ui-button>
+          <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms</ui-button>
+          <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates</ui-button>
+        </div>
+        <span class="muted" id="catalog-count">14 components</span>
       </div>
-      <h1>Lumen-Inspired Tokens &amp; Foundational Atoms</h1>
-      <p>
-        Dark-first obsidian surfaces, hairline borders, and encapsulated native Web Components with zero external runtime dependencies.
-      </p>
-    </section>
+
+      <ui-catalog-grid id="catalog-grid" slot="grid" empty-text="No components match your filter.">
+        <ui-media-card card-id="ui-button" data-tier="atoms" title="<ui-button>" subtitle="Interactive button with variant, size, disabled, and busy states." badge="atoms" badge-variant="accent" meta="event: ui-press"></ui-media-card>
+        <ui-media-card card-id="ui-input" data-tier="atoms" title="<ui-input>" subtitle="Text input encapsulating native input with invalid state and live value." badge="atoms" badge-variant="accent" meta="events: ui-input, ui-change"></ui-media-card>
+        <ui-media-card card-id="ui-label" data-tier="atoms" title="<ui-label>" subtitle="Optical cap-height aligned form label with required indicator." badge="atoms" badge-variant="accent" meta="part: label"></ui-media-card>
+        <ui-media-card card-id="ui-badge" data-tier="atoms" title="<ui-badge>" subtitle="Status and metadata pill badge with semantic accent variants." badge="atoms" badge-variant="accent" meta="5 variants"></ui-media-card>
+        <ui-media-card card-id="ui-icon" data-tier="atoms" title="<ui-icon>" subtitle="12 crisp inline vector icons with decorative or labelled ARIA modes." badge="atoms" badge-variant="accent" meta="12 icons"></ui-media-card>
+        <ui-media-card card-id="ui-skeleton" data-tier="atoms" title="<ui-skeleton>" subtitle="Shimmer loading placeholder with reduced-motion static fallback." badge="atoms" badge-variant="accent" meta="variants: text, rect, circle"></ui-media-card>
+
+        <ui-media-card card-id="ui-field" data-tier="molecules" title="<ui-field>" subtitle="Form field composing ui-label, ui-input, and hint/error messaging." badge="molecules" badge-variant="info" meta="events: ui-input, ui-change"></ui-media-card>
+        <ui-media-card card-id="ui-search-bar" data-tier="molecules" title="<ui-search-bar>" subtitle="Search bar composing ui-input, ui-button, and search icon." badge="molecules" badge-variant="info" meta="event: ui-search"></ui-media-card>
+        <ui-media-card card-id="ui-media-card" data-tier="molecules" title="<ui-media-card>" subtitle="Translucent interactive catalog card with keyboard focus ring." badge="molecules" badge-variant="info" meta="event: ui-select"></ui-media-card>
+
+        <ui-media-card card-id="ui-navbar" data-tier="organisms" title="<ui-navbar>" subtitle="Sticky frosted-glass site header with slots and theme switcher." badge="organisms" badge-variant="success" meta="event: ui-theme-change"></ui-media-card>
+        <ui-media-card card-id="ui-modal" data-tier="organisms" title="<ui-modal>" subtitle="Native <dialog> modal with blurred backdrop and focus restoration." badge="organisms" badge-variant="success" meta="events: ui-open, ui-close"></ui-media-card>
+        <ui-media-card card-id="ui-catalog-grid" data-tier="organisms" title="<ui-catalog-grid>" subtitle="Responsive grid with loading skeletons and empty-state fallback." badge="organisms" badge-variant="success" meta="attrs: loading, empty"></ui-media-card>
+
+        <ui-media-card card-id="page-shell" data-tier="templates" title="<page-shell>" subtitle="Full-page structural blueprint with header, main, and footer slots." badge="templates" badge-variant="warning" meta="3 slots"></ui-media-card>
+        <ui-media-card card-id="catalog-layout" data-tier="templates" title="<catalog-layout>" subtitle="Catalog browser blueprint arranging hero, toolbar, grid, and modal." badge="templates" badge-variant="warning" meta="4 slots"></ui-media-card>
+      </ui-catalog-grid>
+
+      <ui-modal id="detail-modal" slot="modal" title="Component Details">
+        <p id="modal-body-text">Select a component card to inspect its contract.</p>
+        <div slot="footer" class="row">
+          <ui-button id="modal-done-btn" variant="primary" size="sm">Done</ui-button>
+        </div>
+      </ui-modal>
+    </catalog-layout>
 
     <section aria-labelledby="tokens-heading">
       <h2 id="tokens-heading" class="section-title">Design Tokens</h2>
@@ -263,7 +266,7 @@
     </section>
 
     <section aria-labelledby="atoms-heading">
-      <h2 id="atoms-heading" class="section-title">Foundational Atoms</h2>
+      <h2 id="atoms-heading" class="section-title">Interactive Atom &amp; Molecule Playground</h2>
       <div class="grid">
         <article class="card">
           <h3><span>&lt;ui-button&gt;</span><ui-badge>Interactive</ui-badge></h3>
@@ -286,19 +289,12 @@
         </article>
 
         <article class="card">
-          <h3><span>&lt;ui-input&gt; &amp; &lt;ui-label&gt;</span><ui-badge>Form</ui-badge></h3>
+          <h3><span>&lt;ui-input&gt; &amp; &lt;ui-field&gt;</span><ui-badge>Form</ui-badge></h3>
           <div class="field">
             <ui-label for="demo-input" required>Project Identifier</ui-label>
-            <ui-input id="demo-input" placeholder="e.g. asdlc-meta-designsystem" required></ui-input>
+            <ui-input id="demo-input" placeholder="e.g. asdlc-meta-designsystem" aria-label="Project Identifier" required></ui-input>
           </div>
-          <div class="field">
-            <ui-label for="invalid-input" size="sm">Invalid State</ui-label>
-            <ui-input id="invalid-input" value="bad value" invalid aria-label="Invalid example"></ui-input>
-          </div>
-          <div class="field">
-            <ui-label for="disabled-input" size="sm">Disabled State</ui-label>
-            <ui-input id="disabled-input" value="Read-only locked" disabled aria-label="Disabled example"></ui-input>
-          </div>
+          <ui-field id="demo-field" label="Error State Field" value="bad value" invalid error="Must be lowercase kebab-case."></ui-field>
           <p class="muted" id="input-output">Value: —</p>
         </article>
 
@@ -347,35 +343,82 @@
         </div>
       </article>
     </section>
-  </main>
 
-  <footer>
-    ASDLC Meta-DesignSystem · <a href="../" style="color: var(--color-accent)">Return to Specification Dashboard</a>
-  </footer>
+    <div slot="footer">
+      ASDLC Meta-DesignSystem · <a href="../" style="color: var(--color-accent)">Return to Specification Dashboard</a>
+    </div>
+  </page-shell>
 
   <script type="module">
     const root = document.documentElement;
-    const toggleBtn = document.getElementById('theme-toggle');
-    const themeLabel = document.getElementById('theme-label');
-
-    toggleBtn.addEventListener('ui-press', () => {
-      const isLight = root.getAttribute('data-theme') === 'light';
-      if (isLight) {
-        root.removeAttribute('data-theme');
-        themeLabel.textContent = 'Light Mode';
-      } else {
+    const navbar = document.getElementById('navbar');
+    navbar.addEventListener('ui-theme-change', (e) => {
+      if (e.detail.theme === 'light') {
         root.setAttribute('data-theme', 'light');
-        themeLabel.textContent = 'Dark Mode';
+      } else {
+        root.removeAttribute('data-theme');
       }
     });
 
+    const searchBar = document.getElementById('catalog-search');
+    const grid = document.getElementById('catalog-grid');
+    const cards = Array.from(grid.querySelectorAll('ui-media-card'));
+    const countEl = document.getElementById('catalog-count');
+    const tierBtns = Array.from(document.querySelectorAll('.tier-btn'));
+    let activeTier = 'all';
+    let activeQuery = '';
+
+    function applyFilter() {
+      let visible = 0;
+      const q = activeQuery.trim().toLowerCase();
+      for (const card of cards) {
+        const tierOk = activeTier === 'all' || card.dataset.tier === activeTier;
+        const text = `${card.getAttribute('title')} ${card.getAttribute('subtitle')} ${card.getAttribute('meta')}`.toLowerCase();
+        const queryOk = !q || text.includes(q);
+        const show = tierOk && queryOk;
+        card.hidden = !show;
+        if (show) visible += 1;
+      }
+      grid.toggleAttribute('empty', visible === 0);
+      countEl.textContent = `${visible} component${visible === 1 ? '' : 's'}`;
+    }
+
+    searchBar.addEventListener('ui-search', (e) => {
+      activeQuery = e.detail.query || '';
+      applyFilter();
+    });
+
+    for (const btn of tierBtns) {
+      btn.addEventListener('ui-press', () => {
+        activeTier = btn.dataset.tier;
+        for (const b of tierBtns) {
+          b.setAttribute('variant', b === btn ? 'primary' : 'secondary');
+        }
+        applyFilter();
+      });
+    }
+
+    const modal = document.getElementById('detail-modal');
+    const modalBody = document.getElementById('modal-body-text');
+    const modalDone = document.getElementById('modal-done-btn');
+
+    grid.addEventListener('ui-select', (e) => {
+      const card = e.target;
+      modal.setAttribute('title', e.detail.title || e.detail.id);
+      modalBody.textContent = `${card.getAttribute('subtitle')} (${card.getAttribute('meta')})`;
+      modal.showModal(card);
+    });
+
+    modalDone.addEventListener('ui-press', () => modal.close('done'));
+
     let presses = 0;
     const pressOutput = document.getElementById('press-output');
-    document.addEventListener('ui-press', (e) => {
-      if (e.target.id === 'theme-toggle') return;
+    document.getElementById('btn-primary').addEventListener('ui-press', (e) => {
       presses += 1;
       pressOutput.textContent = `Presses: ${presses} (${e.detail.variant})`;
     });
+    document.getElementById('btn-disabled').addEventListener('ui-press', () => { presses += 1; });
+    document.getElementById('btn-busy').addEventListener('ui-press', () => { presses += 1; });
 
     const demoInput = document.getElementById('demo-input');
     const inputOutput = document.getElementById('input-output');

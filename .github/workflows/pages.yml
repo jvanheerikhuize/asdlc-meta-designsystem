@@ -31,7 +31,7 @@ jobs:
           mkdir -p site/showcase/src
           cp src/pages/showcase.html site/showcase/index.html
           cp src/index.js site/showcase/src/index.js
-          cp -r src/tokens src/atoms site/showcase/src/
+          cp -r src/tokens src/atoms src/molecules src/organisms src/templates site/showcase/src/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

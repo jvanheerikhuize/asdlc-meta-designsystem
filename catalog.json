@@ -207,6 +207,155 @@
       "parts": ["skeleton"],
       "accessibility": "Sets aria-busy='true' on the host and aria-hidden='true' on visual shimmer bones; disables shimmer under prefers-reduced-motion: reduce.",
       "example": "<ui-skeleton variant=\"text\" lines=\"3\"></ui-skeleton>"
+    },
+    {
+      "tag": "ui-field",
+      "tier": "molecules",
+      "module": "src/molecules/ui-field.js",
+      "className": "UiField",
+      "description": "Form field Molecule composing <ui-label>, <ui-input>, and hint/error text.",
+      "attributes": {
+        "label": { "type": "string", "default": "" },
+        "name": { "type": "string", "default": "" },
+        "value": { "type": "string", "default": "" },
+        "placeholder": { "type": "string", "default": "" },
+        "type": { "type": "string", "default": "text" },
+        "required": { "type": "boolean", "default": false },
+        "invalid": { "type": "boolean", "default": false },
+        "disabled": { "type": "boolean", "default": false },
+        "hint": { "type": "string", "default": "" },
+        "error": { "type": "string", "default": "" }
+      },
+      "slots": [],
+      "events": [
+        { "name": "ui-input", "detail": { "value": "string" }, "bubbles": true, "composed": true },
+        { "name": "ui-change", "detail": { "value": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["label", "input", "hint"],
+      "accessibility": "Forwards label to aria-label on inner <ui-input> and exposes .value JS property.",
+      "example": "<ui-field label=\"Project\" placeholder=\"asdlc-meta-designsystem\" required></ui-field>"
+    },
+    {
+      "tag": "ui-search-bar",
+      "tier": "molecules",
+      "module": "src/molecules/ui-search-bar.js",
+      "className": "UiSearchBar",
+      "description": "Search bar Molecule composing <ui-input>, <ui-button>, and <ui-icon>.",
+      "attributes": {
+        "value": { "type": "string", "default": "" },
+        "placeholder": { "type": "string", "default": "Search…" },
+        "button-label": { "type": "string", "default": "Search" },
+        "aria-label": { "type": "string", "default": "Search" },
+        "disabled": { "type": "boolean", "default": false }
+      },
+      "slots": [],
+      "events": [
+        { "name": "ui-search", "detail": { "query": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["bar", "input", "button"],
+      "accessibility": "Wraps controls in role='search' and emits ui-search on Enter or button activation.",
+      "example": "<ui-search-bar placeholder=\"Filter catalog…\"></ui-search-bar>"
+    },
+    {
+      "tag": "ui-media-card",
+      "tier": "molecules",
+      "module": "src/molecules/ui-media-card.js",
+      "className": "UiMediaCard",
+      "description": "Interactive translucent catalog/poster card Molecule composing <ui-badge> and <ui-icon>.",
+      "attributes": {
+        "card-id": { "type": "string", "default": "" },
+        "title": { "type": "string", "default": "" },
+        "subtitle": { "type": "string", "default": "" },
+        "badge": { "type": "string", "default": "" },
+        "badge-variant": { "type": "enum", "values": ["neutral", "accent", "info", "success", "warning"], "default": "neutral" },
+        "meta": { "type": "string", "default": "" }
+      },
+      "slots": ["default"],
+      "events": [
+        { "name": "ui-select", "detail": { "id": "string", "title": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["card", "badge", "title", "subtitle", "meta"],
+      "accessibility": "Uses native <button> with delegatesFocus: true and visible :focus-visible outline.",
+      "example": "<ui-media-card card-id=\"item-1\" title=\"Token Set\" subtitle=\"Dark-first palette\" badge=\"active\" badge-variant=\"success\"></ui-media-card>"
+    },
+    {
+      "tag": "ui-navbar",
+      "tier": "organisms",
+      "module": "src/organisms/ui-navbar.js",
+      "className": "UiNavbar",
+      "description": "Sticky frosted-glass site header Organism with integrated theme toggle.",
+      "attributes": {
+        "theme": { "type": "enum", "values": ["dark", "light"], "default": "dark" }
+      },
+      "slots": ["brand", "nav", "search", "actions"],
+      "events": [
+        { "name": "ui-theme-change", "detail": { "theme": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["header", "theme-button"],
+      "accessibility": "Wraps navigation slot in <nav aria-label='Primary'>.",
+      "example": "<ui-navbar><a slot=\"brand\" href=\"./\">ASDLC</a></ui-navbar>"
+    },
+    {
+      "tag": "ui-modal",
+      "tier": "organisms",
+      "module": "src/organisms/ui-modal.js",
+      "className": "UiModal",
+      "description": "Modal dialog Organism built on native <dialog> with blurred backdrop and focus restoration.",
+      "attributes": {
+        "title": { "type": "string", "default": "" },
+        "open": { "type": "boolean", "default": false }
+      },
+      "slots": ["default", "footer"],
+      "events": [
+        { "name": "ui-open", "detail": {}, "bubbles": true, "composed": true },
+        { "name": "ui-close", "detail": { "reason": "string" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["dialog", "title", "close", "body", "footer"],
+      "accessibility": "Uses native <dialog>.showModal() for top-layer focus containment, Escape/backdrop dismissal, and focus restoration to the triggering element.",
+      "example": "<ui-modal title=\"Item Details\"><p>Details here.</p></ui-modal>"
+    },
+    {
+      "tag": "ui-catalog-grid",
+      "tier": "organisms",
+      "module": "src/organisms/ui-catalog-grid.js",
+      "className": "UiCatalogGrid",
+      "description": "Responsive grid Organism for <ui-media-card> items with loading skeletons and empty state.",
+      "attributes": {
+        "loading": { "type": "boolean", "default": false },
+        "empty": { "type": "boolean", "default": false },
+        "empty-text": { "type": "string", "default": "No matching items." }
+      },
+      "slots": ["default"],
+      "events": [],
+      "parts": ["skeletons", "grid", "empty"],
+      "accessibility": "Renders responsive CSS grid with clear empty-state text.",
+      "example": "<ui-catalog-grid empty-text=\"No matches\"></ui-catalog-grid>"
+    },
+    {
+      "tag": "page-shell",
+      "tier": "templates",
+      "module": "src/templates/page-shell.js",
+      "className": "PageShell",
+      "description": "Full-page structural Template with header, main, and footer slots.",
+      "attributes": {},
+      "slots": ["header", "default", "footer"],
+      "events": [],
+      "parts": ["main", "footer"],
+      "accessibility": "Provides semantic <main> and <footer> landmarks.",
+      "example": "<page-shell><ui-navbar slot=\"header\"></ui-navbar><p>Content</p></page-shell>"
+    },
+    {
+      "tag": "catalog-layout",
+      "tier": "templates",
+      "module": "src/templates/catalog-layout.js",
+      "className": "CatalogLayout",
+      "description": "Catalog browser Template arranging hero, toolbar, grid, and modal slots.",
+      "attributes": {},
+      "slots": ["hero", "toolbar", "grid", "modal"],
+      "events": [],
+      "parts": ["hero", "toolbar", "grid"],
+      "accessibility": "Structures catalog sections in semantic <section> landmarks.",
+      "example": "<catalog-layout><div slot=\"hero\">...</div><ui-catalog-grid slot=\"grid\"></ui-catalog-grid></catalog-layout>"
     }
   ]
 }

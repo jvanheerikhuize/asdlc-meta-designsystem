@@ -1,7 +1,7 @@
 ---
 id: REQ-0005
 title: Organisms, Templates, and Pages assemble Molecules into responsive, accessible application views
-status: provisional
+status: active
 because: [FCT-0001, FCT-0004, FCT-0007]
 ---
 
