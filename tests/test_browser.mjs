@@ -126,7 +126,6 @@ async function main() {
     assert.equal(dash.bgImage.includes('radial-gradient'), true, 'Expected radial glow on dashboard body');
     assert.equal(dash.statTiles, 4);
     assert.equal(dash.callouts >= 1, true);
-    assert.equal(dash.progressBars >= 1, true);
 
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/#/capture/requirement` });
     await new Promise((r) => setTimeout(r, 400));

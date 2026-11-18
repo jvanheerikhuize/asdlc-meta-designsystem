@@ -1,7 +1,7 @@
 ---
 id: SPC-0002
 title: Composed Molecules, Organisms, Templates, and Showcase Pages
-status: draft
+status: active
 tier: feature
 depends_on: [SPC-0001]
 requirements: [REQ-0004, REQ-0005]
