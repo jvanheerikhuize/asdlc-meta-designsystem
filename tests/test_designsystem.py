@@ -95,7 +95,7 @@ class DesignSystemTest(unittest.TestCase):
     def test_foundational_atoms_encapsulation_and_exports(self):  # REQ-0003
         expected = [
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
+            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox", "ui-slider",
         ]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in expected:
@@ -154,7 +154,7 @@ class DesignSystemTest(unittest.TestCase):
         documented_tags = {c["tag"]: c for c in catalog["components"]}
         expected_tags = {
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
+            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox", "ui-slider",
             "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout", "ui-code-block",
             "ui-navbar", "ui-modal", "ui-catalog-grid",
             "page-shell", "catalog-layout", "detail-layout",

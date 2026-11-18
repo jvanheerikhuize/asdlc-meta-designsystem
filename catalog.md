@@ -58,6 +58,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-select>` | `options` (JSON array), `value`, `disabled`, `invalid`, `name`, `aria-label` | — | `ui-change` | `select` |
 | `<ui-dot>` | `status` (`done`\|`wait`\|`bad`\|`info`\|`off`), `label` | — | — | `dot` |
 | `<ui-checkbox>` | `checked`, `disabled`, `indeterminate`, `name`, `value`, `aria-label` | default | `ui-change` | `label`, `checkbox` |
+| `<ui-slider>` | `min`, `max`, `step`, `value`, `disabled`, `variant` (`accent`\|`success`\|`warning`\|`neutral`), `name`, `aria-label`, `aria-valuetext` | — | `ui-input`, `ui-change` | `track`, `slider` |
 
 ## Molecules (`src/molecules/`)
 

@@ -547,6 +547,32 @@
       "parts": ["grid", "main", "aside"],
       "accessibility": "Uses semantic <aside> landmark for secondary metadata.",
       "example": "<detail-layout><article>Main</article><dl slot=\"aside\">Meta</dl></detail-layout>"
+    },
+    {
+      "tag": "ui-slider",
+      "tier": "atoms",
+      "module": "src/atoms/ui-slider.js",
+      "className": "UiSlider",
+      "description": "Range slider Atom encapsulating native <input type='range'> for timeline scrubbing, volume, and numeric controls.",
+      "attributes": {
+        "min": { "type": "number", "default": 0 },
+        "max": { "type": "number", "default": 100 },
+        "step": { "type": "number", "default": 1 },
+        "value": { "type": "number", "default": 0 },
+        "disabled": { "type": "boolean", "default": false },
+        "variant": { "type": "enum", "values": ["accent", "success", "warning", "neutral"], "default": "accent" },
+        "name": { "type": "string", "default": "" },
+        "aria-label": { "type": "string", "default": null },
+        "aria-valuetext": { "type": "string", "default": null }
+      },
+      "slots": [],
+      "events": [
+        { "name": "ui-input", "detail": { "value": "number" }, "bubbles": true, "composed": true },
+        { "name": "ui-change", "detail": { "value": "number" }, "bubbles": true, "composed": true }
+      ],
+      "parts": ["track", "slider"],
+      "accessibility": "Uses delegatesFocus: true over native <input type='range'> with aria-label and aria-valuetext forwarding.",
+      "example": "<ui-slider min=\"0\" max=\"100\" value=\"64\" aria-label=\"Volume\"></ui-slider>"
     }
   ]
 }
