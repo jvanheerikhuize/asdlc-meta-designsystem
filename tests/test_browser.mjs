@@ -107,14 +107,37 @@ async function main() {
     await cdp.send('Page.enable');
     await cdp.send('Runtime.enable');
 
-    // 1. Verify Spec Dashboard (/) and link to ./showcase/ (REQ-0007)
+    // 1. Verify Spec Dashboard (/) across routes, font stack, radial glow, and link to ./showcase/ (REQ-0007)
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/` });
     await new Promise((r) => setTimeout(r, 600));
     const dash = await cdp.eval(`(() => ({
       title: document.title,
+      h1: document.querySelector('h1')?.textContent,
       showcaseHref: document.querySelector('a[href="./showcase/"]')?.getAttribute('href'),
+      fontFamily: getComputedStyle(document.body).fontFamily,
+      bgImage: getComputedStyle(document.body).backgroundImage,
+      statTiles: document.querySelectorAll('ui-stat-tile').length,
+      callouts: document.querySelectorAll('ui-callout').length,
+      progressBars: document.querySelectorAll('ui-progress').length,
     }))()`);
+    assert.equal(dash.h1, 'Dashboard');
     assert.equal(dash.showcaseHref, './showcase/');
+    assert.equal(dash.fontFamily.includes('Geist'), true, `Expected Geist in fontFamily, got ${dash.fontFamily}`);
+    assert.equal(dash.bgImage.includes('radial-gradient'), true, 'Expected radial glow on dashboard body');
+    assert.equal(dash.statTiles, 4);
+    assert.equal(dash.callouts >= 1, true);
+    assert.equal(dash.progressBars >= 1, true);
+
+    await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/#/capture/requirement` });
+    await new Promise((r) => setTimeout(r, 400));
+    const cap = await cdp.eval(`(() => ({
+      chips: document.querySelectorAll('ui-chip').length,
+      checkboxes: document.querySelectorAll('ui-checkbox').length,
+      codeBlocks: document.querySelectorAll('ui-code-block').length,
+    }))()`);
+    assert.equal(cap.chips, 5);
+    assert.equal(cap.checkboxes >= 1, true);
+    assert.equal(cap.codeBlocks, 1);
 
     // 2. Verify Showcase (/showcase/) and link back to ../ (REQ-0007)
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/showcase/` });
