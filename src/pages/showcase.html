@@ -345,12 +345,12 @@
         <div slot="toolbar" class="row" style="width: 100%; justify-content: space-between;">
           <div class="row" id="tier-filters">
             <ui-button class="tier-btn" data-tier="all" variant="primary" size="sm">All Tiers</ui-button>
-            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms (6)</ui-button>
-            <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm">Molecules (3)</ui-button>
+            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms (12)</ui-button>
+            <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm">Molecules (6)</ui-button>
             <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms (3)</ui-button>
-            <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates (2)</ui-button>
+            <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates (3)</ui-button>
           </div>
-          <span class="muted" id="catalog-count">14 components</span>
+          <span class="muted" id="catalog-count">24 components</span>
         </div>
 
         <div slot="grid" class="specimen-grid" id="specimen-grid">
@@ -489,6 +489,119 @@
           </div>
         </article>
 
+        <article class="specimen" data-tier="atoms" data-id="ui-chip">
+          <div class="specimen-head">
+            <h3>&lt;ui-chip&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Toggleable filter pill with pressed state and ui-toggle event.</p>
+          <div class="preview">
+            <div class="row">
+              <ui-chip id="demo-chip" pressed>active</ui-chip>
+              <ui-chip>provisional</ui-chip>
+              <ui-chip variant="accent" pressed>filter</ui-chip>
+              <ui-chip disabled>disabled</ui-chip>
+            </div>
+          </div>
+          <pre><code>&lt;ui-chip pressed&gt;active&lt;/ui-chip&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-toggle</span>
+            <ui-button class="inspect-btn" data-component="ui-chip" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="atoms" data-id="ui-progress">
+          <div class="specimen-head">
+            <h3>&lt;ui-progress&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Progress/readiness bar with semantic color variants.</p>
+          <div class="preview">
+            <ui-progress value="80" aria-label="Skeleton readiness"></ui-progress>
+            <ui-progress value="45" variant="warning" aria-label="Warning progress"></ui-progress>
+            <ui-progress value="25" variant="accent" aria-label="Accent progress"></ui-progress>
+          </div>
+          <pre><code>&lt;ui-progress value="80" aria-label="Readiness"&gt;&lt;/ui-progress&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">role: progressbar</span>
+            <ui-button class="inspect-btn" data-component="ui-progress" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="atoms" data-id="ui-textarea">
+          <div class="specimen-head">
+            <h3>&lt;ui-textarea&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Multi-line text input encapsulating native &lt;textarea&gt;.</p>
+          <div class="preview">
+            <ui-textarea rows="2" placeholder="Describe system behaviour…" aria-label="Statement"></ui-textarea>
+          </div>
+          <pre><code>&lt;ui-textarea aria-label="Statement" rows="3"&gt;&lt;/ui-textarea&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">events: ui-input, ui-change</span>
+            <ui-button class="inspect-btn" data-component="ui-textarea" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="atoms" data-id="ui-select">
+          <div class="specimen-head">
+            <h3>&lt;ui-select&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Native &lt;select&gt; driven by JSON options attribute/property.</p>
+          <div class="preview">
+            <ui-select aria-label="Record status" options='["open","provisional","active"]' value="active"></ui-select>
+          </div>
+          <pre><code>&lt;ui-select aria-label="Status" options='["open","active"]'&gt;&lt;/ui-select&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-change</span>
+            <ui-button class="inspect-btn" data-component="ui-select" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="atoms" data-id="ui-dot">
+          <div class="specimen-head">
+            <h3>&lt;ui-dot&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Semantic status dot (done, wait, bad, info, off).</p>
+          <div class="preview">
+            <div class="row">
+              <ui-dot status="done" label="Done"></ui-dot>
+              <ui-dot status="wait" label="Waiting"></ui-dot>
+              <ui-dot status="bad" label="Broken"></ui-dot>
+              <ui-dot status="info" label="Info"></ui-dot>
+              <ui-dot status="off" label="Inactive"></ui-dot>
+            </div>
+          </div>
+          <pre><code>&lt;ui-dot status="done" label="Verified"&gt;&lt;/ui-dot&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">5 status tones</span>
+            <ui-button class="inspect-btn" data-component="ui-dot" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="atoms" data-id="ui-checkbox">
+          <div class="specimen-head">
+            <h3>&lt;ui-checkbox&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Checkbox encapsulating native &lt;input type="checkbox"&gt; for multi-select lists.</p>
+          <div class="preview">
+            <div class="row">
+              <ui-checkbox value="FCT-0001" checked>FCT-0001</ui-checkbox>
+              <ui-checkbox value="FCT-0007">FCT-0007</ui-checkbox>
+              <ui-checkbox value="locked" disabled>Disabled</ui-checkbox>
+            </div>
+          </div>
+          <pre><code>&lt;ui-checkbox value="FCT-0001" checked&gt;FCT-0001&lt;/ui-checkbox&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-change</span>
+            <ui-button class="inspect-btn" data-component="ui-checkbox" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
         <!-- MOLECULES -->
         <article class="specimen" data-tier="molecules" data-id="ui-field">
           <div class="specimen-head">
@@ -536,6 +649,58 @@
           <div class="specimen-foot">
             <span class="muted">event: ui-select</span>
             <ui-button class="inspect-btn" data-component="ui-media-card" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="molecules" data-id="ui-stat-tile">
+          <div class="specimen-head">
+            <h3>&lt;ui-stat-tile&gt;</h3>
+            <ui-badge variant="info">molecules</ui-badge>
+          </div>
+          <p class="specimen-desc">KPI metric tile displaying value, label, and optional &lt;ui-dot&gt;.</p>
+          <div class="preview">
+            <div class="row">
+              <ui-stat-tile value="23" label="Records" status="done" variant="success"></ui-stat-tile>
+              <ui-stat-tile value="1" label="Open QST" status="wait" variant="warning"></ui-stat-tile>
+            </div>
+          </div>
+          <pre><code>&lt;ui-stat-tile value="23" label="Records" status="done"&gt;&lt;/ui-stat-tile&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">composes: ui-dot</span>
+            <ui-button class="inspect-btn" data-component="ui-stat-tile" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="molecules" data-id="ui-callout">
+          <div class="specimen-head">
+            <h3>&lt;ui-callout&gt;</h3>
+            <ui-badge variant="info">molecules</ui-badge>
+          </div>
+          <p class="specimen-desc">Left-accented status/action banner composing &lt;ui-icon&gt;.</p>
+          <div class="preview">
+            <ui-callout variant="success" title="All Checks Passing">Strict spec graph and browser checks succeeded.</ui-callout>
+            <ui-callout variant="warning" title="Open Assumption">ASM-0003 awaits external repo validation.</ui-callout>
+          </div>
+          <pre><code>&lt;ui-callout variant="info" title="Note"&gt;Details here.&lt;/ui-callout&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">composes: ui-icon</span>
+            <ui-button class="inspect-btn" data-component="ui-callout" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="molecules" data-id="ui-code-block">
+          <div class="specimen-head">
+            <h3>&lt;ui-code-block&gt;</h3>
+            <ui-badge variant="info">molecules</ui-badge>
+          </div>
+          <p class="specimen-desc">Monospace code preview composing &lt;ui-button&gt; and &lt;ui-icon&gt; for copy.</p>
+          <div class="preview">
+            <ui-code-block language="html">&lt;ui-badge variant="success"&gt;active&lt;/ui-badge&gt;</ui-code-block>
+          </div>
+          <pre><code>&lt;ui-code-block language="html"&gt;...&lt;/ui-code-block&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-copy</span>
+            <ui-button class="inspect-btn" data-component="ui-code-block" variant="secondary" size="sm">Inspect Contract</ui-button>
           </div>
         </article>
 
@@ -620,6 +785,25 @@
             <ui-button class="inspect-btn" data-component="catalog-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
           </div>
         </article>
+
+        <article class="specimen" data-tier="templates" data-id="detail-layout">
+          <div class="specimen-head">
+            <h3>&lt;detail-layout&gt;</h3>
+            <ui-badge variant="warning">templates</ui-badge>
+          </div>
+          <p class="specimen-desc">Two-column detail Template pairing primary prose with a metadata sidebar.</p>
+          <div class="preview">
+            <detail-layout>
+              <span class="muted">Primary content</span>
+              <span slot="aside" class="muted">Metadata aside</span>
+            </detail-layout>
+          </div>
+          <pre><code>&lt;detail-layout&gt;&lt;article&gt;...&lt;/article&gt;&lt;dl slot="aside"&gt;...&lt;/dl&gt;&lt;/detail-layout&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">slots: default, aside</span>
+            <ui-button class="inspect-btn" data-component="detail-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
       </div>
       </catalog-layout>
     </section>
@@ -658,6 +842,16 @@
       'ui-catalog-grid': { tier: 'organisms', attrs: 'loading, empty, empty-text', slots: 'default', events: '—', a11y: 'Responsive CSS grid with loading skeletons and empty state.' },
       'page-shell': { tier: 'templates', attrs: '—', slots: 'header, default, footer', events: '—', a11y: 'Semantic <main> and <footer> landmarks.' },
       'catalog-layout': { tier: 'templates', attrs: '—', slots: 'hero, toolbar, grid, modal', events: '—', a11y: 'Semantic <section> landmarks.' },
+      'ui-chip': { tier: 'atoms', attrs: 'pressed, disabled, variant', slots: 'default', events: 'ui-toggle', a11y: 'delegatesFocus: true over native <button> with aria-pressed.' },
+      'ui-progress': { tier: 'atoms', attrs: 'value, max, variant, aria-label', slots: '—', events: '—', a11y: 'role="progressbar" with aria-valuenow/min/max.' },
+      'ui-textarea': { tier: 'atoms', attrs: 'value, placeholder, rows, disabled, readonly, required, invalid, name, aria-label', slots: '—', events: 'ui-input, ui-change', a11y: 'delegatesFocus: true over native <textarea>; syncs aria-invalid.' },
+      'ui-select': { tier: 'atoms', attrs: 'options, value, disabled, invalid, name, aria-label', slots: '—', events: 'ui-change', a11y: 'delegatesFocus: true over native <select>; syncs aria-invalid.' },
+      'ui-dot': { tier: 'atoms', attrs: 'status, label', slots: '—', events: '—', a11y: 'aria-hidden="true" by default; role="img" + aria-label when label is set.' },
+      'ui-stat-tile': { tier: 'molecules', attrs: 'value, label, status, variant', slots: '—', events: '—', a11y: 'Semantic <strong> value paired with descriptive label.' },
+      'ui-callout': { tier: 'molecules', attrs: 'variant, title', slots: 'default', events: '—', a11y: 'role="note" with semantic variant icon.' },
+      'ui-code-block': { tier: 'molecules', attrs: 'language', slots: 'default', events: 'ui-copy', a11y: 'Accessible Copy button with visual confirmation.' },
+      'ui-checkbox': { tier: 'atoms', attrs: 'checked, disabled, indeterminate, name, value, aria-label', slots: 'default', events: 'ui-change', a11y: 'delegatesFocus: true over native <input type="checkbox">.' },
+      'detail-layout': { tier: 'templates', attrs: '—', slots: 'default, aside', events: '—', a11y: 'Semantic <aside> landmark for metadata sidebar.' },
     };
 
     const root = document.documentElement;

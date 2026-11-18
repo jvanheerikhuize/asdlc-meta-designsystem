@@ -33,7 +33,7 @@ This document binds the technology-agnostic specifications in `records/` to a co
 - **Cross-Repo Agent Consultation:**
   - **Shared Global Skill:** `~/.agents/skills/asdlc-design-system/SKILL.md` points agents in any repository to the design system contract.
   - **Machine-Readable Catalog:** `catalog.json` (plus human/agent `catalog.md`) documents every token, custom element tag, observed attribute, slot, emitted `CustomEvent`, and ARIA contract.
-  - **Zero-Build ESM Entry Point:** `src/index.js` registers all custom elements and exports token stylesheets so consumer repositories can import components directly without a bundler.
+  - **Zero-Build ESM Entry Point:** `src/index.js` registers all custom elements and exports token stylesheets (`https://jvanheerikhuize.github.io/asdlc-meta-designsystem/showcase/src/index.js` and `.../tokens/tokens.css`) so consumer repositories can import components directly without a bundler.
 
 ## 4. Atomic Directory Layout
 
