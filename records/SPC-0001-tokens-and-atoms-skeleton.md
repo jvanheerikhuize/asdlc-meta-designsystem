@@ -1,7 +1,7 @@
 ---
 id: SPC-0001
 title: Design token foundation and foundational Atoms skeleton
-status: draft
+status: active
 tier: skeleton
 depends_on: []
 requirements: [REQ-0001, REQ-0002, REQ-0003, REQ-0006, REQ-0007]
