@@ -17,22 +17,34 @@ This document binds the technology-agnostic specifications in `records/` to a co
 
 | Token Group | Values / Direction |
 | :--- | :--- |
-| Canvas & Surfaces | Obsidian background (`#08080b`), elevated dark surface (`#111116`), translucent card surface (`rgba(255, 255, 255, 0.04)`) |
+| Canvas & Surfaces | **Dark (default `:root`):** Obsidian (`#08080b`), elevated (`#111116`), translucent card (`rgba(255, 255, 255, 0.04)`) · **Light (`[data-theme="light"]`):** Paper (`#fafafa`), elevated (`#ffffff`), subtle card (`rgba(9, 9, 11, 0.03)`) |
 | Ambient Glow | Subtle top radial highlights in rose (`rgba(244, 63, 94, 0.08)`) and amber (`rgba(251, 146, 60, 0.05)`) |
-| Borders & Hairlines | Crisp `1px` translucent borders (`rgba(255, 255, 255, 0.08)` default, `rgba(255, 255, 255, 0.22)` hover/focus) |
-| Foreground Text | Primary `#ededed`, secondary `#a1a1aa`, muted `#71717a` |
-| Brand & Status Accents | Rose-crimson primary accent (`#f43f5e`), sky info (`#38bdf8`), emerald success (`#10b981`), amber warning (`#f59e0b`) |
+| Borders & Hairlines | **Dark:** `rgba(255, 255, 255, 0.08)` default, `0.22` hover/focus · **Light:** `rgba(9, 9, 11, 0.10)` default, `0.24` hover/focus |
+| Foreground Text | **Dark:** Primary `#ededed`, secondary `#a1a1aa`, muted `#71717a` · **Light:** Primary `#09090b`, secondary `#52525b`, muted `#71717a` |
+| Brand & Status Accents | Rose-crimson primary accent (`#f43f5e` dark / `#e11d48` light), sky info (`#38bdf8`), emerald success (`#10b981`), amber warning (`#f59e0b`) |
 | Typography | Sans (`Geist`, `system-ui`, `sans-serif`), Display (`Bricolage Grotesque`, `Geist`, `sans-serif`), Mono (`Geist Mono`, `ui-monospace`, `monospace`) |
 | Overlays & Loading | Native `<dialog>` backdrop (`rgba(0, 0, 0, 0.75)` + `backdrop-filter: blur(12px)`), shimmer skeleton gradient animation |
 
-## 3. Atomic Directory Layout
+## 3. Publishing & Cross-Repository Distribution
+
+- **GitHub Pages Dual-Site Layout:**
+  - `/` (`site/index.html`): ASDLC specification dashboard (records, tasks, graph, capture), linking to `./showcase/`.
+  - `/showcase/` (`site/showcase/index.html`): Live design-system Showcase website demonstrating tokens, Atoms, Molecules, Organisms, and Templates, linking back to `../`.
+- **Cross-Repo Agent Consultation:**
+  - **Shared Global Skill:** `~/.agents/skills/asdlc-design-system/SKILL.md` points agents in any repository to the design system contract.
+  - **Machine-Readable Catalog:** `catalog.json` (plus human/agent `catalog.md`) documents every token, custom element tag, observed attribute, slot, emitted `CustomEvent`, and ARIA contract.
+  - **Zero-Build ESM Entry Point:** `src/index.js` registers all custom elements and exports token stylesheets so consumer repositories can import components directly without a bundler.
+
+## 4. Atomic Directory Layout
 
 ```text
 src/
-  tokens/       # CSS custom properties (colors, typography, spacing, motion)
+  index.js      # Zero-build ESM entry point registering custom elements
+  tokens/       # CSS custom properties (:root dark default + [data-theme="light"])
   atoms/        # ui-button, ui-input, ui-label, ui-badge, ui-icon, ui-skeleton
   molecules/    # ui-field, ui-search-bar, ui-media-card
   organisms/    # ui-navbar, ui-modal, ui-catalog-grid
   templates/    # page-shell, catalog-layout
-  pages/        # showcase.html (Lumen-inspired live instance)
+  pages/        # showcase.html (Lumen-inspired live instance, copied to site/showcase/)
 ```
+
