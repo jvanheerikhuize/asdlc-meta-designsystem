@@ -1,6 +1,8 @@
 # Technology Stack & Visual Binding
 
-This document binds the technology-agnostic specifications in `records/` to a concrete browser-native implementation and Lumen-inspired dark-first visual language.
+This document binds the technology-agnostic specifications in `.specs/records/` (rendered to `specs/`) to a concrete browser-native implementation and Lumen-inspired dark-first visual language.
+
+Spec-Blueprint: asdlc-meta-specs@latest
 
 ## 1. Runtime & Architecture
 
@@ -11,7 +13,7 @@ This document binds the technology-agnostic specifications in `records/` to a co
   - Native CSS nesting and encapsulated Shadow DOM (`attachShadow({ mode: 'open' })`) stylesheets for component-scoped styling.
   - Native `@media (prefers-reduced-motion: reduce)` fallbacks and optical label alignment (`text-box: trim-both cap alphabetic`).
 - **Vanilla JavaScript:** Component classes extending `HTMLElement`, using `observedAttributes`, `attributeChangedCallback`, `connectedCallback`, `CustomEvent` dispatching, and ARIA attribute synchronization without a virtual DOM.
-- **Verification:** `python3 tools/spec.py check --strict` for specification integrity and native browser / Node test runner checks for component behavior.
+- **Verification:** `Spec-Blueprint` (`asdlc-meta-specs@latest`) `check --strict` for specification integrity and native browser / Node test runner checks for component behavior.
 
 ## 2. Lumen-Inspired Visual Tokens
 
@@ -27,9 +29,9 @@ This document binds the technology-agnostic specifications in `records/` to a co
 
 ## 3. Publishing & Cross-Repository Distribution
 
-- **GitHub Pages Dual-Site Layout:**
-  - `/` (`site/index.html`): ASDLC specification dashboard (records, tasks, graph, capture), linking to `./showcase/`.
-  - `/showcase/` (`site/showcase/index.html`): Live design-system Showcase website demonstrating tokens, Atoms, Molecules, Organisms, and Templates, linking back to `../`.
+- **GitHub Pages Dual-Site Layout (Primary Showcase + Bolted-On Spec Dashboard):**
+  - `/` (`site/index.html` & `/showcase/`): Primary live design-system Showcase website demonstrating tokens, Atoms, Molecules, Organisms, and Templates, linking to `./specs/`.
+  - `/specs/` (`site/specs/index.html`): ASDLC specification dashboard (records, tasks, graph, capture) fetched dynamically from `asdlc-meta-specs@latest` at deploy time, linking back to `../`.
 - **Cross-Repo Agent Consultation:**
   - **Shared Global Skill:** `~/.agents/skills/asdlc-design-system/SKILL.md` points agents in any repository to the design system contract.
   - **Machine-Readable Catalog:** `catalog.json` (plus human/agent `catalog.md`) documents every token, custom element tag, observed attribute, slot, emitted `CustomEvent`, and ARIA contract.
