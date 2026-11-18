@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -28,10 +30,18 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python tools/spec.py index
       - run: |
-          mkdir -p site/showcase/src
+          mkdir -p site/showcase/src site/latest/src
           cp src/pages/showcase.html site/showcase/index.html
           cp src/index.js site/showcase/src/index.js
           cp -r src/tokens src/atoms src/molecules src/organisms src/templates site/showcase/src/
+          cp src/index.js site/latest/src/index.js
+          cp -r src/tokens src/atoms src/molecules src/organisms src/templates site/latest/src/
+          for tag in $(git tag -l 'v*'); do
+            if git cat-file -e "${tag}:src/index.js" 2>/dev/null; then
+              mkdir -p "site/${tag}"
+              git archive "${tag}" src | tar -x -C "site/${tag}"
+            fi
+          done
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

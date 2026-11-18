@@ -33,7 +33,8 @@ This document binds the technology-agnostic specifications in `records/` to a co
 - **Cross-Repo Agent Consultation:**
   - **Shared Global Skill:** `~/.agents/skills/asdlc-design-system/SKILL.md` points agents in any repository to the design system contract.
   - **Machine-Readable Catalog:** `catalog.json` (plus human/agent `catalog.md`) documents every token, custom element tag, observed attribute, slot, emitted `CustomEvent`, and ARIA contract.
-  - **Zero-Build ESM Entry Point:** `src/index.js` registers all custom elements and exports token stylesheets (`https://jvanheerikhuize.github.io/asdlc-meta-designsystem/showcase/src/index.js` and `.../tokens/tokens.css`) so consumer repositories can import components directly without a bundler.
+  - **Zero-Build ESM Entry Point:** `src/index.js` registers all custom elements and exports token stylesheets (`https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/index.js` and `.../latest/src/tokens/tokens.css`, plus `/vX.Y.Z/src/...` for git-tagged releases) so consumer repositories can import components directly without a bundler.
+  - **Workspace Version Policy (`TECH_STACK.md` header):** Consumer repositories declare `Design-System: asdlc-meta-designsystem@latest` (default auto-updating channel) or `Design-System: asdlc-meta-designsystem@vX.Y.Z` (pinned release tag). Running `python3 ~/.agents/skills/asdlc-design-system/scripts/sync_consumers.py --apply` aligns every consumer's HTML imports with its declared channel.
 
 ## 4. Atomic Directory Layout
 
