@@ -171,9 +171,9 @@ class DesignSystemTest(unittest.TestCase):
             self.assertIn("catalog.json", skill_path.read_text(encoding="utf-8"))
 
     def test_pages_dashboard_and_showcase_bidirectional_links(self):  # REQ-0007
-        dash_html = (ROOT / "site" / "index.html").read_text(encoding="utf-8")
-        showcase_html = (ROOT / "site" / "showcase" / "index.html").read_text(encoding="utf-8")
-        self.assertIn('href="./showcase/"', dash_html)
-        self.assertIn('href="../"', showcase_html)
-        self.assertTrue((ROOT / "site" / "showcase" / "src" / "index.js").is_file())
-        self.assertTrue((ROOT / "site" / "showcase" / "src" / "tokens" / "tokens.css").is_file())
+        showcase_html = (ROOT / "src" / "pages" / "showcase.html").read_text(encoding="utf-8")
+        self.assertIn('href="./specs/"', showcase_html)
+        self.assertTrue((ROOT / "specs" / "README.md").is_file())
+        self.assertTrue((ROOT / "specs" / "SPC-0001.md").is_file())
+        self.assertTrue((ROOT / "specs" / "SPC-0002.md").is_file())
+

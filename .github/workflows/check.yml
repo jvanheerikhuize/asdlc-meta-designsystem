@@ -17,6 +17,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install -r requirements.txt
-      - run: python tools/spec.py check --strict --verify tests
-      - run: python -m unittest discover -s tests -v
-      - run: python tools/spec.py index
+      - name: Validate specification graph via Spec-Blueprint and run unit tests
+        run: |
+          VER=$(grep -i '^Spec-Blueprint:' TECH_STACK.md | sed -E 's/.*asdlc-meta-specs@([A-Za-z0-9._-]+).*/\1/' || true)
+          VER=${VER:-latest}
+          curl -fsSL "https://jvanheerikhuize.github.io/asdlc-meta-specs/${VER}/tools/spec.py" -o /tmp/spec.py
+          python3 /tmp/spec.py --root . check --strict --verify tests
+          python3 -m unittest discover -s tests -v

@@ -1,9 +1,10 @@
 name: pages
 
-# Builds the record index and deploys site/ to GitHub Pages on every push to main.
+# Builds the primary Design System Showcase at / (and /showcase/) and bolts the Spec-Blueprint dashboard onto /specs/.
 on:
   push:
     branches: [main]
+    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
@@ -26,22 +27,41 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - run: python tools/spec.py check --strict --verify tests
-      - run: python -m unittest discover -s tests -v
-      - run: python tools/spec.py index
-      - run: |
-          mkdir -p site/showcase/src site/latest/src
+      - name: Fetch Spec-Blueprint, validate .specs/records, and assemble Pages
+        run: |
+          VER=$(grep -i '^Spec-Blueprint:' TECH_STACK.md | sed -E 's/.*asdlc-meta-specs@([A-Za-z0-9._-]+).*/\1/' || true)
+          VER=${VER:-latest}
+          BASE_URL="https://jvanheerikhuize.github.io/asdlc-meta-specs/${VER}"
+          curl -fsSL "${BASE_URL}/tools/spec.py" -o /tmp/spec.py
+          python3 /tmp/spec.py --root . check --strict --verify tests
+          python3 -m unittest discover -s tests -v
+
+          # 1. Primary Pages at / (and /showcase/ compatibility alias) is the Design System Showcase
+          mkdir -p site/src site/showcase/src site/latest/src site/specs
+          cp src/pages/showcase.html site/index.html
           cp src/pages/showcase.html site/showcase/index.html
+          cp src/index.js site/src/index.js
+          cp -r src/tokens src/atoms src/molecules src/organisms src/templates site/src/
           cp src/index.js site/showcase/src/index.js
           cp -r src/tokens src/atoms src/molecules src/organisms src/templates site/showcase/src/
+
+          # 2. Versioned ESM distribution channels (/latest/src and /v*/src)
           cp src/index.js site/latest/src/index.js
           cp -r src/tokens src/atoms src/molecules src/organisms src/templates site/latest/src/
+          cp catalog.json catalog.md site/latest/
           for tag in $(git tag -l 'v*'); do
             if git cat-file -e "${tag}:src/index.js" 2>/dev/null; then
               mkdir -p "site/${tag}"
               git archive "${tag}" src | tar -x -C "site/${tag}"
             fi
           done
+
+          # 3. Bolted-on Spec Dashboard at /specs/
+          for f in index.html app.js styles.css; do
+            curl -fsSL "${BASE_URL}/site/${f}" -o "site/specs/${f}"
+          done
+          sed -i 's|</nav>|<a href="../">← Primary Site</a></nav>|' site/specs/index.html
+          python3 /tmp/spec.py --root . index --out site/specs/data/index.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -89,7 +89,7 @@ async function main() {
   let cdp;
 
   try {
-    await waitForJson(`http://127.0.0.1:${PORT}/data/index.json`);
+    await waitForJson(`http://127.0.0.1:${PORT}/specs/data/index.json`);
     const cdpPort = 9229;
     chrome = spawn(CHROME, [
       '--headless=new',
@@ -107,13 +107,13 @@ async function main() {
     await cdp.send('Page.enable');
     await cdp.send('Runtime.enable');
 
-    // 1. Verify Spec Dashboard (/) across routes, font stack, radial glow, and link to ./showcase/ (REQ-0007)
-    await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/` });
+    // 1. Verify bolted-on Spec Dashboard (/specs/) across routes, font stack, radial glow, and link back to ../ (REQ-0007)
+    await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/specs/` });
     await new Promise((r) => setTimeout(r, 600));
     const dash = await cdp.eval(`(() => ({
       title: document.title,
       h1: document.querySelector('h1')?.textContent,
-      showcaseHref: document.querySelector('a[href="./showcase/"]')?.getAttribute('href'),
+      showcaseHref: document.querySelector('a[href="../"]')?.getAttribute('href'),
       fontFamily: getComputedStyle(document.body).fontFamily,
       bgImage: getComputedStyle(document.body).backgroundImage,
       statTiles: document.querySelectorAll('ui-stat-tile').length,
@@ -121,13 +121,13 @@ async function main() {
       progressBars: document.querySelectorAll('ui-progress').length,
     }))()`);
     assert.equal(dash.h1, 'Dashboard');
-    assert.equal(dash.showcaseHref, './showcase/');
+    assert.equal(dash.showcaseHref, '../');
     assert.equal(dash.fontFamily.includes('Geist'), true, `Expected Geist in fontFamily, got ${dash.fontFamily}`);
     assert.equal(dash.bgImage.includes('radial-gradient'), true, 'Expected radial glow on dashboard body');
     assert.equal(dash.statTiles, 4);
     assert.equal(dash.callouts >= 1, true);
 
-    await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/#/capture/requirement` });
+    await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/specs/#/capture/requirement` });
     await new Promise((r) => setTimeout(r, 400));
     const cap = await cdp.eval(`(() => ({
       chips: document.querySelectorAll('ui-chip').length,
@@ -138,8 +138,8 @@ async function main() {
     assert.equal(cap.checkboxes >= 1, true);
     assert.equal(cap.codeBlocks, 1);
 
-    // 2. Verify Showcase (/showcase/) and link back to ../ (REQ-0007)
-    await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/showcase/` });
+    // 2. Verify Primary Showcase (/) and link to ./specs/ (REQ-0007)
+    await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/` });
     await new Promise((r) => setTimeout(r, 600));
     const showcase = await cdp.eval(`(() => {
       const tags = [
@@ -157,7 +157,7 @@ async function main() {
     })()`);
     assert.equal(showcase.defined, true, 'All 25 components must be defined');
     assert.equal(showcase.shadows, true, 'All 25 components must have Shadow DOM');
-    assert.equal(showcase.backHref, '../');
+    assert.equal(showcase.backHref, './specs/');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
 
     // 3. Verify ui-navbar theme toggle propagates across Shadow DOM (ASM-0001, REQ-0002)
