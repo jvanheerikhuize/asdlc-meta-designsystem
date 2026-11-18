@@ -1,7 +1,8 @@
 ---
 id: ASM-0003
 title: A self-describing design catalog and usage contract enables agents in other repositories to build consistent UIs
-status: open
+status: validated
+promoted_to: FCT-0009
 confidence: 0.8
 ---
 
