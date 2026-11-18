@@ -1,8 +1,9 @@
 ---
 id: QST-0003
 title: How should agents in external repositories discover and consume the design system (shared skill, local path, or package)?
-status: open
+status: answered
 blocks: [REQ-0006]
+answered_by: FCT-0005
 ---
 
 ## Statement
