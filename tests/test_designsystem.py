@@ -1,5 +1,6 @@
 """Automated verification for SPC-0001 (tokens, Atoms, catalog, Pages, WCAG AA contrast)."""
 import json
+import os
 import re
 import unittest
 from pathlib import Path
@@ -114,9 +115,10 @@ class DesignSystemTest(unittest.TestCase):
                 self.assertIn(field, entry, f"{tag} missing {field} in catalog.json")
             self.assertIn(f"<{tag}>", catalog_md)
 
-        skill_path = Path.home() / ".agents" / "skills" / "asdlc-design-system" / "SKILL.md"
-        self.assertTrue(skill_path.is_file(), f"Missing global skill at {skill_path}")
-        self.assertIn("catalog.json", skill_path.read_text(encoding="utf-8"))
+        if os.environ.get("CI") != "true":
+            skill_path = Path.home() / ".agents" / "skills" / "asdlc-design-system" / "SKILL.md"
+            self.assertTrue(skill_path.is_file(), f"Missing global skill at {skill_path}")
+            self.assertIn("catalog.json", skill_path.read_text(encoding="utf-8"))
 
     def test_pages_dashboard_and_showcase_bidirectional_links(self):  # REQ-0007
         dash_html = (ROOT / "site" / "index.html").read_text(encoding="utf-8")
