@@ -1,0 +1,152 @@
+/* ==========================================================================
+   ASDLC Meta-DesignSystem — MkDocs Material Theme Bridge
+   Adapts MkDocs Material (--md-*) to ASDLC Lumen-inspired tokens (--color-*, --font-*)
+   Supports both dark ([data-md-color-scheme="slate"]) and light ([data-md-color-scheme="default"])
+   ========================================================================== */
+
+:root,
+[data-md-color-scheme="slate"] {
+  --md-text-font: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --md-code-font: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --md-default-bg-color: var(--color-bg, #08080b);
+  --md-default-bg-color--light: var(--color-surface, #111116);
+  --md-default-bg-color--lighter: var(--color-surface-elevated, #18181f);
+  --md-default-bg-color--lightest: var(--color-card, rgba(255, 255, 255, 0.04));
+
+  --md-default-fg-color: var(--color-fg, #ededed);
+  --md-default-fg-color--light: var(--color-fg-secondary, #a1a1aa);
+  --md-default-fg-color--lighter: var(--color-fg-muted, #8e8e98);
+  --md-default-fg-color--lightest: var(--color-border, rgba(255, 255, 255, 0.08));
+
+  --md-primary-fg-color: var(--color-surface, #111116);
+  --md-primary-fg-color--light: var(--color-surface-elevated, #18181f);
+  --md-primary-fg-color--dark: var(--color-bg, #08080b);
+  --md-primary-bg-color: var(--color-fg, #ededed);
+  --md-primary-bg-color--light: var(--color-fg-secondary, #a1a1aa);
+
+  --md-accent-fg-color: var(--color-accent, #f43f5e);
+  --md-accent-fg-color--transparent: rgba(244, 63, 94, 0.14);
+  --md-accent-bg-color: var(--color-accent-fg, #08080b);
+
+  --md-code-bg-color: var(--color-surface, #111116);
+  --md-code-fg-color: var(--color-fg, #ededed);
+  --md-typeset-color: var(--color-fg, #ededed);
+  --md-typeset-a-color: var(--color-accent, #f43f5e);
+}
+
+[data-md-color-scheme="default"] {
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f4f4f5;
+  --color-card: rgba(9, 9, 11, 0.03);
+  --color-card-hover: rgba(9, 9, 11, 0.06);
+  --color-border: rgba(9, 9, 11, 0.10);
+  --color-border-hover: rgba(9, 9, 11, 0.24);
+  --color-fg: #09090b;
+  --color-fg-secondary: #52525b;
+  --color-fg-muted: #5c5c66;
+  --color-accent: #e11d48;
+  --color-accent-hover: #be123c;
+  --color-accent-fg: #ffffff;
+  --glow-rose: rgba(225, 29, 72, 0.06);
+  --glow-amber: rgba(217, 119, 6, 0.04);
+
+  --md-default-bg-color: var(--color-bg);
+  --md-default-bg-color--light: var(--color-surface);
+  --md-default-bg-color--lighter: var(--color-surface-elevated);
+  --md-default-bg-color--lightest: var(--color-card);
+
+  --md-default-fg-color: var(--color-fg);
+  --md-default-fg-color--light: var(--color-fg-secondary);
+  --md-default-fg-color--lighter: var(--color-fg-muted);
+  --md-default-fg-color--lightest: var(--color-border);
+
+  --md-primary-fg-color: var(--color-surface);
+  --md-primary-fg-color--light: var(--color-surface-elevated);
+  --md-primary-fg-color--dark: var(--color-bg);
+  --md-primary-bg-color: var(--color-fg);
+  --md-primary-bg-color--light: var(--color-fg-secondary);
+
+  --md-accent-fg-color: var(--color-accent);
+  --md-accent-fg-color--transparent: rgba(225, 29, 72, 0.12);
+  --md-accent-bg-color: var(--color-accent-fg);
+
+  --md-code-bg-color: var(--color-surface-elevated);
+  --md-code-fg-color: var(--color-fg);
+  --md-typeset-color: var(--color-fg);
+  --md-typeset-a-color: var(--color-accent);
+}
+
+/* Canvas ambient radial glow and typography */
+body {
+  background-color: var(--color-bg, #08080b);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% -10%, var(--glow-rose, rgba(244, 63, 94, 0.08)), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 0%, var(--glow-amber, rgba(251, 146, 60, 0.05)), transparent);
+  background-attachment: fixed;
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+
+/* Translucent glassmorphic top header with rose accent border */
+.md-header {
+  background-color: color-mix(in srgb, var(--color-surface, #111116) 82%, transparent) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+  box-shadow: none !important;
+}
+
+.md-tabs {
+  background-color: color-mix(in srgb, var(--color-surface, #111116) 72%, transparent) !important;
+  border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+}
+
+/* Display typography for page headings */
+.md-typeset h1 {
+  font-family: var(--font-display, "Bricolage Grotesque", "Geist", system-ui, sans-serif);
+  color: var(--color-fg, #ededed);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.md-typeset h2,
+.md-typeset h3 {
+  font-family: var(--font-display, "Bricolage Grotesque", "Geist", system-ui, sans-serif);
+  color: var(--color-fg, #ededed);
+  letter-spacing: -0.015em;
+}
+
+/* Translucent surface cards for tables, code blocks, and graph containers */
+.md-typeset table:not([class]) {
+  background-color: var(--color-surface, #111116);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 0.5rem);
+  box-shadow: var(--shadow-sm);
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--color-surface-elevated, #18181f);
+  color: var(--color-fg, #ededed);
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-xs, 0.75rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.md-typeset pre > code {
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 0.5rem);
+}
+
+.md-search__form {
+  background-color: var(--color-surface-elevated, #18181f) !important;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-full, 9999px) !important;
+}
+
+.md-nav__link--active,
+.md-nav__link:focus,
+.md-nav__link:hover {
+  color: var(--color-accent, #f43f5e) !important;
+}
