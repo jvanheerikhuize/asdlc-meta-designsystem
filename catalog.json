@@ -416,6 +416,14 @@
         "aria-label": {
           "type": "string",
           "default": null
+        },
+        "aria-pressed": {
+          "type": "enum",
+          "values": [
+            "true",
+            "false"
+          ],
+          "default": null
         }
       },
       "slots": [
@@ -434,7 +442,7 @@
       "parts": [
         "button"
       ],
-      "accessibility": "Uses Shadow DOM delegatesFocus: true over native <button>. Suppresses click/keyboard activation and sets aria-disabled='true' when disabled or busy; sets aria-busy='true' when busy; displays visible :focus-visible ring.",
+      "accessibility": "Uses Shadow DOM delegatesFocus: true over native <button>. Suppresses click/keyboard activation and sets aria-disabled='true' when disabled or busy; sets aria-busy='true' when busy; displays visible :focus-visible ring. Forwards aria-pressed for toggle buttons; the owner changes it in response to ui-press.",
       "example": "<ui-button variant=\"primary\" size=\"md\">Save Changes</ui-button>"
     },
     {
@@ -478,6 +486,10 @@
         },
         "aria-label": {
           "type": "string",
+          "default": null
+        },
+        "maxlength": {
+          "type": "number",
           "default": null
         }
       },
