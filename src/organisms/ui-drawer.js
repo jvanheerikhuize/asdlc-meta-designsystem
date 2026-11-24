@@ -85,6 +85,7 @@ TEMPLATE.innerHTML = `
     .body {
       flex: 1;
       overflow-y: auto;
+      scrollbar-color: var(--color-border-hover, rgba(255, 255, 255, 0.22)) transparent;
       padding: var(--space-4, 1rem);
       font-family: var(--font-sans, system-ui, sans-serif);
       font-size: var(--text-sm, 0.875rem);

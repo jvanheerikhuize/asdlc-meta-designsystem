@@ -18,7 +18,8 @@ TEMPLATE.innerHTML = `
       line-height: var(--leading-normal, 1.5);
       color: var(--color-fg, #ededed);
       background: var(--color-surface, #111116);
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+      border: 1px solid color-mix(in srgb, var(--color-border-hover, rgba(255, 255, 255, 0.22)) 75%, transparent);
+      scrollbar-color: var(--color-border-hover, rgba(255, 255, 255, 0.22)) transparent;
       border-radius: var(--radius-md, 0.5rem);
       padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
       transition: border-color var(--duration-fast, 120ms) var(--ease-standard, ease);

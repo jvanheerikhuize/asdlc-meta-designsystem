@@ -33,7 +33,7 @@ TEMPLATE.innerHTML = `
       margin: 0;
       border-radius: var(--radius-full, 9999px);
       border: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      background: var(--color-surface-elevated, #18181f);
+      background: var(--color-card-hover, rgba(255, 255, 255, 0.07));
       cursor: pointer;
       flex-shrink: 0;
       transition:
@@ -50,7 +50,8 @@ TEMPLATE.innerHTML = `
       width: 0.95rem;
       height: 0.95rem;
       border-radius: var(--radius-full, 9999px);
-      background: var(--color-fg, #ededed);
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
       transform: translateX(0);
       transition:
         transform var(--duration-fast, 120ms) var(--ease-standard, ease),
@@ -69,7 +70,7 @@ TEMPLATE.innerHTML = `
 
     button[aria-checked="true"] .thumb {
       transform: translateX(1rem);
-      background: var(--color-accent-fg, #08080b);
+      background: #ffffff;
     }
 
     :host([size="sm"]) button[aria-checked="true"] .thumb {

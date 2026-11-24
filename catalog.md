@@ -47,7 +47,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 
 | Tag | Attributes | Slots | Events | Parts |
 | :--- | :--- | :--- | :--- | :--- |
-| `<ui-button>` | `variant` (`primary`\|`secondary`\|`ghost`\|`danger`), `size` (`sm`\|`md`\|`lg`), `disabled`, `busy`, `type`, `aria-label` | default | `ui-press` | `button` |
+| `<ui-button>` | `variant` (`primary`\|`secondary`\|`surface`\|`ghost`\|`danger`), `size` (`sm`\|`md`\|`lg`), `disabled`, `busy`, `type`, `aria-label` | default | `ui-press` | `button` |
 | `<ui-input>` | `type`, `value`, `placeholder`, `disabled`, `readonly`, `required`, `invalid`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `input` |
 | `<ui-label>` | `for`, `required`, `size` (`md`\|`sm`) | default | — | `label` |
 | `<ui-badge>` | `variant` (`neutral`\|`accent`\|`info`\|`success`\|`warning`), `size` (`sm`\|`md`) | default | — | `badge` |
@@ -56,7 +56,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-chip>` | `pressed`, `disabled`, `variant` (`default`\|`accent`) | default | `ui-toggle` | `chip` |
 | `<ui-progress>` | `value`, `max`, `variant` (`success`\|`accent`\|`warning`\|`danger`), `segments` (JSON), `aria-label` | — | — | `track`, `fill`, `segment` |
 | `<ui-textarea>` | `value`, `placeholder`, `rows`, `disabled`, `readonly`, `required`, `invalid`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `textarea` |
-| `<ui-select>` | `options` (JSON array), `value`, `disabled`, `invalid`, `name`, `aria-label` | — | `ui-change` | `select` |
+| `<ui-select>` | `options` (JSON array), `value`, `disabled`, `invalid`, `name`, `aria-label` | — | `ui-change` | `wrapper`, `select`, `chevron` |
 | `<ui-dot>` | `status` (`done`\|`wait`\|`bad`\|`info`\|`off`), `label` | — | — | `dot` |
 | `<ui-checkbox>` | `checked`, `disabled`, `indeterminate`, `name`, `value`, `aria-label` | default | `ui-change` | `label`, `checkbox` |
 | `<ui-slider>` | `min`, `max`, `step`, `value`, `disabled`, `variant` (`accent`\|`success`\|`warning`\|`neutral`), `name`, `aria-label`, `aria-valuetext` | — | `ui-input`, `ui-change` | `track`, `slider` |
@@ -73,10 +73,10 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-search-bar>` | `value`, `placeholder`, `button-label`, `aria-label`, `disabled` | — | `ui-search` | `bar`, `input`, `button` |
 | `<ui-media-card>` | `card-id`, `title`, `subtitle`, `badge`, `badge-variant`, `meta` | default | `ui-select` | `card`, `badge`, `title`, `subtitle`, `meta` |
 | `<ui-stat-tile>` | `value`, `label`, `status`, `variant` (`neutral`\|`accent`\|`success`\|`warning`\|`danger`) | — | — | `tile`, `value`, `dot`, `label` |
-| `<ui-callout>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title` | default | — | `callout`, `icon`, `title`, `body` |
+| `<ui-callout>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `dismissible`, `close-label` | default | `ui-close` | `callout`, `icon`, `title`, `body`, `close` |
 | `<ui-code-block>` | `language` | default | `ui-copy` | `container`, `header`, `language`, `copy-button`, `pre` |
 | `<ui-toolbar>` | `orientation` (`horizontal`\|`vertical`), `variant` (`inline`\|`floating`), `aria-label`, `aria-controls` | default | `ui-navigate` | `toolbar` |
-| `<ui-tabs>` | `tabs` (JSON array), `value`, `aria-label` | default, `<tab-id>` | `ui-change` | `tablist`, `tab`, `panel` |
+| `<ui-tabs>` | `tabs` (JSON array), `value`, `full-width`, `aria-label` | default, `<tab-id>` | `ui-change` | `tablist`, `tab`, `panel` |
 | `<ui-panel-header>` | `title`, `heading-id`, `close-label` | `actions` | `ui-close` | `header`, `title`, `close` |
 
 ## Organisms (`src/organisms/`)
