@@ -1,3 +1,6 @@
+import '../atoms/ui-surface.js';
+import '../atoms/ui-button.js';
+
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
   <style>
@@ -16,47 +19,8 @@ TEMPLATE.innerHTML = `
       display: flex;
       align-items: center;
       gap: var(--space-1, 0.25rem);
-      padding: var(--space-1, 0.25rem);
-      border-radius: var(--radius-md, 0.5rem);
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      background: var(--color-surface-elevated, #18181f);
       overflow-x: auto;
       scrollbar-width: none;
-    }
-
-    button[role="tab"] {
-      appearance: none;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--color-fg-secondary, #a1a1aa);
-      font-family: inherit;
-      font-size: var(--text-sm, 0.875rem);
-      font-weight: 500;
-      line-height: var(--leading-tight, 1.2);
-      padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
-      border-radius: var(--radius-sm, 0.375rem);
-      cursor: pointer;
-      white-space: nowrap;
-      transition:
-        color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease);
-    }
-
-    button[role="tab"]:hover {
-      color: var(--color-fg, #ededed);
-    }
-
-    button[role="tab"][aria-selected="true"] {
-      color: var(--color-fg, #ededed);
-      background: var(--color-surface, #111116);
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.35));
-    }
-
-    button[role="tab"]:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
     }
 
     .panel {
@@ -64,22 +28,18 @@ TEMPLATE.innerHTML = `
       font-size: var(--text-sm, 0.875rem);
       line-height: var(--leading-normal, 1.5);
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      button[role="tab"] {
-        transition: none;
-      }
-    }
   </style>
-  <div class="tablist" part="tablist" role="tablist"></div>
+  <ui-surface variant="elevated" padding="xs" radius="lg">
+    <div class="tablist" part="tablist" role="tablist"></div>
+  </ui-surface>
   <div class="panel" part="panel" role="tabpanel">
     <slot id="active-slot"></slot>
   </div>
 `;
 
 /**
- * Accessible WAI-ARIA tablist Molecule driven by a JSON `tabs` definition
- * (`[{"id":"stages","label":"Stages"}]`) and `value` active tab ID.
+ * Accessible WAI-ARIA tablist Molecule composing <ui-surface> (shared bar chrome
+ * with <ui-toolbar>) and <ui-button> Atoms.
  */
 export class UiTabs extends HTMLElement {
   static observedAttributes = ['tabs', 'value', 'aria-label'];
@@ -121,7 +81,7 @@ export class UiTabs extends HTMLElement {
     if (!id || id === this.getAttribute('value')) return;
     this.setAttribute('value', id);
     if (focusTab) {
-      const btn = this.#tablist.querySelector(`button[data-tab-id="${CSS.escape(id)}"]`);
+      const btn = this.#tablist.querySelector(`ui-button[data-tab-id="${CSS.escape(id)}"]`);
       btn?.focus();
     }
     this.dispatchEvent(new CustomEvent('ui-change', {
@@ -148,7 +108,7 @@ export class UiTabs extends HTMLElement {
   }
 
   #onKeyDown(event) {
-    const buttons = Array.from(this.#tablist.querySelectorAll('button[role="tab"]'));
+    const buttons = Array.from(this.#tablist.querySelectorAll('ui-button[role="tab"]'));
     if (!buttons.length) return;
     const idx = Math.max(0, buttons.findIndex((b) => b === event.target));
     let next = -1;
@@ -166,8 +126,7 @@ export class UiTabs extends HTMLElement {
   #render() {
     if (!this.#tablist) return;
     this.#parsedTabs = this.#parseTabs();
-    const label = this.getAttribute('aria-label') || 'Section tabs';
-    this.#tablist.setAttribute('aria-label', label);
+    this.#tablist.setAttribute('aria-label', this.getAttribute('aria-label') || 'Section tabs');
 
     const activeId = this.#parsedTabs.some((t) => t.id === this.getAttribute('value'))
       ? this.getAttribute('value')
@@ -176,16 +135,17 @@ export class UiTabs extends HTMLElement {
     this.#tablist.innerHTML = '';
     for (const tab of this.#parsedTabs) {
       const selected = tab.id === activeId;
-      const btn = document.createElement('button');
-      btn.type = 'button';
+      const btn = document.createElement('ui-button');
       btn.setAttribute('role', 'tab');
       btn.setAttribute('part', 'tab');
+      btn.setAttribute('variant', selected ? 'secondary' : 'ghost');
+      btn.setAttribute('size', 'sm');
       btn.id = `tab-${tab.id}`;
       btn.dataset.tabId = tab.id;
       btn.setAttribute('aria-selected', selected ? 'true' : 'false');
       btn.tabIndex = selected ? 0 : -1;
       btn.textContent = tab.label;
-      btn.addEventListener('click', () => this.selectTab(tab.id, false));
+      btn.addEventListener('ui-press', () => this.selectTab(tab.id, false));
       this.#tablist.appendChild(btn);
     }
 

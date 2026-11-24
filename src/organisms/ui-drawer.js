@@ -1,5 +1,6 @@
-import '../atoms/ui-button.js';
-import '../atoms/ui-icon.js';
+import '../atoms/ui-surface.js';
+import '../atoms/ui-divider.js';
+import '../molecules/ui-panel-header.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -16,26 +17,20 @@ TEMPLATE.innerHTML = `
     .docked {
       box-sizing: border-box;
       display: flex;
-      flex-direction: column;
       width: var(--drawer-width, 22rem);
       height: 100%;
       max-width: 100vw;
-      background: var(--color-surface, #111116);
-      color: var(--color-fg, #ededed);
-      border-inline-end: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      overflow: hidden;
-    }
-
-    :host([side="right"]) .docked {
-      border-inline-end: 0;
-      border-inline-start: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
     }
 
     :host([side="bottom"]) .docked {
       width: 100%;
       height: var(--drawer-height, 14rem);
-      border-inline: 0;
-      border-block-start: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    }
+
+    .panel-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     dialog {
@@ -44,7 +39,6 @@ TEMPLATE.innerHTML = `
       padding: 0;
       border: 0;
       background: transparent;
-      color: var(--color-fg, #ededed);
       max-width: none;
       max-height: none;
       width: 100vw;
@@ -79,45 +73,13 @@ TEMPLATE.innerHTML = `
     }
 
     .sheet {
-      display: flex;
-      flex-direction: column;
       width: min(var(--drawer-width, 22rem), calc(100vw - 1.5rem));
       height: 100svh;
-      background: var(--color-surface, #111116);
-      border-inline-end: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      box-shadow: var(--shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.6));
-      overflow: hidden;
-    }
-
-    :host([side="right"]) .sheet {
-      border-inline-end: 0;
-      border-inline-start: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
     }
 
     :host([side="bottom"]) .sheet {
       width: 100%;
       height: min(var(--drawer-height, 20rem), 82svh);
-      border-inline: 0;
-      border-block-start: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      border-start-start-radius: var(--radius-xl, 1rem);
-      border-start-end-radius: var(--radius-xl, 1rem);
-    }
-
-    .head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-3, 0.75rem);
-      padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
-      border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      flex-shrink: 0;
-    }
-
-    h2 {
-      margin: 0;
-      font-family: var(--font-display, system-ui, sans-serif);
-      font-size: var(--text-md, 1rem);
-      line-height: var(--leading-tight, 1.2);
     }
 
     .body {
@@ -131,7 +93,6 @@ TEMPLATE.innerHTML = `
 
     .foot {
       padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
-      border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
       flex-shrink: 0;
     }
 
@@ -140,36 +101,35 @@ TEMPLATE.innerHTML = `
     }
   </style>
   <aside class="docked" part="panel">
-    <div class="head" part="header">
-      <h2 class="drawer-title" part="title"></h2>
-      <ui-button class="close-btn" part="close" variant="ghost" size="sm" aria-label="Close panel">
-        <ui-icon name="close" size="sm"></ui-icon>
-      </ui-button>
-    </div>
-    <div class="body" part="body"><slot id="docked-slot"></slot></div>
-    <div class="foot" part="footer"><slot id="docked-foot" name="footer"></slot></div>
+    <ui-surface variant="base" radius="none" padding="none" style="width:100%;height:100%;">
+      <div class="panel-inner">
+        <ui-panel-header class="docked-head" close-label="Close panel"></ui-panel-header>
+        <ui-divider></ui-divider>
+        <div class="body" part="body"><slot id="docked-slot"></slot></div>
+        <div class="foot" part="footer"><slot id="docked-foot" name="footer"></slot></div>
+      </div>
+    </ui-surface>
   </aside>
 
   <dialog part="dialog" aria-labelledby="modal-drawer-title">
     <div class="modal-frame">
       <div class="sheet" part="sheet">
-        <div class="head" part="header">
-          <h2 id="modal-drawer-title" class="drawer-title" part="title"></h2>
-          <ui-button class="modal-close-btn" part="close" variant="ghost" size="sm" aria-label="Close drawer">
-            <ui-icon name="close" size="sm"></ui-icon>
-          </ui-button>
-        </div>
-        <div class="body" part="body"><slot id="modal-slot"></slot></div>
-        <div class="foot" part="footer"><slot id="modal-foot"></slot></div>
+        <ui-surface variant="base" elevation="lg" radius="lg" padding="none" style="width:100%;height:100%;">
+          <div class="panel-inner">
+            <ui-panel-header class="modal-head" heading-id="modal-drawer-title" close-label="Close drawer"></ui-panel-header>
+            <ui-divider></ui-divider>
+            <div class="body" part="body"><slot id="modal-slot"></slot></div>
+            <div class="foot" part="footer"><slot id="modal-foot"></slot></div>
+          </div>
+        </ui-surface>
       </div>
     </div>
   </dialog>
 `;
 
 /**
- * Responsive collapsible drawer/sheet Organism supporting `docked` non-modal
- * panels (sidebars and bottom elevation trays), `modal` top-layer <dialog>
- * sheets, and `auto` viewport-responsive switching (< 1024px modal, >= 1024px docked).
+ * Responsive collapsible drawer/sheet Organism composing <ui-surface>,
+ * <ui-panel-header>, and <ui-divider>.
  */
 export class UiDrawer extends HTMLElement {
   static observedAttributes = ['title', 'side', 'mode', 'open'];
@@ -177,6 +137,8 @@ export class UiDrawer extends HTMLElement {
   #docked;
   #dialog;
   #sheet;
+  #dockedHead;
+  #modalHead;
   #dockedSlot;
   #dockedFoot;
   #modalSlot;
@@ -194,13 +156,15 @@ export class UiDrawer extends HTMLElement {
     this.#docked = shadow.querySelector('.docked');
     this.#dialog = shadow.querySelector('dialog');
     this.#sheet = shadow.querySelector('.sheet');
+    this.#dockedHead = shadow.querySelector('.docked-head');
+    this.#modalHead = shadow.querySelector('.modal-head');
     this.#dockedSlot = shadow.getElementById('docked-slot');
     this.#dockedFoot = shadow.getElementById('docked-foot');
     this.#modalSlot = shadow.getElementById('modal-slot');
     this.#modalFoot = shadow.getElementById('modal-foot');
 
-    shadow.querySelector('.close-btn').addEventListener('ui-press', () => this.close('close-button'));
-    shadow.querySelector('.modal-close-btn').addEventListener('ui-press', () => this.close('close-button'));
+    this.#dockedHead.addEventListener('ui-close', () => this.close('close-button'));
+    this.#modalHead.addEventListener('ui-close', () => this.close('close-button'));
 
     this.#dialog.addEventListener('click', (event) => {
       if (!this.#sheet.contains(event.target)) {
@@ -276,9 +240,8 @@ export class UiDrawer extends HTMLElement {
 
   #syncTitle() {
     const title = this.getAttribute('title') || '';
-    for (const el of this.shadowRoot.querySelectorAll('.drawer-title')) {
-      el.textContent = title;
-    }
+    this.#dockedHead?.setAttribute('title', title);
+    this.#modalHead?.setAttribute('title', title);
     this.#docked?.setAttribute('aria-label', title || 'Side panel');
   }
 

@@ -13,6 +13,8 @@ export { UiCheckbox } from './atoms/ui-checkbox.js';
 export { UiSlider } from './atoms/ui-slider.js';
 export { UiSwitch } from './atoms/ui-switch.js';
 export { UiTooltip } from './atoms/ui-tooltip.js';
+export { UiSurface } from './atoms/ui-surface.js';
+export { UiDivider } from './atoms/ui-divider.js';
 
 export { UiField } from './molecules/ui-field.js';
 export { UiSearchBar } from './molecules/ui-search-bar.js';
@@ -22,13 +24,14 @@ export { UiCallout } from './molecules/ui-callout.js';
 export { UiCodeBlock } from './molecules/ui-code-block.js';
 export { UiToolbar } from './molecules/ui-toolbar.js';
 export { UiTabs } from './molecules/ui-tabs.js';
-export { UiToast } from './molecules/ui-toast.js';
+export { UiPanelHeader } from './molecules/ui-panel-header.js';
 
 export { UiNavbar } from './organisms/ui-navbar.js';
 export { UiModal } from './organisms/ui-modal.js';
 export { UiCatalogGrid } from './organisms/ui-catalog-grid.js';
 export { UiPopover } from './organisms/ui-popover.js';
 export { UiDrawer } from './organisms/ui-drawer.js';
+export { UiToast } from './organisms/ui-toast.js';
 
 export { PageShell } from './templates/page-shell.js';
 export { CatalogLayout } from './templates/catalog-layout.js';
@@ -53,6 +56,8 @@ export const ATOMS = [
   'ui-slider',
   'ui-switch',
   'ui-tooltip',
+  'ui-surface',
+  'ui-divider',
 ];
 
 export const MOLECULES = [
@@ -64,7 +69,7 @@ export const MOLECULES = [
   'ui-code-block',
   'ui-toolbar',
   'ui-tabs',
-  'ui-toast',
+  'ui-panel-header',
 ];
 
 export const ORGANISMS = [
@@ -73,6 +78,7 @@ export const ORGANISMS = [
   'ui-catalog-grid',
   'ui-popover',
   'ui-drawer',
+  'ui-toast',
 ];
 
 export const TEMPLATES = [

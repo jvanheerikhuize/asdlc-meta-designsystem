@@ -1,3 +1,6 @@
+import '../atoms/ui-surface.js';
+import '../atoms/ui-divider.js';
+
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
   <style>
@@ -14,50 +17,29 @@ TEMPLATE.innerHTML = `
       flex-direction: row;
       align-items: center;
       gap: var(--space-1, 0.25rem);
-      padding: var(--space-1, 0.25rem);
-      border-radius: var(--radius-lg, 0.75rem);
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      background: var(--color-surface, #111116);
-      box-sizing: border-box;
-    }
-
-    :host([variant="floating"]) .bar {
-      background: color-mix(in srgb, var(--color-surface, #111116) 86%, transparent);
-      backdrop-filter: blur(12px);
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      box-shadow: var(--shadow-md, 0 4px 14px rgba(0, 0, 0, 0.45));
     }
 
     :host([orientation="vertical"]) .bar {
       flex-direction: column;
     }
-
-    ::slotted([role="separator"]) {
-      align-self: stretch;
-      border: 0;
-      border-inline-start: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      margin: var(--space-1, 0.25rem);
-    }
-
-    :host([orientation="vertical"]) ::slotted([role="separator"]) {
-      border-inline-start: 0;
-      border-block-start: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-    }
   </style>
-  <div class="bar" part="toolbar" role="toolbar" focusgroup="toolbar wrap">
-    <slot></slot>
-  </div>
+  <ui-surface variant="elevated" padding="xs" radius="lg">
+    <div class="bar" part="toolbar" role="toolbar" focusgroup="toolbar wrap">
+      <slot></slot>
+    </div>
+  </ui-surface>
 `;
 
 const INTERACTIVE_SELECTOR = 'ui-button, ui-chip, ui-switch, ui-select, button, [role="button"], a[href]';
 
 /**
- * Accessible composite toolbar Molecule with single-tab-stop roving focus
- * (native focusgroup with automatic Arrow/Home/End roving tabindex fallback).
+ * Accessible composite toolbar Molecule composing <ui-surface> with single-tab-stop
+ * roving focus (native focusgroup with automatic Arrow/Home/End roving tabindex fallback).
  */
 export class UiToolbar extends HTMLElement {
   static observedAttributes = ['orientation', 'variant', 'aria-label', 'aria-controls'];
 
+  #surface;
   #bar;
   #slot;
 
@@ -65,6 +47,7 @@ export class UiToolbar extends HTMLElement {
     super();
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
+    this.#surface = shadow.querySelector('ui-surface');
     this.#bar = shadow.querySelector('.bar');
     this.#slot = shadow.querySelector('slot');
 
@@ -147,12 +130,15 @@ export class UiToolbar extends HTMLElement {
   }
 
   #sync() {
-    if (!this.#bar) return;
+    if (!this.#bar || !this.#surface) return;
+    const floating = this.getAttribute('variant') === 'floating';
+    this.#surface.setAttribute('variant', floating ? 'glass' : 'elevated');
+    this.#surface.setAttribute('elevation', floating ? 'md' : 'none');
+
     const vertical = this.getAttribute('orientation') === 'vertical';
     this.#bar.setAttribute('aria-orientation', vertical ? 'vertical' : 'horizontal');
     this.#bar.setAttribute('focusgroup', vertical ? 'toolbar wrap block' : 'toolbar wrap');
-    const label = this.getAttribute('aria-label') || 'Toolbar';
-    this.#bar.setAttribute('aria-label', label);
+    this.#bar.setAttribute('aria-label', this.getAttribute('aria-label') || 'Toolbar');
     const controls = this.getAttribute('aria-controls');
     if (controls) this.#bar.setAttribute('aria-controls', controls);
     else this.#bar.removeAttribute('aria-controls');

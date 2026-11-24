@@ -1,3 +1,4 @@
+import '../atoms/ui-surface.js';
 import '../atoms/ui-dot.js';
 
 const TEMPLATE = document.createElement('template');
@@ -11,11 +12,7 @@ TEMPLATE.innerHTML = `
       display: none;
     }
 
-    .tile {
-      background: var(--color-card, rgba(255, 255, 255, 0.04));
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      border-radius: var(--radius-lg, 0.75rem);
-      padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
+    .inner {
       display: flex;
       flex-direction: column;
       gap: var(--space-1, 0.25rem);
@@ -43,17 +40,19 @@ TEMPLATE.innerHTML = `
     :host([variant="warning"]) .val { color: var(--color-warning, #f59e0b); }
     :host([variant="danger"]) .val { color: var(--color-danger, #f87171); }
   </style>
-  <div class="tile" part="tile">
-    <strong class="val" part="value"></strong>
-    <div class="label-row">
-      <ui-dot part="dot" hidden></ui-dot>
-      <span class="lbl" part="label"></span>
+  <ui-surface part="tile" variant="card" padding="md" radius="lg">
+    <div class="inner">
+      <strong class="val" part="value"></strong>
+      <div class="label-row">
+        <ui-dot part="dot" hidden></ui-dot>
+        <span class="lbl" part="label"></span>
+      </div>
     </div>
-  </div>
+  </ui-surface>
 `;
 
 /**
- * KPI metric tile Molecule displaying a prominent value, label, and optional status dot.
+ * KPI metric tile Molecule composing <ui-surface> and <ui-dot>.
  */
 export class UiStatTile extends HTMLElement {
   static observedAttributes = ['value', 'label', 'status', 'variant'];

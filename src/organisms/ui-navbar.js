@@ -1,3 +1,4 @@
+import '../atoms/ui-surface.js';
 import '../atoms/ui-button.js';
 import '../atoms/ui-icon.js';
 
@@ -22,9 +23,6 @@ TEMPLATE.innerHTML = `
       gap: var(--space-4, 1rem);
       flex-wrap: wrap;
       padding: var(--space-3, 0.75rem) var(--space-6, 1.5rem);
-      background: color-mix(in srgb, var(--color-surface, #111116) 82%, transparent);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
     }
 
     .left,
@@ -40,29 +38,31 @@ TEMPLATE.innerHTML = `
       max-width: 340px;
     }
   </style>
-  <header part="header">
-    <div class="left">
-      <slot name="brand"></slot>
-      <nav aria-label="Primary">
-        <slot name="nav"></slot>
-      </nav>
-    </div>
-    <div class="search-slot">
-      <slot name="search"></slot>
-    </div>
-    <div class="right">
-      <slot name="actions"></slot>
-      <ui-button id="theme-btn" part="theme-button" variant="secondary" size="sm" aria-label="Toggle color theme">
-        <ui-icon id="theme-icon" name="sun" size="sm"></ui-icon>
-        <span id="theme-text">Light Mode</span>
-      </ui-button>
-    </div>
-  </header>
+  <ui-surface variant="glass" radius="none" padding="none">
+    <header part="header">
+      <div class="left">
+        <slot name="brand"></slot>
+        <nav aria-label="Primary">
+          <slot name="nav"></slot>
+        </nav>
+      </div>
+      <div class="search-slot">
+        <slot name="search"></slot>
+      </div>
+      <div class="right">
+        <slot name="actions"></slot>
+        <ui-button id="theme-btn" part="theme-button" variant="secondary" size="sm" aria-label="Toggle color theme">
+          <ui-icon id="theme-icon" name="sun" size="sm"></ui-icon>
+          <span id="theme-text">Light Mode</span>
+        </ui-button>
+      </div>
+    </header>
+  </ui-surface>
 `;
 
 /**
- * Sticky frosted-glass site header Organism with brand, nav, search, and actions slots
- * plus an integrated theme toggle emitting `ui-theme-change`.
+ * Sticky frosted-glass site header Organism composing <ui-surface variant="glass">,
+ * <ui-button>, and <ui-icon>.
  */
 export class UiNavbar extends HTMLElement {
   static observedAttributes = ['theme'];

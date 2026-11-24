@@ -345,12 +345,12 @@
         <div slot="toolbar" class="row" style="width: 100%; justify-content: space-between;">
           <div class="row" id="tier-filters">
             <ui-button class="tier-btn" data-tier="all" variant="primary" size="sm">All Tiers</ui-button>
-            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms (15)</ui-button>
+            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms (17)</ui-button>
             <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm">Molecules (9)</ui-button>
-            <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms (5)</ui-button>
+            <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms (6)</ui-button>
             <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates (4)</ui-button>
           </div>
-          <span class="muted" id="catalog-count">33 components</span>
+          <span class="muted" id="catalog-count">36 components</span>
         </div>
 
         <div slot="grid" class="specimen-grid" id="specimen-grid">
@@ -681,6 +681,44 @@
           </div>
         </article>
 
+
+        <article class="specimen" data-tier="atoms" data-id="ui-surface">
+          <div class="specimen-head">
+            <h3>&lt;ui-surface&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Foundational container Atom unifying surface backgrounds, borders, radii, padding, shadows, and interactive cards.</p>
+          <div class="preview">
+            <div class="row">
+              <ui-surface variant="elevated" padding="sm" radius="md">Elevated</ui-surface>
+              <ui-surface variant="glass" padding="sm" radius="md" elevation="md">Glass</ui-surface>
+              <ui-surface variant="card" padding="sm" radius="md" accent="success">Accent</ui-surface>
+            </div>
+          </div>
+          <pre><code>&lt;ui-surface variant="elevated" padding="md" radius="lg"&gt;...&lt;/ui-surface&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-press (when interactive)</span>
+            <ui-button class="inspect-btn" data-component="ui-surface" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="atoms" data-id="ui-divider">
+          <div class="specimen-head">
+            <h3>&lt;ui-divider&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Hairline role="separator" Atom supporting horizontal and vertical layouts.</p>
+          <div class="preview">
+            <ui-divider></ui-divider>
+            <div class="row"><span>Left</span><ui-divider orientation="vertical"></ui-divider><span>Right</span></div>
+          </div>
+          <pre><code>&lt;ui-divider orientation="vertical"&gt;&lt;/ui-divider&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">role: separator</span>
+            <ui-button class="inspect-btn" data-component="ui-divider" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
         <!-- MOLECULES -->
         <article class="specimen" data-tier="molecules" data-id="ui-field">
           <div class="specimen-head">
@@ -826,10 +864,10 @@
           </div>
         </article>
 
-        <article class="specimen" data-tier="molecules" data-id="ui-toast">
+        <article class="specimen" data-tier="organisms" data-id="ui-toast">
           <div class="specimen-head">
             <h3>&lt;ui-toast&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
+            <ui-badge variant="success">organisms</ui-badge>
           </div>
           <p class="specimen-desc">Non-modal status notification with polite screen-reader announcement and dismiss control.</p>
           <div class="preview">
@@ -839,6 +877,25 @@
           <div class="specimen-foot">
             <span class="muted">event: ui-close</span>
             <ui-button class="inspect-btn" data-component="ui-toast" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+
+        <article class="specimen" data-tier="molecules" data-id="ui-panel-header">
+          <div class="specimen-head">
+            <h3>&lt;ui-panel-header&gt;</h3>
+            <ui-badge variant="info">molecules</ui-badge>
+          </div>
+          <p class="specimen-desc">Panel header bar Molecule composing heading, actions slot, and close &lt;ui-button&gt;/&lt;ui-icon&gt;.</p>
+          <div class="preview">
+            <ui-surface variant="elevated" padding="none" radius="md">
+              <ui-panel-header title="Stage Details" close-label="Close details"></ui-panel-header>
+            </ui-surface>
+          </div>
+          <pre><code>&lt;ui-panel-header title="Details"&gt;&lt;/ui-panel-header&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-close</span>
+            <ui-button class="inspect-btn" data-component="ui-panel-header" variant="secondary" size="sm">Inspect Contract</ui-button>
           </div>
         </article>
 
@@ -1058,10 +1115,13 @@
       'ui-tooltip': { tier: 'atoms', attrs: 'text, placement, open', slots: 'default', events: '—', a11y: 'WCAG 1.4.13 role="tooltip"; Escape-dismissible, hoverable, focus-persistent.' },
       'ui-toolbar': { tier: 'molecules', attrs: 'orientation, variant, aria-label, aria-controls', slots: 'default', events: 'ui-navigate', a11y: 'role="toolbar" with single-tab-stop roving arrow-key navigation.' },
       'ui-tabs': { tier: 'molecules', attrs: 'tabs, value, aria-label', slots: 'default, <tab-id>', events: 'ui-change', a11y: 'WAI-ARIA role="tablist", role="tab", and role="tabpanel".' },
-      'ui-toast': { tier: 'molecules', attrs: 'variant, title, open, duration', slots: 'default', events: 'ui-close', a11y: 'Polite screen-reader announcement, focus/hover timer pause, and dismiss button.' },
+      'ui-toast': { tier: 'organisms', attrs: 'variant, title, open, duration', slots: 'default', events: 'ui-close', a11y: 'Polite screen-reader announcement, focus/hover timer pause, and dismiss button.' },
       'ui-popover': { tier: 'organisms', attrs: 'open, placement, aria-label', slots: 'trigger, default', events: 'ui-open, ui-close', a11y: 'Native Top Layer popover="auto" with Escape/light-dismiss and aria-expanded.' },
       'ui-drawer': { tier: 'organisms', attrs: 'title, side, mode, open', slots: 'default, footer', events: 'ui-open, ui-close', a11y: 'Non-modal <aside> when docked; native <dialog>.showModal() when modal.' },
       'workspace-layout': { tier: 'templates', attrs: 'aside-side', slots: 'header, aside, default, floating, bottom', events: '—', a11y: 'Semantic header/aside/main/section landmarks with pointer-transparent HUD overlay.' },
+      'ui-surface': { tier: 'atoms', attrs: 'variant, elevation, padding, radius, accent, interactive, aria-label', slots: 'default', events: 'ui-press', a11y: 'delegatesFocus: true; native <button> when interactive.' },
+      'ui-divider': { tier: 'atoms', attrs: 'orientation', slots: '—', events: '—', a11y: 'role="separator" with aria-orientation.' },
+      'ui-panel-header': { tier: 'molecules', attrs: 'title, heading-id, close-label', slots: 'actions', events: 'ui-close', a11y: 'Semantic <h2> title and accessible close <ui-button>.' },
     };
 
     const root = document.documentElement;
