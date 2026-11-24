@@ -95,7 +95,7 @@ class DesignSystemTest(unittest.TestCase):
     def test_foundational_atoms_encapsulation_and_exports(self):  # REQ-0003
         expected = [
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox", "ui-slider",
+            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox", "ui-slider", "ui-switch", "ui-tooltip",
         ]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in expected:
@@ -114,6 +114,9 @@ class DesignSystemTest(unittest.TestCase):
             "ui-stat-tile": "ui-dot",
             "ui-callout": "ui-icon",
             "ui-code-block": "ui-copy",
+            "ui-toolbar": "ui-navigate",
+            "ui-tabs": "ui-change",
+            "ui-toast": "ui-close",
         }
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag, event_name in expected.items():
@@ -124,8 +127,8 @@ class DesignSystemTest(unittest.TestCase):
                 self.assertIn(event_name, code)
 
     def test_organisms_and_templates_compose_lower_tiers(self):  # REQ-0005
-        organisms = ["ui-navbar", "ui-modal", "ui-catalog-grid"]
-        templates = ["page-shell", "catalog-layout", "detail-layout"]
+        organisms = ["ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer"]
+        templates = ["page-shell", "catalog-layout", "detail-layout", "workspace-layout"]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in organisms:
             code = (ROOT / "src" / "organisms" / f"{tag}.js").read_text(encoding="utf-8")
@@ -154,10 +157,10 @@ class DesignSystemTest(unittest.TestCase):
         documented_tags = {c["tag"]: c for c in catalog["components"]}
         expected_tags = {
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox", "ui-slider",
-            "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout", "ui-code-block",
-            "ui-navbar", "ui-modal", "ui-catalog-grid",
-            "page-shell", "catalog-layout", "detail-layout",
+            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox", "ui-slider", "ui-switch", "ui-tooltip",
+            "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout", "ui-code-block", "ui-toolbar", "ui-tabs", "ui-toast",
+            "ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer",
+            "page-shell", "catalog-layout", "detail-layout", "workspace-layout",
         }
         self.assertEqual(set(documented_tags.keys()), expected_tags)
         for tag, entry in documented_tags.items():

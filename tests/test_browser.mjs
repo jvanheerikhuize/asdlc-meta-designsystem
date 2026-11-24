@@ -144,10 +144,10 @@ async function main() {
     const showcase = await cdp.eval(`(() => {
       const tags = [
         'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',
-        'ui-chip', 'ui-progress', 'ui-textarea', 'ui-select', 'ui-dot', 'ui-checkbox', 'ui-slider',
-        'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block',
-        'ui-navbar', 'ui-modal', 'ui-catalog-grid',
-        'page-shell', 'catalog-layout', 'detail-layout',
+        'ui-chip', 'ui-progress', 'ui-textarea', 'ui-select', 'ui-dot', 'ui-checkbox', 'ui-slider', 'ui-switch', 'ui-tooltip',
+        'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block', 'ui-toolbar', 'ui-tabs', 'ui-toast',
+        'ui-navbar', 'ui-modal', 'ui-catalog-grid', 'ui-popover', 'ui-drawer',
+        'page-shell', 'catalog-layout', 'detail-layout', 'workspace-layout',
       ];
       const defined = tags.every((t) => Boolean(customElements.get(t)));
       const shadows = tags.every((t) => Boolean(document.querySelector(t)?.shadowRoot));
@@ -155,8 +155,8 @@ async function main() {
       const bgDark = getComputedStyle(document.body).backgroundColor;
       return { defined, shadows, backHref, bgDark };
     })()`);
-    assert.equal(showcase.defined, true, 'All 25 components must be defined');
-    assert.equal(showcase.shadows, true, 'All 25 components must have Shadow DOM');
+    assert.equal(showcase.defined, true, 'All 33 components must be defined');
+    assert.equal(showcase.shadows, true, 'All 33 components must have Shadow DOM');
     assert.equal(showcase.backHref, './specs/');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
 
@@ -186,6 +186,54 @@ async function main() {
     })()`);
     assert.equal(searchCheck.countText, '1 component');
     assert.deepEqual(searchCheck.visibleIds, ['ui-modal']);
+
+
+    // 5b. Verify new workspace primitives (ui-switch, ui-tabs, ui-popover, ui-drawer, ui-toolbar, ui-toast)
+    const primitivesCheck = await cdp.eval(`(() => {
+      // Clear catalog filter so all specimens are visible
+      const sb = document.getElementById('catalog-search');
+      const innerInput = sb.shadowRoot.querySelector('ui-input').shadowRoot.querySelector('input');
+      innerInput.value = '';
+      innerInput.dispatchEvent(new Event('input', { bubbles: true }));
+      sb.shadowRoot.querySelector('ui-button').shadowRoot.querySelector('button').click();
+
+      const sw = document.getElementById('demo-switch');
+      const swBefore = sw.checked;
+      sw.shadowRoot.querySelector('button').click();
+      const swAfter = sw.checked;
+
+      const tabs = document.getElementById('demo-tabs');
+      tabs.shadowRoot.querySelector('button[data-tab-id="surfaces"]').click();
+      const activeTab = tabs.value;
+
+      const pop = document.getElementById('demo-popover');
+      pop.openPopover();
+      const popOpen = pop.hasAttribute('open');
+      pop.closePopover();
+      const popClosed = !pop.hasAttribute('open');
+
+      const drawer = document.getElementById('demo-drawer');
+      const drawerInitial = drawer.hasAttribute('open');
+      drawer.close('test');
+      const drawerClosed = !drawer.hasAttribute('open');
+      drawer.show();
+      const drawerReopened = drawer.hasAttribute('open');
+
+      const toast = document.getElementById('demo-toast');
+      toast.dismiss('test');
+      const toastDismissed = !toast.hasAttribute('open');
+
+      return { swBefore, swAfter, activeTab, popOpen, popClosed, drawerInitial, drawerClosed, drawerReopened, toastDismissed };
+    })()`);
+    assert.equal(primitivesCheck.swBefore, true);
+    assert.equal(primitivesCheck.swAfter, false);
+    assert.equal(primitivesCheck.activeTab, 'surfaces');
+    assert.equal(primitivesCheck.popOpen, true);
+    assert.equal(primitivesCheck.popClosed, true);
+    assert.equal(primitivesCheck.drawerInitial, true);
+    assert.equal(primitivesCheck.drawerClosed, true);
+    assert.equal(primitivesCheck.drawerReopened, true);
+    assert.equal(primitivesCheck.toastDismissed, true);
 
     // 5. Verify Inspect Contract opens ui-modal, closes on Close button, and restores focus (REQ-0005)
     await cdp.send('Page.bringToFront');

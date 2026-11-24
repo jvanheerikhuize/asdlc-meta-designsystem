@@ -345,12 +345,12 @@
         <div slot="toolbar" class="row" style="width: 100%; justify-content: space-between;">
           <div class="row" id="tier-filters">
             <ui-button class="tier-btn" data-tier="all" variant="primary" size="sm">All Tiers</ui-button>
-            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms (13)</ui-button>
-            <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm">Molecules (6)</ui-button>
-            <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms (3)</ui-button>
-            <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates (3)</ui-button>
+            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms (15)</ui-button>
+            <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm">Molecules (9)</ui-button>
+            <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms (5)</ui-button>
+            <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates (4)</ui-button>
           </div>
-          <span class="muted" id="catalog-count">25 components</span>
+          <span class="muted" id="catalog-count">33 components</span>
         </div>
 
         <div slot="grid" class="specimen-grid" id="specimen-grid">
@@ -445,7 +445,7 @@
             <h3>&lt;ui-icon&gt;</h3>
             <ui-badge variant="accent">atoms</ui-badge>
           </div>
-          <p class="specimen-desc">12 built-in vector icons with decorative or labelled ARIA semantics.</p>
+          <p class="specimen-desc">33 built-in vector icons with decorative or labelled ARIA semantics.</p>
           <div class="preview">
             <div class="icon-grid">
               <div class="icon-cell"><ui-icon name="search" size="md"></ui-icon>search</div>
@@ -460,11 +460,32 @@
               <div class="icon-cell"><ui-icon name="code" size="md"></ui-icon>code</div>
               <div class="icon-cell"><ui-icon name="layers" size="md"></ui-icon>layers</div>
               <div class="icon-cell"><ui-icon name="external" size="md"></ui-icon>external</div>
+              <div class="icon-cell"><ui-icon name="plus" size="md"></ui-icon>plus</div>
+              <div class="icon-cell"><ui-icon name="minus" size="md"></ui-icon>minus</div>
+              <div class="icon-cell"><ui-icon name="close" size="md"></ui-icon>close</div>
+              <div class="icon-cell"><ui-icon name="undo" size="md"></ui-icon>undo</div>
+              <div class="icon-cell"><ui-icon name="redo" size="md"></ui-icon>redo</div>
+              <div class="icon-cell"><ui-icon name="trash" size="md"></ui-icon>trash</div>
+              <div class="icon-cell"><ui-icon name="download" size="md"></ui-icon>download</div>
+              <div class="icon-cell"><ui-icon name="upload" size="md"></ui-icon>upload</div>
+              <div class="icon-cell"><ui-icon name="route" size="md"></ui-icon>route</div>
+              <div class="icon-cell"><ui-icon name="compass" size="md"></ui-icon>compass</div>
+              <div class="icon-cell"><ui-icon name="pin" size="md"></ui-icon>pin</div>
+              <div class="icon-cell"><ui-icon name="flag" size="md"></ui-icon>flag</div>
+              <div class="icon-cell"><ui-icon name="anchor" size="md"></ui-icon>anchor</div>
+              <div class="icon-cell"><ui-icon name="waves" size="md"></ui-icon>waves</div>
+              <div class="icon-cell"><ui-icon name="scissors" size="md"></ui-icon>scissors</div>
+              <div class="icon-cell"><ui-icon name="settings" size="md"></ui-icon>settings</div>
+              <div class="icon-cell"><ui-icon name="chevron-down" size="md"></ui-icon>chevron-down</div>
+              <div class="icon-cell"><ui-icon name="chevron-up" size="md"></ui-icon>chevron-up</div>
+              <div class="icon-cell"><ui-icon name="eye" size="md"></ui-icon>eye</div>
+              <div class="icon-cell"><ui-icon name="eye-off" size="md"></ui-icon>eye-off</div>
+              <div class="icon-cell"><ui-icon name="sidebar" size="md"></ui-icon>sidebar</div>
             </div>
           </div>
           <pre><code>&lt;ui-icon name="sparkles" size="md" label="Featured"&gt;&lt;/ui-icon&gt;</code></pre>
           <div class="specimen-foot">
-            <span class="muted">12 built-in glyphs</span>
+            <span class="muted">33 built-in glyphs</span>
             <ui-button class="inspect-btn" data-component="ui-icon" variant="secondary" size="sm">Inspect Contract</ui-button>
           </div>
         </article>
@@ -619,6 +640,47 @@
           </div>
         </article>
 
+
+        <article class="specimen" data-tier="atoms" data-id="ui-switch">
+          <div class="specimen-head">
+            <h3>&lt;ui-switch&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">Accessible role="switch" toggle control for live map and view overlays.</p>
+          <div class="preview">
+            <div class="row">
+              <ui-switch id="demo-switch" checked>Nautical seamarks</ui-switch>
+              <ui-switch size="sm">Contours</ui-switch>
+              <ui-switch disabled>Disabled</ui-switch>
+            </div>
+          </div>
+          <pre><code>&lt;ui-switch checked&gt;Nautical seamarks&lt;/ui-switch&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-change</span>
+            <ui-button class="inspect-btn" data-component="ui-switch" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="atoms" data-id="ui-tooltip">
+          <div class="specimen-head">
+            <h3>&lt;ui-tooltip&gt;</h3>
+            <ui-badge variant="accent">atoms</ui-badge>
+          </div>
+          <p class="specimen-desc">WCAG 1.4.13 tooltip bubble (Escape-dismissible, hoverable, focus-aware).</p>
+          <div class="preview">
+            <div class="row">
+              <ui-tooltip id="demo-tooltip" text="Undo last waypoint" placement="top">
+                <ui-button variant="secondary" size="sm" aria-label="Undo last waypoint"><ui-icon name="undo" size="sm"></ui-icon> Hover / Focus</ui-button>
+              </ui-tooltip>
+            </div>
+          </div>
+          <pre><code>&lt;ui-tooltip text="Undo"&gt;&lt;ui-button aria-label="Undo"&gt;...&lt;/ui-button&gt;&lt;/ui-tooltip&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">role: tooltip</span>
+            <ui-button class="inspect-btn" data-component="ui-tooltip" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
         <!-- MOLECULES -->
         <article class="specimen" data-tier="molecules" data-id="ui-field">
           <div class="specimen-head">
@@ -721,6 +783,65 @@
           </div>
         </article>
 
+
+        <article class="specimen" data-tier="molecules" data-id="ui-toolbar">
+          <div class="specimen-head">
+            <h3>&lt;ui-toolbar&gt;</h3>
+            <ui-badge variant="info">molecules</ui-badge>
+          </div>
+          <p class="specimen-desc">Frosted or inline role="toolbar" with single-tab-stop roving arrow-key focus.</p>
+          <div class="preview">
+            <ui-toolbar id="demo-toolbar" variant="floating" aria-label="Route actions">
+              <ui-button variant="ghost" size="sm" aria-label="Undo"><ui-icon name="undo" size="sm"></ui-icon></ui-button>
+              <ui-button variant="ghost" size="sm" aria-label="Redo"><ui-icon name="redo" size="sm"></ui-icon></ui-button>
+              <span role="separator" aria-orientation="vertical"></span>
+              <ui-button variant="ghost" size="sm" aria-label="Split stage"><ui-icon name="scissors" size="sm"></ui-icon></ui-button>
+              <ui-button variant="ghost" size="sm" aria-label="Download FIT"><ui-icon name="download" size="sm"></ui-icon></ui-button>
+            </ui-toolbar>
+          </div>
+          <pre><code>&lt;ui-toolbar variant="floating" aria-label="Actions"&gt;...&lt;/ui-toolbar&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-navigate</span>
+            <ui-button class="inspect-btn" data-component="ui-toolbar" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="molecules" data-id="ui-tabs">
+          <div class="specimen-head">
+            <h3>&lt;ui-tabs&gt;</h3>
+            <ui-badge variant="info">molecules</ui-badge>
+          </div>
+          <p class="specimen-desc">Accessible WAI-ARIA tablist Molecule with roving keyboard navigation.</p>
+          <div class="preview">
+            <ui-tabs id="demo-tabs" tabs='[{"id":"stages","label":"Stages"},{"id":"surfaces","label":"Surfaces"},{"id":"pois","label":"POIs"}]' value="stages" aria-label="Tour views">
+              <div slot="stages" class="muted">Day 1 · 42.5 km · +610 m</div>
+              <div slot="surfaces" class="muted">Asphalt 58% · Gravel 42%</div>
+              <div slot="pois" class="muted">2 buoys · 1 cafe</div>
+            </ui-tabs>
+          </div>
+          <pre><code>&lt;ui-tabs tabs='[{"id":"a","label":"Tab A"}]' value="a"&gt;...&lt;/ui-tabs&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-change</span>
+            <ui-button class="inspect-btn" data-component="ui-tabs" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="molecules" data-id="ui-toast">
+          <div class="specimen-head">
+            <h3>&lt;ui-toast&gt;</h3>
+            <ui-badge variant="info">molecules</ui-badge>
+          </div>
+          <p class="specimen-desc">Non-modal status notification with polite screen-reader announcement and dismiss control.</p>
+          <div class="preview">
+            <ui-toast id="demo-toast" variant="success" title="Course exported" open>Veluwe Gravel - Day 1.fit ready.</ui-toast>
+          </div>
+          <pre><code>&lt;ui-toast variant="success" title="Saved" open&gt;Ready.&lt;/ui-toast&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">event: ui-close</span>
+            <ui-button class="inspect-btn" data-component="ui-toast" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
         <!-- ORGANISMS -->
         <article class="specimen" data-tier="organisms" data-id="ui-navbar">
           <div class="specimen-head">
@@ -767,6 +888,47 @@
           <div class="specimen-foot">
             <span class="muted">attrs: loading, empty</span>
             <ui-button class="inspect-btn" data-component="ui-catalog-grid" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+
+        <article class="specimen" data-tier="organisms" data-id="ui-popover">
+          <div class="specimen-head">
+            <h3>&lt;ui-popover&gt;</h3>
+            <ui-badge variant="success">organisms</ui-badge>
+          </div>
+          <p class="specimen-desc">Viewport-aware Top Layer popover flyout for compact layer switchers and context menus.</p>
+          <div class="preview">
+            <ui-popover id="demo-popover" aria-label="Layer options">
+              <ui-button id="demo-popover-btn" slot="trigger" variant="secondary" size="sm"><ui-icon name="layers" size="sm"></ui-icon> Map Layers</ui-button>
+              <div style="display: grid; gap: 0.5rem;">
+                <ui-switch checked size="sm">Waymarked Hiking</ui-switch>
+                <ui-switch checked size="sm">OpenSeaMap Buoys</ui-switch>
+              </div>
+            </ui-popover>
+          </div>
+          <pre><code>&lt;ui-popover&gt;&lt;ui-button slot="trigger"&gt;Layers&lt;/ui-button&gt;...&lt;/ui-popover&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">events: ui-open, ui-close</span>
+            <ui-button class="inspect-btn" data-component="ui-popover" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
+        <article class="specimen" data-tier="organisms" data-id="ui-drawer">
+          <div class="specimen-head">
+            <h3>&lt;ui-drawer&gt;</h3>
+            <ui-badge variant="success">organisms</ui-badge>
+          </div>
+          <p class="specimen-desc">Collapsible side/bottom drawer supporting docked workspace panels and modal mobile sheets.</p>
+          <div class="preview">
+            <ui-drawer id="demo-drawer" title="Elevation Profile" side="bottom" mode="docked" open style="--drawer-height: 7.5rem;">
+              <span class="muted">+480 m ascent · -480 m descent · 1.5 m hysteresis</span>
+            </ui-drawer>
+          </div>
+          <pre><code>&lt;ui-drawer title="Library" side="left" mode="auto" open&gt;...&lt;/ui-drawer&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">events: ui-open, ui-close</span>
+            <ui-button class="inspect-btn" data-component="ui-drawer" variant="secondary" size="sm">Inspect Contract</ui-button>
           </div>
         </article>
 
@@ -821,6 +983,28 @@
             <ui-button class="inspect-btn" data-component="detail-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
           </div>
         </article>
+
+        <article class="specimen" data-tier="templates" data-id="workspace-layout">
+          <div class="specimen-head">
+            <h3>&lt;workspace-layout&gt;</h3>
+            <ui-badge variant="warning">templates</ui-badge>
+          </div>
+          <p class="specimen-desc">Full-viewport (100dvh) canvas shell with header, docked aside, floating HUD, and bottom tray slots.</p>
+          <div class="preview">
+            <div style="height: 9rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden;">
+              <workspace-layout style="height: 100%;">
+                <div slot="aside" style="padding: 0.5rem; border-right: 1px solid var(--color-border);" class="muted">Aside</div>
+                <div style="display: grid; place-items: center; height: 100%;" class="muted">Canvas</div>
+                <div slot="bottom" style="padding: 0.35rem 0.5rem; border-top: 1px solid var(--color-border);" class="muted">Bottom tray</div>
+              </workspace-layout>
+            </div>
+          </div>
+          <pre><code>&lt;workspace-layout&gt;&lt;ui-navbar slot="header"&gt;&lt;/ui-navbar&gt;&lt;div id="map"&gt;&lt;/div&gt;&lt;/workspace-layout&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">slots: header, aside, default, floating, bottom</span>
+            <ui-button class="inspect-btn" data-component="workspace-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
       </div>
       </catalog-layout>
     </section>
@@ -869,6 +1053,15 @@
       'ui-code-block': { tier: 'molecules', attrs: 'language', slots: 'default', events: 'ui-copy', a11y: 'Accessible Copy button with visual confirmation.' },
       'ui-checkbox': { tier: 'atoms', attrs: 'checked, disabled, indeterminate, name, value, aria-label', slots: 'default', events: 'ui-change', a11y: 'delegatesFocus: true over native <input type="checkbox">.' },
       'detail-layout': { tier: 'templates', attrs: '—', slots: 'default, aside', events: '—', a11y: 'Semantic <aside> landmark for metadata sidebar.' },
+      'ui-slider': { tier: 'atoms', attrs: 'min, max, step, value, disabled, variant, name, aria-label, aria-valuetext', slots: '—', events: 'ui-input, ui-change', a11y: 'delegatesFocus: true over native <input type="range">.' },
+      'ui-switch': { tier: 'atoms', attrs: 'checked, disabled, size, name, value, aria-label', slots: 'default', events: 'ui-change', a11y: 'delegatesFocus: true over <button role="switch"> with aria-checked.' },
+      'ui-tooltip': { tier: 'atoms', attrs: 'text, placement, open', slots: 'default', events: '—', a11y: 'WCAG 1.4.13 role="tooltip"; Escape-dismissible, hoverable, focus-persistent.' },
+      'ui-toolbar': { tier: 'molecules', attrs: 'orientation, variant, aria-label, aria-controls', slots: 'default', events: 'ui-navigate', a11y: 'role="toolbar" with single-tab-stop roving arrow-key navigation.' },
+      'ui-tabs': { tier: 'molecules', attrs: 'tabs, value, aria-label', slots: 'default, <tab-id>', events: 'ui-change', a11y: 'WAI-ARIA role="tablist", role="tab", and role="tabpanel".' },
+      'ui-toast': { tier: 'molecules', attrs: 'variant, title, open, duration', slots: 'default', events: 'ui-close', a11y: 'Polite screen-reader announcement, focus/hover timer pause, and dismiss button.' },
+      'ui-popover': { tier: 'organisms', attrs: 'open, placement, aria-label', slots: 'trigger, default', events: 'ui-open, ui-close', a11y: 'Native Top Layer popover="auto" with Escape/light-dismiss and aria-expanded.' },
+      'ui-drawer': { tier: 'organisms', attrs: 'title, side, mode, open', slots: 'default, footer', events: 'ui-open, ui-close', a11y: 'Non-modal <aside> when docked; native <dialog>.showModal() when modal.' },
+      'workspace-layout': { tier: 'templates', attrs: 'aside-side', slots: 'header, aside, default, floating, bottom', events: '—', a11y: 'Semantic header/aside/main/section landmarks with pointer-transparent HUD overlay.' },
     };
 
     const root = document.documentElement;
