@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "name": "asdlc-meta-designsystem",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "spec": "SPC-0001",
   "entrypoint": "src/index.js",
   "publishedEntrypoint": "https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/index.js",
@@ -39,6 +39,7 @@
     "UiPopover",
     "UiDrawer",
     "UiToast",
+    "UiTable",
     "PageShell",
     "CatalogLayout",
     "DetailLayout",
@@ -1806,6 +1807,28 @@
       ],
       "accessibility": "Exposes role='region' with keyboard-focusable dismiss button, announces via ariaNotify() or polite live region without stealing focus, and pauses timer while hovered or focused.",
       "example": "<ui-toast variant=\"success\" title=\"Course exported\" open>Saved Veluwe Loop.fit</ui-toast>"
+    },
+    {
+      "tag": "ui-table",
+      "tier": "organisms",
+      "module": "src/organisms/ui-table.js",
+      "className": "UiTable",
+      "description": "Data table Organism styling a slotted native <table> and scrolling it inside a labelled region.",
+      "attributes": {
+        "aria-label": {
+          "type": "string",
+          "default": "Table"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "scroll"
+      ],
+      "accessibility": "Keeps native table semantics, wraps the table in a labelled region and makes that region a keyboard stop only while it overflows.",
+      "example": "<ui-table aria-label=\"Repositories\"><table><thead><tr><th scope=\"col\">Name</th></tr></thead><tbody><tr><td>lumen</td></tr></tbody></table></ui-table>"
     },
     {
       "tag": "ui-popover",

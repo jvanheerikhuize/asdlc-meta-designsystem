@@ -89,6 +89,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-popover>` | `open`, `placement` (`bottom-start`\|`bottom-end`\|`top-start`\|`top-end`), `aria-label` | `trigger`, default | `ui-open`, `ui-close` | `trigger`, `panel` |
 | `<ui-drawer>` | `title`, `side` (`left`\|`right`\|`bottom`), `mode` (`docked`\|`modal`\|`auto`), `open` | default, `footer` | `ui-open`, `ui-close` | `panel`, `dialog`, `sheet`, `header`, `title`, `close`, `body`, `footer` |
 | `<ui-toast>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `callout` |
+| `<ui-table>` | `aria-label` | default (native `<table>`) | — | `scroll` |
 
 ## Templates (`src/templates/`)
 

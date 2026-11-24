@@ -32,6 +32,7 @@ export { UiCatalogGrid } from './organisms/ui-catalog-grid.js';
 export { UiPopover } from './organisms/ui-popover.js';
 export { UiDrawer } from './organisms/ui-drawer.js';
 export { UiToast } from './organisms/ui-toast.js';
+export { UiTable } from './organisms/ui-table.js';
 
 export { PageShell } from './templates/page-shell.js';
 export { CatalogLayout } from './templates/catalog-layout.js';
@@ -79,6 +80,7 @@ export const ORGANISMS = [
   'ui-popover',
   'ui-drawer',
   'ui-toast',
+  'ui-table',
 ];
 
 export const TEMPLATES = [

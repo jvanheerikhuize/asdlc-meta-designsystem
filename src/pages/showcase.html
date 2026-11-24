@@ -354,7 +354,7 @@
             <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms (6)</ui-button>
             <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates (4)</ui-button>
           </div>
-          <span class="muted" id="catalog-count">36 components</span>
+          <span class="muted" id="catalog-count">37 components</span>
         </div>
 
         <div slot="grid" class="specimen-grid" id="specimen-grid">
@@ -885,6 +885,25 @@
         </article>
 
 
+        <article class="specimen" data-tier="organisms" data-id="ui-table">
+          <div class="specimen-head">
+            <h3>&lt;ui-table&gt;</h3>
+            <ui-badge variant="success">organisms</ui-badge>
+          </div>
+          <p class="specimen-desc">Native data table with token styling, scrolled inside a labelled region.</p>
+          <div class="preview">
+            <ui-table aria-label="Stages"><table>
+              <thead><tr><th scope="col">Stage</th><th scope="col">Distance</th><th scope="col">Surface</th></tr></thead>
+              <tbody><tr><td>Day 1</td><td>64 km</td><td>Gravel</td></tr><tr><td>Day 2</td><td>71 km</td><td>Paved</td></tr></tbody>
+            </table></ui-table>
+          </div>
+          <pre><code>&lt;ui-table aria-label="Stages"&gt;&lt;table&gt;…&lt;/table&gt;&lt;/ui-table&gt;</code></pre>
+          <div class="specimen-foot">
+            <span class="muted">part: scroll</span>
+            <ui-button class="inspect-btn" data-component="ui-table" variant="secondary" size="sm">Inspect Contract</ui-button>
+          </div>
+        </article>
+
         <article class="specimen" data-tier="molecules" data-id="ui-panel-header">
           <div class="specimen-head">
             <h3>&lt;ui-panel-header&gt;</h3>
@@ -1125,6 +1144,7 @@
       'workspace-layout': { tier: 'templates', attrs: 'aside-side', slots: 'header, aside, default, floating, bottom', events: '—', a11y: 'Semantic header/aside/main/section landmarks with pointer-transparent HUD overlay.' },
       'ui-surface': { tier: 'atoms', attrs: 'variant, elevation, padding, radius, accent, interactive, aria-label', slots: 'default', events: 'ui-press', a11y: 'delegatesFocus: true; native <button> when interactive.' },
       'ui-divider': { tier: 'atoms', attrs: 'orientation', slots: '—', events: '—', a11y: 'role="separator" with aria-orientation.' },
+      'ui-table': { tier: 'organisms', attrs: 'aria-label', slots: 'default (native <table>)', events: '—', a11y: 'Native table semantics; the labelled region is focusable only while it overflows.' },
       'ui-panel-header': { tier: 'molecules', attrs: 'title, heading-id, close-label', slots: 'actions', events: 'ui-close', a11y: 'Semantic <h2> title and accessible close <ui-button>.' },
     };
 
