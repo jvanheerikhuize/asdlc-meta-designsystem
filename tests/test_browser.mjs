@@ -188,6 +188,39 @@ async function main() {
     assert.equal(visualConsistency.detailNoOverlap, true, 'detail-layout main and aside columns must never overlap');
     assert.equal(visualConsistency.overflowingPres, 0, 'Specimen code previews must wrap cleanly without horizontal scrollbars');
 
+    // 2c. Toggle button state is owned by the view; text input enforces its maximum length (REQ-0003)
+    const toggle = await cdp.eval(`(() => {
+      const host = document.createElement('ui-button');
+      host.setAttribute('variant', 'secondary');
+      document.body.append(host);
+      const btn = host.shadowRoot.querySelector('button');
+      const plain = btn.getAttribute('aria-pressed');
+      host.setAttribute('aria-pressed', 'false');
+      const offBg = getComputedStyle(btn).borderColor;
+      btn.click();
+      const afterClick = btn.getAttribute('aria-pressed');
+      host.setAttribute('aria-pressed', 'true');
+      btn.getAnimations().forEach((a) => a.finish());
+      const on = btn.getAttribute('aria-pressed');
+      const onBg = getComputedStyle(btn).borderColor;
+      host.remove();
+      const input = document.createElement('ui-input');
+      input.id = 'max-probe';
+      input.setAttribute('maxlength', '5');
+      document.body.prepend(input);
+      input.focus();
+      return { plain, afterClick, on, styled: offBg !== onBg };
+    })()`);
+    assert.deepEqual(toggle, { plain: null, afterClick: 'false', on: 'true', styled: true });
+    await cdp.send('Input.insertText', { text: 'abcdefgh' });
+    const limited = await cdp.eval(`(() => {
+      const el = document.getElementById('max-probe');
+      const value = el.value;
+      el.remove();
+      return value;
+    })()`);
+    assert.equal(limited, 'abcde', 'ui-input must not accept text past maxlength');
+
     // 3. Verify ui-navbar theme toggle propagates across Shadow DOM (ASM-0001, REQ-0002)
     const lightBg = await cdp.eval(`(() => {
       document.getElementById('navbar').shadowRoot.getElementById('theme-btn').shadowRoot.querySelector('button').click();
