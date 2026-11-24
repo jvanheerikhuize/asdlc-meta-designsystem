@@ -1,0 +1,206 @@
+const TEMPLATE = document.createElement('template');
+TEMPLATE.innerHTML = `
+  <style>
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3, 0.75rem);
+      font-family: var(--font-sans, system-ui, sans-serif);
+    }
+
+    :host([hidden]) {
+      display: none;
+    }
+
+    .tablist {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1, 0.25rem);
+      padding: var(--space-1, 0.25rem);
+      border-radius: var(--radius-md, 0.5rem);
+      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+      background: var(--color-surface-elevated, #18181f);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    button[role="tab"] {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--color-fg-secondary, #a1a1aa);
+      font-family: inherit;
+      font-size: var(--text-sm, 0.875rem);
+      font-weight: 500;
+      line-height: var(--leading-tight, 1.2);
+      padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+      border-radius: var(--radius-sm, 0.375rem);
+      cursor: pointer;
+      white-space: nowrap;
+      transition:
+        color var(--duration-fast, 120ms) var(--ease-standard, ease),
+        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
+        border-color var(--duration-fast, 120ms) var(--ease-standard, ease);
+    }
+
+    button[role="tab"]:hover {
+      color: var(--color-fg, #ededed);
+    }
+
+    button[role="tab"][aria-selected="true"] {
+      color: var(--color-fg, #ededed);
+      background: var(--color-surface, #111116);
+      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
+      box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.35));
+    }
+
+    button[role="tab"]:focus-visible {
+      outline: 2px solid var(--color-focus-ring, #f43f5e);
+      outline-offset: 2px;
+    }
+
+    .panel {
+      color: var(--color-fg, #ededed);
+      font-size: var(--text-sm, 0.875rem);
+      line-height: var(--leading-normal, 1.5);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      button[role="tab"] {
+        transition: none;
+      }
+    }
+  </style>
+  <div class="tablist" part="tablist" role="tablist"></div>
+  <div class="panel" part="panel" role="tabpanel">
+    <slot id="active-slot"></slot>
+  </div>
+`;
+
+/**
+ * Accessible WAI-ARIA tablist Molecule driven by a JSON `tabs` definition
+ * (`[{"id":"stages","label":"Stages"}]`) and `value` active tab ID.
+ */
+export class UiTabs extends HTMLElement {
+  static observedAttributes = ['tabs', 'value', 'aria-label'];
+
+  #tablist;
+  #panel;
+  #slot;
+  #parsedTabs = [];
+
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: 'open' });
+    shadow.appendChild(TEMPLATE.content.cloneNode(true));
+    this.#tablist = shadow.querySelector('.tablist');
+    this.#panel = shadow.querySelector('.panel');
+    this.#slot = shadow.getElementById('active-slot');
+
+    this.#tablist.addEventListener('keydown', (event) => this.#onKeyDown(event));
+  }
+
+  connectedCallback() {
+    this.#render();
+  }
+
+  attributeChangedCallback() {
+    this.#render();
+  }
+
+  get value() {
+    return this.getAttribute('value') || (this.#parsedTabs[0]?.id ?? '');
+  }
+
+  set value(val) {
+    if (val == null) this.removeAttribute('value');
+    else this.setAttribute('value', String(val));
+  }
+
+  selectTab(id, focusTab = false) {
+    if (!id || id === this.getAttribute('value')) return;
+    this.setAttribute('value', id);
+    if (focusTab) {
+      const btn = this.#tablist.querySelector(`button[data-tab-id="${CSS.escape(id)}"]`);
+      btn?.focus();
+    }
+    this.dispatchEvent(new CustomEvent('ui-change', {
+      bubbles: true,
+      composed: true,
+      detail: { value: id },
+    }));
+  }
+
+  #parseTabs() {
+    const raw = this.getAttribute('tabs');
+    if (!raw) return [];
+    try {
+      const arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) return [];
+      return arr.map((item) => (
+        typeof item === 'string'
+          ? { id: item, label: item }
+          : { id: String(item.id), label: String(item.label ?? item.id) }
+      ));
+    } catch {
+      return [];
+    }
+  }
+
+  #onKeyDown(event) {
+    const buttons = Array.from(this.#tablist.querySelectorAll('button[role="tab"]'));
+    if (!buttons.length) return;
+    const idx = Math.max(0, buttons.findIndex((b) => b === event.target));
+    let next = -1;
+    if (event.key === 'ArrowRight') next = (idx + 1) % buttons.length;
+    else if (event.key === 'ArrowLeft') next = (idx - 1 + buttons.length) % buttons.length;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = buttons.length - 1;
+    if (next < 0) return;
+
+    event.preventDefault();
+    const nextId = buttons[next].dataset.tabId;
+    this.selectTab(nextId, true);
+  }
+
+  #render() {
+    if (!this.#tablist) return;
+    this.#parsedTabs = this.#parseTabs();
+    const label = this.getAttribute('aria-label') || 'Section tabs';
+    this.#tablist.setAttribute('aria-label', label);
+
+    const activeId = this.#parsedTabs.some((t) => t.id === this.getAttribute('value'))
+      ? this.getAttribute('value')
+      : (this.#parsedTabs[0]?.id ?? '');
+
+    this.#tablist.innerHTML = '';
+    for (const tab of this.#parsedTabs) {
+      const selected = tab.id === activeId;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('part', 'tab');
+      btn.id = `tab-${tab.id}`;
+      btn.dataset.tabId = tab.id;
+      btn.setAttribute('aria-selected', selected ? 'true' : 'false');
+      btn.tabIndex = selected ? 0 : -1;
+      btn.textContent = tab.label;
+      btn.addEventListener('click', () => this.selectTab(tab.id, false));
+      this.#tablist.appendChild(btn);
+    }
+
+    if (activeId) {
+      this.#panel.setAttribute('aria-labelledby', `tab-${activeId}`);
+      const hasNamedSlotContent = Boolean(this.querySelector(`[slot="${CSS.escape(activeId)}"]`));
+      if (hasNamedSlotContent) this.#slot.setAttribute('name', activeId);
+      else this.#slot.removeAttribute('name');
+    } else {
+      this.#panel.removeAttribute('aria-labelledby');
+      this.#slot.removeAttribute('name');
+    }
+  }
+}
+
+if (!customElements.get('ui-tabs')) {
+  customElements.define('ui-tabs', UiTabs);
+}

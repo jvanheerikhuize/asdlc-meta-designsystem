@@ -51,7 +51,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-input>` | `type`, `value`, `placeholder`, `disabled`, `readonly`, `required`, `invalid`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `input` |
 | `<ui-label>` | `for`, `required`, `size` (`md`\|`sm`) | default | — | `label` |
 | `<ui-badge>` | `variant` (`neutral`\|`accent`\|`info`\|`success`\|`warning`), `size` (`sm`\|`md`) | default | — | `badge` |
-| `<ui-icon>` | `name` (`search`, `sun`, `moon`, `check`, `alert`, `info`, `arrow-right`, `arrow-left`, `sparkles`, `code`, `layers`, `external`), `size` (`sm`\|`md`\|`lg`), `label` | — | — | `icon` |
+| `<ui-icon>` | `name` (`search`, `sun`, `moon`, `check`, `alert`, `info`, `arrow-right`, `arrow-left`, `sparkles`, `code`, `layers`, `external`, `plus`, `minus`, `close`, `undo`, `redo`, `trash`, `download`, `upload`, `route`, `compass`, `pin`, `flag`, `anchor`, `waves`, `scissors`, `settings`, `chevron-down`, `chevron-up`, `eye`, `eye-off`, `sidebar`), `size` (`sm`\|`md`\|`lg`), `label` | — | — | `icon` |
 | `<ui-skeleton>` | `variant` (`text`\|`rect`\|`circle`), `width`, `height`, `lines` | — | — | `skeleton` |
 | `<ui-chip>` | `pressed`, `disabled`, `variant` (`default`\|`accent`) | default | `ui-toggle` | `chip` |
 | `<ui-progress>` | `value`, `max`, `variant` (`success`\|`accent`\|`warning`\|`danger`), `segments` (JSON), `aria-label` | — | — | `track`, `fill`, `segment` |
@@ -60,6 +60,8 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-dot>` | `status` (`done`\|`wait`\|`bad`\|`info`\|`off`), `label` | — | — | `dot` |
 | `<ui-checkbox>` | `checked`, `disabled`, `indeterminate`, `name`, `value`, `aria-label` | default | `ui-change` | `label`, `checkbox` |
 | `<ui-slider>` | `min`, `max`, `step`, `value`, `disabled`, `variant` (`accent`\|`success`\|`warning`\|`neutral`), `name`, `aria-label`, `aria-valuetext` | — | `ui-input`, `ui-change` | `track`, `slider` |
+| `<ui-switch>` | `checked`, `disabled`, `size` (`sm`\|`md`), `name`, `value`, `aria-label` | default | `ui-change` | `label`, `switch`, `thumb` |
+| `<ui-tooltip>` | `text`, `placement` (`top`\|`bottom`\|`left`\|`right`), `open` | default | — | `tooltip` |
 
 ## Molecules (`src/molecules/`)
 
@@ -71,6 +73,9 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-stat-tile>` | `value`, `label`, `status`, `variant` (`neutral`\|`accent`\|`success`\|`warning`\|`danger`) | — | — | `tile`, `value`, `dot`, `label` |
 | `<ui-callout>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title` | default | — | `callout`, `icon`, `title`, `body` |
 | `<ui-code-block>` | `language` | default | `ui-copy` | `container`, `header`, `language`, `copy-button`, `pre` |
+| `<ui-toolbar>` | `orientation` (`horizontal`\|`vertical`), `variant` (`inline`\|`floating`), `aria-label`, `aria-controls` | default | `ui-navigate` | `toolbar` |
+| `<ui-tabs>` | `tabs` (JSON array), `value`, `aria-label` | default, `<tab-id>` | `ui-change` | `tablist`, `tab`, `panel` |
+| `<ui-toast>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `toast`, `icon`, `title`, `body`, `dismiss` |
 
 ## Organisms (`src/organisms/`)
 
@@ -79,6 +84,8 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-navbar>` | `theme` (`dark`\|`light`) | `brand`, `nav`, `search`, `actions` | `ui-theme-change` | `header`, `theme-button` |
 | `<ui-modal>` | `title`, `open` | default, `footer` | `ui-open`, `ui-close` | `dialog`, `title`, `close`, `body`, `footer` |
 | `<ui-catalog-grid>` | `loading`, `empty`, `empty-text` | default | — | `skeletons`, `grid`, `empty` |
+| `<ui-popover>` | `open`, `placement` (`bottom-start`\|`bottom-end`\|`top-start`\|`top-end`), `aria-label` | `trigger`, default | `ui-open`, `ui-close` | `trigger`, `panel` |
+| `<ui-drawer>` | `title`, `side` (`left`\|`right`\|`bottom`), `mode` (`docked`\|`modal`\|`auto`), `open` | default, `footer` | `ui-open`, `ui-close` | `panel`, `dialog`, `sheet`, `header`, `title`, `close`, `body`, `footer` |
 
 ## Templates (`src/templates/`)
 
@@ -87,4 +94,5 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<page-shell>` | — | `header`, default, `footer` | — | `main`, `footer` |
 | `<catalog-layout>` | — | `hero`, `toolbar`, `grid`, `modal` | — | `hero`, `toolbar`, `grid` |
 | `<detail-layout>` | — | default, `aside` | — | `grid`, `main`, `aside` |
+| `<workspace-layout>` | `aside-side` (`left`\|`right`) | `header`, `aside`, default, `floating`, `bottom` | — | `header`, `body`, `aside`, `main`, `canvas`, `floating`, `bottom` |
 
