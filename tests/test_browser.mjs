@@ -149,7 +149,7 @@ async function main() {
         'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',
         'ui-chip', 'ui-progress', 'ui-textarea', 'ui-select', 'ui-dot', 'ui-checkbox', 'ui-slider', 'ui-switch', 'ui-tooltip', 'ui-surface', 'ui-divider',
         'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block', 'ui-toolbar', 'ui-tabs', 'ui-panel-header',
-        'ui-navbar', 'ui-modal', 'ui-catalog-grid', 'ui-popover', 'ui-drawer', 'ui-toast',
+        'ui-navbar', 'ui-modal', 'ui-catalog-grid', 'ui-popover', 'ui-drawer', 'ui-toast', 'ui-table',
         'page-shell', 'catalog-layout', 'detail-layout', 'workspace-layout',
       ];
       const defined = tags.every((t) => Boolean(customElements.get(t)));
@@ -158,8 +158,8 @@ async function main() {
       const bgDark = getComputedStyle(document.body).backgroundColor;
       return { defined, shadows, backHref, bgDark };
     })()`);
-    assert.equal(showcase.defined, true, 'All 36 components must be defined');
-    assert.equal(showcase.shadows, true, 'All 36 components must have Shadow DOM');
+    assert.equal(showcase.defined, true, 'All 37 components must be defined');
+    assert.equal(showcase.shadows, true, 'All 37 components must have Shadow DOM');
     assert.equal(showcase.backHref, './specs/');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
 
@@ -220,6 +220,29 @@ async function main() {
       return value;
     })()`);
     assert.equal(limited, 'abcde', 'ui-input must not accept text past maxlength');
+
+    // 2d. Data table scrolls inside its own labelled region and is a keyboard stop only then (REQ-0005)
+    const table = await cdp.eval(`(async () => {
+      const host = document.createElement('ui-table');
+      host.setAttribute('aria-label', 'Probe');
+      host.innerHTML = '<table><thead><tr><th scope="col">A</th></tr></thead><tbody><tr><td>b</td></tr></tbody></table>';
+      document.body.prepend(host);
+      const scroll = host.shadowRoot.querySelector('[part="scroll"]');
+      const settle = () => new Promise((r) => setTimeout(r, 200));
+      await settle();
+      const narrow = scroll.getAttribute('tabindex');
+      const pageBefore = document.documentElement.scrollWidth;
+      host.querySelector('td').textContent = 'x'.repeat(2000);
+      await settle();
+      const out = {
+        narrow, wide: scroll.getAttribute('tabindex'), role: scroll.getAttribute('role'), label: scroll.getAttribute('aria-label'),
+        scrolls: scroll.scrollWidth > scroll.clientWidth, pageGrew: document.documentElement.scrollWidth > pageBefore,
+        padded: getComputedStyle(host.querySelector('td')).paddingLeft !== '1px',
+      };
+      host.remove();
+      return out;
+    })()`);
+    assert.deepEqual(table, { narrow: null, wide: '0', role: 'region', label: 'Probe', scrolls: true, pageGrew: false, padded: true });
 
     // 3. Verify ui-navbar theme toggle propagates across Shadow DOM (ASM-0001, REQ-0002)
     const lightBg = await cdp.eval(`(() => {

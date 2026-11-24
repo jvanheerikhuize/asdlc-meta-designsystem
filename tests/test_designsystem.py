@@ -145,7 +145,7 @@ class DesignSystemTest(unittest.TestCase):
                 self.assertIn(event_name, code)
 
     def test_organisms_and_templates_compose_lower_tiers(self):  # REQ-0005
-        organisms = ["ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer", "ui-toast"]
+        organisms = ["ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer", "ui-toast", "ui-table"]
         templates = ["page-shell", "catalog-layout", "detail-layout", "workspace-layout"]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in organisms:
@@ -181,7 +181,7 @@ class DesignSystemTest(unittest.TestCase):
             "ui-slider", "ui-switch", "ui-tooltip", "ui-surface", "ui-divider",
             "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout",
             "ui-code-block", "ui-toolbar", "ui-tabs", "ui-panel-header",
-            "ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer", "ui-toast",
+            "ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer", "ui-toast", "ui-table",
             "page-shell", "catalog-layout", "detail-layout", "workspace-layout",
         }
         self.assertEqual(set(documented_tags.keys()), expected_tags)
