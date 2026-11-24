@@ -109,7 +109,10 @@ async function main() {
 
     // 1. Verify bolted-on Spec Dashboard (/specs/) across routes, font stack, radial glow, and link back to ../ (REQ-0007)
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/specs/` });
-    await new Promise((r) => setTimeout(r, 600));
+    for (let i = 0; i < 50; i += 1) {
+      if (await cdp.eval(`Boolean(document.querySelector('h1')?.textContent)`)) break;
+      await new Promise((r) => setTimeout(r, 100));
+    }
     const dash = await cdp.eval(`(() => ({
       title: document.title,
       h1: document.querySelector('h1')?.textContent,
@@ -159,6 +162,31 @@ async function main() {
     assert.equal(showcase.shadows, true, 'All 36 components must have Shadow DOM');
     assert.equal(showcase.backHref, './specs/');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
+
+
+    // 2b. Visual consistency assertions: 36px control height parity, dark color-scheme, non-overlapping detail-layout, zero horizontal pre overflow
+    const visualConsistency = await cdp.eval(`(() => {
+      const rootScheme = getComputedStyle(document.documentElement).colorScheme;
+      const btnMd = document.querySelector('#catalog-search').shadowRoot.querySelector('ui-button').getBoundingClientRect().height;
+      const inputMd = document.querySelector('ui-input').getBoundingClientRect().height;
+      const selectMd = document.querySelector('ui-select').getBoundingClientRect().height;
+      const selectChevron = Boolean(document.querySelector('ui-select').shadowRoot.querySelector('svg.chevron'));
+
+      const dl = document.querySelector('detail-layout');
+      const mainRect = dl.shadowRoot.querySelector('.main').getBoundingClientRect();
+      const asideRect = dl.shadowRoot.querySelector('.aside').getBoundingClientRect();
+      const detailNoOverlap = (asideRect.top >= mainRect.bottom - 1) || (asideRect.left >= mainRect.right - 1);
+
+      const overflowingPres = Array.from(document.querySelectorAll('.specimen pre')).filter(p => p.scrollWidth > p.clientWidth + 1).length;
+      return { rootScheme, btnMd: Math.round(btnMd), inputMd: Math.round(inputMd), selectMd: Math.round(selectMd), selectChevron, detailNoOverlap, overflowingPres };
+    })()`);
+    assert.equal(visualConsistency.rootScheme, 'dark', 'Dark default :root must report colorScheme=dark so native scrollbars/popups match');
+    assert.equal(visualConsistency.btnMd, 36, 'Medium button height must be 36px');
+    assert.equal(visualConsistency.inputMd, 36, 'Input height must match medium button (36px)');
+    assert.equal(visualConsistency.selectMd, 36, 'Select height must match input and medium button (36px)');
+    assert.equal(visualConsistency.selectChevron, true, 'ui-select must render custom chevron icon');
+    assert.equal(visualConsistency.detailNoOverlap, true, 'detail-layout main and aside columns must never overlap');
+    assert.equal(visualConsistency.overflowingPres, 0, 'Specimen code previews must wrap cleanly without horizontal scrollbars');
 
     // 3. Verify ui-navbar theme toggle propagates across Shadow DOM (ASM-0001, REQ-0002)
     const lightBg = await cdp.eval(`(() => {

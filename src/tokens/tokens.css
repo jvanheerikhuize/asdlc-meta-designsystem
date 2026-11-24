@@ -4,7 +4,8 @@
    ========================================================================== */
 
 :root {
-  color-scheme: dark light;
+  color-scheme: dark;
+  scrollbar-color: var(--color-border-hover) transparent;
 
   /* Canvas & Surfaces (Dark default: Obsidian) */
   --color-bg: #08080b;
@@ -85,6 +86,7 @@
 
 [data-theme="light"] {
   color-scheme: light;
+  scrollbar-color: var(--color-border-hover) transparent;
 
   /* Canvas & Surfaces (Paper) */
   --color-bg: #fafafa;

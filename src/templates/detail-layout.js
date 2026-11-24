@@ -3,6 +3,7 @@ TEMPLATE.innerHTML = `
   <style>
     :host {
       display: block;
+      container-type: inline-size;
     }
 
     :host([hidden]) {
@@ -11,14 +12,15 @@ TEMPLATE.innerHTML = `
 
     .grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 300px;
+      grid-template-columns: minmax(0, 1fr) 260px;
       gap: var(--space-6, 1.5rem);
       align-items: start;
     }
 
-    @media (max-width: 820px) {
+    @container (max-width: 640px) {
       .grid {
         grid-template-columns: 1fr;
+        gap: var(--space-3, 0.75rem);
       }
     }
   </style>
@@ -33,7 +35,8 @@ TEMPLATE.innerHTML = `
 `;
 
 /**
- * Two-column detail Template pairing primary prose/content with a metadata sidebar.
+ * Two-column detail Template pairing primary prose/content with a metadata sidebar,
+ * collapsing cleanly via container query in narrow containers.
  */
 export class DetailLayout extends HTMLElement {
   constructor() {

@@ -15,6 +15,15 @@ TEMPLATE.innerHTML = `
       display: none;
     }
 
+    ui-surface {
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    :host([full-width]) ui-surface {
+      width: 100%;
+    }
+
     .tablist {
       display: flex;
       align-items: center;
@@ -138,7 +147,7 @@ export class UiTabs extends HTMLElement {
       const btn = document.createElement('ui-button');
       btn.setAttribute('role', 'tab');
       btn.setAttribute('part', 'tab');
-      btn.setAttribute('variant', selected ? 'secondary' : 'ghost');
+      btn.setAttribute('variant', selected ? 'surface' : 'ghost');
       btn.setAttribute('size', 'sm');
       btn.id = `tab-${tab.id}`;
       btn.dataset.tabId = tab.id;

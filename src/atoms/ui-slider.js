@@ -41,8 +41,8 @@ TEMPLATE.innerHTML = `
         to right,
         var(--slider-color) 0%,
         var(--slider-color) var(--slider-pct),
-        var(--color-card-hover, rgba(255, 255, 255, 0.12)) var(--slider-pct),
-        var(--color-card-hover, rgba(255, 255, 255, 0.12)) 100%
+        var(--color-border-hover, rgba(255, 255, 255, 0.22)) var(--slider-pct),
+        var(--color-border-hover, rgba(255, 255, 255, 0.22)) 100%
       );
       outline: none;
       cursor: pointer;
@@ -54,8 +54,8 @@ TEMPLATE.innerHTML = `
       width: 0.95rem;
       height: 0.95rem;
       border-radius: var(--radius-full, 9999px);
-      background: var(--color-fg, #ededed);
-      border: 2px solid var(--slider-color);
+      background: #ffffff;
+      border: 2.5px solid var(--slider-color);
       box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.45));
       cursor: pointer;
       transition: transform var(--duration-fast, 120ms) var(--ease-standard, ease);
@@ -65,8 +65,8 @@ TEMPLATE.innerHTML = `
       width: 0.95rem;
       height: 0.95rem;
       border-radius: var(--radius-full, 9999px);
-      background: var(--color-fg, #ededed);
-      border: 2px solid var(--slider-color);
+      background: #ffffff;
+      border: 2.5px solid var(--slider-color);
       box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.45));
       cursor: pointer;
       transition: transform var(--duration-fast, 120ms) var(--ease-standard, ease);

@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark light">
   <title>ASDLC Design System — Catalog &amp; Visual Reference</title>
   <link rel="stylesheet" href="./src/tokens/tokens.css">
   <script type="module" src="./src/index.js"></script>
@@ -217,7 +216,8 @@
       font-size: var(--text-xs);
       line-height: 1.45;
       color: var(--color-fg-secondary);
-      overflow-x: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
 
     .specimen-foot {
@@ -235,8 +235,12 @@
 
     .icon-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
-      gap: var(--space-2);
+      grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
+      gap: var(--space-1);
+      max-height: 15.5rem;
+      overflow-y: auto;
+      padding-right: var(--space-1);
+      scrollbar-color: var(--color-border-hover) transparent;
     }
 
     .icon-cell {
@@ -978,7 +982,7 @@
           </div>
           <p class="specimen-desc">Collapsible side/bottom drawer supporting docked workspace panels and modal mobile sheets.</p>
           <div class="preview">
-            <ui-drawer id="demo-drawer" title="Elevation Profile" side="bottom" mode="docked" open style="--drawer-height: 7.5rem;">
+            <ui-drawer id="demo-drawer" title="Elevation Profile" side="bottom" mode="docked" open style="--drawer-height: 10rem;">
               <span class="muted">+480 m ascent · -480 m descent · 1.5 m hysteresis</span>
             </ui-drawer>
           </div>
@@ -1080,7 +1084,7 @@
     </ui-modal>
 
     <div slot="footer">
-      ASDLC Meta-DesignSystem · <a href="../" style="color: var(--color-accent)">Return to Specification Dashboard</a>
+      ASDLC Meta-DesignSystem · <a href="./specs/" style="color: var(--color-accent)">Return to Specification Dashboard</a>
     </div>
   </page-shell>
 

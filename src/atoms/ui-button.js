@@ -85,6 +85,13 @@ TEMPLATE.innerHTML = `
       color: var(--color-fg, #ededed);
     }
 
+    :host([variant="surface"]) button {
+      background: var(--color-surface, #111116);
+      color: var(--color-fg, #ededed);
+      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
+      box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.35));
+    }
+
     :host([variant="danger"]) button {
       background: var(--color-danger, #f87171);
       color: var(--color-danger-fg, #08080b);
