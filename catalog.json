@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "name": "asdlc-meta-designsystem",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "spec": "SPC-0001",
   "entrypoint": "src/index.js",
   "publishedEntrypoint": "https://jvanheerikhuize.github.io/asdlc-meta-designsystem/latest/src/index.js",
@@ -22,6 +22,8 @@
     "UiSlider",
     "UiSwitch",
     "UiTooltip",
+    "UiSurface",
+    "UiDivider",
     "UiField",
     "UiSearchBar",
     "UiMediaCard",
@@ -30,12 +32,13 @@
     "UiCodeBlock",
     "UiToolbar",
     "UiTabs",
-    "UiToast",
+    "UiPanelHeader",
     "UiNavbar",
     "UiModal",
     "UiCatalogGrid",
     "UiPopover",
     "UiDrawer",
+    "UiToast",
     "PageShell",
     "CatalogLayout",
     "DetailLayout",
@@ -1313,7 +1316,7 @@
       "tier": "molecules",
       "module": "src/molecules/ui-callout.js",
       "className": "UiCallout",
-      "description": "Left-accented status/action banner Molecule composing <ui-icon>.",
+      "description": "Left-accented status/action banner Molecule composing <ui-surface>, <ui-icon>, and optional dismiss <ui-button>.",
       "attributes": {
         "variant": {
           "type": "enum",
@@ -1328,17 +1331,39 @@
         "title": {
           "type": "string",
           "default": ""
+        },
+        "dismissible": {
+          "type": "boolean",
+          "default": false
+        },
+        "elevation": {
+          "type": "enum",
+          "values": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "none"
         }
       },
       "slots": [
         "default"
       ],
-      "events": [],
+      "events": [
+        {
+          "name": "ui-dismiss",
+          "detail": null,
+          "bubbles": true,
+          "composed": true
+        }
+      ],
       "parts": [
         "callout",
         "icon",
         "title",
-        "body"
+        "body",
+        "dismiss"
       ],
       "accessibility": "Uses role='note' with semantic variant icon.",
       "example": "<ui-callout variant=\"warning\" title=\"Open Question\">Needs clarification.</ui-callout>"
@@ -1716,10 +1741,10 @@
     },
     {
       "tag": "ui-toast",
-      "tier": "molecules",
-      "module": "src/molecules/ui-toast.js",
+      "tier": "organisms",
+      "module": "src/organisms/ui-toast.js",
       "className": "UiToast",
-      "description": "Non-modal status notification Molecule composing <ui-icon> and <ui-button> with focus/hover-paused auto-dismiss.",
+      "description": "Notification lifecycle Organism wrapping <ui-callout dismissible> with auto-dismiss timer (paused on hover/focus) and polite screen-reader announcement.",
       "attributes": {
         "variant": {
           "type": "enum",
@@ -1758,11 +1783,7 @@
         }
       ],
       "parts": [
-        "toast",
-        "icon",
-        "title",
-        "body",
-        "dismiss"
+        "callout"
       ],
       "accessibility": "Exposes role='region' with keyboard-focusable dismiss button, announces via ariaNotify() or polite live region without stealing focus, and pauses timer while hovered or focused.",
       "example": "<ui-toast variant=\"success\" title=\"Course exported\" open>Saved Veluwe Loop.fit</ui-toast>"
@@ -1920,6 +1941,157 @@
       ],
       "accessibility": "Exposes semantic <header>, <aside>, <main>, and <section> landmarks while keeping floating HUD overlays pointer-transparent outside slotted controls.",
       "example": "<workspace-layout><ui-navbar slot=\"header\"></ui-navbar><div id=\"map\"></div><ui-toolbar slot=\"floating\" variant=\"floating\"></ui-toolbar></workspace-layout>"
+    },
+    {
+      "tag": "ui-surface",
+      "tier": "atoms",
+      "module": "src/atoms/ui-surface.js",
+      "className": "UiSurface",
+      "description": "Foundational container Atom providing consistent surface backgrounds, hairline borders, radii, padding, elevation shadows, left-accent stripes, and interactive card states.",
+      "attributes": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "base",
+            "elevated",
+            "card",
+            "glass"
+          ],
+          "default": "base"
+        },
+        "elevation": {
+          "type": "enum",
+          "values": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "none"
+        },
+        "padding": {
+          "type": "enum",
+          "values": [
+            "none",
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "none"
+        },
+        "radius": {
+          "type": "enum",
+          "values": [
+            "none",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "full"
+          ],
+          "default": "lg"
+        },
+        "accent": {
+          "type": "enum",
+          "values": [
+            "none",
+            "info",
+            "success",
+            "warning",
+            "danger",
+            "accent"
+          ],
+          "default": "none"
+        },
+        "interactive": {
+          "type": "boolean",
+          "default": false
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-press",
+          "detail": null,
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "surface"
+      ],
+      "accessibility": "Uses delegatesFocus: true; switches container to native <button type='button'> with :focus-visible outline when interactive.",
+      "example": "<ui-surface variant=\"elevated\" padding=\"md\" radius=\"lg\">Content</ui-surface>"
+    },
+    {
+      "tag": "ui-divider",
+      "tier": "atoms",
+      "module": "src/atoms/ui-divider.js",
+      "className": "UiDivider",
+      "description": "Hairline separator Atom supporting horizontal and vertical orientations.",
+      "attributes": {
+        "orientation": {
+          "type": "enum",
+          "values": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "divider"
+      ],
+      "accessibility": "Exposes role='separator' with aria-orientation='horizontal' or 'vertical'.",
+      "example": "<ui-divider orientation=\"horizontal\"></ui-divider>"
+    },
+    {
+      "tag": "ui-panel-header",
+      "tier": "molecules",
+      "module": "src/molecules/ui-panel-header.js",
+      "className": "UiPanelHeader",
+      "description": "Reusable panel header bar Molecule composing a title heading, actions slot, and close <ui-button>/<ui-icon>.",
+      "attributes": {
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "heading-id": {
+          "type": "string",
+          "default": null
+        },
+        "close-label": {
+          "type": "string",
+          "default": "Close"
+        }
+      },
+      "slots": [
+        "actions"
+      ],
+      "events": [
+        {
+          "name": "ui-close",
+          "detail": null,
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "header",
+        "title",
+        "close"
+      ],
+      "accessibility": "Exposes semantic <h2> title and accessible close <ui-button> with <ui-icon name='close'>.",
+      "example": "<ui-panel-header title=\"Elevation Profile\" close-label=\"Close panel\"></ui-panel-header>"
     }
   ]
 }

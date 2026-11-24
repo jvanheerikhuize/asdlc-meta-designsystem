@@ -144,9 +144,9 @@ async function main() {
     const showcase = await cdp.eval(`(() => {
       const tags = [
         'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',
-        'ui-chip', 'ui-progress', 'ui-textarea', 'ui-select', 'ui-dot', 'ui-checkbox', 'ui-slider', 'ui-switch', 'ui-tooltip',
-        'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block', 'ui-toolbar', 'ui-tabs', 'ui-toast',
-        'ui-navbar', 'ui-modal', 'ui-catalog-grid', 'ui-popover', 'ui-drawer',
+        'ui-chip', 'ui-progress', 'ui-textarea', 'ui-select', 'ui-dot', 'ui-checkbox', 'ui-slider', 'ui-switch', 'ui-tooltip', 'ui-surface', 'ui-divider',
+        'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block', 'ui-toolbar', 'ui-tabs', 'ui-panel-header',
+        'ui-navbar', 'ui-modal', 'ui-catalog-grid', 'ui-popover', 'ui-drawer', 'ui-toast',
         'page-shell', 'catalog-layout', 'detail-layout', 'workspace-layout',
       ];
       const defined = tags.every((t) => Boolean(customElements.get(t)));
@@ -155,8 +155,8 @@ async function main() {
       const bgDark = getComputedStyle(document.body).backgroundColor;
       return { defined, shadows, backHref, bgDark };
     })()`);
-    assert.equal(showcase.defined, true, 'All 33 components must be defined');
-    assert.equal(showcase.shadows, true, 'All 33 components must have Shadow DOM');
+    assert.equal(showcase.defined, true, 'All 36 components must be defined');
+    assert.equal(showcase.shadows, true, 'All 36 components must have Shadow DOM');
     assert.equal(showcase.backHref, './specs/');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
 
@@ -203,7 +203,7 @@ async function main() {
       const swAfter = sw.checked;
 
       const tabs = document.getElementById('demo-tabs');
-      tabs.shadowRoot.querySelector('button[data-tab-id="surfaces"]').click();
+      tabs.shadowRoot.querySelector('ui-button[data-tab-id="surfaces"]').shadowRoot.querySelector('button').click();
       const activeTab = tabs.value;
 
       const pop = document.getElementById('demo-popover');

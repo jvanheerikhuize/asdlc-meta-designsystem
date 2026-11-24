@@ -1,3 +1,5 @@
+import '../atoms/ui-surface.js';
+import '../atoms/ui-divider.js';
 import '../atoms/ui-button.js';
 import '../atoms/ui-icon.js';
 
@@ -12,20 +14,12 @@ TEMPLATE.innerHTML = `
       display: none;
     }
 
-    .wrap {
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      border-radius: var(--radius-md, 0.5rem);
-      background: var(--color-surface-elevated, #18181f);
-      overflow: hidden;
-    }
-
     .head {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--space-2, 0.5rem);
       padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
-      border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
       font-family: var(--font-mono, monospace);
       font-size: var(--text-xs, 0.75rem);
       color: var(--color-fg-muted, #8e8e98);
@@ -42,7 +36,7 @@ TEMPLATE.innerHTML = `
       white-space: pre-wrap;
     }
   </style>
-  <div class="wrap" part="container">
+  <ui-surface part="container" variant="elevated" padding="none" radius="md">
     <div class="head" part="header">
       <span class="lang" part="language"></span>
       <ui-button id="copy-btn" part="copy-button" variant="ghost" size="sm" aria-label="Copy code">
@@ -50,12 +44,14 @@ TEMPLATE.innerHTML = `
         <span id="copy-label">Copy</span>
       </ui-button>
     </div>
+    <ui-divider></ui-divider>
     <pre part="pre"><code><slot></slot></code></pre>
-  </div>
+  </ui-surface>
 `;
 
 /**
- * Monospace code/record preview Molecule composing <ui-button> and <ui-icon> for copy-to-clipboard.
+ * Monospace code/record preview Molecule composing <ui-surface>, <ui-divider>,
+ * <ui-button>, and <ui-icon> for copy-to-clipboard.
  */
 export class UiCodeBlock extends HTMLElement {
   static observedAttributes = ['language'];

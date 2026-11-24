@@ -1,4 +1,6 @@
+import '../atoms/ui-surface.js';
 import '../atoms/ui-icon.js';
+import '../atoms/ui-button.js';
 
 const ICONS_BY_VARIANT = {
   info: 'info',
@@ -18,34 +20,25 @@ TEMPLATE.innerHTML = `
       display: none;
     }
 
-    .callout {
+    .row {
       display: flex;
       align-items: flex-start;
       gap: var(--space-3, 0.75rem);
-      padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
-      border-radius: var(--radius-lg, 0.75rem);
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      border-left: 5px solid var(--color-info, #38bdf8);
-      background: var(--color-surface, #111116);
-      color: var(--color-fg, #ededed);
       font-family: var(--font-sans, system-ui, sans-serif);
     }
 
-    :host([variant="success"]) .callout { border-left-color: var(--color-success, #10b981); }
-    :host([variant="warning"]) .callout { border-left-color: var(--color-warning, #f59e0b); }
-    :host([variant="danger"]) .callout { border-left-color: var(--color-danger, #f87171); }
-
-    ui-icon {
+    ui-icon.lead {
       margin-top: 0.125rem;
       color: var(--color-info, #38bdf8);
       flex-shrink: 0;
     }
 
-    :host([variant="success"]) ui-icon { color: var(--color-success, #10b981); }
-    :host([variant="warning"]) ui-icon { color: var(--color-warning, #f59e0b); }
-    :host([variant="danger"]) ui-icon { color: var(--color-danger, #f87171); }
+    :host([variant="success"]) ui-icon.lead { color: var(--color-success, #10b981); }
+    :host([variant="warning"]) ui-icon.lead { color: var(--color-warning, #f59e0b); }
+    :host([variant="danger"]) ui-icon.lead { color: var(--color-danger, #f87171); }
 
     .content {
+      flex: 1;
       display: flex;
       flex-direction: column;
       gap: var(--space-1, 0.25rem);
@@ -57,6 +50,7 @@ TEMPLATE.innerHTML = `
       font-size: var(--text-sm, 0.875rem);
       font-weight: 700;
       line-height: var(--leading-tight, 1.2);
+      color: var(--color-fg, #ededed);
     }
 
     .body {
@@ -65,30 +59,44 @@ TEMPLATE.innerHTML = `
       line-height: var(--leading-normal, 1.5);
     }
   </style>
-  <div class="callout" part="callout" role="note">
-    <ui-icon part="icon" name="info" size="md"></ui-icon>
-    <div class="content">
-      <strong class="title" part="title"></strong>
-      <div class="body" part="body"><slot></slot></div>
+  <ui-surface part="callout" variant="base" padding="md" radius="lg" accent="info" role="note">
+    <div class="row">
+      <ui-icon class="lead" part="icon" name="info" size="md"></ui-icon>
+      <div class="content">
+        <strong class="title" part="title"></strong>
+        <div class="body" part="body"><slot></slot></div>
+      </div>
+      <ui-button class="dismiss" part="dismiss" variant="ghost" size="sm" aria-label="Dismiss" hidden>
+        <ui-icon name="close" size="sm"></ui-icon>
+      </ui-button>
     </div>
-  </div>
+  </ui-surface>
 `;
 
 /**
- * Left-accented status/action banner Molecule composing <ui-icon>.
+ * Left-accented status/action banner Molecule composing <ui-surface>, <ui-icon>,
+ * and optional dismiss <ui-button>.
  */
 export class UiCallout extends HTMLElement {
-  static observedAttributes = ['variant', 'title'];
+  static observedAttributes = ['variant', 'title', 'dismissible', 'elevation'];
 
+  #surface;
   #icon;
   #title;
+  #dismissBtn;
 
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
-    this.#icon = shadow.querySelector('ui-icon');
+    this.#surface = shadow.querySelector('ui-surface');
+    this.#icon = shadow.querySelector('ui-icon.lead');
     this.#title = shadow.querySelector('.title');
+    this.#dismissBtn = shadow.querySelector('.dismiss');
+
+    this.#dismissBtn.addEventListener('ui-press', () => {
+      this.dispatchEvent(new CustomEvent('ui-dismiss', { bubbles: true, composed: true }));
+    });
   }
 
   connectedCallback() {
@@ -100,12 +108,16 @@ export class UiCallout extends HTMLElement {
   }
 
   #sync() {
-    if (!this.#icon || !this.#title) return;
+    if (!this.#surface || !this.#icon || !this.#title || !this.#dismissBtn) return;
     const variant = this.getAttribute('variant') || 'info';
+    this.#surface.setAttribute('accent', variant);
+    const elevation = this.getAttribute('elevation') || 'none';
+    this.#surface.setAttribute('elevation', elevation);
     this.#icon.setAttribute('name', ICONS_BY_VARIANT[variant] || 'info');
     const title = this.getAttribute('title') || '';
     this.#title.textContent = title;
     this.#title.hidden = !title;
+    this.#dismissBtn.hidden = !this.hasAttribute('dismissible');
   }
 }
 

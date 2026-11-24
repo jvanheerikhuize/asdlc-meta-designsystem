@@ -1,4 +1,4 @@
-import '../atoms/ui-button.js';
+import '../atoms/ui-surface.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -17,15 +17,9 @@ TEMPLATE.innerHTML = `
       box-sizing: border-box;
       min-width: 12rem;
       max-width: min(22rem, calc(100vw - 1.5rem));
-      padding: var(--space-3, 0.75rem);
-      border-radius: var(--radius-lg, 0.75rem);
-      border: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      background: var(--color-surface, #111116);
-      color: var(--color-fg, #ededed);
-      box-shadow: var(--shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.6));
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
+      border: 0;
+      padding: 0;
+      background: transparent;
     }
 
     .panel[popover] {
@@ -46,14 +40,15 @@ TEMPLATE.innerHTML = `
     <slot name="trigger"></slot>
   </span>
   <div class="panel" part="panel" popover="auto">
-    <slot></slot>
+    <ui-surface variant="base" elevation="lg" radius="lg" padding="sm">
+      <slot></slot>
+    </ui-surface>
   </div>
 `;
 
 /**
- * Viewport-aware anchored flyout Organism built on the native Popover API
- * (`popover="auto"`) with automatic edge-flipping, Escape/light-dismiss,
- * and `aria-expanded` trigger synchronization.
+ * Viewport-aware anchored flyout Organism composing <ui-surface> inside native
+ * Top Layer `popover="auto"` with collision flipping and `aria-expanded` sync.
  */
 export class UiPopover extends HTMLElement {
   static observedAttributes = ['open', 'placement', 'aria-label'];

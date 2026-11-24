@@ -1,4 +1,4 @@
-"""Automated verification for SPC-0001 (tokens, Atoms, catalog, Pages, WCAG AA contrast)."""
+"""Automated verification for SPC-0001 + SPC-0002 (tokens, strict Atomic tiers, catalog, Pages, WCAG AA contrast)."""
 import json
 import os
 import re
@@ -43,7 +43,7 @@ def _parse_tokens(css_text: str) -> tuple[dict[str, str], dict[str, str]]:
 
 
 class DesignSystemTest(unittest.TestCase):
-    def test_unidirectional_atom_dependencies_and_zero_external_imports(self):  # REQ-0001
+    def test_unidirectional_atom_dependencies_and_strict_composition(self):  # REQ-0001
         tier_order = {"atoms": 1, "molecules": 2, "organisms": 3, "templates": 4}
         for tier, rank in tier_order.items():
             for path in sorted((ROOT / "src" / tier).glob("*.js")):
@@ -59,6 +59,23 @@ class DesignSystemTest(unittest.TestCase):
                             rank,
                             f"{tier}/{path.name} cannot import higher/same tier {imp}",
                         )
+
+                if tier == "molecules":
+                    atom_imports = [i for i in imports if i.startswith("../atoms/")]
+                    self.assertTrue(atom_imports, f"Molecule {path.name} MUST import and compose at least one Atom")
+
+                if tier in ("molecules", "organisms"):
+                    self.assertNotRegex(
+                        src,
+                        r"<(?:button|input|select|textarea)\b",
+                        f"{tier}/{path.name} must compose Atom controls rather than raw <button>/<input>/<select>/<textarea>",
+                    )
+                    src_no_backdrop = re.sub(r"dialog::backdrop\s*\{[^}]*\}", "", src, flags=re.S)
+                    self.assertNotIn(
+                        "backdrop-filter",
+                        src_no_backdrop,
+                        f"{tier}/{path.name} must compose <ui-surface variant='glass'> instead of duplicating backdrop-filter",
+                    )
 
     def test_lumen_tokens_wcag_aa_contrast_and_reduced_motion(self):  # REQ-0002
         css_path = ROOT / "src" / "tokens" / "tokens.css"
@@ -95,7 +112,8 @@ class DesignSystemTest(unittest.TestCase):
     def test_foundational_atoms_encapsulation_and_exports(self):  # REQ-0003
         expected = [
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox", "ui-slider", "ui-switch", "ui-tooltip",
+            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
+            "ui-slider", "ui-switch", "ui-tooltip", "ui-surface", "ui-divider",
         ]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in expected:
@@ -116,7 +134,7 @@ class DesignSystemTest(unittest.TestCase):
             "ui-code-block": "ui-copy",
             "ui-toolbar": "ui-navigate",
             "ui-tabs": "ui-change",
-            "ui-toast": "ui-close",
+            "ui-panel-header": "ui-close",
         }
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag, event_name in expected.items():
@@ -127,7 +145,7 @@ class DesignSystemTest(unittest.TestCase):
                 self.assertIn(event_name, code)
 
     def test_organisms_and_templates_compose_lower_tiers(self):  # REQ-0005
-        organisms = ["ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer"]
+        organisms = ["ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer", "ui-toast"]
         templates = ["page-shell", "catalog-layout", "detail-layout", "workspace-layout"]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in organisms:
@@ -137,6 +155,8 @@ class DesignSystemTest(unittest.TestCase):
         modal_code = (ROOT / "src" / "organisms" / "ui-modal.js").read_text(encoding="utf-8")
         self.assertIn("<dialog", modal_code)
         self.assertIn("showModal()", modal_code)
+        toast_code = (ROOT / "src" / "organisms" / "ui-toast.js").read_text(encoding="utf-8")
+        self.assertIn("<ui-callout", toast_code)
         for tag in templates:
             code = (ROOT / "src" / "templates" / f"{tag}.js").read_text(encoding="utf-8")
             self.assertIn(f"customElements.define('{tag}'", code)
@@ -157,9 +177,11 @@ class DesignSystemTest(unittest.TestCase):
         documented_tags = {c["tag"]: c for c in catalog["components"]}
         expected_tags = {
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox", "ui-slider", "ui-switch", "ui-tooltip",
-            "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout", "ui-code-block", "ui-toolbar", "ui-tabs", "ui-toast",
-            "ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer",
+            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
+            "ui-slider", "ui-switch", "ui-tooltip", "ui-surface", "ui-divider",
+            "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout",
+            "ui-code-block", "ui-toolbar", "ui-tabs", "ui-panel-header",
+            "ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer", "ui-toast",
             "page-shell", "catalog-layout", "detail-layout", "workspace-layout",
         }
         self.assertEqual(set(documented_tags.keys()), expected_tags)
@@ -179,4 +201,3 @@ class DesignSystemTest(unittest.TestCase):
         self.assertTrue((ROOT / "specs" / "README.md").is_file())
         self.assertTrue((ROOT / "specs" / "SPC-0001.md").is_file())
         self.assertTrue((ROOT / "specs" / "SPC-0002.md").is_file())
-

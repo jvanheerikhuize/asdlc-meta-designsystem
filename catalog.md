@@ -62,6 +62,8 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-slider>` | `min`, `max`, `step`, `value`, `disabled`, `variant` (`accent`\|`success`\|`warning`\|`neutral`), `name`, `aria-label`, `aria-valuetext` | — | `ui-input`, `ui-change` | `track`, `slider` |
 | `<ui-switch>` | `checked`, `disabled`, `size` (`sm`\|`md`), `name`, `value`, `aria-label` | default | `ui-change` | `label`, `switch`, `thumb` |
 | `<ui-tooltip>` | `text`, `placement` (`top`\|`bottom`\|`left`\|`right`), `open` | default | — | `tooltip` |
+| `<ui-surface>` | `variant` (`base`\|`elevated`\|`card`\|`glass`), `elevation`, `padding`, `radius`, `accent`, `interactive` | default | `ui-press` | `surface` |
+| `<ui-divider>` | `orientation` (`horizontal`\|`vertical`) | — | — | `divider` |
 
 ## Molecules (`src/molecules/`)
 
@@ -75,7 +77,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-code-block>` | `language` | default | `ui-copy` | `container`, `header`, `language`, `copy-button`, `pre` |
 | `<ui-toolbar>` | `orientation` (`horizontal`\|`vertical`), `variant` (`inline`\|`floating`), `aria-label`, `aria-controls` | default | `ui-navigate` | `toolbar` |
 | `<ui-tabs>` | `tabs` (JSON array), `value`, `aria-label` | default, `<tab-id>` | `ui-change` | `tablist`, `tab`, `panel` |
-| `<ui-toast>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `toast`, `icon`, `title`, `body`, `dismiss` |
+| `<ui-panel-header>` | `title`, `heading-id`, `close-label` | `actions` | `ui-close` | `header`, `title`, `close` |
 
 ## Organisms (`src/organisms/`)
 
@@ -86,6 +88,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-catalog-grid>` | `loading`, `empty`, `empty-text` | default | — | `skeletons`, `grid`, `empty` |
 | `<ui-popover>` | `open`, `placement` (`bottom-start`\|`bottom-end`\|`top-start`\|`top-end`), `aria-label` | `trigger`, default | `ui-open`, `ui-close` | `trigger`, `panel` |
 | `<ui-drawer>` | `title`, `side` (`left`\|`right`\|`bottom`), `mode` (`docked`\|`modal`\|`auto`), `open` | default, `footer` | `ui-open`, `ui-close` | `panel`, `dialog`, `sheet`, `header`, `title`, `close`, `body`, `footer` |
+| `<ui-toast>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `callout` |
 
 ## Templates (`src/templates/`)
 
