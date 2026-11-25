@@ -19,16 +19,27 @@ const links = (label, tags) => el('p', { class: 'relations muted' }, `${label} `
 // How each kind of token is shown, by name prefix. The first match wins.
 const SAMPLES = [
   [/^--(palette|color|glow)-/, 'chip', 'background'],
+  [/^--gradient-/, 'chip', 'background-image'],
   [/^--font-/, 'text', 'font-family'],
   [/^--text-/, 'text', 'font-size'],
+  [/^--type-/, 'text', 'font'],
   [/^--weight-/, 'text', 'font-weight'],
   [/^--tracking-/, 'text', 'letter-spacing'],
   [/^--leading-/, 'text', 'line-height'],
+  [/^--numeric-/, 'text', 'font-variant-numeric'],
   [/^--radius-/, 'box', 'border-radius'],
+  [/^--shadow-text$/, 'text', 'text-shadow'],
   [/^--shadow-/, 'box', 'box-shadow'],
+  [/^--line-/, 'box', 'border'],
+  [/^--ratio-/, 'ratio', 'aspect-ratio'],
   [/^--opacity-/, 'box fill', 'opacity'],
+  [/^--filter-/, 'chip brand', 'filter'],
+  [/^--cursor-/, 'box', 'cursor'],
+  [/^--scale-/, 'box', 'scale'],
   [/^--pad-/, 'box pad', 'padding'],
-  [/^--(space|border|focus|control|icon|size|switch|panel|layout|anchor)-/, 'bar', 'width'],
+  [/^--icon-stroke$/],
+  [/^--layout-columns$/],
+  [/^--(space|inset|stack|cluster|gutter|section|border|focus|control|icon|size|target|switch|panel|layout|anchor|travel)-?/, 'bar', 'width'],
 ];
 function sample(name) {
   const [, kind, prop] = SAMPLES.find(([pattern]) => pattern.test(name)) ?? [];
@@ -38,7 +49,7 @@ function sample(name) {
 }
 function tokenGroup([group, tokens]) {
   const { title, summary } = catalog.tokenGroups[group];
-  const rows = tokens.map((t) => el('li', { class: 'token' }, sample(t.name), el('code', {}, t.name),
+  const rows = tokens.map((t) => el('li', { class: 'token' }, sample(t.name), el('code', {}, t.name), ...(t.role ? [el('span', { class: 'token-value' }, t.role)] : []),
     el('span', { class: 'token-value' }, t.value ?? (t.dark === t.light ? t.dark : `${t.dark} / ${t.light}`))));
   return el('article', { class: 'specimen token-group', 'data-tier': 'tokens', 'data-id': group, id: `tokens-${group}` },
     el('div', { class: 'specimen-head' }, el('h3', {}, title), el('ui-badge', { variant: 'neutral' }, String(tokens.length))),
