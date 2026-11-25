@@ -1,4 +1,5 @@
 import '../atoms/ui-label.js';
+import '../atoms/ui-hint.js';
 import { submitImplicitly } from '../atoms/ui-input.js';
 
 const TEMPLATE = document.createElement('template');
@@ -14,29 +15,14 @@ TEMPLATE.innerHTML = `
       display: none;
     }
 
-    .hint {
-      margin: 0;
-      font-family: var(--font-sans);
-      font-size: var(--text-xs);
-      line-height: var(--leading-normal);
-      color: var(--color-fg-muted);
-    }
-
-    :host([invalid]) .hint {
-      color: var(--color-danger);
-    }
-
-    .hint[hidden] {
-      display: none;
-    }
   </style>
   <ui-label part="label"></ui-label>
   <ui-input part="input"></ui-input>
-  <p class="hint" part="hint" id="field-hint" hidden></p>
+  <ui-hint exportparts="hint" hidden></ui-hint>
 `;
 
 /**
- * Form field Molecule composing <ui-label>, <ui-input>, and hint/error messaging.
+ * Form field Molecule composing <ui-label>, <ui-input>, and <ui-hint>.
  */
 export class UiField extends HTMLElement {
   static observedAttributes = [
@@ -58,7 +44,7 @@ export class UiField extends HTMLElement {
     shadow.appendChild(document.importNode(TEMPLATE.content, true));
     this.#label = shadow.querySelector('ui-label');
     this.#input = shadow.querySelector('ui-input');
-    this.#hint = shadow.querySelector('.hint');
+    this.#hint = shadow.querySelector('ui-hint');
     this.#internals = this.attachInternals();
     this.#input.addEventListener('ui-input', () => this.#syncForm());
     this.#input.addEventListener('keypress', (event) => {
@@ -125,6 +111,7 @@ export class UiField extends HTMLElement {
       : (this.getAttribute('hint') || '');
     this.#hint.textContent = message;
     this.#hint.hidden = !message;
+    this.#hint.setAttribute('tone', this.hasAttribute('invalid') ? 'error' : 'neutral');
     this.#syncForm();
   }
 

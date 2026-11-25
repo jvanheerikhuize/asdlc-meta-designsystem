@@ -110,6 +110,8 @@ class DesignSystemTest(unittest.TestCase):
                     self.assertFalse(imports)
                 if tier == "molecules":
                     atoms = {t for t in composed if (ROOT / "src/atoms" / f"{t}.js").is_file()}
+                    if path.stem not in ("ui-callout", "ui-code-block", "ui-media-card"):  # QST-0004
+                        self.assertNotRegex(src, r"<(?:h[1-6]|p|strong|small|code|a|input|button|select|textarea|img)[ >]", "an atom covers this element")
                     self.assertTrue(1 <= len(atoms) <= 3, f"one to three kinds of atom, got {sorted(atoms)}")
                 if tier == "organisms":
                     molecules = {t for t in composed if (ROOT / "src/molecules" / f"{t}.js").is_file()}

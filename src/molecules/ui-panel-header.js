@@ -1,5 +1,6 @@
 import '../atoms/ui-button.js';
 import '../atoms/ui-icon.js';
+import '../atoms/ui-heading.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -20,17 +21,9 @@ TEMPLATE.innerHTML = `
       padding: var(--space-3) var(--space-4);
     }
 
-    .title {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: var(--text-md);
-      font-weight: var(--weight-bold);
-      line-height: var(--leading-tight);
-      color: var(--color-fg);
-    }
   </style>
   <div class="head" part="header">
-    <h2 class="title" part="title"></h2>
+    <ui-heading class="title" exportparts="heading: title" level="2" size="h5"></ui-heading>
     <slot name="actions"></slot>
     <ui-button class="close-btn" part="close" variant="ghost" size="sm" aria-label="Close">
       <ui-icon name="close" size="sm"></ui-icon>
@@ -39,7 +32,7 @@ TEMPLATE.innerHTML = `
 `;
 
 /**
- * Reusable header bar Molecule composing a title heading and close <ui-button>/<ui-icon>.
+ * Reusable header bar Molecule composing a <ui-heading> and close <ui-button>/<ui-icon>.
  */
 export class UiPanelHeader extends HTMLElement {
   static observedAttributes = ['title', 'heading-id', 'close-label'];

@@ -6,7 +6,7 @@ because: [FCT-0001, FCT-0007, FCT-0010]
 ---
 
 ## Statement
-Molecules (such as Form Field, Search Bar, and Media/Poster Card) MUST compose multiple Atoms through explicit content slots and emit high-level semantic events (such as search submission or card selection) without leaking internal Atom layout details to parent containers.
+Molecules (such as Form Field, Search Bar, and Media/Poster Card) MUST compose multiple Atoms through explicit content slots and emit high-level semantic events (such as search submission or card selection) without leaking internal Atom layout details to parent containers. A Molecule MUST use an existing Atom for each title, message, value or control it shows, as far as the limit of three kinds of Atom allows.
 
 ## Acceptance
 - Given a Search Bar Molecule composed of Label, Text Input, and Button Atoms
