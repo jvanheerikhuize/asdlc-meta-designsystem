@@ -1,22 +1,25 @@
 # ASDLC Meta-DesignSystem
 
-A vanilla, atom-based design system built with plain HTML, CSS, and JavaScript, following Brad Frost's Atomic Design methodology and drawing visual and UX inspiration from [`lumen`](https://github.com/jvanheerikhuize/lumen), specified using the `asdlc-meta-specs` epistemic record graph.
+A vanilla, atom-based design system built with plain HTML, CSS, and JavaScript, extending Brad Frost's Atomic Design with a token tier and drawing visual and UX inspiration from [`lumen`](https://github.com/jvanheerikhuize/lumen), specified using the `asdlc-meta-specs` epistemic record graph.
 
-## Atomic Architecture
+## Tiers
 
-1. **Atoms:** Foundational tokens and indivisible controls (buttons, inputs, labels, badges, icons, loading skeletons).
-2. **Molecules:** Small functional groups (form fields, search bars, media/poster cards).
-3. **Organisms:** Standalone interface sections (site header/navbar, modal dialogs, catalog grids).
-4. **Templates:** Structural page blueprints arranging organisms into responsive grids.
-5. **Pages:** Live instances populated with real content to test the system under real-world conditions.
+Dependencies go one way: a tier never knows a higher one.
+
+1. **Tokens:** named values. The only place for raw colors, lengths, layers and durations.
+2. **Atoms:** one foundational HTML element each, with local state only.
+3. **Molecules:** one to three kinds of atom for one task.
+4. **Organisms:** self-contained regions with their own choreography, such as focus, loading and empty states.
+5. **Templates:** content-agnostic skeletons with slots and responsive placement.
+6. **Pages:** templates with real data. They live in consumers; the [`showcase/`](showcase/) here is one.
+
+Tiers 1 to 5 are the shared package in [`src/`](src/). See [`catalog.md`](catalog.md) for every token and component.
 
 ## Working with Specifications
 
-```bash
-pip install -r requirements.txt
-python3 tools/spec.py check --strict
-python3 tools/spec.py render --tier skeleton --stack TECH_STACK.md
-python3 tools/spec.py index
-```
+Records in `.specs/records/` are behavioral and stack-agnostic, `specs/` is rendered from them, and technology choices live in [`TECH_STACK.md`](TECH_STACK.md).
 
-All technology-specific choices (Web Components, Shadow DOM, CSS Custom Properties, and Lumen visual tokens) live in [`TECH_STACK.md`](TECH_STACK.md), while `records/` stays strictly behavioral and stack-agnostic.
+```bash
+python3 ~/.agents/skills/asdlc-spec-workflow/scripts/sync_specs.py --apply --repo .
+python3 -m unittest discover -s tests
+```
