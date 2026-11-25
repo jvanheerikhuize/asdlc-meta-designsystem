@@ -12,24 +12,24 @@ TEMPLATE.innerHTML = `
     label {
       display: inline-flex;
       align-items: baseline;
-      gap: var(--space-1, 0.25rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      font-weight: 500;
-      line-height: var(--leading-tight, 1.2);
-      color: var(--color-fg, #ededed);
+      gap: var(--space-1);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      line-height: var(--leading-tight);
+      color: var(--color-fg);
       text-box: trim-both cap alphabetic;
     }
 
     :host([size="sm"]) label {
-      font-size: var(--text-xs, 0.75rem);
-      color: var(--color-fg-secondary, #a1a1aa);
+      font-size: var(--text-xs);
+      color: var(--color-fg-secondary);
     }
 
     .req {
       display: none;
-      color: var(--color-accent, #f43f5e);
-      font-weight: 600;
+      color: var(--color-accent);
+      font-weight: var(--weight-semibold);
     }
 
     :host([required]) .req {

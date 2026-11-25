@@ -51,8 +51,8 @@ TEMPLATE.innerHTML = `
 
     svg {
       display: block;
-      width: var(--_icon-size, 1rem);
-      height: var(--_icon-size, 1rem);
+      width: var(--_icon-size, var(--icon-md));
+      height: var(--_icon-size, var(--icon-md));
       fill: none;
       stroke: currentColor;
       stroke-width: 2;
@@ -60,9 +60,9 @@ TEMPLATE.innerHTML = `
       stroke-linejoin: round;
     }
 
-    :host([size="sm"]) svg { --_icon-size: 0.875rem; }
-    :host([size="md"]) svg { --_icon-size: 1rem; }
-    :host([size="lg"]) svg { --_icon-size: 1.375rem; }
+    :host([size="sm"]) svg { --_icon-size: var(--icon-sm); }
+    :host([size="md"]) svg { --_icon-size: var(--icon-md); }
+    :host([size="lg"]) svg { --_icon-size: var(--icon-lg); }
   </style>
   <svg part="icon" viewBox="0 0 24 24" aria-hidden="true"></svg>
 `;

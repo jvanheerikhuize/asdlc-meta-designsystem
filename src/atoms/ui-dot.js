@@ -14,17 +14,17 @@ TEMPLATE.innerHTML = `
 
     .dot {
       display: inline-block;
-      width: 0.625rem;
-      height: 0.625rem;
-      border-radius: var(--radius-full, 9999px);
-      background: var(--color-fg-muted, #8e8e98);
+      width: var(--size-dot);
+      height: var(--size-dot);
+      border-radius: var(--radius-full);
+      background: var(--color-fg-muted);
     }
 
-    :host([status="done"]) .dot { background: var(--color-success, #10b981); }
-    :host([status="wait"]) .dot { background: var(--color-warning, #f59e0b); }
-    :host([status="bad"]) .dot { background: var(--color-danger, #f87171); }
-    :host([status="info"]) .dot { background: var(--color-info, #38bdf8); }
-    :host([status="off"]) .dot { background: var(--color-border-hover, rgba(255, 255, 255, 0.22)); }
+    :host([status="done"]) .dot { background: var(--color-success); }
+    :host([status="wait"]) .dot { background: var(--color-warning); }
+    :host([status="bad"]) .dot { background: var(--color-danger); }
+    :host([status="info"]) .dot { background: var(--color-info); }
+    :host([status="off"]) .dot { background: var(--color-border-hover); }
   </style>
   <span class="dot" part="dot" aria-hidden="true"></span>
 `;

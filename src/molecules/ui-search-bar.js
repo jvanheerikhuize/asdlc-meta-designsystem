@@ -16,7 +16,7 @@ TEMPLATE.innerHTML = `
     .bar {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: var(--space-2, 0.5rem);
+      gap: var(--space-2);
       align-items: center;
     }
 
@@ -41,13 +41,13 @@ TEMPLATE.innerHTML = `
 
     .lead {
       display: none;
-      left: var(--space-3, 0.75rem);
-      color: var(--color-fg-muted, #8e8e98);
+      left: var(--space-3);
+      color: var(--color-fg-muted);
       pointer-events: none;
     }
 
     .clear {
-      right: var(--space-1, 0.25rem);
+      right: var(--space-1);
     }
 
     .clear[hidden] {
@@ -59,11 +59,11 @@ TEMPLATE.innerHTML = `
     }
 
     :host([compact]) ui-input {
-      --ui-input-padding-start: 2.25rem;
+      --ui-input-padding-start: var(--control-md);
     }
 
     :host([clearable]) ui-input {
-      --ui-input-padding-end: 2.5rem;
+      --ui-input-padding-end: var(--space-10);
     }
   </style>
   <div class="bar" part="bar" role="search">

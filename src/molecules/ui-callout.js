@@ -23,40 +23,40 @@ TEMPLATE.innerHTML = `
     .row {
       display: flex;
       align-items: flex-start;
-      gap: var(--space-3, 0.75rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
+      gap: var(--space-3);
+      font-family: var(--font-sans);
     }
 
     ui-icon.lead {
-      margin-top: 0.125rem;
-      color: var(--color-info, #38bdf8);
+      margin-top: var(--space-0-5);
+      color: var(--color-info);
       flex-shrink: 0;
     }
 
-    :host([variant="success"]) ui-icon.lead { color: var(--color-success, #10b981); }
-    :host([variant="warning"]) ui-icon.lead { color: var(--color-warning, #f59e0b); }
-    :host([variant="danger"]) ui-icon.lead { color: var(--color-danger, #f87171); }
+    :host([variant="success"]) ui-icon.lead { color: var(--color-success); }
+    :host([variant="warning"]) ui-icon.lead { color: var(--color-warning); }
+    :host([variant="danger"]) ui-icon.lead { color: var(--color-danger); }
 
     .content {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: var(--space-1, 0.25rem);
+      gap: var(--space-1);
       min-width: 0;
     }
 
     .title {
       margin: 0;
-      font-size: var(--text-sm, 0.875rem);
-      font-weight: 700;
-      line-height: var(--leading-tight, 1.2);
-      color: var(--color-fg, #ededed);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-bold);
+      line-height: var(--leading-tight);
+      color: var(--color-fg);
     }
 
     .body {
-      font-size: var(--text-sm, 0.875rem);
-      color: var(--color-fg-secondary, #a1a1aa);
-      line-height: var(--leading-normal, 1.5);
+      font-size: var(--text-sm);
+      color: var(--color-fg-secondary);
+      line-height: var(--leading-normal);
     }
   </style>
   <ui-surface part="callout" variant="base" padding="md" radius="lg" accent="info" role="note">

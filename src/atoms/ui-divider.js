@@ -19,16 +19,16 @@ TEMPLATE.innerHTML = `
       width: 100%;
       height: 0;
       border: 0;
-      border-block-start: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+      border-block-start: var(--border-width) solid var(--color-border);
       margin: 0;
     }
 
     :host([orientation="vertical"]) .line {
       width: 0;
       height: auto;
-      min-height: 1.25rem;
+      min-height: var(--space-5);
       border-block-start: 0;
-      border-inline-start: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+      border-inline-start: var(--border-width) solid var(--color-border);
     }
   </style>
   <div class="line" part="divider" role="separator" aria-orientation="horizontal"></div>

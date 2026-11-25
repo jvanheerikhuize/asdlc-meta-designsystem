@@ -16,7 +16,7 @@ TEMPLATE.innerHTML = `
     .inner {
       display: flex;
       flex-direction: column;
-      gap: var(--space-3, 0.75rem);
+      gap: var(--space-3);
       height: 100%;
     }
 
@@ -24,24 +24,24 @@ TEMPLATE.innerHTML = `
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-2, 0.5rem);
+      gap: var(--space-2);
     }
 
     .title {
       margin: 0;
-      font-family: var(--font-display, system-ui, sans-serif);
-      font-size: var(--text-lg, 1.125rem);
-      font-weight: 700;
-      line-height: var(--leading-tight, 1.2);
-      color: var(--color-fg, #ededed);
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      line-height: var(--leading-tight);
+      color: var(--color-fg);
     }
 
     .subtitle {
       margin: 0;
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
-      color: var(--color-fg-secondary, #a1a1aa);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+      color: var(--color-fg-secondary);
       flex: 1;
     }
 
@@ -49,10 +49,10 @@ TEMPLATE.innerHTML = `
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-2, 0.5rem);
-      font-family: var(--font-mono, monospace);
-      font-size: var(--text-xs, 0.75rem);
-      color: var(--color-fg-muted, #8e8e98);
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-fg-muted);
     }
   </style>
   <ui-surface part="card" variant="card" padding="lg" radius="lg" interactive>

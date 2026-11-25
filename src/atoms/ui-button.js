@@ -16,108 +16,108 @@ TEMPLATE.innerHTML = `
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: var(--space-2, 0.5rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-weight: 600;
-      line-height: 1;
-      border-radius: var(--radius-md, 0.5rem);
-      border: 1px solid transparent;
+      gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-weight: var(--weight-semibold);
+      line-height: var(--leading-none);
+      border-radius: var(--radius-md);
+      border: var(--border-width) solid transparent;
       cursor: pointer;
       user-select: none;
       white-space: nowrap;
       transition:
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        opacity var(--duration-fast, 120ms) var(--ease-standard, ease);
+        background-color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard),
+        opacity var(--duration-fast) var(--ease-standard);
     }
 
     /* Sizes */
     :host([size="sm"]) button {
-      font-size: var(--text-xs, 0.75rem);
-      padding: var(--space-1, 0.25rem) var(--space-3, 0.75rem);
-      min-height: 1.875rem;
+      font-size: var(--text-xs);
+      padding: var(--space-1) var(--space-3);
+      min-height: var(--control-sm);
     }
 
     :host(:not([size])) button,
     :host([size="md"]) button {
-      font-size: var(--text-sm, 0.875rem);
-      padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
-      min-height: 2.25rem;
+      font-size: var(--text-sm);
+      padding: var(--space-2) var(--space-4);
+      min-height: var(--control-md);
     }
 
     :host([size="lg"]) button {
-      font-size: var(--text-md, 1rem);
-      padding: var(--space-3, 0.75rem) var(--space-5, 1.25rem);
-      min-height: 2.75rem;
+      font-size: var(--text-md);
+      padding: var(--space-3) var(--space-5);
+      min-height: var(--control-lg);
     }
 
     /* Variants */
     :host(:not([variant])) button,
     :host([variant="primary"]) button {
-      background: var(--color-accent, #f43f5e);
-      color: var(--color-accent-fg, #08080b);
+      background: var(--color-accent);
+      color: var(--color-accent-fg);
     }
 
     :host(:not([variant])) button:hover:not(:disabled):not([aria-busy="true"]),
     :host([variant="primary"]) button:hover:not(:disabled):not([aria-busy="true"]) {
-      background: var(--color-accent-hover, #fb7185);
+      background: var(--color-accent-hover);
     }
 
     :host([variant="secondary"]) button {
-      background: var(--color-card, rgba(255, 255, 255, 0.04));
-      color: var(--color-fg, #ededed);
-      border-color: var(--color-border, rgba(255, 255, 255, 0.08));
+      background: var(--color-card);
+      color: var(--color-fg);
+      border-color: var(--color-border);
     }
 
     :host([variant="secondary"]) button:hover:not(:disabled):not([aria-busy="true"]) {
-      background: var(--color-card-hover, rgba(255, 255, 255, 0.07));
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
+      background: var(--color-card-hover);
+      border-color: var(--color-border-hover);
     }
 
     :host([variant="ghost"]) button {
       background: transparent;
-      color: var(--color-fg-secondary, #a1a1aa);
+      color: var(--color-fg-secondary);
     }
 
     :host([variant="ghost"]) button:hover:not(:disabled):not([aria-busy="true"]) {
-      background: var(--color-card, rgba(255, 255, 255, 0.04));
-      color: var(--color-fg, #ededed);
+      background: var(--color-card);
+      color: var(--color-fg);
     }
 
     :host([variant="surface"]) button {
-      background: var(--color-surface, #111116);
-      color: var(--color-fg, #ededed);
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.35));
+      background: var(--color-surface);
+      color: var(--color-fg);
+      border-color: var(--color-border-hover);
+      box-shadow: var(--shadow-sm);
     }
 
     :host([variant="danger"]) button {
-      background: var(--color-danger, #f87171);
-      color: var(--color-danger-fg, #08080b);
+      background: var(--color-danger);
+      color: var(--color-danger-fg);
     }
 
     /* Toggle button that is on */
     :host([aria-pressed="true"]:not([variant="danger"])) button {
-      background: color-mix(in srgb, var(--color-accent, #f43f5e) 18%, transparent);
-      border-color: color-mix(in srgb, var(--color-accent, #f43f5e) 50%, transparent);
-      color: var(--color-fg, #ededed);
+      background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+      border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+      color: var(--color-fg);
     }
 
     :host([aria-pressed="true"]:not([variant="danger"])) button:hover:not(:disabled):not([aria-busy="true"]) {
-      background: color-mix(in srgb, var(--color-accent, #f43f5e) 28%, transparent);
+      background: color-mix(in srgb, var(--color-accent) 28%, transparent);
     }
 
     /* Focus ring */
     button:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
     }
 
     /* Disabled & busy states */
     :host([disabled]) button,
     :host([busy]) button {
-      opacity: 0.55;
+      opacity: var(--opacity-disabled);
       cursor: not-allowed;
     }
 
@@ -125,10 +125,10 @@ TEMPLATE.innerHTML = `
       display: none;
       width: 0.875em;
       height: 0.875em;
-      border: 2px solid currentColor;
+      border: var(--border-width-strong) solid currentColor;
       border-right-color: transparent;
-      border-radius: 9999px;
-      animation: ui-spin 650ms linear infinite;
+      border-radius: var(--radius-full);
+      animation: ui-spin var(--duration-spin) linear infinite;
     }
 
     :host([busy]) .spinner {
@@ -146,7 +146,7 @@ TEMPLATE.innerHTML = `
       .spinner {
         animation: none;
         border-right-color: currentColor;
-        opacity: 0.7;
+        opacity: var(--opacity-muted);
       }
     }
   </style>

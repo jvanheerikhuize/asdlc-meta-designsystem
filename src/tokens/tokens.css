@@ -7,37 +7,80 @@
   color-scheme: dark;
   scrollbar-color: var(--color-border-hover) transparent;
 
+  /* ---- Primitives: raw values. Only the semantic tokens below may use them. ---- */
+  --palette-amber-500: #f59e0b;
+  --palette-amber-700: #b45309;
+  --palette-amber-dark-a05: rgba(251, 146, 60, 0.05);
+  --palette-amber-light-a04: rgba(217, 119, 6, 0.04);
+  --palette-black-a75: rgba(0, 0, 0, 0.75);
+  --palette-emerald-500: #10b981;
+  --palette-emerald-700: #047857;
+  --palette-ink-800: #18181f;
+  --palette-ink-900: #111116;
+  --palette-ink-950: #08080b;
+  --palette-ink-975: #09090b;
+  --palette-ink-a03: rgba(9, 9, 11, 0.03);
+  --palette-ink-a06: rgba(9, 9, 11, 0.06);
+  --palette-ink-a10: rgba(9, 9, 11, 0.10);
+  --palette-ink-a24: rgba(9, 9, 11, 0.24);
+  --palette-ink-a55: rgba(9, 9, 11, 0.55);
+  --palette-paper-100: #f4f4f5;
+  --palette-paper-200: #ededed;
+  --palette-paper-50: #fafafa;
+  --palette-red-400: #f87171;
+  --palette-red-600: #dc2626;
+  --palette-rose-400: #fb7185;
+  --palette-rose-500: #f43f5e;
+  --palette-rose-600: #e11d48;
+  --palette-rose-700: #be123c;
+  --palette-rose-dark-a08: rgba(244, 63, 94, 0.08);
+  --palette-rose-light-a06: rgba(225, 29, 72, 0.06);
+  --palette-sky-400: #38bdf8;
+  --palette-sky-700: #0369a1;
+  --palette-white: #ffffff;
+  --palette-white-a04: rgba(255, 255, 255, 0.04);
+  --palette-white-a07: rgba(255, 255, 255, 0.07);
+  --palette-white-a08: rgba(255, 255, 255, 0.08);
+  --palette-white-a22: rgba(255, 255, 255, 0.22);
+  --palette-zinc-400: #a1a1aa;
+  --palette-zinc-450: #8e8e98;
+  --palette-zinc-550: #5c5c66;
+  --palette-zinc-600: #52525b;
+
+  /* ---- Semantic tokens ---- */
+
   /* Canvas & Surfaces (Dark default: Obsidian) */
-  --color-bg: #08080b;
-  --color-surface: #111116;
-  --color-surface-elevated: #18181f;
-  --color-card: rgba(255, 255, 255, 0.04);
-  --color-card-hover: rgba(255, 255, 255, 0.07);
-  --color-overlay: rgba(0, 0, 0, 0.75);
+  --color-bg: var(--palette-ink-950);
+  --color-surface: var(--palette-ink-900);
+  --color-surface-elevated: var(--palette-ink-800);
+  --color-card: var(--palette-white-a04);
+  --color-card-hover: var(--palette-white-a07);
+  --color-overlay: var(--palette-black-a75);
 
   /* Ambient Glow */
-  --glow-rose: rgba(244, 63, 94, 0.08);
-  --glow-amber: rgba(251, 146, 60, 0.05);
+  --glow-rose: var(--palette-rose-dark-a08);
+  --glow-amber: var(--palette-amber-dark-a05);
 
   /* Borders & Hairlines */
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(255, 255, 255, 0.22);
-  --color-focus-ring: #f43f5e;
+  --color-border: var(--palette-white-a08);
+  --color-border-hover: var(--palette-white-a22);
+  --color-focus-ring: var(--palette-rose-500);
 
   /* Foreground Text Hierarchy (WCAG AA >= 4.5:1 on --color-bg and --color-surface) */
-  --color-fg: #ededed;
-  --color-fg-secondary: #a1a1aa;
-  --color-fg-muted: #8e8e98;
+  --color-fg: var(--palette-paper-200);
+  --color-fg-secondary: var(--palette-zinc-400);
+  --color-fg-muted: var(--palette-zinc-450);
 
   /* Brand & Status Accents */
-  --color-accent: #f43f5e;
-  --color-accent-hover: #fb7185;
-  --color-accent-fg: #08080b;
-  --color-info: #38bdf8;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #f87171;
-  --color-danger-fg: #08080b;
+  --color-accent: var(--palette-rose-500);
+  --color-accent-hover: var(--palette-rose-400);
+  --color-accent-fg: var(--palette-ink-950);
+  --color-info: var(--palette-sky-400);
+  --color-success: var(--palette-emerald-500);
+  --color-warning: var(--palette-amber-500);
+  --color-danger: var(--palette-red-400);
+  --color-danger-fg: var(--palette-ink-950);
+  --color-thumb: var(--palette-white);
 
   /* Typography */
   --font-sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -55,6 +98,7 @@
   --leading-normal: 1.5;
 
   /* Spacing */
+  --space-0-5: 0.125rem;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -66,6 +110,7 @@
   --space-12: 3rem;
 
   /* Radii */
+  --radius-xs: 2px;
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
@@ -76,12 +121,88 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --shadow-thumb: 0 1px 3px rgba(0, 0, 0, 0.35);
 
   /* Motion */
   --duration-fast: 120ms;
   --duration-normal: 220ms;
   --duration-shimmer: 1400ms;
+  --duration-spin: 650ms;
   --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Typography extras */
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --leading-none: 1;
+  --leading-snug: 1.15;
+  --leading-control: 1.25;
+  --tracking-label: 0.02em;
+
+  /* Border widths */
+  --border-width: 1px;
+  --border-width-strong: 2px;
+  --border-width-thumb: 2.5px;
+  --border-width-accent: 4px;
+  --focus-width: 2px;
+  --focus-offset: 2px;
+  --focus-offset-wide: 4px;
+
+  /* Sizes */
+  --control-sm: 1.875rem;
+  --control-md: 2.25rem;
+  --control-lg: 2.75rem;
+  --icon-sm: 0.875rem;
+  --icon-md: 1rem;
+  --icon-lg: 1.375rem;
+  --size-dot: 0.625rem;
+  --size-checkbox: 1.05rem;
+  --size-checkmark: 0.55rem;
+  --size-track: 0.375rem;
+  --size-thumb: 0.95rem;
+  --size-thumb-sm: 0.75rem;
+  --size-skeleton: 5rem;
+  --size-skeleton-card: 9rem;
+  --switch-width: 2.35rem;
+  --switch-height: 1.35rem;
+  --switch-travel: 1rem;
+  --switch-width-sm: 1.95rem;
+  --switch-height-sm: 1.1rem;
+  --switch-travel-sm: 0.85rem;
+  --pad-badge-sm: 0.25rem 0.55rem;
+  --pad-badge-md: 0.35rem 0.75rem;
+  --pad-chip: 0.4rem 0.75rem;
+
+  /* Layout */
+  --panel-menu-min: 12rem;
+  --panel-tray: 14rem;
+  --panel-tooltip: 16rem;
+  --panel-sheet: 20rem;
+  --panel-menu: 22rem;
+  --panel-drawer: 22rem;
+  --panel-toast: 26rem;
+  --panel-modal: 36rem;
+  --layout-search-min: 220px;
+  --layout-search-max: 340px;
+  --layout-aside: 260px;
+  --layout-card-min: 260px;
+  --layout-content: 1120px;
+  /* Read by scripts, so px only */
+  --anchor-gap: 6px;
+  --anchor-margin: 8px;
+
+  /* Layers */
+  --z-floating: 10;
+  --z-tray: 12;
+  --z-panel: 15;
+  --z-header: 20;
+  --z-tooltip: 60;
+
+  /* Effects */
+  --opacity-disabled: 0.55;
+  --opacity-muted: 0.7;
+  --frost-sm: 8px;
+  --frost-md: 12px;
 }
 
 [data-theme="light"] {
@@ -89,36 +210,36 @@
   scrollbar-color: var(--color-border-hover) transparent;
 
   /* Canvas & Surfaces (Paper) */
-  --color-bg: #fafafa;
-  --color-surface: #ffffff;
-  --color-surface-elevated: #f4f4f5;
-  --color-card: rgba(9, 9, 11, 0.03);
-  --color-card-hover: rgba(9, 9, 11, 0.06);
-  --color-overlay: rgba(9, 9, 11, 0.55);
+  --color-bg: var(--palette-paper-50);
+  --color-surface: var(--palette-white);
+  --color-surface-elevated: var(--palette-paper-100);
+  --color-card: var(--palette-ink-a03);
+  --color-card-hover: var(--palette-ink-a06);
+  --color-overlay: var(--palette-ink-a55);
 
   /* Ambient Glow */
-  --glow-rose: rgba(225, 29, 72, 0.06);
-  --glow-amber: rgba(217, 119, 6, 0.04);
+  --glow-rose: var(--palette-rose-light-a06);
+  --glow-amber: var(--palette-amber-light-a04);
 
   /* Borders & Hairlines */
-  --color-border: rgba(9, 9, 11, 0.10);
-  --color-border-hover: rgba(9, 9, 11, 0.24);
-  --color-focus-ring: #e11d48;
+  --color-border: var(--palette-ink-a10);
+  --color-border-hover: var(--palette-ink-a24);
+  --color-focus-ring: var(--palette-rose-600);
 
   /* Foreground Text Hierarchy (WCAG AA >= 4.5:1 on --color-bg and --color-surface) */
-  --color-fg: #09090b;
-  --color-fg-secondary: #52525b;
-  --color-fg-muted: #5c5c66;
+  --color-fg: var(--palette-ink-975);
+  --color-fg-secondary: var(--palette-zinc-600);
+  --color-fg-muted: var(--palette-zinc-550);
 
   /* Brand & Status Accents */
-  --color-accent: #e11d48;
-  --color-accent-hover: #be123c;
-  --color-accent-fg: #ffffff;
-  --color-info: #0369a1;
-  --color-success: #047857;
-  --color-warning: #b45309;
-  --color-danger: #dc2626;
-  --color-danger-fg: #ffffff;
+  --color-accent: var(--palette-rose-600);
+  --color-accent-hover: var(--palette-rose-700);
+  --color-accent-fg: var(--palette-white);
+  --color-info: var(--palette-sky-700);
+  --color-success: var(--palette-emerald-700);
+  --color-warning: var(--palette-amber-700);
+  --color-danger: var(--palette-red-600);
+  --color-danger-fg: var(--palette-white);
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(9, 9, 11, 0.06);
@@ -131,6 +252,7 @@
     --duration-fast: 0ms;
     --duration-normal: 0ms;
     --duration-shimmer: 0ms;
+    --duration-spin: 0ms;
   }
 
   *,

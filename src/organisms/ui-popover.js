@@ -15,8 +15,8 @@ TEMPLATE.innerHTML = `
 
     .panel {
       box-sizing: border-box;
-      min-width: 12rem;
-      max-width: min(22rem, calc(100vw - 1.5rem));
+      min-width: var(--panel-menu-min);
+      max-width: min(var(--panel-menu), calc(100vw - var(--space-6)));
       border: 0;
       padding: 0;
       background: transparent;
@@ -168,23 +168,25 @@ export class UiPopover extends HTMLElement {
     const triggerRect = this.#triggerWrap.getBoundingClientRect();
     const panelRect = this.#panel.getBoundingClientRect();
     const placement = this.getAttribute('placement') || 'bottom-start';
-    const gap = 6;
+    const px = (name) => parseFloat(getComputedStyle(this).getPropertyValue(name)) || 0;
+    const gap = px('--anchor-gap');
+    const edge = px('--anchor-margin');
 
     const preferTop = placement.startsWith('top');
-    const fitsBelow = triggerRect.bottom + gap + panelRect.height <= window.innerHeight - 8;
-    const fitsAbove = triggerRect.top - gap - panelRect.height >= 8;
+    const fitsBelow = triggerRect.bottom + gap + panelRect.height <= window.innerHeight - edge;
+    const fitsAbove = triggerRect.top - gap - panelRect.height >= edge;
 
     const placeAbove = preferTop ? (fitsAbove || !fitsBelow) : (!fitsBelow && fitsAbove);
     const top = placeAbove
-      ? Math.max(8, triggerRect.top - gap - panelRect.height)
-      : Math.min(window.innerHeight - panelRect.height - 8, triggerRect.bottom + gap);
+      ? Math.max(edge, triggerRect.top - gap - panelRect.height)
+      : Math.min(window.innerHeight - panelRect.height - edge, triggerRect.bottom + gap);
 
     const preferEnd = placement.endsWith('end');
     const rawLeft = preferEnd ? triggerRect.right - panelRect.width : triggerRect.left;
-    const left = Math.max(8, Math.min(rawLeft, window.innerWidth - panelRect.width - 8));
+    const left = Math.max(edge, Math.min(rawLeft, window.innerWidth - panelRect.width - edge));
 
-    this.#panel.style.top = `${Math.max(8, top)}px`;
-    this.#panel.style.left = `${Math.max(8, left)}px`;
+    this.#panel.style.top = `${Math.max(edge, top)}px`;
+    this.#panel.style.left = `${Math.max(edge, left)}px`;
   }
 
   #syncExpanded(expanded) {

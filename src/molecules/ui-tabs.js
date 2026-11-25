@@ -7,8 +7,8 @@ TEMPLATE.innerHTML = `
     :host {
       display: flex;
       flex-direction: column;
-      gap: var(--space-3, 0.75rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
+      gap: var(--space-3);
+      font-family: var(--font-sans);
     }
 
     :host([hidden]) {
@@ -27,15 +27,15 @@ TEMPLATE.innerHTML = `
     .tablist {
       display: flex;
       align-items: center;
-      gap: var(--space-1, 0.25rem);
+      gap: var(--space-1);
       overflow-x: auto;
       scrollbar-width: none;
     }
 
     .panel {
-      color: var(--color-fg, #ededed);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
+      color: var(--color-fg);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
     }
   </style>
   <ui-surface variant="elevated" padding="xs" radius="lg">

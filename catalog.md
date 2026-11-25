@@ -20,15 +20,31 @@ Declare `Design-System: asdlc-meta-designsystem@latest` (auto-updating default) 
 ```
 
 - `ensureTokens(doc = document)` (exported from `src/index.js`) idempotently injects `<link rel="stylesheet" href=".../tokens.css">` if not already present.
-- `tokens.css` defines custom properties only; it does not reset `body` styles or bundle `@font-face` files. Load the fonts in the page itself: `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap">`.
+- `tokens.css` defines custom properties only and is required, because components have no fallback values; it does not reset `body` styles or bundle `@font-face` files. Load the fonts in the page itself: `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap">`.
 - **MkDocs Material Adapter (`src/tokens/mkdocs-theme.css`):** For MkDocs Material documentation/wiki sites, include both `.../src/tokens/tokens.css` and `.../src/tokens/mkdocs-theme.css` in `extra_css` (and set `palette` default to `slate`) to bridge `--md-*` theme variables to ASDLC `--color-*` and `--font-*` tokens.
 - Theme switching: dark mode is the default on `:root`; set `data-theme="light"` on `<html>` (or an ancestor) for light mode.
 - **Shadow DOM Notes:** `<ui-button>` aligns slotted `<ui-icon>` and text with `inline-flex` + `gap` and `<ui-icon>` inherits `currentColor`. `<ui-input>` exposes a live `.value` JS property in addition to `ui-input`/`ui-change` events. `<ui-button>`, `<ui-input>` and `<ui-field>` are form-associated: use them in a `<form>` and listen to `submit`. A `ui-button` is not the event's `submitter`. The other controls are not form-associated, and there is no cross-shadow `<label for>` bridging, so pair `<ui-input>` with `aria-label`. `<ui-skeleton lines>` applies only when `variant="text"`.
 
 ## Tier Architecture (`REQ-0001`)
 
-`tokens` -> `atoms` -> `molecules` -> `organisms` -> `templates` -> `pages`
-Lower tiers MUST NOT import or depend on higher tiers.
+Each arrow means "may use". Lower tiers MUST NOT import or depend on higher tiers.
+
+```mermaid
+flowchart RL
+  pages["6 Pages (consumers)"] --> templates["5 Templates"]
+  pages --> organisms["4 Organisms"]
+  organisms --> molecules["3 Molecules"]
+  organisms --> atoms["2 Atoms"]
+  molecules --> atoms
+  atoms --> tokens["1 Tokens"]
+  molecules --> tokens
+  organisms --> tokens
+  templates --> tokens
+  pages --> molecules
+  pages --> atoms
+```
+
+Templates take components only through slots, so they import none.
 
 ## Design Tokens (`src/tokens/tokens.css`)
 
@@ -42,6 +58,13 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | Typography | `--font-sans`, `--font-display`, `--font-mono`, `--text-xs`..`--text-2xl`, `--leading-tight`, `--leading-normal` | `Geist`, `Bricolage Grotesque`, `Geist Mono` | same |
 | Spacing & Radii | `--space-1`..`--space-12`, `--radius-sm`..`--radius-full` | `0.25rem`..`3rem`, `0.375rem`..`9999px` | same |
 | Shadows & Motion | `--shadow-sm`..`--shadow-lg`, `--duration-fast`, `--duration-normal`, `--duration-shimmer`, `--ease-standard` | `120ms`, `220ms`, `1400ms` (`0ms` under `prefers-reduced-motion: reduce`) | lighter alpha shadows |
+| Primitives | `--palette-*` | Raw colors for the semantic tokens above. Do not use them directly. | same |
+| Type details | `--weight-medium`, `--weight-semibold`, `--weight-bold`, `--leading-none`, `--leading-snug`, `--leading-control`, `--tracking-label` | `500`, `600`, `700`, `1`, `1.15`, `1.25`, `0.02em` | same |
+| Borders & focus widths | `--border-width`, `-strong`, `-thumb`, `-accent`, `--focus-width`, `--focus-offset`, `--focus-offset-wide` | `1px`..`4px` | same |
+| Sizes | `--control-*`, `--icon-*`, `--size-*`, `--switch-*`, `--pad-*` | see `catalog.json` | same |
+| Layout | `--panel-*`, `--layout-*`, `--anchor-gap`, `--anchor-margin` | see `catalog.json` | same |
+| Layers | `--z-floating`, `--z-tray`, `--z-panel`, `--z-header`, `--z-tooltip` | `10`, `12`, `15`, `20`, `60` | same |
+| Effects | `--opacity-disabled`, `--opacity-muted`, `--frost-sm`, `--frost-md` | `0.55`, `0.7`, `8px`, `12px` | same |
 
 ## Atoms (`src/atoms/`)
 
@@ -78,6 +101,8 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-toolbar>` | `orientation` (`horizontal`\|`vertical`), `variant` (`inline`\|`floating`), `aria-label`, `aria-controls` | default | `ui-navigate` | `toolbar` |
 | `<ui-tabs>` | `tabs` (JSON array), `value`, `full-width`, `aria-label` | default, `<tab-id>` | `ui-change` | `tablist`, `tab`, `panel` |
 | `<ui-panel-header>` | `title`, `heading-id`, `close-label` | `actions` | `ui-close` | `header`, `title`, `close` |
+| `<ui-empty-state>` | `text`, `icon` | default | — | `container`, `body`, `text` |
+| `<ui-theme-toggle>` | `theme` (`dark`\|`light`) | — | `ui-theme-change` | `theme-button` |
 
 ## Organisms (`src/organisms/`)
 
@@ -89,7 +114,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | `<ui-popover>` | `open`, `placement` (`bottom-start`\|`bottom-end`\|`top-start`\|`top-end`), `aria-label` | `trigger`, default | `ui-open`, `ui-close` | `trigger`, `panel` |
 | `<ui-drawer>` | `title`, `side` (`left`\|`right`\|`bottom`), `mode` (`docked`\|`modal`\|`auto`), `open` | default, `footer` | `ui-open`, `ui-close` | `panel`, `dialog`, `sheet`, `header`, `title`, `close`, `body`, `footer` |
 | `<ui-toast>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `callout` |
-| `<ui-table>` | `aria-label` | default (native `<table>`) | — | `scroll` |
+| `<ui-table>` | `aria-label`, `loading`, `empty`, `empty-text` | default (native `<table>`) | — | `scroll`, `skeleton`, `empty` |
 
 ## Templates (`src/templates/`)
 

@@ -11,36 +11,36 @@ TEMPLATE.innerHTML = `
 
     .track {
       display: flex;
-      gap: 2px;
+      gap: var(--space-0-5);
       width: 100%;
-      height: 0.5rem;
-      border-radius: var(--radius-full, 9999px);
-      background: var(--color-card, rgba(255, 255, 255, 0.04));
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+      height: var(--space-2);
+      border-radius: var(--radius-full);
+      background: var(--color-card);
+      border: var(--border-width) solid var(--color-border);
       overflow: hidden;
     }
 
     .fill,
     .seg {
       height: 100%;
-      border-radius: var(--radius-full, 9999px);
-      background: var(--color-success, #10b981);
-      transition: width var(--duration-normal, 220ms) var(--ease-standard, ease);
+      border-radius: var(--radius-full);
+      background: var(--color-success);
+      transition: width var(--duration-normal) var(--ease-standard);
     }
 
     .seg {
-      border-radius: 2px;
-      min-width: 4px;
+      border-radius: var(--radius-xs);
+      min-width: var(--space-1);
     }
 
     :host([variant="accent"]) .fill,
-    .seg[data-variant="accent"] { background: var(--color-accent, #f43f5e); }
+    .seg[data-variant="accent"] { background: var(--color-accent); }
     :host([variant="warning"]) .fill,
-    .seg[data-variant="warning"] { background: var(--color-warning, #f59e0b); }
+    .seg[data-variant="warning"] { background: var(--color-warning); }
     :host([variant="danger"]) .fill,
-    .seg[data-variant="danger"] { background: var(--color-danger, #f87171); }
-    .seg[data-variant="info"] { background: var(--color-info, #38bdf8); }
-    .seg[data-variant="off"] { background: var(--color-border-hover, rgba(255, 255, 255, 0.22)); }
+    .seg[data-variant="danger"] { background: var(--color-danger); }
+    .seg[data-variant="info"] { background: var(--color-info); }
+    .seg[data-variant="off"] { background: var(--color-border-hover); }
 
     @media (prefers-reduced-motion: reduce) {
       .fill,

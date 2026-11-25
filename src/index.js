@@ -25,6 +25,8 @@ export { UiCodeBlock } from './molecules/ui-code-block.js';
 export { UiToolbar } from './molecules/ui-toolbar.js';
 export { UiTabs } from './molecules/ui-tabs.js';
 export { UiPanelHeader } from './molecules/ui-panel-header.js';
+export { UiEmptyState } from './molecules/ui-empty-state.js';
+export { UiThemeToggle } from './molecules/ui-theme-toggle.js';
 
 export { UiNavbar } from './organisms/ui-navbar.js';
 export { UiModal } from './organisms/ui-modal.js';
@@ -71,6 +73,8 @@ export const MOLECULES = [
   'ui-toolbar',
   'ui-tabs',
   'ui-panel-header',
+  'ui-empty-state',
+  'ui-theme-toggle',
 ];
 
 export const ORGANISMS = [

@@ -1,12 +1,15 @@
+import '../atoms/ui-skeleton.js';
+import '../molecules/ui-empty-state.js';
+
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
   <style>
     :host {
       display: block;
       min-width: 0;
-      color: var(--color-fg, #ededed);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
+      color: var(--color-fg);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
     }
 
     :host([hidden]) {
@@ -15,15 +18,22 @@ TEMPLATE.innerHTML = `
 
     .scroll {
       overflow-x: auto;
-      border-radius: var(--radius-sm, 0.375rem);
+      border-radius: var(--radius-sm);
+    }
+
+    .scroll[hidden],
+    ui-skeleton[hidden] {
+      display: none;
     }
 
     .scroll:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #fb7185);
-      outline-offset: 2px;
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
     }
   </style>
   <div class="scroll" part="scroll" role="region"><slot></slot></div>
+  <ui-skeleton part="skeleton" variant="text" lines="4" hidden></ui-skeleton>
+  <ui-empty-state part="empty" hidden></ui-empty-state>
 `;
 
 // Cells stay in the owning document so native table semantics and queries keep working.
@@ -31,20 +41,21 @@ const CELLS = new CSSStyleSheet();
 CELLS.replaceSync(`
   ui-table > table { width: 100%; border-collapse: collapse; }
   ui-table > table :is(th, td) {
-    padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
-    border-block-end: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+    padding: var(--space-2) var(--space-3);
+    border-block-end: var(--border-width) solid var(--color-border);
     text-align: start;
     white-space: nowrap;
   }
-  ui-table > table th { color: var(--color-fg-secondary, #a1a1aa); font-weight: 500; }
-  ui-table > table caption { padding-block-end: var(--space-2, 0.5rem); text-align: start; color: var(--color-fg-secondary, #a1a1aa); }
+  ui-table > table th { color: var(--color-fg-secondary); font-weight: var(--weight-medium); }
+  ui-table > table caption { padding-block-end: var(--space-2); text-align: start; color: var(--color-fg-secondary); }
 `);
 
 /**
- * Data table Organism: styles a slotted native <table> and scrolls it inside a labelled region.
+ * Data table Organism: styles a slotted native <table> and scrolls it inside a labelled region,
+ * or shows a loading placeholder or an empty message in its place.
  */
 export class UiTable extends HTMLElement {
-  static observedAttributes = ['aria-label'];
+  static observedAttributes = ['aria-label', 'loading', 'empty', 'empty-text'];
 
   #scroll;
   #slot;
@@ -62,7 +73,7 @@ export class UiTable extends HTMLElement {
   connectedCallback() {
     const root = this.getRootNode();
     if (root.adoptedStyleSheets && !root.adoptedStyleSheets.includes(CELLS)) root.adoptedStyleSheets.push(CELLS);
-    this.#syncLabel();
+    this.#sync();
     this.#observe();
   }
 
@@ -71,7 +82,7 @@ export class UiTable extends HTMLElement {
   }
 
   attributeChangedCallback() {
-    this.#syncLabel();
+    this.#sync();
   }
 
   #observe() {
@@ -81,8 +92,15 @@ export class UiTable extends HTMLElement {
     for (const el of this.#slot.assignedElements()) this.#observer.observe(el);
   }
 
-  #syncLabel() {
+  #sync() {
+    const loading = this.hasAttribute('loading');
+    const empty = !loading && this.hasAttribute('empty');
+    const emptyState = this.shadowRoot.querySelector('ui-empty-state');
     this.#scroll.setAttribute('aria-label', this.getAttribute('aria-label') || 'Table');
+    this.#scroll.hidden = loading || empty;
+    this.shadowRoot.querySelector('ui-skeleton').hidden = !loading;
+    emptyState.hidden = !empty;
+    emptyState.setAttribute('text', this.getAttribute('empty-text') || 'No rows.');
   }
 
   // A region that does not scroll must not be an extra keyboard stop.

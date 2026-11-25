@@ -21,37 +21,37 @@ TEMPLATE.innerHTML = `
       -webkit-appearance: none;
       box-sizing: border-box;
       width: 100%;
-      height: 2.25rem;
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      font-weight: 500;
-      line-height: 1.25;
-      color: var(--color-fg, #ededed);
-      background: var(--color-surface, #111116);
-      border: 1px solid color-mix(in srgb, var(--color-border-hover, rgba(255, 255, 255, 0.22)) 75%, transparent);
-      border-radius: var(--radius-md, 0.5rem);
-      padding: 0 2.25rem 0 var(--space-3, 0.75rem);
+      height: var(--control-md);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      line-height: var(--leading-control);
+      color: var(--color-fg);
+      background: var(--color-surface);
+      border: var(--border-width) solid color-mix(in srgb, var(--color-border-hover) 75%, transparent);
+      border-radius: var(--radius-md);
+      padding: 0 var(--control-md) 0 var(--space-3);
       cursor: pointer;
       transition:
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        box-shadow var(--duration-fast, 120ms) var(--ease-standard, ease);
+        border-color var(--duration-fast) var(--ease-standard),
+        background-color var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
     }
 
     select:hover:not(:disabled) {
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      background: var(--color-surface-elevated, #18181f);
+      border-color: var(--color-border-hover);
+      background: var(--color-surface-elevated);
     }
 
     select:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
-      border-color: var(--color-focus-ring, #f43f5e);
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
+      border-color: var(--color-focus-ring);
     }
 
     option {
-      background: var(--color-surface-elevated, #18181f);
-      color: var(--color-fg, #ededed);
+      background: var(--color-surface-elevated);
+      color: var(--color-fg);
     }
 
     @supports (appearance: base-select) {
@@ -70,58 +70,58 @@ TEMPLATE.innerHTML = `
       }
 
       select::picker(select) {
-        margin-block-start: 4px;
-        padding: var(--space-1, 0.25rem);
-        border: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
-        border-radius: var(--radius-md, 0.5rem);
-        background: var(--color-surface-elevated, #18181f);
-        color: var(--color-fg, #ededed);
-        box-shadow: var(--shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.6));
-        font-family: var(--font-sans, system-ui, sans-serif);
-        font-size: var(--text-sm, 0.875rem);
+        margin-block-start: var(--space-1);
+        padding: var(--space-1);
+        border: var(--border-width) solid var(--color-border-hover);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-elevated);
+        color: var(--color-fg);
+        box-shadow: var(--shadow-lg);
+        font-family: var(--font-sans);
+        font-size: var(--text-sm);
       }
 
       option {
-        padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
-        border-radius: var(--radius-sm, 0.375rem);
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--radius-sm);
         cursor: pointer;
       }
 
       option:hover,
       option:focus {
-        background: var(--color-card-hover, rgba(255, 255, 255, 0.07));
+        background: var(--color-card-hover);
       }
 
       option:checked {
-        font-weight: 600;
+        font-weight: var(--weight-semibold);
       }
 
       option::checkmark {
-        color: var(--color-accent, #f43f5e);
+        color: var(--color-accent);
       }
     }
 
     .chevron {
       position: absolute;
-      inset-inline-end: 0.75rem;
-      width: 1rem;
-      height: 1rem;
+      inset-inline-end: var(--space-3);
+      width: var(--icon-md);
+      height: var(--icon-md);
       pointer-events: none;
-      color: var(--color-fg-secondary, #a1a1aa);
-      transition: color var(--duration-fast, 120ms) var(--ease-standard, ease);
+      color: var(--color-fg-secondary);
+      transition: color var(--duration-fast) var(--ease-standard);
     }
 
     .wrap:hover select:not(:disabled) + .chevron {
-      color: var(--color-fg, #ededed);
+      color: var(--color-fg);
     }
 
     :host([invalid]) select {
-      border-color: var(--color-danger, #f87171);
+      border-color: var(--color-danger);
     }
 
     :host([disabled]) select,
     :host([disabled]) .chevron {
-      opacity: 0.55;
+      opacity: var(--opacity-disabled);
       cursor: not-allowed;
     }
 

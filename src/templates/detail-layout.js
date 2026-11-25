@@ -12,15 +12,15 @@ TEMPLATE.innerHTML = `
 
     .grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 260px;
-      gap: var(--space-6, 1.5rem);
+      grid-template-columns: minmax(0, 1fr) var(--layout-aside);
+      gap: var(--space-6);
       align-items: start;
     }
 
     @container (max-width: 640px) {
       .grid {
         grid-template-columns: 1fr;
-        gap: var(--space-3, 0.75rem);
+        gap: var(--space-3);
       }
     }
   </style>

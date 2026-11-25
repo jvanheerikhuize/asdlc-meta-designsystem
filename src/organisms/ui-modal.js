@@ -11,8 +11,8 @@ TEMPLATE.innerHTML = `
 
     dialog {
       box-sizing: border-box;
-      width: min(36rem, calc(100vw - 2rem));
-      max-height: calc(100vh - 3rem);
+      width: min(var(--panel-modal), calc(100vw - var(--space-8)));
+      max-height: calc(100vh - var(--space-12));
       margin: auto;
       padding: 0;
       border: 0;
@@ -27,23 +27,23 @@ TEMPLATE.innerHTML = `
     dialog::backdrop {
       overflow: hidden;
       overscroll-behavior: contain;
-      background: var(--color-overlay, rgba(0, 0, 0, 0.75));
-      backdrop-filter: blur(12px);
+      background: var(--color-overlay);
+      backdrop-filter: blur(var(--frost-md));
     }
 
     .body {
-      padding: var(--space-5, 1.25rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
-      color: var(--color-fg-secondary, #a1a1aa);
+      padding: var(--space-5);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+      color: var(--color-fg-secondary);
     }
 
     .foot {
       display: flex;
       justify-content: flex-end;
-      gap: var(--space-2, 0.5rem);
-      padding: var(--space-3, 0.75rem) var(--space-5, 1.25rem);
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
     }
   </style>
   <dialog part="dialog" closedby="any" aria-labelledby="modal-title">

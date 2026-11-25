@@ -4,15 +4,28 @@ TEMPLATE.innerHTML = `
     :host {
       display: flex;
       flex-direction: column;
-      gap: var(--space-6, 1.5rem);
+      gap: var(--space-6);
+      container-type: inline-size;
+    }
+
+    :host([hidden]) {
+      display: none;
     }
 
     .toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-4, 1rem);
+      gap: var(--space-4);
       flex-wrap: wrap;
+    }
+
+    @container (max-width: 640px) {
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+      }
     }
   </style>
   <section part="hero">

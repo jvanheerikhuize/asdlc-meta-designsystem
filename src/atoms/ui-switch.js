@@ -13,11 +13,11 @@ TEMPLATE.innerHTML = `
     .wrap {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-2, 0.5rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
-      color: var(--color-fg, #ededed);
+      gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+      color: var(--color-fg);
       cursor: pointer;
       user-select: none;
     }
@@ -27,64 +27,64 @@ TEMPLATE.innerHTML = `
       display: inline-flex;
       align-items: center;
       box-sizing: border-box;
-      width: 2.35rem;
-      height: 1.35rem;
-      padding: 2px;
+      width: var(--switch-width);
+      height: var(--switch-height);
+      padding: var(--space-0-5);
       margin: 0;
-      border-radius: var(--radius-full, 9999px);
-      border: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      background: var(--color-card-hover, rgba(255, 255, 255, 0.07));
+      border-radius: var(--radius-full);
+      border: var(--border-width) solid var(--color-border-hover);
+      background: var(--color-card-hover);
       cursor: pointer;
       flex-shrink: 0;
       transition:
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease);
+        background-color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard);
     }
 
     :host([size="sm"]) button {
-      width: 1.95rem;
-      height: 1.1rem;
+      width: var(--switch-width-sm);
+      height: var(--switch-height-sm);
     }
 
     .thumb {
-      width: 0.95rem;
-      height: 0.95rem;
-      border-radius: var(--radius-full, 9999px);
-      background: #ffffff;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      width: var(--size-thumb);
+      height: var(--size-thumb);
+      border-radius: var(--radius-full);
+      background: var(--color-thumb);
+      box-shadow: var(--shadow-thumb);
       transform: translateX(0);
       transition:
-        transform var(--duration-fast, 120ms) var(--ease-standard, ease),
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease);
+        transform var(--duration-fast) var(--ease-standard),
+        background-color var(--duration-fast) var(--ease-standard);
     }
 
     :host([size="sm"]) .thumb {
-      width: 0.75rem;
-      height: 0.75rem;
+      width: var(--size-thumb-sm);
+      height: var(--size-thumb-sm);
     }
 
     button[aria-checked="true"] {
-      background: var(--color-accent, #f43f5e);
-      border-color: var(--color-accent, #f43f5e);
+      background: var(--color-accent);
+      border-color: var(--color-accent);
     }
 
     button[aria-checked="true"] .thumb {
-      transform: translateX(1rem);
-      background: #ffffff;
+      transform: translateX(var(--switch-travel));
+      background: var(--color-thumb);
     }
 
     :host([size="sm"]) button[aria-checked="true"] .thumb {
-      transform: translateX(0.85rem);
+      transform: translateX(var(--switch-travel-sm));
     }
 
     button:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
     }
 
     :host([disabled]) .wrap,
     :host([disabled]) button {
-      opacity: 0.55;
+      opacity: var(--opacity-disabled);
       cursor: not-allowed;
     }
 
