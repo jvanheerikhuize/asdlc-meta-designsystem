@@ -1,8 +1,9 @@
 ---
 id: QST-0004
 title: May a Molecule combine more than three kinds of Atom when the extra kinds only show text?
-status: open
+status: answered
 blocks: [REQ-0008]
+answered_by: FCT-0013
 ---
 
 ## Statement

@@ -1,6 +1,7 @@
 import '../atoms/ui-surface.js';
 import '../atoms/ui-icon.js';
 import '../atoms/ui-button.js';
+import '../atoms/ui-text.js';
 
 const ICONS_BY_VARIANT = {
   info: 'info',
@@ -45,26 +46,13 @@ TEMPLATE.innerHTML = `
       min-width: 0;
     }
 
-    .title {
-      margin: 0;
-      font-size: var(--text-sm);
-      font-weight: var(--weight-bold);
-      line-height: var(--leading-tight);
-      color: var(--color-fg);
-    }
-
-    .body {
-      font-size: var(--text-sm);
-      color: var(--color-fg-secondary);
-      line-height: var(--leading-normal);
-    }
   </style>
   <ui-surface part="callout" variant="base" padding="md" radius="lg" accent="info" role="note">
     <div class="row">
       <ui-icon class="lead" part="icon" name="info" size="md"></ui-icon>
       <div class="content">
-        <strong class="title" part="title"></strong>
-        <div class="body" part="body"><slot></slot></div>
+        <ui-text class="title" exportparts="text: title" variant="small-strong"></ui-text>
+        <ui-text class="body" exportparts="text: body" variant="small" tone="secondary"><slot></slot></ui-text>
       </div>
       <ui-button class="dismiss" part="dismiss" variant="ghost" size="sm" aria-label="Dismiss" hidden>
         <ui-icon name="close" size="sm"></ui-icon>
@@ -75,7 +63,7 @@ TEMPLATE.innerHTML = `
 
 /**
  * Left-accented status/action banner Molecule composing <ui-surface>, <ui-icon>,
- * and optional dismiss <ui-button>.
+ * <ui-text>, and optional dismiss <ui-button>.
  */
 export class UiCallout extends HTMLElement {
   static observedAttributes = ['variant', 'title', 'dismissible', 'elevation'];

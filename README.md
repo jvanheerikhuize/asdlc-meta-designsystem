@@ -8,7 +8,7 @@ Dependencies go one way: a tier never knows a higher one.
 
 1. **Tokens:** named values. The only place for raw colors, lengths, layers and durations.
 2. **Atoms:** one foundational HTML element each, styled only with tokens, with local state only.
-3. **Molecules:** one to three kinds of atom for one task.
+3. **Molecules:** at most three kinds of atom, not counting text atoms, for one task.
 4. **Organisms:** self-contained regions that compose at least one molecule, with their own choreography, such as focus, loading and empty states.
 5. **Templates:** content-agnostic skeletons with slots and responsive placement.
 6. **Pages:** templates with real data. They live in consumers; the [`showcase/`](showcase/) here is one.

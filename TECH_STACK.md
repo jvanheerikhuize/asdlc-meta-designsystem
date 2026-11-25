@@ -45,7 +45,7 @@ src/            # Shared package: tiers 1 to 5
 ├── index.js    # Zero-build ESM entry point registering custom elements
 ├── tokens/     # 1. tokens.css (--palette-* primitives, then semantic tokens), mkdocs-theme.css
 ├── atoms/      # 2. One native element each, imports nothing
-├── molecules/  # 3. One to three kinds of atom, imports atoms only
+├── molecules/  # 3. At most three kinds of atom, not counting text atoms, imports atoms only
 ├── organisms/  # 4. At least one molecule, imports atoms and molecules
 └── templates/  # 5. Slots and CSS Grid, imports nothing
 showcase/       # 6. The one page here, a consumer of src/ and catalog.json

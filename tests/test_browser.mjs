@@ -436,6 +436,27 @@ async function main() {
       text: ['59.1 km', '5', 'Nov 25, 2026', '-12%', '99+'], toggle: [1, true], tags: ['h4', 'span'], menuDisabled: true, trend: true,
     });
 
+    // Text atoms in molecules (REQ-0008)
+    const textCheck = await cdp.eval(`(async () => {
+      const box = document.createElement('div');
+      box.innerHTML = '<ui-code-block>one</ui-code-block><ui-code-block>one&#10;two</ui-code-block><ui-media-card title="T"></ui-media-card><ui-callout>b</ui-callout>';
+      document.body.append(box);
+      await new Promise((r) => setTimeout(r, 200));
+      const [one, two, card, callout] = box.children;
+      const code = one.shadowRoot.querySelector('ui-code').shadowRoot.querySelector('code');
+      const line = parseFloat(getComputedStyle(code).lineHeight);
+      const pre = (el) => { const p = el.shadowRoot.querySelector('pre'); return p.clientHeight - parseFloat(getComputedStyle(p).paddingTop) * 2; };
+      const style = document.createElement('style');
+      style.textContent = 'ui-media-card::part(title) { color: rgb(1, 2, 3); }';
+      document.head.append(style);
+      const out = { lines: [pre(one) / line, pre(two) / line], meta: card.shadowRoot.querySelector('.foot').checkVisibility(), title: callout.shadowRoot.querySelector('.title').checkVisibility(),
+        part: getComputedStyle(card.shadowRoot.querySelector('ui-heading').shadowRoot.querySelector('.heading')).color };
+      box.remove();
+      style.remove();
+      return out;
+    })()`);
+    assert.deepEqual(textCheck, { lines: [1, 2], meta: false, title: false, part: 'rgb(1, 2, 3)' });
+
     // A close control reports the close once (REQ-0005)
     const closeCheck = await cdp.eval(`(async () => {
       const wait = () => new Promise((r) => setTimeout(r, 150));

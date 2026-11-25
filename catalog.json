@@ -246,7 +246,7 @@
       "id": "molecules",
       "order": 3,
       "title": "Molecules",
-      "summary": "One to three kinds of atom for one task.",
+      "summary": "At most three kinds of atom, not counting text atoms, for one task.",
       "mayUse": [
         "tokens",
         "atoms"
@@ -2590,6 +2590,11 @@
         "role": "Secondary text"
       },
       {
+        "name": "--type-small-strong",
+        "value": "700 0.875rem/1.2 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "role": "Short title"
+      },
+      {
         "name": "--type-label",
         "value": "500 0.875rem/1.25 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         "role": "Control label"
@@ -2613,6 +2618,11 @@
         "name": "--type-code",
         "value": "400 0.875rem/1.5 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
         "role": "Code"
+      },
+      {
+        "name": "--type-code-small",
+        "value": "400 0.75rem/1.5 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+        "role": "Code block and metadata"
       },
       {
         "name": "--type-stat",
@@ -3912,7 +3922,8 @@
         "abbr"
       ],
       "accessibility": "Native <abbr>; also write the full form in the text once.",
-      "example": "<ui-abbr full=\"Points of interest\">POIs</ui-abbr>"
+      "example": "<ui-abbr full=\"Points of interest\">POIs</ui-abbr>",
+      "textOnly": true
     },
     {
       "tag": "ui-arrow",
@@ -4358,7 +4369,7 @@
       "tier": "atoms",
       "module": "src/atoms/ui-code.js",
       "className": "UiCode",
-      "description": "Inline code Atom.",
+      "description": "Code Atom, inline or as a block.",
       "composes": [],
       "attributes": {
         "tone": {
@@ -4368,6 +4379,14 @@
             "accent"
           ],
           "default": "default"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "inline",
+            "block"
+          ],
+          "default": "inline"
         }
       },
       "slots": [
@@ -4378,7 +4397,8 @@
         "code"
       ],
       "accessibility": "Native <code>.",
-      "example": "<ui-code>npm test</ui-code>"
+      "example": "<ui-code>npm test</ui-code>",
+      "textOnly": true
     },
     {
       "tag": "ui-color-input",
@@ -4873,7 +4893,8 @@
         "heading"
       ],
       "accessibility": "Native <h1> to <h6>; keep levels in document order and use size for looks.",
-      "example": "<ui-heading level=\"2\" size=\"h3\">Section</ui-heading>"
+      "example": "<ui-heading level=\"2\" size=\"h3\">Section</ui-heading>",
+      "textOnly": true
     },
     {
       "tag": "ui-hint",
@@ -4902,7 +4923,8 @@
         "hint"
       ],
       "accessibility": "Plain text; give the control the same text as its description.",
-      "example": "<ui-hint tone=\"error\">Enter a name.</ui-hint>"
+      "example": "<ui-hint tone=\"error\">Enter a name.</ui-hint>",
+      "textOnly": true
     },
     {
       "tag": "ui-icon",
@@ -5138,7 +5160,8 @@
         "key"
       ],
       "accessibility": "Native <kbd>.",
-      "example": "<ui-kbd>Ctrl</ui-kbd>"
+      "example": "<ui-kbd>Ctrl</ui-kbd>",
+      "textOnly": true
     },
     {
       "tag": "ui-label",
@@ -5258,7 +5281,8 @@
         "list"
       ],
       "accessibility": "Native list with role=\"list\", so unstyled lists stay lists.",
-      "example": "<ui-list><li>Plan</li><li>Ride</li></ui-list>"
+      "example": "<ui-list><li>Plan</li><li>Ride</li></ui-list>",
+      "textOnly": true
     },
     {
       "tag": "ui-live",
@@ -5302,7 +5326,8 @@
         "mark"
       ],
       "accessibility": "Native <mark>.",
-      "example": "<ui-mark>match</ui-mark>"
+      "example": "<ui-mark>match</ui-mark>",
+      "textOnly": true
     },
     {
       "tag": "ui-marker",
@@ -5516,7 +5541,8 @@
         "number"
       ],
       "accessibility": "Native <data> with the raw value.",
-      "example": "<ui-number value=\"59.1\" format=\"unit\" unit=\"kilometer\" locale=\"en\"></ui-number>"
+      "example": "<ui-number value=\"59.1\" format=\"unit\" unit=\"kilometer\" locale=\"en\"></ui-number>",
+      "textOnly": true
     },
     {
       "tag": "ui-number-input",
@@ -5695,7 +5721,8 @@
         "source"
       ],
       "accessibility": "Native <blockquote> and <cite>.",
-      "example": "<ui-quote source=\"Brad Frost\">Build systems, not pages.</ui-quote>"
+      "example": "<ui-quote source=\"Brad Frost\">Build systems, not pages.</ui-quote>",
+      "textOnly": true
     },
     {
       "tag": "ui-radio",
@@ -6521,7 +6548,9 @@
             "label",
             "caption",
             "overline",
-            "stat"
+            "stat",
+            "small-strong",
+            "mono"
           ],
           "default": "body"
         },
@@ -6570,7 +6599,8 @@
         "text"
       ],
       "accessibility": "Native <p>, or <span> when inline.",
-      "example": "<ui-text variant=\"lead\">A short introduction.</ui-text>"
+      "example": "<ui-text variant=\"lead\">A short introduction.</ui-text>",
+      "textOnly": true
     },
     {
       "tag": "ui-textarea",
@@ -6675,7 +6705,8 @@
         "time"
       ],
       "accessibility": "Native <time> with a machine-readable datetime.",
-      "example": "<ui-time datetime=\"2026-11-25\" locale=\"en\"></ui-time>"
+      "example": "<ui-time datetime=\"2026-11-25\" locale=\"en\"></ui-time>",
+      "textOnly": true
     },
     {
       "tag": "ui-tooltip",
@@ -6817,7 +6848,8 @@
         "text"
       ],
       "accessibility": "Read by assistive technology, not shown.",
-      "example": "<ui-visually-hidden>Opens in a new tab</ui-visually-hidden>"
+      "example": "<ui-visually-hidden>Opens in a new tab</ui-visually-hidden>",
+      "textOnly": true
     },
     {
       "tag": "ui-callout",
@@ -6828,7 +6860,8 @@
       "composes": [
         "ui-button",
         "ui-icon",
-        "ui-surface"
+        "ui-surface",
+        "ui-text"
       ],
       "attributes": {
         "variant": {
@@ -6889,8 +6922,10 @@
       "description": "Monospace code preview Molecule composing <ui-button> and <ui-icon> for clipboard copy.",
       "composes": [
         "ui-button",
+        "ui-code",
         "ui-icon",
-        "ui-surface"
+        "ui-surface",
+        "ui-text"
       ],
       "attributes": {
         "language": {
@@ -7042,8 +7077,10 @@
       "description": "Interactive translucent catalog/poster card Molecule composing <ui-badge> and <ui-icon>.",
       "composes": [
         "ui-badge",
+        "ui-heading",
         "ui-icon",
-        "ui-surface"
+        "ui-surface",
+        "ui-text"
       ],
       "attributes": {
         "card-id": {
