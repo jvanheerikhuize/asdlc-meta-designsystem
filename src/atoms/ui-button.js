@@ -22,7 +22,7 @@ TEMPLATE.innerHTML = `
       line-height: var(--leading-none);
       border-radius: var(--radius-md);
       border: var(--border-width) solid transparent;
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       user-select: none;
       white-space: nowrap;
       transition:
@@ -99,13 +99,13 @@ TEMPLATE.innerHTML = `
 
     /* Toggle button that is on */
     :host([aria-pressed="true"]:not([variant="danger"])) button {
-      background: color-mix(in srgb, var(--color-accent) 18%, transparent);
-      border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+      background: var(--color-accent-pressed);
+      border-color: var(--color-accent-pressed-border);
       color: var(--color-fg);
     }
 
     :host([aria-pressed="true"]:not([variant="danger"])) button:hover:not(:disabled):not([aria-busy="true"]) {
-      background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+      background: var(--color-accent-pressed-hover);
     }
 
     /* Focus ring */
@@ -118,17 +118,17 @@ TEMPLATE.innerHTML = `
     :host([disabled]) button,
     :host([busy]) button {
       opacity: var(--opacity-disabled);
-      cursor: not-allowed;
+      cursor: var(--cursor-disabled);
     }
 
     .spinner {
       display: none;
-      width: 0.875em;
-      height: 0.875em;
+      width: var(--size-spinner-inline);
+      height: var(--size-spinner-inline);
       border: var(--border-width-strong) solid currentColor;
       border-right-color: transparent;
       border-radius: var(--radius-full);
-      animation: ui-spin var(--duration-spin) linear infinite;
+      animation: ui-spin var(--duration-spin) var(--ease-linear) infinite;
     }
 
     :host([busy]) .spinner {

@@ -112,7 +112,8 @@ class DesignSystemTest(unittest.TestCase):
                     atoms = {t for t in composed if (ROOT / "src/atoms" / f"{t}.js").is_file()}
                     self.assertTrue(1 <= len(atoms) <= 3, f"one to three kinds of atom, got {sorted(atoms)}")
                 if tier == "organisms":
-                    self.assertTrue(composed, "an organism must compose lower tiers")
+                    molecules = {t for t in composed if (ROOT / "src/molecules" / f"{t}.js").is_file()}
+                    self.assertTrue(molecules, "an organism must compose at least one molecule")
                 if tier == "templates":
                     self.assertIn("<slot", src)
                     self.assertIn(":host([hidden])", src)
@@ -129,6 +130,10 @@ class DesignSystemTest(unittest.TestCase):
                 self.assertNotRegex(css, r"#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?)\(", "raw color")
                 self.assertNotRegex(css, r"(?<![\w-])\d*\.?\d+(?:px|rem)\b", "raw length")
                 self.assertNotRegex(css, r"(?:z-index|font-weight):\s*[1-9]|opacity:\s*0\.\d|[0-9]m?s\b(?=[ ;])", "raw layer, weight, opacity or duration")
+                self.assertNotRegex(css, r"color-mix\(|cursor:(?!\s*(?:var|inherit))|scale\((?![01]\)|var)", "derived color, raw cursor or raw scale")
+                self.assertNotRegex(css, r"(?<![\w-])\d*\.?\d+em\b|\b(?:linear|ease|ease-in|ease-out|ease-in-out)(?=[ ,;])", "raw em length or easing")
+                if path.parent.name == "atoms":
+                    self.assertTrue(set(re.findall(r"var\((--[a-z0-9-]+)\)", css)) & set(dark), "an atom must use tokens")
                 self.assertNotIn("--palette-", src, "primitives are for semantic tokens only")
                 fallbacks = [t for t in re.findall(r"var\((--[a-z0-9-]+)\s*,", src) if t in dark]
                 self.assertFalse(fallbacks, "fallback values")

@@ -79,7 +79,10 @@ export class UiModal extends HTMLElement {
     this.#dialog = shadow.querySelector('dialog');
     this.#header = shadow.getElementById('modal-head');
 
-    this.#header.addEventListener('ui-close', () => this.close('close-button'));
+    this.#header.addEventListener('ui-close', (e) => {
+      e.stopPropagation(); // reported once, by the dialog
+      this.close('close-button');
+    });
 
     this.#dialog.addEventListener('click', (event) => {
       if (event.target !== this.#dialog) return;

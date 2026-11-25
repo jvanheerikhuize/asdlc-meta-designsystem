@@ -18,7 +18,7 @@ TEMPLATE.innerHTML = `
       line-height: var(--leading-normal);
       color: var(--color-fg);
       background: var(--color-surface);
-      border: var(--border-width) solid color-mix(in srgb, var(--color-border-hover) 75%, transparent);
+      border: var(--border-width) solid var(--color-border-field);
       scrollbar-color: var(--color-border-hover) transparent;
       border-radius: var(--radius-md);
       padding: var(--space-2) var(--space-3);
@@ -45,7 +45,7 @@ TEMPLATE.innerHTML = `
 
     :host([disabled]) textarea {
       opacity: var(--opacity-disabled);
-      cursor: not-allowed;
+      cursor: var(--cursor-disabled);
     }
 
     @media (prefers-reduced-motion: reduce) {

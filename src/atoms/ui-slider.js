@@ -45,7 +45,7 @@ TEMPLATE.innerHTML = `
         var(--color-border-hover) 100%
       );
       outline: none;
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
     }
 
     input[type="range"]::-webkit-slider-thumb {
@@ -57,7 +57,7 @@ TEMPLATE.innerHTML = `
       background: var(--color-thumb);
       border: var(--border-width-thumb) solid var(--slider-color);
       box-shadow: var(--shadow-sm);
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       transition: transform var(--duration-fast) var(--ease-standard);
     }
 
@@ -68,16 +68,16 @@ TEMPLATE.innerHTML = `
       background: var(--color-thumb);
       border: var(--border-width-thumb) solid var(--slider-color);
       box-shadow: var(--shadow-sm);
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       transition: transform var(--duration-fast) var(--ease-standard);
     }
 
     input[type="range"]:hover:not(:disabled)::-webkit-slider-thumb {
-      transform: scale(1.15);
+      transform: scale(var(--scale-pop));
     }
 
     input[type="range"]:hover:not(:disabled)::-moz-range-thumb {
-      transform: scale(1.15);
+      transform: scale(var(--scale-pop));
     }
 
     input[type="range"]:focus-visible {
@@ -87,7 +87,7 @@ TEMPLATE.innerHTML = `
 
     :host([disabled]) input[type="range"] {
       opacity: var(--opacity-disabled);
-      cursor: not-allowed;
+      cursor: var(--cursor-disabled);
     }
 
     @media (prefers-reduced-motion: reduce) {

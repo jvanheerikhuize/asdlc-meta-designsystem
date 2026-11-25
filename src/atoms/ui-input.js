@@ -17,7 +17,7 @@ TEMPLATE.innerHTML = `
       line-height: var(--leading-normal);
       color: var(--color-fg);
       background: var(--color-surface);
-      border: var(--border-width) solid color-mix(in srgb, var(--color-border-hover) 75%, transparent);
+      border: var(--border-width) solid var(--color-border-field);
       border-radius: var(--radius-md);
       padding: 0 var(--ui-input-padding-end, var(--space-3)) 0 var(--ui-input-padding-start, var(--space-3));
       height: var(--control-md);
@@ -46,7 +46,7 @@ TEMPLATE.innerHTML = `
 
     :host([disabled]) input {
       opacity: var(--opacity-disabled);
-      cursor: not-allowed;
+      cursor: var(--cursor-disabled);
     }
 
     @media (prefers-reduced-motion: reduce) {

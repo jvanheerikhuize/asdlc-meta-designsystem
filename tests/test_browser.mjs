@@ -345,6 +345,41 @@ async function main() {
     assert.ok(tokenCheck.enough, 'checked ' + tokenCheck.checked + ' tokens');
     assert.match(tokenCheck.gradient, /#e11d48/);
 
+    // A close control reports the close once (REQ-0005)
+    const closeCheck = await cdp.eval(`(async () => {
+      const wait = () => new Promise((r) => setTimeout(r, 150));
+      const inner = (host, ...path) => path.reduce((n, q) => n.shadowRoot.querySelector(q), host);
+      const box = document.createElement('div');
+      box.innerHTML = '<ui-modal title="M"></ui-modal><ui-drawer title="D" mode="docked" open></ui-drawer><ui-drawer title="E" mode="modal"></ui-drawer><ui-toast open duration="0">t</ui-toast>'
+        + '<ui-popover heading="Layers"><ui-button slot="trigger">t</ui-button>body</ui-popover><ui-popover><ui-button slot="trigger">t</ui-button>body</ui-popover>';
+      document.body.append(box);
+      const [modal, docked, sheet, toast, pop, plain] = box.children;
+      const counts = {};
+      const run = async (name, host, open, button) => {
+        counts[name] = 0;
+        host.addEventListener('ui-close', () => { counts[name] += 1; });
+        open();
+        await wait();
+        button().click();
+        await wait();
+      };
+      const closeBtn = (host, head) => () => inner(host, head, '.close-btn', 'button');
+      await run('modal', modal, () => modal.showModal(), closeBtn(modal, 'ui-panel-header'));
+      await run('docked', docked, () => {}, closeBtn(docked, '.docked-head'));
+      await run('sheet', sheet, () => sheet.setAttribute('open', ''), closeBtn(sheet, '.modal-head'));
+      await run('toast', toast, () => {}, () => inner(toast, 'ui-callout', '.dismiss', 'button'));
+      const trigger = pop.querySelector('ui-button');
+      await run('popover', pop, () => { trigger.focus(); trigger.shadowRoot.querySelector('button').click(); }, closeBtn(pop, 'ui-panel-header'));
+      const result = { counts, open: pop.hasAttribute('open'), focus: document.activeElement === trigger,
+        label: pop.shadowRoot.querySelector('.panel').getAttribute('aria-label'),
+        heads: [pop, plain].map((n) => n.shadowRoot.querySelector('ui-panel-header')?.hidden) };
+      box.remove();
+      return result;
+    })()`);
+    assert.deepEqual(closeCheck, {
+      counts: { modal: 1, docked: 1, sheet: 1, toast: 1, popover: 1 }, open: false, focus: true, label: 'Layers', heads: [false, true],
+    });
+
     // 5a. The catalog is built up by tier, with links between relatives (REQ-0006)
     const tiersCheck = await cdp.eval(`(async () => {
       const wait = () => new Promise((r) => setTimeout(r, 100));

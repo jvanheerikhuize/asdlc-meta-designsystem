@@ -164,8 +164,14 @@ export class UiDrawer extends HTMLElement {
     this.#modalSlot = shadow.getElementById('modal-slot');
     this.#modalFoot = shadow.getElementById('modal-foot');
 
-    this.#dockedHead.addEventListener('ui-close', () => this.close('close-button'));
-    this.#modalHead.addEventListener('ui-close', () => this.close('close-button'));
+    this.#dockedHead.addEventListener('ui-close', (e) => {
+      e.stopPropagation(); // reported once, by the drawer
+      this.close('close-button');
+    });
+    this.#modalHead.addEventListener('ui-close', (e) => {
+      e.stopPropagation(); // reported once, by the drawer
+      this.close('close-button');
+    });
 
     this.#dialog.addEventListener('click', (event) => {
       if (!this.#sheet.contains(event.target)) {

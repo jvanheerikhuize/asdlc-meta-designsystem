@@ -46,11 +46,11 @@ src/            # Shared package: tiers 1 to 5
 ├── tokens/     # 1. tokens.css (--palette-* primitives, then semantic tokens), mkdocs-theme.css
 ├── atoms/      # 2. One native element each, imports nothing
 ├── molecules/  # 3. One to three kinds of atom, imports atoms only
-├── organisms/  # 4. Imports atoms and molecules
+├── organisms/  # 4. At least one molecule, imports atoms and molecules
 └── templates/  # 5. Slots and CSS Grid, imports nothing
 showcase/       # 6. The one page here, a consumer of src/ and catalog.json
 ```
 
-- **Token rules:** components use `var(--token)` without fallbacks, so `tokens.css` is mandatory. Only semantic tokens may use `--palette-*`. `--anchor-gap` and `--anchor-margin` must be in `px`, because scripts read them.
-- **Exceptions:** media and container queries cannot read custom properties, so breakpoints are literals: `640px` (narrow) and `1023px` (drawer becomes modal). `0`, percentages, viewport units, `em`, `fr` and ratios are not tokens.
+- **Token rules:** components use `var(--token)` without fallbacks and do not derive values with `color-mix`, so `tokens.css` is mandatory. Only semantic tokens may use `--palette-*`. `--anchor-gap` and `--anchor-margin` must be in `px`, because scripts read them.
+- **Exceptions:** media and container queries cannot read custom properties, so breakpoints are literals: `640px` (narrow) and `1023px` (drawer becomes modal). `0`, percentages, viewport units, `fr`, the keyword `transparent`, the state extremes `scale(0)` and `scale(1)`, and gradients made of tokens are not tokens.
 - **Enforcement:** `tests/test_designsystem.py` checks imports, composition, raw values and unused imports.

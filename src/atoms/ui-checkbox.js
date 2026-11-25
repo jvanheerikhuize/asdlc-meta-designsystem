@@ -18,7 +18,7 @@ TEMPLATE.innerHTML = `
       font-size: var(--text-sm);
       line-height: var(--leading-normal);
       color: var(--color-fg);
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       user-select: none;
     }
 
@@ -34,7 +34,7 @@ TEMPLATE.innerHTML = `
       background: var(--color-surface);
       display: grid;
       place-content: center;
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       transition:
         background-color var(--duration-fast) var(--ease-standard),
         border-color var(--duration-fast) var(--ease-standard);
@@ -67,7 +67,7 @@ TEMPLATE.innerHTML = `
     :host([disabled]) label,
     :host([disabled]) input[type="checkbox"] {
       opacity: var(--opacity-disabled);
-      cursor: not-allowed;
+      cursor: var(--cursor-disabled);
     }
 
     @media (prefers-reduced-motion: reduce) {
