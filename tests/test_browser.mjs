@@ -165,8 +165,17 @@ async function main() {
       [...document.fonts].some((f) => f.status === 'loaded' && f.family.replace(/"/g, '') === family))`);
     const showcase = await cdp.eval(`(() => {
       const tags = [
-        'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',
-        'ui-chip', 'ui-progress', 'ui-textarea', 'ui-select', 'ui-dot', 'ui-checkbox', 'ui-slider', 'ui-switch', 'ui-tooltip', 'ui-surface', 'ui-divider',
+        'ui-abbr', 'ui-arrow', 'ui-audio', 'ui-avatar', 'ui-badge', 'ui-button', 'ui-center',
+        'ui-checkbox', 'ui-chip', 'ui-cluster', 'ui-code', 'ui-color-input', 'ui-counter',
+        'ui-disclosure', 'ui-divider', 'ui-dot', 'ui-embed', 'ui-fieldset', 'ui-file-input',
+        'ui-glow', 'ui-grid', 'ui-handle', 'ui-heading', 'ui-hint', 'ui-icon', 'ui-image',
+        'ui-input', 'ui-kbd', 'ui-label', 'ui-link', 'ui-list', 'ui-live', 'ui-mark', 'ui-marker',
+        'ui-menu-item', 'ui-meter', 'ui-nav-link', 'ui-number', 'ui-number-input', 'ui-output',
+        'ui-progress', 'ui-quote', 'ui-radio', 'ui-rating', 'ui-ratio', 'ui-ring', 'ui-scrim',
+        'ui-scroll', 'ui-select', 'ui-skeleton', 'ui-skip-link', 'ui-slider', 'ui-spacer',
+        'ui-sparkline', 'ui-spinner', 'ui-stack', 'ui-step-marker', 'ui-surface', 'ui-swatch',
+        'ui-switch', 'ui-text', 'ui-textarea', 'ui-time', 'ui-tooltip', 'ui-trend', 'ui-video',
+        'ui-visually-hidden',
         'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block', 'ui-toolbar', 'ui-tabs', 'ui-panel-header', 'ui-empty-state', 'ui-theme-toggle',
         'ui-navbar', 'ui-modal', 'ui-catalog-grid', 'ui-popover', 'ui-drawer', 'ui-toast', 'ui-table',
         'page-shell', 'catalog-layout', 'detail-layout', 'workspace-layout',
@@ -177,8 +186,8 @@ async function main() {
       const bgDark = getComputedStyle(document.body).backgroundColor;
       return { defined, shadows, backHref, bgDark };
     })()`);
-    assert.equal(showcase.defined, true, 'All 39 components must be defined');
-    assert.equal(showcase.shadows, true, 'All 39 components must have Shadow DOM');
+    assert.equal(showcase.defined, true, 'All 89 components must be defined');
+    assert.equal(showcase.shadows, true, 'All 89 components must have Shadow DOM');
     assert.equal(showcase.backHref, './specs/');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
 
@@ -344,6 +353,82 @@ async function main() {
     assert.deepEqual(tokenCheck.invalid, []);
     assert.ok(tokenCheck.enough, 'checked ' + tokenCheck.checked + ' tokens');
     assert.match(tokenCheck.gradient, /#e11d48/);
+
+    // Further atoms (REQ-0003)
+    const atomCheck = await cdp.eval(`(async () => {
+      const wait = (ms = 150) => new Promise((r) => setTimeout(r, ms));
+      const $ = (host, q) => host.shadowRoot.querySelector(q);
+      const box = document.createElement('div');
+      box.innerHTML = '<form><fieldset>'
+        + '<ui-radio name="r" value="a" checked>A</ui-radio><ui-radio name="r" value="b">B</ui-radio><ui-radio name="r" value="c" disabled>C</ui-radio>'
+        + '<ui-number-input name="n" value="3" min="1" max="5"></ui-number-input><ui-color-input name="c" value="#ff0000"></ui-color-input>'
+        + '<ui-rating name="s" value="2"></ui-rating><ui-file-input name="f" required></ui-file-input></fieldset></form>'
+        + '<ui-radio name="r" value="other" checked>Other group</ui-radio>'
+        + '<ui-image src="/missing.png" alt="Gone" loading="eager"></ui-image><ui-avatar src="/missing.png" name="Ada King Lovelace"></ui-avatar>'
+        + '<ui-link href="java' + 'script:alert(1)">x</ui-link><ui-nav-link href=" java' + 'script:alert(1)">x</ui-nav-link><ui-embed src="data:text/html,x"></ui-embed><ui-link href="./specs/" target="_blank">ok</ui-link>'
+        + '<ui-skip-link target="#skip-here">s</ui-skip-link><p id="skip-here">here</p>'
+        + '<ui-handle></ui-handle><ui-scroll style="height: 40px"><div style="height: 400px">x</div></ui-scroll><ui-scroll><div>x</div></ui-scroll>'
+        + '<ui-number value="59.1" format="unit" unit="kilometer" locale="en"></ui-number><ui-number value="5" format="currency" currency="bad!"></ui-number>'
+        + '<ui-time datetime="2026-11-25" locale="en"></ui-time><ui-trend value="-0.12" format="percent" locale="en"></ui-trend>'
+        + '<ui-disclosure summary="S">b</ui-disclosure><ui-menu-item disabled>m</ui-menu-item><ui-counter value="120"></ui-counter><ui-heading level="4">h</ui-heading><ui-text inline>t</ui-text>';
+      document.body.append(box);
+      await wait(600);
+      const q = (s) => box.querySelector(s);
+      const form = q('form');
+      const out = {};
+      const radios = [...form.querySelectorAll('ui-radio')];
+      const input = (el) => $(el, 'input');
+      const data = () => Object.fromEntries([...new FormData(form)].filter(([k]) => k !== 'f'));
+      const stops = () => radios.map((el) => input(el).tabIndex).join();
+      out.data = data();
+      out.stops = [stops()];
+      const changes = [];
+      form.addEventListener('ui-change', (e) => changes.push(e.detail.value));
+      radios[0].focus();
+      input(radios[0]).dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+      out.stops.push(stops());
+      out.focused = document.activeElement === radios[1];
+      out.changes = changes;
+      input(q('ui-number-input')).value = '9';
+      input(q('ui-number-input')).dispatchEvent(new Event('input', { bubbles: true }));
+      q('ui-rating').value = 4;
+      out.changed = data();
+      out.invalid = [...form.querySelectorAll(':invalid')].map((el) => el.localName).filter((n) => n !== 'fieldset');
+      form.reset();
+      out.reset = data();
+      out.other = box.querySelector(':scope > ui-radio').checked;
+      q('fieldset').disabled = true;
+      out.disabled = ['ui-radio', 'ui-number-input', 'ui-color-input', 'ui-rating', 'ui-file-input'].every((t) => input(q(t)).disabled);
+      out.fallback = [$(q('ui-image'), '.fallback').checkVisibility() && $(q('ui-image'), '.fallback').textContent, $(q('ui-avatar'), '.initials').checkVisibility() && $(q('ui-avatar'), '.initials').textContent];
+      out.hrefs = [...box.querySelectorAll('ui-link, ui-nav-link')].map((el) => $(el, 'a').getAttribute('href'));
+      out.rel = $(box.querySelectorAll('ui-link')[1], 'a').rel;
+      out.embed = $(q('ui-embed'), 'iframe').hasAttribute('src');
+      $(q('ui-skip-link'), 'a').click();
+      out.skip = document.activeElement.id;
+      const moves = [];
+      q('ui-handle').addEventListener('ui-move', (e) => moves.push(e.detail.dx));
+      $(q('ui-handle'), '.handle').dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }));
+      out.moved = moves.length === 1 && moves[0] < 0;
+      out.scroll = [...box.querySelectorAll('ui-scroll')].map((el) => $(el, '.scroll').hasAttribute('tabindex'));
+      out.text = [...box.querySelectorAll('ui-number')].map((el) => $(el, 'data').textContent).concat($(q('ui-time'), 'time').textContent, $(q('ui-trend'), '.value').textContent, $(q('ui-counter'), 'span').textContent);
+      let toggles = 0;
+      q('ui-disclosure').addEventListener('ui-toggle', () => { toggles += 1; });
+      $(q('ui-disclosure'), 'summary').click();
+      await wait();
+      out.trend = getComputedStyle($(q('ui-trend'), '.value')).color === getComputedStyle($(q('ui-trend'), '.trend')).color;
+      out.toggle = [toggles, q('ui-disclosure').hasAttribute('open')];
+      out.tags = [$(q('ui-heading'), '.heading').localName, $(q('ui-text'), '.text').localName];
+      out.menuDisabled = $(q('ui-menu-item'), 'button').disabled;
+      box.remove();
+      return out;
+    })()`);
+    assert.deepEqual(atomCheck, {
+      data: { r: 'a', n: '3', c: '#ff0000', s: '2' }, stops: ['0,-1,-1', '-1,0,-1'], focused: true, changes: ['b'],
+      changed: { r: 'b', n: '9', c: '#ff0000', s: '4' }, invalid: ['ui-number-input', 'ui-file-input'],
+      reset: { r: 'a', n: '3', c: '#ff0000', s: '2' }, other: true, disabled: true, fallback: ['Gone', 'AL'],
+      hrefs: [null, null, './specs/'], rel: 'noopener', embed: false, skip: 'skip-here', moved: true, scroll: [true, false],
+      text: ['59.1 km', '5', 'Nov 25, 2026', '-12%', '99+'], toggle: [1, true], tags: ['h4', 'span'], menuDisabled: true, trend: true,
+    });
 
     // A close control reports the close once (REQ-0005)
     const closeCheck = await cdp.eval(`(async () => {

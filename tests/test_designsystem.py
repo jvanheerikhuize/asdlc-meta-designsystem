@@ -232,9 +232,17 @@ class DesignSystemTest(unittest.TestCase):
 
     def test_foundational_atoms_encapsulation_and_exports(self):  # REQ-0003
         expected = [
-            "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
-            "ui-slider", "ui-switch", "ui-tooltip", "ui-surface", "ui-divider",
+            "ui-abbr", "ui-arrow", "ui-audio", "ui-avatar", "ui-badge", "ui-button", "ui-center",
+            "ui-checkbox", "ui-chip", "ui-cluster", "ui-code", "ui-color-input", "ui-counter",
+            "ui-disclosure", "ui-divider", "ui-dot", "ui-embed", "ui-fieldset", "ui-file-input",
+            "ui-glow", "ui-grid", "ui-handle", "ui-heading", "ui-hint", "ui-icon", "ui-image",
+            "ui-input", "ui-kbd", "ui-label", "ui-link", "ui-list", "ui-live", "ui-mark",
+            "ui-marker", "ui-menu-item", "ui-meter", "ui-nav-link", "ui-number", "ui-number-input",
+            "ui-output", "ui-progress", "ui-quote", "ui-radio", "ui-rating", "ui-ratio", "ui-ring",
+            "ui-scrim", "ui-scroll", "ui-select", "ui-skeleton", "ui-skip-link", "ui-slider",
+            "ui-spacer", "ui-sparkline", "ui-spinner", "ui-stack", "ui-step-marker", "ui-surface",
+            "ui-swatch", "ui-switch", "ui-text", "ui-textarea", "ui-time", "ui-tooltip", "ui-trend",
+            "ui-video", "ui-visually-hidden",
         ]
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag in expected:
@@ -309,9 +317,17 @@ class DesignSystemTest(unittest.TestCase):
 
         documented_tags = {c["tag"]: c for c in catalog["components"]}
         expected_tags = {
-            "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
-            "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
-            "ui-slider", "ui-switch", "ui-tooltip", "ui-surface", "ui-divider",
+            "ui-abbr", "ui-arrow", "ui-audio", "ui-avatar", "ui-badge", "ui-button", "ui-center",
+            "ui-checkbox", "ui-chip", "ui-cluster", "ui-code", "ui-color-input", "ui-counter",
+            "ui-disclosure", "ui-divider", "ui-dot", "ui-embed", "ui-fieldset", "ui-file-input",
+            "ui-glow", "ui-grid", "ui-handle", "ui-heading", "ui-hint", "ui-icon", "ui-image",
+            "ui-input", "ui-kbd", "ui-label", "ui-link", "ui-list", "ui-live", "ui-mark",
+            "ui-marker", "ui-menu-item", "ui-meter", "ui-nav-link", "ui-number", "ui-number-input",
+            "ui-output", "ui-progress", "ui-quote", "ui-radio", "ui-rating", "ui-ratio", "ui-ring",
+            "ui-scrim", "ui-scroll", "ui-select", "ui-skeleton", "ui-skip-link", "ui-slider",
+            "ui-spacer", "ui-sparkline", "ui-spinner", "ui-stack", "ui-step-marker", "ui-surface",
+            "ui-swatch", "ui-switch", "ui-text", "ui-textarea", "ui-time", "ui-tooltip", "ui-trend",
+            "ui-video", "ui-visually-hidden",
             "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout",
             "ui-code-block", "ui-toolbar", "ui-tabs", "ui-panel-header", "ui-empty-state", "ui-theme-toggle",
             "ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer", "ui-toast", "ui-table",
@@ -352,6 +368,14 @@ class DesignSystemTest(unittest.TestCase):
             self.assertEqual(tiers[tier]["members"], [c["tag"] for c in catalog["components"] if c["tier"] == tier])
             self.assertEqual(tiers[tier]["members"], re.findall(r"^\| `<([a-z-]+)>` ", md_sections[tier], re.M))
             self.assertEqual(tiers[tier]["members"], re.findall(r'<article [^>]*data-id="([a-z-]+)"', html_sections[tier]))
+
+        index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
+        exported = re.findall(r"^export \{ (\w+) \}", index_js, re.M)
+        self.assertEqual(sorted(exported), sorted(c["className"] for c in catalog["components"]))
+        self.assertEqual(exported, catalog["entrypointExports"][:len(exported)])
+        for tier in ("atoms", "molecules", "organisms", "templates"):
+            listed = re.findall(r"'([a-z-]+)'", re.search(rf"export const {tier.upper()} = \[(.*?)\];", index_js, re.S)[1])
+            self.assertEqual(sorted(listed), sorted(tiers[tier]["members"]))
 
         if os.environ.get("CI") != "true":
             skill_path = Path.home() / ".agents" / "skills" / "asdlc-design-system" / "SKILL.md"

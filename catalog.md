@@ -49,7 +49,7 @@ Templates take components only through slots, so they import none.
 | Tier | Purpose | May use | Members |
 | :--- | :--- | :--- | :--- |
 | 1. Tokens | Named values that nothing renders. The only place for raw colors, lengths, layers and durations. | — | 738 tokens in 28 groups |
-| 2. Atoms | One foundational HTML element each, with local state only. | tokens | 17 |
+| 2. Atoms | One foundational HTML element each, with local state only. | tokens | 67 |
 | 3. Molecules | One to three kinds of atom for one task. | tokens, atoms | 11 |
 | 4. Organisms | Self-contained regions with their own choreography, such as focus, loading and empty states. | tokens, atoms, molecules | 7 |
 | 5. Templates | Content-agnostic skeletons with named slots and responsive placement. | tokens | 4 |
@@ -98,23 +98,73 @@ One foundational HTML element each, with local state only.
 
 | Tag | Composes | Attributes | Slots | Events | Parts |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| `<ui-abbr>` | — | `full` | default | — | `abbr` |
+| `<ui-arrow>` | — | `direction` (`up`\|`down`\|`left`\|`right`), `tone` (`surface`\|`inverse`\|`accent`) | — | — | `arrow` |
+| `<ui-audio>` | — | `src`, `captions`, `captions-lang`, `loop`, `muted`, `aria-label` | — | — | `audio` |
+| `<ui-avatar>` | — | `src`, `name`, `size` (`xs`\|`sm`\|`md`\|`lg`\|`xl`), `shape` (`round`\|`square`) | — | — | `avatar`, `image`, `initials` |
 | `<ui-badge>` | — | `variant` (`neutral`\|`accent`\|`info`\|`success`\|`warning`), `size` (`sm`\|`md`) | default | — | `badge` |
 | `<ui-button>` | — | `variant` (`primary`\|`secondary`\|`surface`\|`ghost`\|`danger`), `size` (`sm`\|`md`\|`lg`), `disabled`, `busy`, `type`, `aria-label`, `aria-pressed` (`true`\|`false`, controlled by the owner), `aria-expanded`, `aria-haspopup` | default | `ui-press` | `button` |
+| `<ui-center>` | — | `width` (`prose`\|`form`\|`content`\|`full`) | default | — | `center` |
 | `<ui-checkbox>` | — | `checked`, `disabled`, `indeterminate`, `name`, `value`, `aria-label` | default | `ui-change` | `label`, `checkbox` |
 | `<ui-chip>` | — | `pressed`, `disabled`, `variant` (`default`\|`accent`) | default | `ui-toggle` | `chip` |
+| `<ui-cluster>` | — | `gap` (`none`\|`xs`\|`sm`\|`md`\|`lg`), `justify` (`start`\|`center`\|`end`\|`between`), `align` (`center`\|`start`\|`end`\|`baseline`), `nowrap` | default | — | `cluster` |
+| `<ui-code>` | — | `tone` (`default`\|`accent`) | default | — | `code` |
+| `<ui-color-input>` | — | `value`, `disabled`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `input` |
+| `<ui-counter>` | — | `value`, `max`, `label`, `variant` (`accent`\|`neutral`\|`danger`), `show-zero` | — | — | `counter` |
+| `<ui-disclosure>` | — | `summary`, `open` | default | `ui-toggle` | `details`, `summary`, `body` |
 | `<ui-divider>` | — | `orientation` (`horizontal`\|`vertical`) | — | — | `divider` |
 | `<ui-dot>` | — | `status` (`done`\|`wait`\|`bad`\|`info`\|`off`), `label` | — | — | `dot` |
+| `<ui-embed>` | — | `src`, `label`, `sandbox`, `ratio` (`square`\|`photo`\|`classic`\|`video`\|`wide`\|`poster`\|`portrait`) | — | — | `frame`, `embed` |
+| `<ui-fieldset>` | — | `legend`, `kind` (`group`\|`radio`) | default | — | `fieldset`, `legend` |
+| `<ui-file-input>` | — | `accept`, `multiple`, `disabled`, `required`, `name`, `aria-label` | — | `ui-change` | `input` |
+| `<ui-glow>` | — | `tone` (`rose`\|`amber`\|`sky`\|`emerald`\|`violet`) | — | — | `glow` |
+| `<ui-grid>` | — | `min` (`xs`\|`sm`\|`md`\|`lg`), `gap` (`none`\|`xs`\|`sm`\|`md`\|`lg`\|`xl`) | default | — | `grid` |
+| `<ui-handle>` | — | `orientation` (`vertical`\|`horizontal`), `value`, `min`, `max`, `disabled`, `aria-label` | — | `ui-move` | `handle` |
+| `<ui-heading>` | — | `level` (`1`\|`2`\|`3`\|`4`\|`5`\|`6`), `size` (`display`\|`h1`\|`h2`\|`h3`\|`h4`), `tone` (`default`\|`secondary`\|`muted`\|`accent`\|`info`\|`success`\|`warning`\|`danger`\|`inverse`) | default | — | `heading` |
+| `<ui-hint>` | — | `tone` (`neutral`\|`error`\|`success`\|`warning`) | default | — | `hint` |
 | `<ui-icon>` | — | `name` (`search`, `sun`, `moon`, `check`, `alert`, `info`, `arrow-right`, `arrow-left`, `sparkles`, `code`, `layers`, `external`, `plus`, `minus`, `close`, `undo`, `redo`, `trash`, `download`, `upload`, `route`, `compass`, `pin`, `flag`, `anchor`, `waves`, `scissors`, `settings`, `chevron-down`, `chevron-up`, `eye`, `eye-off`, `sidebar`), `size` (`sm`\|`md`\|`lg`), `label` | — | — | `icon` |
+| `<ui-image>` | — | `src`, `alt`, `ratio` (`square`\|`photo`\|`classic`\|`video`\|`wide`\|`poster`\|`portrait`), `fit` (`cover`\|`contain`), `radius` (`none`\|`sm`\|`md`\|`lg`), `loading` (`lazy`\|`eager`) | — | — | `frame`, `image`, `fallback` |
 | `<ui-input>` | — | `type`, `value`, `placeholder`, `disabled`, `readonly`, `required`, `invalid`, `name`, `maxlength`, `aria-label` | — | `ui-input`, `ui-change` | `input` |
+| `<ui-kbd>` | — | `size` (`sm`\|`md`) | default | — | `key` |
 | `<ui-label>` | — | `for`, `required`, `size` (`md`\|`sm`) | default | — | `label` |
+| `<ui-link>` | — | `href`, `target`, `rel`, `download`, `aria-label`, `variant` (`inline`\|`quiet`\|`standalone`) | default | — | `link` |
+| `<ui-list>` | — | `type` (`bullet`\|`number`\|`none`), `gap` (`xs`\|`sm`\|`md`) | default (native <li>) | — | `list` |
+| `<ui-live>` | — | `assertive` | — | — | `live` |
+| `<ui-mark>` | — | `active` | default | — | `mark` |
+| `<ui-marker>` | — | `label`, `variant` (`accent`\|`info`\|`success`\|`warning`\|`danger`\|`neutral`), `selected` | default | — | `marker` |
+| `<ui-menu-item>` | — | `disabled`, `variant` (`default`\|`danger`), `checked` (`true`\|`false`) | default | `ui-press` | `item` |
+| `<ui-meter>` | — | `value`, `min`, `max`, `low`, `high`, `variant` (`accent`\|`auto`), `aria-label` | — | — | `track`, `fill` |
+| `<ui-nav-link>` | — | `href`, `current`, `aria-label` | default | — | `link` |
+| `<ui-number>` | — | `value`, `format` (`decimal`\|`percent`\|`currency`\|`unit`\|`compact`), `currency`, `unit`, `digits`, `locale` | — | — | `number` |
+| `<ui-number-input>` | — | `value`, `min`, `max`, `step`, `placeholder`, `disabled`, `readonly`, `required`, `invalid`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `input` |
+| `<ui-output>` | — | `variant` (`inline`\|`stat`) | default | — | `output` |
 | `<ui-progress>` | — | `value`, `max`, `variant` (`success`\|`accent`\|`warning`\|`danger`), `segments` (JSON), `aria-label` | — | — | `track`, `fill`, `segment` |
+| `<ui-quote>` | — | `cite`, `source` | default | — | `quote`, `source` |
+| `<ui-radio>` | — | `checked`, `disabled`, `name`, `value`, `aria-label` | default | `ui-change` | `label`, `radio` |
+| `<ui-rating>` | — | `value`, `max`, `readonly`, `disabled`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `rating` |
+| `<ui-ratio>` | — | `ratio` (`square`\|`photo`\|`classic`\|`video`\|`wide`\|`poster`\|`portrait`) | default | — | `frame` |
+| `<ui-ring>` | — | `value`, `max`, `size` (`sm`\|`md`\|`lg`), `variant` (`accent`\|`success`\|`warning`\|`danger`), `aria-label` | — | — | `ring` |
+| `<ui-scrim>` | — | `tone` (`default`\|`soft`\|`media`), `contained` | — | — | `scrim` |
+| `<ui-scroll>` | — | `axis` (`y`\|`x`\|`both`), `aria-label` | default | — | `scroll` |
 | `<ui-select>` | — | `options` (JSON array), `value`, `disabled`, `invalid`, `name`, `aria-label` | — | `ui-change` | `wrapper`, `select`, `chevron` |
 | `<ui-skeleton>` | — | `variant` (`text`\|`rect`\|`circle`), `width`, `height`, `lines` | — | — | `skeleton` |
+| `<ui-skip-link>` | — | `target` | default | — | `link` |
 | `<ui-slider>` | — | `min`, `max`, `step`, `value`, `disabled`, `variant` (`accent`\|`success`\|`warning`\|`neutral`), `name`, `aria-label`, `aria-valuetext` | — | `ui-input`, `ui-change` | `track`, `slider` |
+| `<ui-spacer>` | — | `size` (`xs`\|`sm`\|`md`\|`lg`\|`xl`), `grow` | — | — | `space` |
+| `<ui-sparkline>` | — | `values`, `label`, `variant` (`accent`\|`info`\|`success`\|`warning`\|`danger`) | — | — | `chart`, `line` |
+| `<ui-spinner>` | — | `label`, `size` (`sm`\|`md`\|`lg`) | — | — | `spinner` |
+| `<ui-stack>` | — | `gap` (`none`\|`xs`\|`sm`\|`md`\|`lg`\|`xl`), `align` (`stretch`\|`start`\|`center`\|`end`) | default | — | `stack` |
+| `<ui-step-marker>` | — | `number`, `state` (`todo`\|`current`\|`done`\|`error`), `label` | — | — | `marker` |
 | `<ui-surface>` | — | `variant` (`base`\|`elevated`\|`card`\|`glass`), `elevation`, `padding`, `radius`, `accent`, `interactive` | default | `ui-press` | `surface` |
+| `<ui-swatch>` | — | `color`, `label`, `size` (`sm`\|`md`\|`lg`), `shape` (`square`\|`round`\|`line`) | — | — | `swatch` |
 | `<ui-switch>` | — | `checked`, `disabled`, `size` (`sm`\|`md`), `name`, `value`, `aria-label` | default | `ui-change` | `label`, `switch`, `thumb` |
+| `<ui-text>` | — | `variant` (`lead`\|`body`\|`strong`\|`small`\|`label`\|`caption`\|`overline`\|`stat`), `tone` (`default`\|`secondary`\|`muted`\|`accent`\|`info`\|`success`\|`warning`\|`danger`\|`inverse`), `inline`, `truncate`, `lines`, `align` (`start`\|`center`\|`end`) | default | — | `text` |
 | `<ui-textarea>` | — | `value`, `placeholder`, `rows`, `disabled`, `readonly`, `required`, `invalid`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `textarea` |
+| `<ui-time>` | — | `datetime`, `format` (`date`\|`time`\|`datetime`\|`relative`), `locale` | — | — | `time` |
 | `<ui-tooltip>` | — | `text`, `placement` (`top`\|`bottom`\|`left`\|`right`), `open` | default | — | `tooltip` |
+| `<ui-trend>` | — | `value`, `format` (`decimal`\|`percent`), `digits`, `locale`, `invert` | — | — | `trend`, `value` |
+| `<ui-video>` | — | `src`, `poster`, `captions`, `captions-lang`, `loop`, `muted`, `aria-label` | — | — | `video` |
+| `<ui-visually-hidden>` | — | — | default | — | `text` |
 
 ## 3. Molecules (`src/molecules/`)
 
