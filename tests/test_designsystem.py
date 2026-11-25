@@ -120,6 +120,8 @@ class DesignSystemTest(unittest.TestCase):
                 if tier == "organisms":
                     molecules = {t for t in composed if (ROOT / "src/molecules" / f"{t}.js").is_file()}
                     self.assertTrue(molecules, "an organism must compose at least one molecule")
+                    template = src[src.index("innerHTML = `"):src.index("`;")]
+                    self.assertNotRegex(template, r"<(?:h[1-6]|p|strong|small|code|a|input|button|select|textarea|img)[ >]|aria-live|overflow-[xy]:|display: grid", "an atom covers this")
                 if tier == "templates":
                     self.assertIn("<slot", src)
                     self.assertIn(":host([hidden])", src)

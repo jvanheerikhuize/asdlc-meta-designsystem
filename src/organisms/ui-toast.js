@@ -1,3 +1,4 @@
+import '../atoms/ui-live.js';
 import '../molecules/ui-callout.js';
 
 const TEMPLATE = document.createElement('template');
@@ -12,19 +13,8 @@ TEMPLATE.innerHTML = `
       display: none;
     }
 
-    .sr-live {
-      position: absolute;
-      width: var(--border-width);
-      height: var(--border-width);
-      padding: 0;
-      margin: calc(-1 * var(--border-width));
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
   </style>
-  <div class="sr-live" aria-live="polite" aria-atomic="true"></div>
+  <ui-live></ui-live>
   <div role="region" aria-label="Notification">
     <ui-callout part="callout" elevation="lg" dismissible>
       <slot></slot>
@@ -33,7 +23,7 @@ TEMPLATE.innerHTML = `
 `;
 
 /**
- * Notification lifecycle Organism wrapping <ui-callout dismissible> with
+ * Notification lifecycle Organism wrapping <ui-callout dismissible> and <ui-live> with
  * auto-dismiss timer (paused on hover/focus) and polite screen-reader announcement.
  */
 export class UiToast extends HTMLElement {
@@ -49,7 +39,7 @@ export class UiToast extends HTMLElement {
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
     this.#callout = shadow.querySelector('ui-callout');
-    this.#liveEl = shadow.querySelector('.sr-live');
+    this.#liveEl = shadow.querySelector('ui-live');
 
     this.#callout.addEventListener('ui-dismiss', () => this.dismiss('dismiss-button'));
     this.addEventListener('mouseenter', () => {
@@ -116,8 +106,8 @@ export class UiToast extends HTMLElement {
     if (!message) return;
     if (typeof this.ariaNotify === 'function') {
       this.ariaNotify(message);
-    } else if (this.#liveEl) {
-      this.#liveEl.textContent = message;
+    } else {
+      this.#liveEl.announce?.(message);
     }
   }
 

@@ -1,5 +1,6 @@
 import '../atoms/ui-surface.js';
 import '../atoms/ui-divider.js';
+import '../atoms/ui-scroll.js';
 import '../molecules/ui-panel-header.js';
 
 const TEMPLATE = document.createElement('template');
@@ -84,12 +85,15 @@ TEMPLATE.innerHTML = `
 
     .body {
       flex: 1;
-      overflow-y: auto;
-      scrollbar-color: var(--color-border-hover) transparent;
-      padding: var(--space-4);
       font-family: var(--font-sans);
       font-size: var(--text-sm);
       line-height: var(--leading-normal);
+    }
+
+    .body::part(scroll) {
+      box-sizing: border-box;
+      height: 100%;
+      padding: var(--space-4);
     }
 
     .foot {
@@ -106,7 +110,7 @@ TEMPLATE.innerHTML = `
       <div class="panel-inner">
         <ui-panel-header class="docked-head" close-label="Close panel"></ui-panel-header>
         <ui-divider></ui-divider>
-        <div class="body" part="body"><slot id="docked-slot"></slot></div>
+        <ui-scroll class="body" exportparts="scroll: body"><slot id="docked-slot"></slot></ui-scroll>
         <div class="foot" part="footer"><slot id="docked-foot" name="footer"></slot></div>
       </div>
     </ui-surface>
@@ -119,7 +123,7 @@ TEMPLATE.innerHTML = `
           <div class="panel-inner">
             <ui-panel-header class="modal-head" heading-id="modal-drawer-title" close-label="Close drawer"></ui-panel-header>
             <ui-divider></ui-divider>
-            <div class="body" part="body"><slot id="modal-slot"></slot></div>
+            <ui-scroll class="body" exportparts="scroll: body"><slot id="modal-slot"></slot></ui-scroll>
             <div class="foot" part="footer"><slot id="modal-foot"></slot></div>
           </div>
         </ui-surface>
@@ -130,7 +134,7 @@ TEMPLATE.innerHTML = `
 
 /**
  * Responsive collapsible drawer/sheet Organism composing <ui-surface>,
- * <ui-panel-header>, and <ui-divider>.
+ * <ui-panel-header>, <ui-divider>, and <ui-scroll>.
  */
 export class UiDrawer extends HTMLElement {
   static observedAttributes = ['title', 'side', 'mode', 'open'];
@@ -250,6 +254,7 @@ export class UiDrawer extends HTMLElement {
     this.#dockedHead?.setAttribute('title', title);
     this.#modalHead?.setAttribute('title', title);
     this.#docked?.setAttribute('aria-label', title || 'Side panel');
+    for (const body of this.shadowRoot.querySelectorAll('.body')) body.setAttribute('aria-label', title || 'Panel content');
   }
 
   #syncState() {

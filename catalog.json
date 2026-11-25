@@ -4754,7 +4754,8 @@
             "xs",
             "sm",
             "md",
-            "lg"
+            "lg",
+            "card"
           ],
           "default": "sm"
         },
@@ -7459,6 +7460,7 @@
       "description": "Responsive grid Organism for <ui-media-card> items with loading skeletons and empty state.",
       "composes": [
         "ui-empty-state",
+        "ui-grid",
         "ui-skeleton"
       ],
       "attributes": {
@@ -7496,6 +7498,7 @@
       "composes": [
         "ui-divider",
         "ui-panel-header",
+        "ui-scroll",
         "ui-surface"
       ],
       "attributes": {
@@ -7556,7 +7559,7 @@
         "body",
         "footer"
       ],
-      "accessibility": "Renders non-modal <aside> landmark when docked and native <dialog>.showModal() with backdrop/Escape dismissal and focus restoration when modal or < 1024px in auto mode.",
+      "accessibility": "Renders non-modal <aside> landmark when docked and native <dialog>.showModal() with backdrop/Escape dismissal and focus restoration when modal or < 1024px in auto mode. The body is a labelled region and a keyboard stop only while it scrolls.",
       "example": "<ui-drawer title=\"Tour Library\" side=\"left\" mode=\"auto\" open><p>Saved routes</p></ui-drawer>"
     },
     {
@@ -7566,6 +7569,7 @@
       "className": "UiModal",
       "description": "Modal dialog Organism built on native <dialog> with blurred backdrop and focus restoration.",
       "composes": [
+        "ui-cluster",
         "ui-divider",
         "ui-panel-header",
         "ui-surface"
@@ -7617,6 +7621,7 @@
       "className": "UiNavbar",
       "description": "Sticky frosted-glass site header Organism with a composed theme toggle.",
       "composes": [
+        "ui-cluster",
         "ui-surface",
         "ui-theme-toggle"
       ],
@@ -7721,6 +7726,7 @@
       "description": "Data table Organism styling a slotted native <table> and scrolling it inside a labelled region.",
       "composes": [
         "ui-empty-state",
+        "ui-scroll",
         "ui-skeleton"
       ],
       "attributes": {
@@ -7760,7 +7766,8 @@
       "className": "UiToast",
       "description": "Notification lifecycle Organism wrapping <ui-callout dismissible> with auto-dismiss timer (paused on hover/focus) and polite screen-reader announcement.",
       "composes": [
-        "ui-callout"
+        "ui-callout",
+        "ui-live"
       ],
       "attributes": {
         "variant": {

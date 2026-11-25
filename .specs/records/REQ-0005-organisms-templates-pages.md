@@ -2,11 +2,11 @@
 id: REQ-0005
 title: Organisms, Templates, and Pages assemble Molecules into responsive, accessible application views
 status: active
-because: [FCT-0001, FCT-0004, FCT-0007, FCT-0010]
+because: [FCT-0001, FCT-0004, FCT-0007, FCT-0010, FCT-0012]
 ---
 
 ## Statement
-Organisms (Site Header, Modal Dialog with blurred backdrop and focus containment, Catalog Grid, and Data Table), Templates (structural page blueprints), and Pages (live showcase instances with realistic content) MUST compose lower-tier components into responsive views that preserve keyboard navigation, overlay dismissal, and clean slot boundaries.
+Organisms (Site Header, Modal Dialog with blurred backdrop and focus containment, Catalog Grid, and Data Table), Templates (structural page blueprints), and Pages (live showcase instances with realistic content) MUST compose lower-tier components into responsive views that preserve keyboard navigation, overlay dismissal, and clean slot boundaries. An Organism MUST use an existing Atom for each scroll area, live region, grid or text it shows; Templates contain no components.
 
 ## Acceptance
 - Given a Modal Dialog Organism opened from a Catalog Grid item
@@ -32,3 +32,11 @@ Organisms (Site Header, Modal Dialog with blurred backdrop and focus containment
 - Given a Template in a narrow view
 - When its slots are filled
 - Then they stack without sideways scrolling, and a footer without content takes no space
+
+- Given a Drawer Organism, docked or as a sheet
+- When its content is taller than the panel
+- Then the content is a labelled region that scrolls and can be reached with the keyboard, and otherwise is not an extra keyboard stop
+
+- Given a Toast Organism
+- When it opens
+- Then its title and message are announced

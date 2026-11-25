@@ -118,7 +118,7 @@ One foundational HTML element each, with local state only.
 | `<ui-fieldset>` | — | `legend`, `kind` (`group`\|`radio`) | default | — | `fieldset`, `legend` |
 | `<ui-file-input>` | — | `accept`, `multiple`, `disabled`, `required`, `name`, `aria-label` | — | `ui-change` | `input` |
 | `<ui-glow>` | — | `tone` (`rose`\|`amber`\|`sky`\|`emerald`\|`violet`) | — | — | `glow` |
-| `<ui-grid>` | — | `min` (`xs`\|`sm`\|`md`\|`lg`), `gap` (`none`\|`xs`\|`sm`\|`md`\|`lg`\|`xl`) | default | — | `grid` |
+| `<ui-grid>` | — | `min` (`xs`\|`sm`\|`md`\|`lg`\|`card`), `gap` (`none`\|`xs`\|`sm`\|`md`\|`lg`\|`xl`) | default | — | `grid` |
 | `<ui-handle>` | — | `orientation` (`vertical`\|`horizontal`), `value`, `min`, `max`, `disabled`, `aria-label` | — | `ui-move` | `handle` |
 | `<ui-heading>` | — | `level` (`1`\|`2`\|`3`\|`4`\|`5`\|`6`), `size` (`display`\|`h1`\|`h2`\|`h3`\|`h4`\|`h5`), `tone` (`default`\|`secondary`\|`muted`\|`accent`\|`info`\|`success`\|`warning`\|`danger`\|`inverse`) | default | — | `heading` |
 | `<ui-hint>` | — | `tone` (`neutral`\|`error`\|`success`\|`warning`) | default | — | `hint` |
@@ -190,13 +190,13 @@ Self-contained regions with their own choreography, such as focus, loading and e
 
 | Tag | Composes | Attributes | Slots | Events | Parts |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `<ui-catalog-grid>` | `ui-empty-state`, `ui-skeleton` | `loading`, `empty`, `empty-text` | default | — | `skeletons`, `grid`, `empty` |
-| `<ui-drawer>` | `ui-divider`, `ui-panel-header`, `ui-surface` | `title`, `side` (`left`\|`right`\|`bottom`), `mode` (`docked`\|`modal`\|`auto`), `open` | default, `footer` | `ui-open`, `ui-close` | `panel`, `dialog`, `sheet`, `header`, `title`, `close`, `body`, `footer` |
-| `<ui-modal>` | `ui-divider`, `ui-panel-header`, `ui-surface` | `title`, `open` | default, `footer` | `ui-open`, `ui-close` | `dialog`, `title`, `close`, `body`, `footer` |
-| `<ui-navbar>` | `ui-surface`, `ui-theme-toggle` | `theme` (`dark`\|`light`) | `brand`, `nav`, `search`, `actions` | `ui-theme-change` | `header`, `theme-button` |
+| `<ui-catalog-grid>` | `ui-empty-state`, `ui-grid`, `ui-skeleton` | `loading`, `empty`, `empty-text` | default | — | `skeletons`, `grid`, `empty` |
+| `<ui-drawer>` | `ui-divider`, `ui-panel-header`, `ui-scroll`, `ui-surface` | `title`, `side` (`left`\|`right`\|`bottom`), `mode` (`docked`\|`modal`\|`auto`), `open` | default, `footer` | `ui-open`, `ui-close` | `panel`, `dialog`, `sheet`, `header`, `title`, `close`, `body`, `footer` |
+| `<ui-modal>` | `ui-cluster`, `ui-divider`, `ui-panel-header`, `ui-surface` | `title`, `open` | default, `footer` | `ui-open`, `ui-close` | `dialog`, `title`, `close`, `body`, `footer` |
+| `<ui-navbar>` | `ui-cluster`, `ui-surface`, `ui-theme-toggle` | `theme` (`dark`\|`light`) | `brand`, `nav`, `search`, `actions` | `ui-theme-change` | `header`, `theme-button` |
 | `<ui-popover>` | `ui-panel-header`, `ui-surface` | `open`, `placement` (`bottom-start`\|`bottom-end`\|`top-start`\|`top-end`), `aria-label`, `heading` | `trigger`, default | `ui-open`, `ui-close` | `trigger`, `panel`, `body` |
-| `<ui-table>` | `ui-empty-state`, `ui-skeleton` | `aria-label`, `loading`, `empty`, `empty-text` | default (native `<table>`) | — | `scroll`, `skeleton`, `empty` |
-| `<ui-toast>` | `ui-callout` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `callout` |
+| `<ui-table>` | `ui-empty-state`, `ui-scroll`, `ui-skeleton` | `aria-label`, `loading`, `empty`, `empty-text` | default (native `<table>`) | — | `scroll`, `skeleton`, `empty` |
+| `<ui-toast>` | `ui-callout`, `ui-live` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `callout` |
 
 ## 5. Templates (`src/templates/`)
 

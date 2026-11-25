@@ -23,6 +23,7 @@ TEMPLATE.innerHTML = `
 
     :host([axis="x"]) .scroll {
       overflow: auto hidden;
+      overscroll-behavior: contain auto;
     }
 
     :host([axis="both"]) .scroll {
@@ -44,6 +45,7 @@ export class UiScroll extends HTMLElement {
   static observedAttributes = ['aria-label'];
 
   #scroll;
+  #slot;
   #observer = new ResizeObserver(() => this.#syncFocusable());
 
   constructor() {
@@ -51,7 +53,8 @@ export class UiScroll extends HTMLElement {
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
     this.#scroll = shadow.querySelector('.scroll');
-    shadow.querySelector('slot').addEventListener('slotchange', () => this.#observe());
+    this.#slot = shadow.querySelector('slot');
+    this.#slot.addEventListener('slotchange', () => this.#observe());
   }
 
   attributeChangedCallback() {
@@ -71,7 +74,8 @@ export class UiScroll extends HTMLElement {
     this.#observer.disconnect();
     if (!this.isConnected) return;
     this.#observer.observe(this.#scroll);
-    for (const el of this.children) this.#observer.observe(el);
+    // Flattened, so content passed on through an outer slot counts too.
+    for (const el of this.#slot.assignedElements({ flatten: true })) this.#observer.observe(el);
   }
 
   #syncFocusable() {

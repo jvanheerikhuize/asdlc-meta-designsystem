@@ -1,3 +1,4 @@
+import '../atoms/ui-scroll.js';
 import '../atoms/ui-skeleton.js';
 import '../molecules/ui-empty-state.js';
 
@@ -16,22 +17,16 @@ TEMPLATE.innerHTML = `
       display: none;
     }
 
-    .scroll {
-      overflow-x: auto;
+    ui-scroll::part(scroll) {
       border-radius: var(--radius-sm);
     }
 
-    .scroll[hidden],
     ui-skeleton[hidden] {
       display: none;
     }
 
-    .scroll:focus-visible {
-      outline: var(--focus-width) solid var(--color-focus-ring);
-      outline-offset: var(--focus-offset);
-    }
   </style>
-  <div class="scroll" part="scroll" role="region"><slot></slot></div>
+  <ui-scroll class="scroll" exportparts="scroll" axis="x"><slot></slot></ui-scroll>
   <ui-skeleton part="skeleton" variant="text" lines="4" hidden></ui-skeleton>
   <ui-empty-state part="empty" hidden></ui-empty-state>
 `;
@@ -51,45 +46,29 @@ CELLS.replaceSync(`
 `);
 
 /**
- * Data table Organism: styles a slotted native <table> and scrolls it inside a labelled region,
+ * Data table Organism: styles a slotted native <table> and scrolls it in a labelled <ui-scroll>,
  * or shows a loading placeholder or an empty message in its place.
  */
 export class UiTable extends HTMLElement {
   static observedAttributes = ['aria-label', 'loading', 'empty', 'empty-text'];
 
   #scroll;
-  #slot;
-  #observer = new ResizeObserver(() => this.#syncFocusable());
 
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
     this.#scroll = shadow.querySelector('.scroll');
-    this.#slot = shadow.querySelector('slot');
-    this.#slot.addEventListener('slotchange', () => this.#observe());
   }
 
   connectedCallback() {
     const root = this.getRootNode();
     if (root.adoptedStyleSheets && !root.adoptedStyleSheets.includes(CELLS)) root.adoptedStyleSheets.push(CELLS);
     this.#sync();
-    this.#observe();
-  }
-
-  disconnectedCallback() {
-    this.#observer.disconnect();
   }
 
   attributeChangedCallback() {
     this.#sync();
-  }
-
-  #observe() {
-    this.#observer.disconnect();
-    if (!this.isConnected) return;
-    this.#observer.observe(this.#scroll);
-    for (const el of this.#slot.assignedElements()) this.#observer.observe(el);
   }
 
   #sync() {
@@ -101,12 +80,6 @@ export class UiTable extends HTMLElement {
     this.shadowRoot.querySelector('ui-skeleton').hidden = !loading;
     emptyState.hidden = !empty;
     emptyState.setAttribute('text', this.getAttribute('empty-text') || 'No rows.');
-  }
-
-  // A region that does not scroll must not be an extra keyboard stop.
-  #syncFocusable() {
-    if (this.#scroll.scrollWidth > this.#scroll.clientWidth) this.#scroll.setAttribute('tabindex', '0');
-    else this.#scroll.removeAttribute('tabindex');
   }
 }
 
