@@ -23,7 +23,7 @@ Declare `Design-System: asdlc-meta-designsystem@latest` (auto-updating default) 
 - `tokens.css` defines custom properties only; it does not reset `body` styles or bundle `@font-face` files. Load the fonts in the page itself: `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap">`.
 - **MkDocs Material Adapter (`src/tokens/mkdocs-theme.css`):** For MkDocs Material documentation/wiki sites, include both `.../src/tokens/tokens.css` and `.../src/tokens/mkdocs-theme.css` in `extra_css` (and set `palette` default to `slate`) to bridge `--md-*` theme variables to ASDLC `--color-*` and `--font-*` tokens.
 - Theme switching: dark mode is the default on `:root`; set `data-theme="light"` on `<html>` (or an ancestor) for light mode.
-- **Shadow DOM Notes:** `<ui-button>` aligns slotted `<ui-icon>` and text with `inline-flex` + `gap` and `<ui-icon>` inherits `currentColor`. `<ui-input>` exposes a live `.value` JS property in addition to `ui-input`/`ui-change` events. In `SPC-0001`, Atoms do not implement `ElementInternals` form association (`formAssociated`) or cross-shadow `<label for>` bridging, so always pair `<ui-input>` with `aria-label` and handle `ui-press` in JS. `<ui-skeleton lines>` applies only when `variant="text"`.
+- **Shadow DOM Notes:** `<ui-button>` aligns slotted `<ui-icon>` and text with `inline-flex` + `gap` and `<ui-icon>` inherits `currentColor`. `<ui-input>` exposes a live `.value` JS property in addition to `ui-input`/`ui-change` events. `<ui-button>`, `<ui-input>` and `<ui-field>` are form-associated: use them in a `<form>` and listen to `submit`. A `ui-button` is not the event's `submitter`. The other controls are not form-associated, and there is no cross-shadow `<label for>` bridging, so pair `<ui-input>` with `aria-label`. `<ui-skeleton lines>` applies only when `variant="text"`.
 
 ## Tier Architecture (`REQ-0001`)
 
@@ -47,7 +47,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 
 | Tag | Attributes | Slots | Events | Parts |
 | :--- | :--- | :--- | :--- | :--- |
-| `<ui-button>` | `variant` (`primary`\|`secondary`\|`surface`\|`ghost`\|`danger`), `size` (`sm`\|`md`\|`lg`), `disabled`, `busy`, `type`, `aria-label`, `aria-pressed` (`true`\|`false`, controlled by the owner) | default | `ui-press` | `button` |
+| `<ui-button>` | `variant` (`primary`\|`secondary`\|`surface`\|`ghost`\|`danger`), `size` (`sm`\|`md`\|`lg`), `disabled`, `busy`, `type`, `aria-label`, `aria-pressed` (`true`\|`false`, controlled by the owner), `aria-expanded`, `aria-haspopup` | default | `ui-press` | `button` |
 | `<ui-input>` | `type`, `value`, `placeholder`, `disabled`, `readonly`, `required`, `invalid`, `name`, `maxlength`, `aria-label` | — | `ui-input`, `ui-change` | `input` |
 | `<ui-label>` | `for`, `required`, `size` (`md`\|`sm`) | default | — | `label` |
 | `<ui-badge>` | `variant` (`neutral`\|`accent`\|`info`\|`success`\|`warning`), `size` (`sm`\|`md`) | default | — | `badge` |
@@ -70,7 +70,7 @@ Lower tiers MUST NOT import or depend on higher tiers.
 | Tag | Attributes | Slots | Events | Parts |
 | :--- | :--- | :--- | :--- | :--- |
 | `<ui-field>` | `label`, `name`, `value`, `placeholder`, `type`, `required`, `invalid`, `disabled`, `hint`, `error` | — | `ui-input`, `ui-change` | `label`, `input`, `hint` |
-| `<ui-search-bar>` | `value`, `placeholder`, `button-label`, `aria-label`, `disabled` | — | `ui-search` | `bar`, `input`, `button` |
+| `<ui-search-bar>` | `value`, `placeholder`, `button-label`, `aria-label`, `disabled`, `clearable`, `clear-label`, `compact` | — | `ui-search`, `ui-input` | `bar`, `input`, `button`, `clear` |
 | `<ui-media-card>` | `card-id`, `title`, `subtitle`, `badge`, `badge-variant`, `meta` | default | `ui-select` | `card`, `badge`, `title`, `subtitle`, `meta` |
 | `<ui-stat-tile>` | `value`, `label`, `status`, `variant` (`neutral`\|`accent`\|`success`\|`warning`\|`danger`) | — | — | `tile`, `value`, `dot`, `label` |
 | `<ui-callout>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `dismissible`, `close-label` | default | `ui-close` | `callout`, `icon`, `title`, `body`, `close` |

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ASDLC Design System — Catalog &amp; Visual Reference</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f43f5e' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='m12 2 9 5-9 5-9-5 9-5Z'/%3E%3Cpath d='m3 12 9 5 9-5M3 17l9 5 9-5'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap">
@@ -752,6 +753,7 @@
           <p class="specimen-desc">Search bar composing &lt;ui-input&gt;, &lt;ui-button&gt;, and search icon.</p>
           <div class="preview">
             <ui-search-bar placeholder="Search records…" button-label="Search"></ui-search-bar>
+            <ui-search-bar compact clearable placeholder="Filter records…" aria-label="Filter records" value="REQ"></ui-search-bar>
           </div>
           <pre><code>&lt;ui-search-bar placeholder="Search…"&gt;&lt;/ui-search-bar&gt;</code></pre>
           <div class="specimen-foot">
@@ -1112,14 +1114,14 @@
 
   <script type="module">
     const CONTRACTS = {
-      'ui-button': { tier: 'atoms', attrs: 'variant, size, disabled, busy, type, aria-label', slots: 'default', events: 'ui-press', a11y: 'delegatesFocus: true over native <button>; suppresses click when disabled or busy.' },
+      'ui-button': { tier: 'atoms', attrs: 'variant, size, disabled, busy, type, aria-label, aria-pressed, aria-expanded, aria-haspopup', slots: 'default', events: 'ui-press', a11y: 'delegatesFocus: true over native <button>; suppresses click when disabled or busy.' },
       'ui-input': { tier: 'atoms', attrs: 'type, value, placeholder, disabled, readonly, required, invalid, name, aria-label', slots: '—', events: 'ui-input, ui-change', a11y: 'delegatesFocus: true over native <input>; syncs aria-invalid.' },
       'ui-label': { tier: 'atoms', attrs: 'for, required, size', slots: 'default', events: '—', a11y: 'Native <label>; optical cap-height trim.' },
       'ui-badge': { tier: 'atoms', attrs: 'variant, size', slots: 'default', events: '—', a11y: 'Non-interactive inline status pill.' },
       'ui-icon': { tier: 'atoms', attrs: 'name, size, label', slots: '—', events: '—', a11y: 'aria-hidden="true" when decorative; role="img" + aria-label when label is set.' },
       'ui-skeleton': { tier: 'atoms', attrs: 'variant, width, height, lines', slots: '—', events: '—', a11y: 'aria-busy="true"; disables shimmer under prefers-reduced-motion: reduce.' },
       'ui-field': { tier: 'molecules', attrs: 'label, name, value, placeholder, type, required, invalid, disabled, hint, error', slots: '—', events: 'ui-input, ui-change', a11y: 'Composes <ui-label> and <ui-input>; forwards label to aria-label.' },
-      'ui-search-bar': { tier: 'molecules', attrs: 'value, placeholder, button-label, aria-label, disabled', slots: '—', events: 'ui-search', a11y: 'role="search"; emits ui-search on Enter or button activation.' },
+      'ui-search-bar': { tier: 'molecules', attrs: 'value, placeholder, button-label, aria-label, disabled, clearable, clear-label, compact', slots: '—', events: 'ui-search, ui-input', a11y: 'role="search"; emits ui-search on Enter or button activation.' },
       'ui-media-card': { tier: 'molecules', attrs: 'card-id, title, subtitle, badge, badge-variant, meta', slots: 'default', events: 'ui-select', a11y: 'delegatesFocus: true over native <button> with visible :focus-visible outline.' },
       'ui-navbar': { tier: 'organisms', attrs: 'theme', slots: 'brand, nav, search, actions', events: 'ui-theme-change', a11y: 'Wraps nav slot in <nav aria-label="Primary">.' },
       'ui-modal': { tier: 'organisms', attrs: 'title, open', slots: 'default, footer', events: 'ui-open, ui-close', a11y: 'Native <dialog>.showModal(); blurred backdrop, Escape dismissal, and focus restoration.' },

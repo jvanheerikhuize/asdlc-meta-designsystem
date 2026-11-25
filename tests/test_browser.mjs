@@ -186,7 +186,7 @@ async function main() {
     // 2b. Visual consistency assertions: 36px control height parity, dark color-scheme, non-overlapping detail-layout, zero horizontal pre overflow
     const visualConsistency = await cdp.eval(`(() => {
       const rootScheme = getComputedStyle(document.documentElement).colorScheme;
-      const btnMd = document.querySelector('#catalog-search').shadowRoot.querySelector('ui-button').getBoundingClientRect().height;
+      const btnMd = document.querySelector('#catalog-search').shadowRoot.querySelector('.submit').getBoundingClientRect().height;
       const inputMd = document.querySelector('ui-input').getBoundingClientRect().height;
       const selectMd = document.querySelector('ui-select').getBoundingClientRect().height;
       const selectChevron = Boolean(document.querySelector('ui-select').shadowRoot.querySelector('svg.chevron'));
@@ -280,7 +280,7 @@ async function main() {
       const innerInput = sb.shadowRoot.querySelector('ui-input').shadowRoot.querySelector('input');
       innerInput.value = '<ui-modal>';
       innerInput.dispatchEvent(new Event('input', { bubbles: true }));
-      sb.shadowRoot.querySelector('ui-button').shadowRoot.querySelector('button').click();
+      sb.shadowRoot.querySelector('.submit').shadowRoot.querySelector('button').click();
       const visible = Array.from(document.querySelectorAll('#specimen-grid .specimen')).filter((el) => !el.hidden);
       return {
         countText: document.getElementById('catalog-count').textContent,
@@ -298,7 +298,7 @@ async function main() {
       const innerInput = sb.shadowRoot.querySelector('ui-input').shadowRoot.querySelector('input');
       innerInput.value = '';
       innerInput.dispatchEvent(new Event('input', { bubbles: true }));
-      sb.shadowRoot.querySelector('ui-button').shadowRoot.querySelector('button').click();
+      sb.shadowRoot.querySelector('.submit').shadowRoot.querySelector('button').click();
 
       const sw = document.getElementById('demo-switch');
       const swBefore = sw.checked;
@@ -416,6 +416,96 @@ async function main() {
       return hit && inside && closed;
     }))`);
     assert.deepEqual(tips, Array(8).fill(true), 'Tooltip bubbles must be visible and inside the viewport');
+
+    // Menu state reaches the focusable control (REQ-0003)
+    const menu = await cdp.eval(`(() => {
+      const el = document.createElement('ui-button');
+      el.setAttribute('aria-haspopup', 'menu');
+      el.setAttribute('aria-expanded', 'false');
+      document.body.append(el);
+      const inner = el.shadowRoot.querySelector('button');
+      const first = inner.getAttribute('aria-haspopup') + inner.getAttribute('aria-expanded');
+      el.setAttribute('aria-expanded', 'true');
+      const second = inner.getAttribute('aria-expanded');
+      el.removeAttribute('aria-expanded');
+      const third = inner.hasAttribute('aria-expanded');
+      el.remove();
+      return [first, second, third];
+    })()`);
+    assert.deepEqual(menu, ['menufalse', 'true', false]);
+
+    // Form participation (REQ-0003, REQ-0004)
+    const press = async (key, code, text) => {
+      await cdp.send('Input.dispatchKeyEvent', { type: 'keyDown', key, code: key, windowsVirtualKeyCode: code, text });
+      await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key, code: key, windowsVirtualKeyCode: code });
+    };
+    await cdp.eval(`(() => {
+      const form = document.createElement('form');
+      form.id = 'form-test';
+      form.innerHTML = '<fieldset><ui-input name="a" required aria-label="a"></ui-input><ui-field name="b" label="b" value="two"></ui-field>'
+        + '<ui-button type="submit">Go</ui-button><ui-button type="reset">Reset</ui-button><ui-button>Plain</ui-button></fieldset>';
+      window.submits = [];
+      form.addEventListener('submit', (e) => { e.preventDefault(); window.submits.push([...new FormData(form)].join(';')); });
+      document.body.append(form);
+      form.querySelector('ui-input').focus();
+    })()`);
+    const inner = (n) => `document.querySelectorAll('#form-test ui-button')[${n}].shadowRoot.querySelector('button')`;
+    await press('Enter', 13, '\r');
+    await cdp.eval(`${inner(0)}.click()`);
+    assert.deepEqual(await cdp.eval(`window.submits`), [], 'An invalid form must not submit');
+    await cdp.eval(`document.querySelector('#form-test ui-input').focus()`);
+    await cdp.send('Input.insertText', { text: 'one' });
+    await press('Enter', 13, '\r');
+    await cdp.eval(`${inner(0)}.click()`);
+    await cdp.eval(`${inner(2)}.click()`);
+    await cdp.eval(`document.querySelector('#form-test ui-field').focus()`);
+    await press('Enter', 13, '\r');
+    assert.deepEqual(await cdp.eval(`window.submits`), Array(3).fill('a,one;b,two'), 'Enter and submit each submit once; plain buttons do not');
+    await cdp.eval(`(() => { document.querySelector('#form-test ui-field').addEventListener('keydown', (e) => e.preventDefault(), { once: true }); window.submits = []; })()`);
+    await press('Enter', 13, '\r');
+    await cdp.eval(`document.querySelector('#form-test ui-button').setAttribute('busy', '')`);
+    await press('Enter', 13, '\r');
+    assert.deepEqual(await cdp.eval(`window.submits`), [], 'A prevented keydown or inactive submit button must not submit');
+    const after = await cdp.eval(`(() => {
+      const form = document.getElementById('form-test');
+      form.querySelector('ui-field').shadowRoot.querySelector('ui-input').value = 'changed';
+      ${inner(1)}.click();
+      const reset = [form.querySelector('ui-input').value, form.querySelector('ui-field').value];
+      form.querySelector('fieldset').disabled = true;
+      const off = [form.querySelector('ui-input').shadowRoot.querySelector('input').disabled,
+        form.querySelector('ui-field').shadowRoot.querySelector('ui-input').shadowRoot.querySelector('input').disabled, ${inner(0)}.disabled];
+      const data = [...new FormData(form)].length;
+      form.remove();
+      return { reset, off, data };
+    })()`);
+    assert.deepEqual(after, { reset: ['', 'two'], off: [true, true, true], data: 0 });
+
+    // Clearable search (REQ-0004)
+    await cdp.eval(`(() => {
+      const bar = document.createElement('ui-search-bar');
+      bar.id = 'clear-test';
+      for (const a of ['compact', 'clearable']) bar.setAttribute(a, '');
+      bar.value = 'abc';
+      window.inputs = [];
+      window.escapes = 0;
+      window.presses = 0;
+      bar.addEventListener('ui-input', (e) => window.inputs.push(e.detail.value));
+      bar.addEventListener('ui-press', () => { window.presses += 1; });
+      bar.addEventListener('keydown', () => { window.escapes += 1; });
+      document.body.append(bar);
+      bar.shadowRoot.querySelector('.clear').shadowRoot.querySelector('button').click();
+    })()`);
+    const clearState = `(() => { const b = document.getElementById('clear-test'); return [b.value, b.shadowRoot.querySelector('.clear').hidden,
+      document.activeElement === b && b.shadowRoot.activeElement?.localName, window.inputs.join('|'), window.escapes, window.presses]; })()`;
+    assert.deepEqual(await cdp.eval(clearState), ['', true, 'ui-input', '', 0, 0]);
+    assert.equal(await cdp.eval(`window.inputs.length`), 1, 'Clearing is reported once');
+    await cdp.send('Input.insertText', { text: 'x' });
+    assert.deepEqual((await cdp.eval(clearState)).slice(0, 2), ['x', false]);
+    await press('Escape', 27);
+    assert.deepEqual(await cdp.eval(clearState), ['', true, 'ui-input', '|x|', 0, 0]);
+    await press('Escape', 27);
+    assert.equal(await cdp.eval(`window.escapes`), 1, 'Escape in an empty search reaches the page');
+    await cdp.eval(`document.getElementById('clear-test').remove()`);
 
     // 7. Verify prefers-reduced-motion suppresses skeleton shimmer (REQ-0002)
     await cdp.send('Emulation.setEmulatedMedia', {

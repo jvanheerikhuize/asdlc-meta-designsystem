@@ -1,5 +1,5 @@
 import '../atoms/ui-label.js';
-import '../atoms/ui-input.js';
+import { submitImplicitly } from '../atoms/ui-input.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -42,7 +42,10 @@ export class UiField extends HTMLElement {
   static observedAttributes = [
     'label', 'name', 'value', 'placeholder', 'type', 'required', 'invalid', 'disabled', 'hint', 'error',
   ];
+  static formAssociated = true;
 
+  #internals;
+  #formDisabled = false;
   #label;
   #input;
   #hint;
@@ -56,6 +59,26 @@ export class UiField extends HTMLElement {
     this.#label = shadow.querySelector('ui-label');
     this.#input = shadow.querySelector('ui-input');
     this.#hint = shadow.querySelector('.hint');
+    this.#internals = this.attachInternals();
+    this.#input.addEventListener('ui-input', () => this.#syncForm());
+    this.#input.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter' && !event.isComposing) submitImplicitly(this.#internals.form);
+    });
+  }
+
+  formDisabledCallback(disabled) {
+    this.#formDisabled = disabled;
+    this.#sync();
+  }
+
+  formResetCallback() {
+    this.#input.value = this.getAttribute('value') ?? '';
+    this.#syncForm();
+  }
+
+  /** The form that owns this field, if any. */
+  get form() {
+    return this.#internals.form;
   }
 
   connectedCallback() {
@@ -72,7 +95,10 @@ export class UiField extends HTMLElement {
 
   set value(val) {
     const next = val == null ? '' : String(val);
-    if (this.#input) this.#input.value = next;
+    if (this.#input) {
+      this.#input.value = next;
+      this.#syncForm();
+    }
     this.setAttribute('value', next);
   }
 
@@ -89,7 +115,7 @@ export class UiField extends HTMLElement {
     if (labelText) this.#input.setAttribute('aria-label', labelText);
     this.#input.toggleAttribute('required', this.hasAttribute('required'));
     this.#input.toggleAttribute('invalid', this.hasAttribute('invalid'));
-    this.#input.toggleAttribute('disabled', this.hasAttribute('disabled'));
+    this.#input.toggleAttribute('disabled', this.hasAttribute('disabled') || this.#formDisabled);
     if (this.hasAttribute('value') && this.#input.value !== this.getAttribute('value')) {
       this.#input.value = this.getAttribute('value') ?? '';
     }
@@ -99,6 +125,16 @@ export class UiField extends HTMLElement {
       : (this.getAttribute('hint') || '');
     this.#hint.textContent = message;
     this.#hint.hidden = !message;
+    this.#syncForm();
+  }
+
+  #syncForm() {
+    this.#internals.setFormValue(this.#input.value);
+    if (this.#input.willValidate && !this.#input.validity.valid) {
+      this.#internals.setValidity(this.#input.validity, this.#input.validationMessage, this.#input);
+    } else {
+      this.#internals.setValidity({});
+    }
   }
 }
 

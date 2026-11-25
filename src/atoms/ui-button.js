@@ -161,18 +161,22 @@ TEMPLATE.innerHTML = `
  * disabled, and busy state handling.
  */
 export class UiButton extends HTMLElement {
-  static observedAttributes = ['disabled', 'busy', 'type', 'variant', 'size', 'aria-label', 'aria-pressed'];
+  static observedAttributes = ['disabled', 'busy', 'type', 'variant', 'size', 'aria-label', 'aria-pressed', 'aria-expanded', 'aria-haspopup'];
+  static formAssociated = true;
 
   #btn;
+  #internals;
+  #formDisabled = false;
 
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: 'open', delegatesFocus: true });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
     this.#btn = shadow.querySelector('button');
+    this.#internals = this.attachInternals();
 
     this.#btn.addEventListener('click', (event) => {
-      if (this.disabled || this.busy) {
+      if (this.disabled || this.#formDisabled || this.busy) {
         event.preventDefault();
         event.stopImmediatePropagation();
         return;
@@ -182,6 +186,10 @@ export class UiButton extends HTMLElement {
         composed: true,
         detail: { variant: this.variant },
       }));
+      // The inner button is outside the form's tree, so it cannot submit by itself.
+      const type = this.getAttribute('type');
+      if (type === 'submit') this.#internals.form?.requestSubmit();
+      if (type === 'reset') this.#internals.form?.reset();
     });
   }
 
@@ -191,6 +199,16 @@ export class UiButton extends HTMLElement {
 
   attributeChangedCallback() {
     this.#sync();
+  }
+
+  formDisabledCallback(disabled) {
+    this.#formDisabled = disabled;
+    this.#sync();
+  }
+
+  /** The form that owns this button, if any. */
+  get form() {
+    return this.#internals.form;
   }
 
   get disabled() {
@@ -219,7 +237,7 @@ export class UiButton extends HTMLElement {
 
   #sync() {
     if (!this.#btn) return;
-    const isDisabled = this.disabled;
+    const isDisabled = this.disabled || this.#formDisabled;
     const isBusy = this.busy;
     this.#btn.type = this.getAttribute('type') || 'button';
     this.#btn.disabled = isDisabled;
@@ -230,6 +248,11 @@ export class UiButton extends HTMLElement {
       this.#btn.setAttribute('aria-label', ariaLabel);
     } else {
       this.#btn.removeAttribute('aria-label');
+    }
+    for (const name of ['aria-expanded', 'aria-haspopup']) {
+      const value = this.getAttribute(name);
+      if (value === null) this.#btn.removeAttribute(name);
+      else this.#btn.setAttribute(name, value);
     }
     const pressed = this.getAttribute('aria-pressed');
     if (pressed === null) {

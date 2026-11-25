@@ -425,6 +425,26 @@
             "false"
           ],
           "default": null
+        },
+        "aria-expanded": {
+          "type": "enum",
+          "values": [
+            "true",
+            "false"
+          ],
+          "default": null
+        },
+        "aria-haspopup": {
+          "type": "enum",
+          "values": [
+            "true",
+            "menu",
+            "listbox",
+            "tree",
+            "grid",
+            "dialog"
+          ],
+          "default": null
         }
       },
       "slots": [
@@ -443,7 +463,7 @@
       "parts": [
         "button"
       ],
-      "accessibility": "Uses Shadow DOM delegatesFocus: true over native <button>. Suppresses click/keyboard activation and sets aria-disabled='true' when disabled or busy; sets aria-busy='true' when busy; displays visible :focus-visible ring. Forwards aria-pressed for toggle buttons; the owner changes it in response to ui-press.",
+      "accessibility": "Uses Shadow DOM delegatesFocus: true over native <button>. Suppresses click/keyboard activation and sets aria-disabled='true' when disabled or busy; sets aria-busy='true' when busy; displays visible :focus-visible ring. Forwards aria-pressed for toggle buttons; the owner changes it in response to ui-press. Forwards aria-expanded and aria-haspopup for menu and panel triggers. Form-associated: type='submit' and 'reset' act on the owning form after ui-press.",
       "example": "<ui-button variant=\"primary\" size=\"md\">Save Changes</ui-button>"
     },
     {
@@ -516,7 +536,7 @@
       "parts": [
         "input"
       ],
-      "accessibility": "Uses delegatesFocus: true over native <input>. Syncs aria-invalid from the invalid attribute and forwards aria-label.",
+      "accessibility": "Uses delegatesFocus: true over native <input>. Syncs aria-invalid from the invalid attribute and forwards aria-label. Form-associated: takes part in form data, validation, reset and disabled fieldsets; Enter submits the owning form unless the page prevents the keydown.",
       "example": "<ui-input type=\"email\" placeholder=\"name@example.com\" required></ui-input>"
     },
     {
@@ -767,7 +787,7 @@
         "input",
         "hint"
       ],
-      "accessibility": "Forwards label to aria-label on inner <ui-input> and exposes .value JS property.",
+      "accessibility": "Forwards label to aria-label on inner <ui-input> and exposes .value JS property. Form-associated like ui-input.",
       "example": "<ui-field label=\"Project\" placeholder=\"asdlc-meta-designsystem\" required></ui-field>"
     },
     {
@@ -796,6 +816,18 @@
         "disabled": {
           "type": "boolean",
           "default": false
+        },
+        "clearable": {
+          "type": "boolean",
+          "default": false
+        },
+        "clear-label": {
+          "type": "string",
+          "default": "Clear search"
+        },
+        "compact": {
+          "type": "boolean",
+          "default": false
         }
       },
       "slots": [],
@@ -807,14 +839,23 @@
           },
           "bubbles": true,
           "composed": true
+        },
+        {
+          "name": "ui-input",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
         }
       ],
       "parts": [
         "bar",
         "input",
-        "button"
+        "button",
+        "clear"
       ],
-      "accessibility": "Wraps controls in role='search' and emits ui-search on Enter or button activation.",
+      "accessibility": "Wraps controls in role='search' and emits ui-search on Enter or button activation. With clearable, a labelled clear button or Escape empties the query, emits ui-input once and keeps focus in the input. Does not emit ui-change on clear.",
       "example": "<ui-search-bar placeholder=\"Filter catalog\u2026\"></ui-search-bar>"
     },
     {
