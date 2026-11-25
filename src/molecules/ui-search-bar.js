@@ -43,7 +43,9 @@ export class UiSearchBar extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: 'open', delegatesFocus: true });
-    shadow.appendChild(TEMPLATE.content.cloneNode(true));
+    // importNode upgrades the inner Atoms now. With cloneNode they stay inert until connected, and a
+    // value set before that becomes an own property that hides the Atom's accessor for good.
+    shadow.appendChild(document.importNode(TEMPLATE.content, true));
     this.#input = shadow.querySelector('ui-input');
     this.#button = shadow.querySelector('ui-button');
     this.#btnLabel = shadow.querySelector('.btn-label');

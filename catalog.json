@@ -1659,7 +1659,7 @@
       "parts": [
         "tooltip"
       ],
-      "accessibility": "Exposes role='tooltip'; dismissible via Escape without moving focus, hoverable over tooltip bubble, and persistent while focused or hovered.",
+      "accessibility": "Exposes role='tooltip'; dismissible via Escape without moving focus, hoverable over tooltip bubble, and persistent while focused or hovered. Renders in the Top Layer, flips and stays inside the viewport.",
       "example": "<ui-tooltip text=\"Undo last edit\" placement=\"bottom\"><ui-button variant=\"ghost\" size=\"sm\" aria-label=\"Undo last edit\"><ui-icon name=\"undo\"></ui-icon></ui-button></ui-tooltip>"
     },
     {
