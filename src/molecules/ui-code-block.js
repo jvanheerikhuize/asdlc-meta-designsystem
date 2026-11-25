@@ -1,5 +1,4 @@
 import '../atoms/ui-surface.js';
-import '../atoms/ui-divider.js';
 import '../atoms/ui-button.js';
 import '../atoms/ui-icon.js';
 
@@ -18,20 +17,21 @@ TEMPLATE.innerHTML = `
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-2, 0.5rem);
-      padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
-      font-family: var(--font-mono, monospace);
-      font-size: var(--text-xs, 0.75rem);
-      color: var(--color-fg-muted, #8e8e98);
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-fg-muted);
+      border-block-end: var(--border-width) solid var(--color-border);
     }
 
     pre {
       margin: 0;
-      padding: var(--space-3, 0.75rem);
-      font-family: var(--font-mono, monospace);
-      font-size: var(--text-xs, 0.75rem);
-      line-height: 1.5;
-      color: var(--color-fg-secondary, #a1a1aa);
+      padding: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      line-height: var(--leading-normal);
+      color: var(--color-fg-secondary);
       overflow-x: auto;
       white-space: pre-wrap;
     }
@@ -44,14 +44,13 @@ TEMPLATE.innerHTML = `
         <span id="copy-label">Copy</span>
       </ui-button>
     </div>
-    <ui-divider></ui-divider>
     <pre part="pre"><code><slot></slot></code></pre>
   </ui-surface>
 `;
 
 /**
- * Monospace code/record preview Molecule composing <ui-surface>, <ui-divider>,
- * <ui-button>, and <ui-icon> for copy-to-clipboard.
+ * Monospace code/record preview Molecule composing <ui-surface>,
+ * <ui-button> and <ui-icon> for copy-to-clipboard.
  */
 export class UiCodeBlock extends HTMLElement {
   static observedAttributes = ['language'];

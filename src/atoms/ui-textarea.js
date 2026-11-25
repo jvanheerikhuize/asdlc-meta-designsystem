@@ -13,38 +13,38 @@ TEMPLATE.innerHTML = `
       box-sizing: border-box;
       width: 100%;
       resize: vertical;
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
-      color: var(--color-fg, #ededed);
-      background: var(--color-surface, #111116);
-      border: 1px solid color-mix(in srgb, var(--color-border-hover, rgba(255, 255, 255, 0.22)) 75%, transparent);
-      scrollbar-color: var(--color-border-hover, rgba(255, 255, 255, 0.22)) transparent;
-      border-radius: var(--radius-md, 0.5rem);
-      padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
-      transition: border-color var(--duration-fast, 120ms) var(--ease-standard, ease);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+      color: var(--color-fg);
+      background: var(--color-surface);
+      border: var(--border-width) solid color-mix(in srgb, var(--color-border-hover) 75%, transparent);
+      scrollbar-color: var(--color-border-hover) transparent;
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-3);
+      transition: border-color var(--duration-fast) var(--ease-standard);
     }
 
     textarea::placeholder {
-      color: var(--color-fg-muted, #8e8e98);
+      color: var(--color-fg-muted);
     }
 
     textarea:hover:not(:disabled) {
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
+      border-color: var(--color-border-hover);
     }
 
     textarea:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
-      border-color: var(--color-focus-ring, #f43f5e);
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
+      border-color: var(--color-focus-ring);
     }
 
     :host([invalid]) textarea {
-      border-color: var(--color-danger, #f87171);
+      border-color: var(--color-danger);
     }
 
     :host([disabled]) textarea {
-      opacity: 0.55;
+      opacity: var(--opacity-disabled);
       cursor: not-allowed;
     }
 

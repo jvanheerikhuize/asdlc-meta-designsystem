@@ -39,7 +39,24 @@ def _parse_tokens(css_text: str) -> tuple[dict[str, str], dict[str, str]]:
 
     dark = extract(root_match.group(1))
     light = {**dark, **extract(light_match.group(1))}
-    return dark, light
+    def resolve(tokens: dict[str, str]) -> dict[str, str]:
+        out = {}
+        for name, value in tokens.items():
+            while match := re.search(r"var\((--[a-z0-9-]+)\)", value):
+                value = value.replace(match[0], tokens[match[1]])
+            out[name] = value
+        return out
+
+    return resolve(dark), resolve(light)
+
+
+def _component_sources() -> list[tuple[str, Path, str]]:
+    tiers = ("atoms", "molecules", "organisms", "templates")
+    return [(t, p, p.read_text(encoding="utf-8")) for t in tiers for p in sorted((ROOT / "src" / t).glob("*.js"))]
+
+
+def _composed_tags(src: str) -> set[str]:
+    return set(re.findall(r"<((?:ui|page|catalog|detail|workspace)-[a-z-]+)[\s>]", re.sub(r"/\*.*?\*/", "", src, flags=re.S)))
 
 
 class DesignSystemTest(unittest.TestCase):
@@ -76,6 +93,48 @@ class DesignSystemTest(unittest.TestCase):
                         src_no_backdrop,
                         f"{tier}/{path.name} must compose <ui-surface variant='glass'> instead of duplicating backdrop-filter",
                     )
+
+    def test_six_tier_boundaries(self):  # REQ-0001
+        package = {p.name for p in (ROOT / "src").iterdir()}
+        self.assertEqual(package, {"index.js", "tokens", "atoms", "molecules", "organisms", "templates"})
+        for tier, path, src in _component_sources():
+            imports = set(re.findall(r"^import .*?['\"]\.\./[a-z]+/([a-z-]+)\.js['\"]", src, re.M))
+            composed = _composed_tags(src)
+            with self.subTest(component=path.name):
+                unused = {tag for tag in imports if tag not in composed and f"createElement('{tag}')" not in src
+                          and not re.search(rf"import \{{.*\}} from '[^']*{tag}\.js'", src)}
+                self.assertFalse(unused, "unused imports")
+                self.assertFalse(composed - imports - {path.stem}, "composed without import")
+                if tier in ("atoms", "templates"):
+                    self.assertFalse(composed, f"{tier} must not name other components")
+                    self.assertFalse(imports)
+                if tier == "molecules":
+                    atoms = {t for t in composed if (ROOT / "src/atoms" / f"{t}.js").is_file()}
+                    self.assertTrue(1 <= len(atoms) <= 3, f"one to three kinds of atom, got {sorted(atoms)}")
+                if tier == "organisms":
+                    self.assertTrue(composed, "an organism must compose lower tiers")
+                if tier == "templates":
+                    self.assertIn("<slot", src)
+                    self.assertIn(":host([hidden])", src)
+
+    def test_components_take_visual_values_from_tokens(self):  # REQ-0002
+        css_text = (ROOT / "src" / "tokens" / "tokens.css").read_text(encoding="utf-8")
+        dark, _ = _parse_tokens(css_text)
+        for line in re.findall(r"^\s+--(?:color|glow)-[^;]+;", css_text, re.M):
+            self.assertRegex(line, r": var\(--palette-[a-z0-9-]+\);", "semantic colors must alias a primitive")
+        for _, path, src in _component_sources():
+            css = " ".join(re.findall(r"<style>(.*?)</style>|replaceSync\(`(.*?)`\)", src, re.S)[0]) + src[src.find("replaceSync"):] * ("replaceSync" in src)
+            css = re.sub(r"@(?:media|container)[^{]*", "", re.sub(r"/\*.*?\*/", "", css, flags=re.S))
+            with self.subTest(component=path.name):
+                self.assertNotRegex(css, r"#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?)\(", "raw color")
+                self.assertNotRegex(css, r"(?<![\w-])\d*\.?\d+(?:px|rem)\b", "raw length")
+                self.assertNotRegex(css, r"(?:z-index|font-weight):\s*[1-9]|opacity:\s*0\.\d|[0-9]m?s\b(?=[ ;])", "raw layer, weight, opacity or duration")
+                self.assertNotIn("--palette-", src, "primitives are for semantic tokens only")
+                fallbacks = [t for t in re.findall(r"var\((--[a-z0-9-]+)\s*,", src) if t in dark]
+                self.assertFalse(fallbacks, "fallback values")
+                used = set(re.findall(r"var\((--[a-z0-9-]+)\)", css))
+                local = set(re.findall(r"(--[a-z0-9_-]+):", css)) | set(re.findall(r"setProperty\('(--[a-z0-9-]+)'", src))
+                self.assertFalse(used - set(dark) - local, "unknown tokens")
 
     def test_lumen_tokens_wcag_aa_contrast_and_reduced_motion(self):  # REQ-0002
         css_path = ROOT / "src" / "tokens" / "tokens.css"
@@ -135,6 +194,8 @@ class DesignSystemTest(unittest.TestCase):
             "ui-toolbar": "ui-navigate",
             "ui-tabs": "ui-change",
             "ui-panel-header": "ui-close",
+            "ui-empty-state": "ui-icon",
+            "ui-theme-toggle": "ui-theme-change",
         }
         index_js = (ROOT / "src" / "index.js").read_text(encoding="utf-8")
         for tag, event_name in expected.items():
@@ -174,13 +235,19 @@ class DesignSystemTest(unittest.TestCase):
         }
         self.assertEqual(set(dark.keys()), documented_tokens)
 
+        dark, light = _parse_tokens((ROOT / "src" / "tokens" / "tokens.css").read_text(encoding="utf-8"))
+        for token in (t for group in catalog["tokens"].values() for t in group):
+            for key, theme in (("dark", dark), ("light", light), ("value", dark)):
+                if key in token:
+                    self.assertEqual(token[key].replace(" ", ""), re.sub(r"\s", "", theme[token["name"]]), token["name"])
+
         documented_tags = {c["tag"]: c for c in catalog["components"]}
         expected_tags = {
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
             "ui-chip", "ui-progress", "ui-textarea", "ui-select", "ui-dot", "ui-checkbox",
             "ui-slider", "ui-switch", "ui-tooltip", "ui-surface", "ui-divider",
             "ui-field", "ui-search-bar", "ui-media-card", "ui-stat-tile", "ui-callout",
-            "ui-code-block", "ui-toolbar", "ui-tabs", "ui-panel-header",
+            "ui-code-block", "ui-toolbar", "ui-tabs", "ui-panel-header", "ui-empty-state", "ui-theme-toggle",
             "ui-navbar", "ui-modal", "ui-catalog-grid", "ui-popover", "ui-drawer", "ui-toast", "ui-table",
             "page-shell", "catalog-layout", "detail-layout", "workspace-layout",
         }
@@ -196,7 +263,9 @@ class DesignSystemTest(unittest.TestCase):
             self.assertIn("catalog.json", skill_path.read_text(encoding="utf-8"))
 
     def test_pages_dashboard_and_showcase_bidirectional_links(self):  # REQ-0007
-        showcase_html = (ROOT / "src" / "pages" / "showcase.html").read_text(encoding="utf-8")
+        showcase_html = (ROOT / "showcase" / "index.html").read_text(encoding="utf-8")
+        for tag in (c["tag"] for c in json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))["components"]):
+            self.assertIn(f'data-component="{tag}"', showcase_html)
         self.assertIn('href="./specs/"', showcase_html)
         self.assertTrue((ROOT / "specs" / "README.md").is_file())
         self.assertTrue((ROOT / "specs" / "SPC-0001.md").is_file())

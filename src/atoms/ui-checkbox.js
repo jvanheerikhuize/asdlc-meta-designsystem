@@ -13,11 +13,11 @@ TEMPLATE.innerHTML = `
     label {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-2, 0.5rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
-      color: var(--color-fg, #ededed);
+      gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+      color: var(--color-fg);
       cursor: pointer;
       user-select: none;
     }
@@ -26,33 +26,33 @@ TEMPLATE.innerHTML = `
       appearance: none;
       -webkit-appearance: none;
       margin: 0;
-      width: 1.05rem;
-      height: 1.05rem;
+      width: var(--size-checkbox);
+      height: var(--size-checkbox);
       flex-shrink: 0;
-      border-radius: var(--radius-sm, 0.375rem);
-      border: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      background: var(--color-surface, #111116);
+      border-radius: var(--radius-sm);
+      border: var(--border-width) solid var(--color-border-hover);
+      background: var(--color-surface);
       display: grid;
       place-content: center;
       cursor: pointer;
       transition:
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease);
+        background-color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard);
     }
 
     input[type="checkbox"]::after {
       content: '';
-      width: 0.55rem;
-      height: 0.55rem;
+      width: var(--size-checkmark);
+      height: var(--size-checkmark);
       transform: scale(0);
-      background: var(--color-accent-fg, #08080b);
+      background: var(--color-accent-fg);
       clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-      transition: transform var(--duration-fast, 120ms) var(--ease-standard, ease);
+      transition: transform var(--duration-fast) var(--ease-standard);
     }
 
     input[type="checkbox"]:checked {
-      background: var(--color-accent, #f43f5e);
-      border-color: var(--color-accent, #f43f5e);
+      background: var(--color-accent);
+      border-color: var(--color-accent);
     }
 
     input[type="checkbox"]:checked::after {
@@ -60,13 +60,13 @@ TEMPLATE.innerHTML = `
     }
 
     input[type="checkbox"]:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
     }
 
     :host([disabled]) label,
     :host([disabled]) input[type="checkbox"] {
-      opacity: 0.55;
+      opacity: var(--opacity-disabled);
       cursor: not-allowed;
     }
 

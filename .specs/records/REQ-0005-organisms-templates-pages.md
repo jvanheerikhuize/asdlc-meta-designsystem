@@ -2,7 +2,7 @@
 id: REQ-0005
 title: Organisms, Templates, and Pages assemble Molecules into responsive, accessible application views
 status: active
-because: [FCT-0001, FCT-0004, FCT-0007]
+because: [FCT-0001, FCT-0004, FCT-0007, FCT-0010]
 ---
 
 ## Statement
@@ -16,3 +16,11 @@ Organisms (Site Header, Modal Dialog with blurred backdrop and focus containment
 - Given a Data Table wider than the available space
 - When a keyboard user focuses its labelled region
 - Then the table scrolls inside that region, the page itself does not scroll sideways, and header and cell semantics stay intact
+
+- Given a Data Table or Catalog Grid that is loading or has no items
+- When it is rendered
+- Then it shows a loading placeholder or an empty message in place of its items
+
+- Given a Template in a narrow view
+- When its slots are filled
+- Then they stack without sideways scrolling, and a footer without content takes no space

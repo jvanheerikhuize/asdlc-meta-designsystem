@@ -1,4 +1,5 @@
 import '../atoms/ui-skeleton.js';
+import '../molecules/ui-empty-state.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -13,34 +14,24 @@ TEMPLATE.innerHTML = `
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: var(--space-4, 1rem);
+      grid-template-columns: repeat(auto-fill, minmax(var(--layout-card-min), 1fr));
+      gap: var(--space-4);
     }
 
-    .empty {
-      padding: var(--space-8, 2rem);
-      text-align: center;
-      border-radius: var(--radius-lg, 0.75rem);
-      border: 1px dashed var(--color-border, rgba(255, 255, 255, 0.08));
-      color: var(--color-fg-muted, #8e8e98);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-    }
-
-    .empty[hidden],
+    .items[hidden],
     .skeletons[hidden] {
       display: none;
     }
   </style>
   <div class="grid skeletons" part="skeletons" hidden>
-    <ui-skeleton variant="rect" height="9rem"></ui-skeleton>
-    <ui-skeleton variant="rect" height="9rem"></ui-skeleton>
-    <ui-skeleton variant="rect" height="9rem"></ui-skeleton>
+    <ui-skeleton variant="rect" height="var(--size-skeleton-card)"></ui-skeleton>
+    <ui-skeleton variant="rect" height="var(--size-skeleton-card)"></ui-skeleton>
+    <ui-skeleton variant="rect" height="var(--size-skeleton-card)"></ui-skeleton>
   </div>
   <div class="grid items" part="grid">
     <slot></slot>
   </div>
-  <div class="empty" part="empty" hidden></div>
+  <ui-empty-state class="empty" part="empty" hidden></ui-empty-state>
 `;
 
 /**
@@ -78,7 +69,7 @@ export class UiCatalogGrid extends HTMLElement {
     this.#skeletons.hidden = !isLoading;
     this.#items.hidden = isLoading || isEmpty;
     this.#empty.hidden = isLoading || !isEmpty;
-    this.#empty.textContent = this.getAttribute('empty-text') || 'No matching items.';
+    this.#empty.setAttribute('text', this.getAttribute('empty-text') || 'No matching items.');
   }
 }
 

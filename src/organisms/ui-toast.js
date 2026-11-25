@@ -5,7 +5,7 @@ TEMPLATE.innerHTML = `
   <style>
     :host {
       display: block;
-      max-width: min(26rem, calc(100vw - 2rem));
+      max-width: min(var(--panel-toast), calc(100vw - var(--space-8)));
     }
 
     :host(:not([open])) {
@@ -14,10 +14,10 @@ TEMPLATE.innerHTML = `
 
     .sr-live {
       position: absolute;
-      width: 1px;
-      height: 1px;
+      width: var(--border-width);
+      height: var(--border-width);
       padding: 0;
-      margin: -1px;
+      margin: calc(-1 * var(--border-width));
       overflow: hidden;
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;

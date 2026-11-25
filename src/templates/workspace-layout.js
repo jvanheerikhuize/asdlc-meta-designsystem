@@ -7,13 +7,17 @@ TEMPLATE.innerHTML = `
       width: 100%;
       height: 100dvh;
       overflow: hidden;
-      background: var(--color-bg, #08080b);
-      color: var(--color-fg, #ededed);
+      background: var(--color-bg);
+      color: var(--color-fg);
       box-sizing: border-box;
     }
 
+    :host([hidden]) {
+      display: none;
+    }
+
     header {
-      z-index: 20;
+      z-index: var(--z-header);
     }
 
     .body {
@@ -35,7 +39,7 @@ TEMPLATE.innerHTML = `
 
     .aside {
       min-height: 0;
-      z-index: 15;
+      z-index: var(--z-panel);
     }
 
     .stage {
@@ -59,8 +63,8 @@ TEMPLATE.innerHTML = `
       position: absolute;
       inset: 0;
       pointer-events: none;
-      z-index: 10;
-      padding: var(--space-3, 0.75rem);
+      z-index: var(--z-floating);
+      padding: var(--space-3);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -72,8 +76,25 @@ TEMPLATE.innerHTML = `
     }
 
     .bottom {
-      z-index: 12;
+      z-index: var(--z-tray);
       min-width: 0;
+    }
+
+    @media (max-width: 640px) {
+      .body,
+      :host([aside-side="right"]) .body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+      }
+
+      :host([aside-side="right"]) .aside {
+        order: 0;
+      }
+
+      .aside {
+        max-height: 50dvh;
+        overflow: auto;
+      }
     }
   </style>
   <header part="header">

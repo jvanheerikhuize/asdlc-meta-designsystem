@@ -16,22 +16,22 @@ TEMPLATE.innerHTML = `
       inset: auto;
       margin: 0;
       box-sizing: border-box;
-      z-index: 60;
-      max-width: min(16rem, calc(100vw - 1rem));
+      z-index: var(--z-tooltip);
+      max-width: min(var(--panel-tooltip), calc(100vw - var(--space-4)));
       width: max-content;
-      padding: var(--space-1, 0.25rem) var(--space-2, 0.5rem);
-      border-radius: var(--radius-sm, 0.375rem);
-      border: 1px solid var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      background: var(--color-surface-elevated, #18181f);
-      color: var(--color-fg, #ededed);
-      box-shadow: var(--shadow-md, 0 4px 14px rgba(0, 0, 0, 0.45));
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-xs, 0.75rem);
-      line-height: var(--leading-normal, 1.5);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      border: var(--border-width) solid var(--color-border-hover);
+      background: var(--color-surface-elevated);
+      color: var(--color-fg);
+      box-shadow: var(--shadow-md);
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      line-height: var(--leading-normal);
       pointer-events: auto;
       opacity: 0;
       visibility: hidden;
-      transition: opacity var(--duration-fast, 120ms) var(--ease-standard, ease);
+      transition: opacity var(--duration-fast) var(--ease-standard);
     }
 
     :host([open]) .bubble {
@@ -143,8 +143,9 @@ export class UiTooltip extends HTMLElement {
   }
 
   #place() {
-    const gap = 6;
-    const edge = 8;
+    const px = (name) => parseFloat(getComputedStyle(this).getPropertyValue(name)) || 0;
+    const gap = px('--anchor-gap');
+    const edge = px('--anchor-margin');
     const host = this.getBoundingClientRect();
     const { width, height } = this.#bubble.getBoundingClientRect();
     const fits = {

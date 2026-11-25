@@ -2,7 +2,7 @@
 id: REQ-0004
 title: Molecules compose Atoms into single-purpose interactive groups with slot and event contracts
 status: active
-because: [FCT-0001, FCT-0007]
+because: [FCT-0001, FCT-0007, FCT-0010]
 ---
 
 ## Statement
@@ -24,3 +24,7 @@ Molecules (such as Form Field, Search Bar, and Media/Poster Card) MUST compose m
 - Given a Form Field Molecule inside a form
 - When the form is submitted or reset
 - Then the Form Field takes part like a Text Input
+
+- Given a Theme Toggle Molecule
+- When the user activates it
+- Then it switches between dark and light and emits one semantic event with the new theme

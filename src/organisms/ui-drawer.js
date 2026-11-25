@@ -17,14 +17,14 @@ TEMPLATE.innerHTML = `
     .docked {
       box-sizing: border-box;
       display: flex;
-      width: var(--drawer-width, 22rem);
+      width: var(--drawer-width, var(--panel-drawer));
       height: 100%;
       max-width: 100vw;
     }
 
     :host([side="bottom"]) .docked {
       width: 100%;
-      height: var(--drawer-height, 14rem);
+      height: var(--drawer-height, var(--panel-tray));
     }
 
     .panel-inner {
@@ -52,8 +52,8 @@ TEMPLATE.innerHTML = `
     }
 
     dialog::backdrop {
-      background: var(--color-overlay, rgba(0, 0, 0, 0.75));
-      backdrop-filter: blur(8px);
+      background: var(--color-overlay);
+      backdrop-filter: blur(var(--frost-sm));
     }
 
     .modal-frame {
@@ -73,27 +73,27 @@ TEMPLATE.innerHTML = `
     }
 
     .sheet {
-      width: min(var(--drawer-width, 22rem), calc(100vw - 1.5rem));
+      width: min(var(--drawer-width, var(--panel-drawer)), calc(100vw - var(--space-6)));
       height: 100svh;
     }
 
     :host([side="bottom"]) .sheet {
       width: 100%;
-      height: min(var(--drawer-height, 20rem), 82svh);
+      height: min(var(--drawer-height, var(--panel-sheet)), 82svh);
     }
 
     .body {
       flex: 1;
       overflow-y: auto;
-      scrollbar-color: var(--color-border-hover, rgba(255, 255, 255, 0.22)) transparent;
-      padding: var(--space-4, 1rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
+      scrollbar-color: var(--color-border-hover) transparent;
+      padding: var(--space-4);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
     }
 
     .foot {
-      padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+      padding: var(--space-3) var(--space-4);
       flex-shrink: 0;
     }
 

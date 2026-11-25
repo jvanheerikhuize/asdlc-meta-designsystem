@@ -15,54 +15,54 @@ TEMPLATE.innerHTML = `
       box-sizing: border-box;
       display: inline-flex;
       align-items: center;
-      gap: var(--space-1, 0.25rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-xs, 0.75rem);
-      font-weight: 500;
-      line-height: 1;
-      padding: 0.4rem 0.75rem;
-      border-radius: var(--radius-full, 9999px);
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      background: var(--color-surface, #111116);
-      color: var(--color-fg-secondary, #a1a1aa);
+      gap: var(--space-1);
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      line-height: var(--leading-none);
+      padding: var(--pad-chip);
+      border-radius: var(--radius-full);
+      border: var(--border-width) solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-fg-secondary);
       cursor: pointer;
       user-select: none;
       white-space: nowrap;
       transition:
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        color var(--duration-fast, 120ms) var(--ease-standard, ease);
+        background-color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard);
     }
 
     button:hover:not(:disabled) {
-      color: var(--color-fg, #ededed);
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
+      color: var(--color-fg);
+      border-color: var(--color-border-hover);
     }
 
     :host([pressed]) button {
-      background: var(--color-fg, #ededed);
-      color: var(--color-bg, #08080b);
-      border-color: var(--color-fg, #ededed);
+      background: var(--color-fg);
+      color: var(--color-bg);
+      border-color: var(--color-fg);
     }
 
     :host([variant="accent"]) button {
-      color: var(--color-accent, #f43f5e);
-      border-color: color-mix(in srgb, var(--color-accent, #f43f5e) 50%, transparent);
+      color: var(--color-accent);
+      border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
     }
 
     :host([variant="accent"][pressed]) button {
-      background: var(--color-accent, #f43f5e);
-      color: var(--color-accent-fg, #08080b);
-      border-color: var(--color-accent, #f43f5e);
+      background: var(--color-accent);
+      color: var(--color-accent-fg);
+      border-color: var(--color-accent);
     }
 
     button:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
     }
 
     :host([disabled]) button {
-      opacity: 0.5;
+      opacity: var(--opacity-disabled);
       cursor: not-allowed;
     }
 

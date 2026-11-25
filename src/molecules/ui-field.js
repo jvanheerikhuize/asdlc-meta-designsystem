@@ -7,7 +7,7 @@ TEMPLATE.innerHTML = `
     :host {
       display: flex;
       flex-direction: column;
-      gap: var(--space-2, 0.5rem);
+      gap: var(--space-2);
     }
 
     :host([hidden]) {
@@ -16,14 +16,14 @@ TEMPLATE.innerHTML = `
 
     .hint {
       margin: 0;
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-xs, 0.75rem);
-      line-height: var(--leading-normal, 1.5);
-      color: var(--color-fg-muted, #8e8e98);
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      line-height: var(--leading-normal);
+      color: var(--color-fg-muted);
     }
 
     :host([invalid]) .hint {
-      color: var(--color-danger, #f87171);
+      color: var(--color-danger);
     }
 
     .hint[hidden] {

@@ -15,49 +15,49 @@ TEMPLATE.innerHTML = `
       width: 100%;
       height: 100%;
       display: block;
-      background: var(--_bg, var(--color-surface, #111116));
-      color: var(--color-fg, #ededed);
-      border: 1px solid var(--_border, var(--color-border, rgba(255, 255, 255, 0.08)));
-      border-radius: var(--_radius, var(--radius-lg, 0.75rem));
+      background: var(--_bg, var(--color-surface));
+      color: var(--color-fg);
+      border: var(--border-width) solid var(--_border, var(--color-border));
+      border-radius: var(--_radius, var(--radius-lg));
       padding: var(--_pad, 0);
       box-shadow: var(--_shadow, none);
       overflow: hidden;
       transition:
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        transform var(--duration-fast, 120ms) var(--ease-standard, ease);
+        background-color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-standard);
     }
 
-    :host([variant="elevated"]) .surface { --_bg: var(--color-surface-elevated, #18181f); }
-    :host([variant="card"]) .surface { --_bg: var(--color-card, rgba(255, 255, 255, 0.04)); }
+    :host([variant="elevated"]) .surface { --_bg: var(--color-surface-elevated); }
+    :host([variant="card"]) .surface { --_bg: var(--color-card); }
     :host([variant="glass"]) .surface {
-      --_bg: color-mix(in srgb, var(--color-surface, #111116) 84%, transparent);
-      --_border: var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      backdrop-filter: blur(12px);
+      --_bg: color-mix(in srgb, var(--color-surface) 84%, transparent);
+      --_border: var(--color-border-hover);
+      backdrop-filter: blur(var(--frost-md));
     }
 
-    :host([elevation="sm"]) .surface { --_shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.35)); }
-    :host([elevation="md"]) .surface { --_shadow: var(--shadow-md, 0 4px 14px rgba(0, 0, 0, 0.45)); }
-    :host([elevation="lg"]) .surface { --_shadow: var(--shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.6)); }
+    :host([elevation="sm"]) .surface { --_shadow: var(--shadow-sm); }
+    :host([elevation="md"]) .surface { --_shadow: var(--shadow-md); }
+    :host([elevation="lg"]) .surface { --_shadow: var(--shadow-lg); }
 
     :host([padding="none"]) .surface { --_pad: 0; }
-    :host([padding="xs"]) .surface { --_pad: var(--space-1, 0.25rem); }
-    :host([padding="sm"]) .surface { --_pad: var(--space-3, 0.75rem); }
-    :host([padding="md"]) .surface { --_pad: var(--space-4, 1rem) var(--space-5, 1.25rem); }
-    :host([padding="lg"]) .surface { --_pad: var(--space-5, 1.25rem); }
+    :host([padding="xs"]) .surface { --_pad: var(--space-1); }
+    :host([padding="sm"]) .surface { --_pad: var(--space-3); }
+    :host([padding="md"]) .surface { --_pad: var(--space-4) var(--space-5); }
+    :host([padding="lg"]) .surface { --_pad: var(--space-5); }
 
     :host([radius="none"]) .surface { --_radius: 0; border-inline: 0; }
-    :host([radius="sm"]) .surface { --_radius: var(--radius-sm, 0.375rem); }
-    :host([radius="md"]) .surface { --_radius: var(--radius-md, 0.5rem); }
-    :host([radius="lg"]) .surface { --_radius: var(--radius-lg, 0.75rem); }
-    :host([radius="xl"]) .surface { --_radius: var(--radius-xl, 1rem); }
-    :host([radius="full"]) .surface { --_radius: var(--radius-full, 9999px); }
+    :host([radius="sm"]) .surface { --_radius: var(--radius-sm); }
+    :host([radius="md"]) .surface { --_radius: var(--radius-md); }
+    :host([radius="lg"]) .surface { --_radius: var(--radius-lg); }
+    :host([radius="xl"]) .surface { --_radius: var(--radius-xl); }
+    :host([radius="full"]) .surface { --_radius: var(--radius-full); }
 
-    :host([accent="info"]) .surface { border-inline-start: 4px solid var(--color-info, #38bdf8); }
-    :host([accent="success"]) .surface { border-inline-start: 4px solid var(--color-success, #10b981); }
-    :host([accent="warning"]) .surface { border-inline-start: 4px solid var(--color-warning, #f59e0b); }
-    :host([accent="danger"]) .surface { border-inline-start: 4px solid var(--color-danger, #f87171); }
-    :host([accent="accent"]) .surface { border-inline-start: 4px solid var(--color-accent, #f43f5e); }
+    :host([accent="info"]) .surface { border-inline-start: var(--border-width-accent) solid var(--color-info); }
+    :host([accent="success"]) .surface { border-inline-start: var(--border-width-accent) solid var(--color-success); }
+    :host([accent="warning"]) .surface { border-inline-start: var(--border-width-accent) solid var(--color-warning); }
+    :host([accent="danger"]) .surface { border-inline-start: var(--border-width-accent) solid var(--color-danger); }
+    :host([accent="accent"]) .surface { border-inline-start: var(--border-width-accent) solid var(--color-accent); }
 
     button.surface {
       appearance: none;
@@ -67,15 +67,15 @@ TEMPLATE.innerHTML = `
     }
 
     button.surface:hover {
-      background: var(--color-card-hover, rgba(255, 255, 255, 0.07));
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
-      transform: translateY(-2px);
+      background: var(--color-card-hover);
+      border-color: var(--color-border-hover);
+      transform: translateY(calc(-1 * var(--space-0-5)));
     }
 
     button.surface:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
-      border-color: var(--color-focus-ring, #f43f5e);
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
+      border-color: var(--color-focus-ring);
     }
 
     @media (prefers-reduced-motion: reduce) {

@@ -12,40 +12,40 @@ TEMPLATE.innerHTML = `
     input {
       box-sizing: border-box;
       width: 100%;
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
-      line-height: var(--leading-normal, 1.5);
-      color: var(--color-fg, #ededed);
-      background: var(--color-surface, #111116);
-      border: 1px solid color-mix(in srgb, var(--color-border-hover, rgba(255, 255, 255, 0.22)) 75%, transparent);
-      border-radius: var(--radius-md, 0.5rem);
-      padding: 0 var(--ui-input-padding-end, var(--space-3, 0.75rem)) 0 var(--ui-input-padding-start, var(--space-3, 0.75rem));
-      height: 2.25rem;
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+      color: var(--color-fg);
+      background: var(--color-surface);
+      border: var(--border-width) solid color-mix(in srgb, var(--color-border-hover) 75%, transparent);
+      border-radius: var(--radius-md);
+      padding: 0 var(--ui-input-padding-end, var(--space-3)) 0 var(--ui-input-padding-start, var(--space-3));
+      height: var(--control-md);
       transition:
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        box-shadow var(--duration-fast, 120ms) var(--ease-standard, ease);
+        border-color var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
     }
 
     input::placeholder {
-      color: var(--color-fg-muted, #8e8e98);
+      color: var(--color-fg-muted);
     }
 
     input:hover:not(:disabled) {
-      border-color: var(--color-border-hover, rgba(255, 255, 255, 0.22));
+      border-color: var(--color-border-hover);
     }
 
     input:focus-visible {
-      outline: 2px solid var(--color-focus-ring, #f43f5e);
-      outline-offset: 2px;
-      border-color: var(--color-focus-ring, #f43f5e);
+      outline: var(--focus-width) solid var(--color-focus-ring);
+      outline-offset: var(--focus-offset);
+      border-color: var(--color-focus-ring);
     }
 
     :host([invalid]) input {
-      border-color: var(--color-danger, #f87171);
+      border-color: var(--color-danger);
     }
 
     :host([disabled]) input {
-      opacity: 0.55;
+      opacity: var(--opacity-disabled);
       cursor: not-allowed;
     }
 

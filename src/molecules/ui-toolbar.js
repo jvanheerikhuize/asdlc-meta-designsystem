@@ -1,5 +1,4 @@
 import '../atoms/ui-surface.js';
-import '../atoms/ui-divider.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -16,7 +15,7 @@ TEMPLATE.innerHTML = `
       display: inline-flex;
       flex-direction: row;
       align-items: center;
-      gap: var(--space-1, 0.25rem);
+      gap: var(--space-1);
     }
 
     :host([orientation="vertical"]) .bar {

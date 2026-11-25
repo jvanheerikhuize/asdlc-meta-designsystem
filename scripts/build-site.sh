@@ -10,8 +10,8 @@ rm -rf site
 
 # 1. Primary Pages at / (and /showcase/ compatibility alias) is the Design System Showcase
 mkdir -p site/src site/showcase/src site/latest/src site/specs
-cp src/pages/showcase.html site/index.html
-cp src/pages/showcase.html site/showcase/index.html
+cp showcase/* catalog.json site/
+cp showcase/* catalog.json site/showcase/
 cp src/index.js site/src/index.js
 cp -r src/tokens src/atoms src/molecules src/organisms src/templates site/src/
 cp src/index.js site/showcase/src/index.js

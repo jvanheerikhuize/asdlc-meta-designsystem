@@ -12,27 +12,27 @@ TEMPLATE.innerHTML = `
     .stack {
       display: flex;
       flex-direction: column;
-      gap: var(--space-2, 0.5rem);
+      gap: var(--space-2);
     }
 
     .bone {
       position: relative;
       overflow: hidden;
-      background: var(--color-card, rgba(255, 255, 255, 0.04));
-      border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      border-radius: var(--radius-md, 0.5rem);
+      background: var(--color-card);
+      border: var(--border-width) solid var(--color-border);
+      border-radius: var(--radius-md);
       width: var(--_sk-width, 100%);
-      height: var(--_sk-height, 1rem);
+      height: var(--_sk-height, var(--space-4));
     }
 
     :host([variant="circle"]) .bone {
-      border-radius: var(--radius-full, 9999px);
-      width: var(--_sk-width, 2.5rem);
-      height: var(--_sk-height, 2.5rem);
+      border-radius: var(--radius-full);
+      width: var(--_sk-width, var(--space-10));
+      height: var(--_sk-height, var(--space-10));
     }
 
     :host([variant="rect"]) .bone {
-      height: var(--_sk-height, 5rem);
+      height: var(--_sk-height, var(--size-skeleton));
     }
 
     .bone::after {
@@ -43,10 +43,10 @@ TEMPLATE.innerHTML = `
       background: linear-gradient(
         90deg,
         transparent,
-        var(--color-card-hover, rgba(255, 255, 255, 0.07)),
+        var(--color-card-hover),
         transparent
       );
-      animation: ui-shimmer var(--duration-shimmer, 1400ms) infinite;
+      animation: ui-shimmer var(--duration-shimmer) infinite;
     }
 
     @keyframes ui-shimmer {

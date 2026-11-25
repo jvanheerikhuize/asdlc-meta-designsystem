@@ -167,7 +167,7 @@ async function main() {
       const tags = [
         'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',
         'ui-chip', 'ui-progress', 'ui-textarea', 'ui-select', 'ui-dot', 'ui-checkbox', 'ui-slider', 'ui-switch', 'ui-tooltip', 'ui-surface', 'ui-divider',
-        'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block', 'ui-toolbar', 'ui-tabs', 'ui-panel-header',
+        'ui-field', 'ui-search-bar', 'ui-media-card', 'ui-stat-tile', 'ui-callout', 'ui-code-block', 'ui-toolbar', 'ui-tabs', 'ui-panel-header', 'ui-empty-state', 'ui-theme-toggle',
         'ui-navbar', 'ui-modal', 'ui-catalog-grid', 'ui-popover', 'ui-drawer', 'ui-toast', 'ui-table',
         'page-shell', 'catalog-layout', 'detail-layout', 'workspace-layout',
       ];
@@ -177,8 +177,8 @@ async function main() {
       const bgDark = getComputedStyle(document.body).backgroundColor;
       return { defined, shadows, backHref, bgDark };
     })()`);
-    assert.equal(showcase.defined, true, 'All 37 components must be defined');
-    assert.equal(showcase.shadows, true, 'All 37 components must have Shadow DOM');
+    assert.equal(showcase.defined, true, 'All 39 components must be defined');
+    assert.equal(showcase.shadows, true, 'All 39 components must have Shadow DOM');
     assert.equal(showcase.backHref, './specs/');
     assert.equal(showcase.bgDark, 'rgb(8, 8, 11)', 'Dark default --color-bg should be #08080b');
 
@@ -263,9 +263,37 @@ async function main() {
     })()`);
     assert.deepEqual(table, { narrow: null, wide: '0', role: 'region', label: 'Probe', scrolls: true, pageGrew: false, padded: true });
 
+    // Loading and empty states, and template responsiveness (REQ-0005)
+    const states = await cdp.eval(`(async () => {
+      const host = document.createElement('div');
+      host.innerHTML = '<ui-table><table><tbody><tr><td>x</td></tr></tbody></table></ui-table><page-shell></page-shell><page-shell><p slot="footer">f</p></page-shell>';
+      document.body.append(host);
+      await new Promise((r) => setTimeout(r, 50));
+      const table = host.querySelector('ui-table');
+      const seen = () => ['.scroll', 'ui-skeleton', 'ui-empty-state'].map((q) => table.shadowRoot.querySelector(q).getBoundingClientRect().height > 0);
+      const plain = seen();
+      table.setAttribute('empty', '');
+      table.setAttribute('empty-text', 'None');
+      const empty = seen();
+      const text = table.shadowRoot.querySelector('ui-empty-state').shadowRoot.querySelector('.text').textContent;
+      table.setAttribute('loading', '');
+      const loading = seen();
+      const footers = [...host.querySelectorAll('page-shell')].map((el) => el.shadowRoot.querySelector('footer').getBoundingClientRect().height > 0);
+      host.remove();
+      const toggle = document.querySelector('[data-id="ui-theme-toggle"] ui-theme-toggle');
+      const themes = [];
+      toggle.addEventListener('ui-theme-change', (e) => themes.push(e.detail.theme));
+      for (let i = 0; i < 2; i += 1) toggle.shadowRoot.querySelector('ui-button').shadowRoot.querySelector('button').click();
+      return { plain, empty, text, loading, footers, themes };
+    })()`);
+    assert.deepEqual(states, {
+      plain: [true, false, false], empty: [false, false, true], text: 'None', loading: [false, true, false],
+      footers: [false, true], themes: ['light', 'dark'],
+    });
+
     // 3. Verify ui-navbar theme toggle propagates across Shadow DOM (ASM-0001, REQ-0002)
     const lightBg = await cdp.eval(`(() => {
-      document.getElementById('navbar').shadowRoot.getElementById('theme-btn').shadowRoot.querySelector('button').click();
+      document.getElementById('navbar').shadowRoot.getElementById('theme-btn').shadowRoot.querySelector('ui-button').shadowRoot.querySelector('button').click();
       return {
         attr: document.documentElement.getAttribute('data-theme'),
         bgLight: getComputedStyle(document.body).backgroundColor,

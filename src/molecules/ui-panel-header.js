@@ -16,17 +16,17 @@ TEMPLATE.innerHTML = `
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-3, 0.75rem);
-      padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
     }
 
     .title {
       margin: 0;
-      font-family: var(--font-display, system-ui, sans-serif);
-      font-size: var(--text-md, 1rem);
-      font-weight: 700;
-      line-height: var(--leading-tight, 1.2);
-      color: var(--color-fg, #ededed);
+      font-family: var(--font-display);
+      font-size: var(--text-md);
+      font-weight: var(--weight-bold);
+      line-height: var(--leading-tight);
+      color: var(--color-fg);
     }
   </style>
   <div class="head" part="header">

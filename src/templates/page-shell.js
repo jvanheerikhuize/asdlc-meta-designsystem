@@ -7,32 +7,51 @@ TEMPLATE.innerHTML = `
       min-height: 100vh;
     }
 
+    :host([hidden]) {
+      display: none;
+    }
+
     main {
       flex: 1;
       width: 100%;
-      max-width: 1120px;
+      max-width: var(--layout-content);
       margin: 0 auto;
-      padding: var(--space-8, 2rem) var(--space-6, 1.5rem) var(--space-12, 3rem);
+      padding: var(--space-8) var(--space-6) var(--space-12);
       display: flex;
       flex-direction: column;
-      gap: var(--space-10, 2.5rem);
+      gap: var(--space-10);
       box-sizing: border-box;
     }
 
     footer {
-      border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-      padding: var(--space-6, 1.5rem);
+      border-top: var(--border-width) solid var(--color-border);
+      padding: var(--space-6);
       text-align: center;
-      color: var(--color-fg-muted, #8e8e98);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-sm, 0.875rem);
+      color: var(--color-fg-muted);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+    }
+
+    footer[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: var(--space-6) var(--space-4) var(--space-8);
+        gap: var(--space-8);
+      }
+
+      footer {
+        padding: var(--space-4);
+      }
     }
   </style>
   <slot name="header"></slot>
   <main part="main">
     <slot></slot>
   </main>
-  <footer part="footer">
+  <footer part="footer" hidden>
     <slot name="footer"></slot>
   </footer>
 `;
@@ -45,6 +64,10 @@ export class PageShell extends HTMLElement {
     super();
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
+    const slot = shadow.querySelector('slot[name="footer"]');
+    slot.addEventListener('slotchange', () => {
+      slot.parentElement.hidden = slot.assignedNodes().length === 0;
+    });
   }
 }
 

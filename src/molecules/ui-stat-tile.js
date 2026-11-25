@@ -15,30 +15,30 @@ TEMPLATE.innerHTML = `
     .inner {
       display: flex;
       flex-direction: column;
-      gap: var(--space-1, 0.25rem);
+      gap: var(--space-1);
     }
 
     .val {
-      font-family: var(--font-display, system-ui, sans-serif);
-      font-size: var(--text-2xl, 1.875rem);
-      font-weight: 700;
-      line-height: 1.15;
-      color: var(--color-fg, #ededed);
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      line-height: var(--leading-snug);
+      color: var(--color-fg);
     }
 
     .label-row {
       display: flex;
       align-items: center;
-      gap: var(--space-2, 0.5rem);
-      font-family: var(--font-sans, system-ui, sans-serif);
-      font-size: var(--text-xs, 0.75rem);
-      color: var(--color-fg-secondary, #a1a1aa);
+      gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--color-fg-secondary);
     }
 
-    :host([variant="accent"]) .val { color: var(--color-accent, #f43f5e); }
-    :host([variant="success"]) .val { color: var(--color-success, #10b981); }
-    :host([variant="warning"]) .val { color: var(--color-warning, #f59e0b); }
-    :host([variant="danger"]) .val { color: var(--color-danger, #f87171); }
+    :host([variant="accent"]) .val { color: var(--color-accent); }
+    :host([variant="success"]) .val { color: var(--color-success); }
+    :host([variant="warning"]) .val { color: var(--color-warning); }
+    :host([variant="danger"]) .val { color: var(--color-danger); }
   </style>
   <ui-surface part="tile" variant="card" padding="md" radius="lg">
     <div class="inner">

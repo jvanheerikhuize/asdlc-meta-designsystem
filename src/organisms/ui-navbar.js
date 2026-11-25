@@ -1,6 +1,5 @@
 import '../atoms/ui-surface.js';
-import '../atoms/ui-button.js';
-import '../atoms/ui-icon.js';
+import '../molecules/ui-theme-toggle.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -9,7 +8,7 @@ TEMPLATE.innerHTML = `
       display: block;
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: var(--z-header);
     }
 
     :host([hidden]) {
@@ -20,22 +19,22 @@ TEMPLATE.innerHTML = `
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-4, 1rem);
+      gap: var(--space-4);
       flex-wrap: wrap;
-      padding: var(--space-3, 0.75rem) var(--space-6, 1.5rem);
+      padding: var(--space-3) var(--space-6);
     }
 
     .left,
     .right {
       display: flex;
       align-items: center;
-      gap: var(--space-3, 0.75rem);
+      gap: var(--space-3);
       flex-wrap: wrap;
     }
 
     .search-slot {
-      flex: 1 1 220px;
-      max-width: 340px;
+      flex: 1 1 var(--layout-search-min);
+      max-width: var(--layout-search-max);
     }
   </style>
   <ui-surface variant="glass" radius="none" padding="none">
@@ -51,42 +50,28 @@ TEMPLATE.innerHTML = `
       </div>
       <div class="right">
         <slot name="actions"></slot>
-        <ui-button id="theme-btn" part="theme-button" variant="secondary" size="sm" aria-label="Toggle color theme">
-          <ui-icon id="theme-icon" name="sun" size="sm"></ui-icon>
-          <span id="theme-text">Light Mode</span>
-        </ui-button>
+        <ui-theme-toggle id="theme-btn" exportparts="theme-button"></ui-theme-toggle>
       </div>
     </header>
   </ui-surface>
 `;
 
 /**
- * Sticky frosted-glass site header Organism composing <ui-surface variant="glass">,
- * <ui-button>, and <ui-icon>.
+ * Sticky frosted-glass site header Organism composing <ui-surface variant="glass">
+ * and <ui-theme-toggle>, whose ui-theme-change event passes through.
  */
 export class UiNavbar extends HTMLElement {
   static observedAttributes = ['theme'];
 
-  #themeBtn;
-  #themeIcon;
-  #themeText;
+  #toggle;
 
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
-    this.#themeBtn = shadow.getElementById('theme-btn');
-    this.#themeIcon = shadow.getElementById('theme-icon');
-    this.#themeText = shadow.getElementById('theme-text');
-
-    this.#themeBtn.addEventListener('ui-press', () => {
-      const next = this.theme === 'light' ? 'dark' : 'light';
-      this.theme = next;
-      this.dispatchEvent(new CustomEvent('ui-theme-change', {
-        bubbles: true,
-        composed: true,
-        detail: { theme: next },
-      }));
+    this.#toggle = shadow.getElementById('theme-btn');
+    this.#toggle.addEventListener('ui-theme-change', (e) => {
+      this.theme = e.detail.theme;
     });
   }
 
@@ -107,10 +92,7 @@ export class UiNavbar extends HTMLElement {
   }
 
   #sync() {
-    if (!this.#themeIcon || !this.#themeText) return;
-    const isLight = this.theme === 'light';
-    this.#themeIcon.setAttribute('name', isLight ? 'moon' : 'sun');
-    this.#themeText.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+    this.#toggle?.setAttribute('theme', this.theme);
   }
 }
 
