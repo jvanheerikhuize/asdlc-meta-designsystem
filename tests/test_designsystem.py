@@ -168,6 +168,63 @@ class DesignSystemTest(unittest.TestCase):
             danger_ratio = _contrast_ratio(tokens["--color-danger-fg"], tokens["--color-danger"])
             self.assertGreaterEqual(danger_ratio, 4.5, f"{theme_name} danger-fg contrast {danger_ratio:.2f}:1")
 
+    def test_extended_vocabulary_contrast_and_theming(self):  # REQ-0002
+        css_text = (ROOT / "src" / "tokens" / "tokens.css").read_text(encoding="utf-8")
+        blocks = {
+            "dark": re.search(r":root\s*\{(.*?)\n\}", css_text, re.S)[1],
+            "light": re.search(r'\[data-theme="light"\]\s*\{(.*?)\n\}', css_text, re.S)[1],
+        }
+        pairs = {theme: re.findall(r"(--[a-z0-9-]+)\s*:\s*([^;]+);", block) for theme, block in blocks.items()}
+        for theme, found in pairs.items():
+            self.assertEqual(len(found), len(dict(found)), f"{theme}: duplicate tokens")
+        raw_dark, raw_light = dict(pairs["dark"]), dict(pairs["light"])
+        self.assertFalse(set(raw_light) - set(raw_dark), "light-only tokens")
+
+        # A token that refers to a themed token must be repeated in the light block,
+        # because custom properties resolve where they are declared.
+        themed = set(raw_light)
+        for name, value in raw_dark.items():
+            if themed & set(re.findall(r"var\((--[a-z0-9-]+)\)", value)):
+                self.assertIn(name, raw_light, f"{name} depends on a themed token")
+
+        def rgba(value):
+            if value.startswith("#"):
+                return (*_hex_to_rgb(value), 1.0)
+            return tuple(float(x) for x in re.findall(r"[\d.]+", value))
+
+        def over(top, bottom):
+            r, g, b, a = rgba(top)
+            return "#" + "".join(f"{round(a * t + (1 - a) * u):02x}" for t, u in zip((r, g, b), _hex_to_rgb(bottom)))
+
+        for theme, tokens in zip(("dark", "light"), _parse_tokens(css_text)):
+            def check(fg, bg, minimum):
+                ratio = _contrast_ratio(over(tokens[fg], bg), bg)
+                self.assertGreaterEqual(ratio, minimum, f"{theme} {fg} on {bg}: {ratio:.2f}:1")
+
+            for base in ("--color-bg", "--color-surface", "--color-surface-elevated"):
+                bg = tokens[base]
+                for fg in ("link", "link-hover", "link-visited", "heading", "fg-placeholder", "data-axis", "icon", "data-positive", "data-negative"):
+                    check(f"--color-{fg}", bg, 4.5)
+                for fg in ["border-control", "caret", "border-selected"] + [f"data-{i}" for i in range(1, 11)]:
+                    check(f"--color-{fg}", bg, 3)
+                for status in ("info", "success", "warning", "danger", "accent", "neutral"):
+                    for tint in ("subtle", "subtle-hover"):
+                        check(f"--color-{status}-text", over(tokens[f"--color-{status}-{tint}"], bg), 4.5)
+            for status in ("info", "success", "warning", "danger", "accent", "neutral"):
+                for state in ("", "-hover", "-active"):
+                    check(f"--color-{status}-fg", tokens[f"--color-{status}{state}"], 4.5)
+            check("--color-fg-inverse", tokens["--color-surface-inverse"], 4.5)
+            check("--color-match-active-fg", tokens["--color-match-active"], 4.5)
+            for fg in (t for t in tokens if t.startswith("--color-code-") and not t.endswith(("-bg", "-active"))):
+                check(fg, tokens["--color-code-bg"], 4.5)
+            for line, text in (("inserted", "inserted"), ("deleted", "deleted")):
+                check(f"--color-code-{text}", over(tokens[f"--color-code-{line}-bg"], tokens["--color-code-bg"]), 4.5)
+
+        reduced = css_text[css_text.index("@media (prefers-reduced-motion"):]
+        for name, value in raw_dark.items():
+            if re.match(r"--(?:duration|travel|scale)-", name) and value != "0ms":
+                self.assertRegex(reduced, rf"{name}: (?:0ms|0px|1);", f"{name} needs a reduced-motion value")
+
     def test_foundational_atoms_encapsulation_and_exports(self):  # REQ-0003
         expected = [
             "ui-button", "ui-input", "ui-label", "ui-badge", "ui-icon", "ui-skeleton",
@@ -240,6 +297,10 @@ class DesignSystemTest(unittest.TestCase):
             for key, theme in (("dark", dark), ("light", light), ("value", dark)):
                 if key in token:
                     self.assertEqual(token[key].replace(" ", ""), re.sub(r"\s", "", theme[token["name"]]), token["name"])
+
+        for group, tokens in catalog["tokens"].items():
+            for token in tokens if group != "primitives" else []:
+                self.assertIn(f"`{token['name']}`", catalog_md)
 
         documented_tags = {c["tag"]: c for c in catalog["components"]}
         expected_tags = {

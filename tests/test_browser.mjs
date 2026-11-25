@@ -319,6 +319,32 @@ async function main() {
     assert.deepEqual(searchCheck.visibleIds, ['ui-modal']);
 
 
+    // Every sampled token is a valid value, and composites follow a nested light theme (REQ-0002)
+    const tokenCheck = await cdp.eval(`(() => {
+      const props = { gradient: 'background-image', type: 'font', line: 'border', ratio: 'aspect-ratio', filter: 'filter', cursor: 'cursor', touch: 'touch-action', transition: 'transition',
+        shadow: 'box-shadow', ease: 'transition-timing-function', duration: 'transition-duration', delay: 'transition-delay', color: 'color', palette: 'color', glow: 'color', text: 'font-size', leading: 'line-height',
+        tracking: 'letter-spacing', weight: 'font-weight', numeric: 'font-variant-numeric', measure: 'width', space: 'width', inset: 'padding', stack: 'gap', cluster: 'gap', radius: 'border-radius', z: 'z-index',
+        opacity: 'opacity', frost: 'width', safe: 'padding', viewport: 'height', bp: 'width', target: 'width', travel: 'width', scale: 'scale', size: 'width', control: 'height', panel: 'width', pad: 'padding', font: 'font-family' };
+      const style = getComputedStyle(document.documentElement);
+      const invalid = [];
+      let checked = 0;
+      for (const name of [...style].filter((n) => n.startsWith('--'))) {
+        const prop = props[name.split('-')[2]];
+        if (!prop) continue;
+        checked += 1;
+        if (!CSS.supports(prop, style.getPropertyValue(name))) invalid.push(name);
+      }
+      const light = document.createElement('div');
+      light.dataset.theme = 'light';
+      document.body.append(light);
+      const gradient = getComputedStyle(light).getPropertyValue('--gradient-accent');
+      light.remove();
+      return { invalid, enough: checked > 600, checked, gradient };
+    })()`);
+    assert.deepEqual(tokenCheck.invalid, []);
+    assert.ok(tokenCheck.enough, 'checked ' + tokenCheck.checked + ' tokens');
+    assert.match(tokenCheck.gradient, /#e11d48/);
+
     // 5a. The catalog is built up by tier, with links between relatives (REQ-0006)
     const tiersCheck = await cdp.eval(`(async () => {
       const wait = () => new Promise((r) => setTimeout(r, 100));
@@ -344,7 +370,7 @@ async function main() {
     })()`);
     const allTiers = ['tokens', 'atoms', 'molecules', 'organisms', 'templates', 'pages'];
     assert.deepEqual(tiersCheck, {
-      filtered: ['organisms'], afterLink: allTiers, linkVisible: true, tokensOnly: ['tokens', '16 token groups'], tokenRows: true,
+      filtered: ['organisms'], afterLink: allTiers, linkVisible: true, tokensOnly: ['tokens', '28 token groups'], tokenRows: true,
       duplicateIds: 0, broken: 0, usedBy: ['Composes ui-button, ui-icon', 'Used by ui-navbar'],
     });
 

@@ -168,7 +168,7 @@ body {
 }
 
 .token-stage {
-  grid-row: 1 / span 2;
+  grid-row: 1 / span 3;
   display: grid;
   place-items: center;
   min-height: var(--control-md);
@@ -200,6 +200,16 @@ body {
   width: auto;
   height: auto;
   background: var(--color-accent);
+}
+
+.token-sample.ratio {
+  max-width: 100%;
+  height: var(--space-5);
+  background: var(--color-accent);
+}
+
+.token-sample.brand {
+  background-image: var(--gradient-accent);
 }
 
 .token-sample.bar {
