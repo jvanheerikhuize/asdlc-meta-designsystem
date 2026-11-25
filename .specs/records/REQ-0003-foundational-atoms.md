@@ -24,3 +24,15 @@ Foundational Atoms (Button, Text Input, Label, Badge, Icon, Tooltip, and Loading
 - Given a Tooltip Atom inside a container that clips its content
 - When the tooltip opens
 - Then its whole label is visible within the viewport
+
+- Given a Button Atom that controls a menu or panel
+- When the owning view declares whether that is open
+- Then assistive technology is told so on the focusable control
+
+- Given Text Input and submit Button Atoms inside a form
+- When the user activates the Button or presses Enter in the Text Input
+- Then the form validates and submits once, carrying the named value
+
+- Given Text Input and Button Atoms inside a form
+- When the form is reset, or its group of controls is disabled
+- Then the Text Input returns to its declared value, or both Atoms become inactive
