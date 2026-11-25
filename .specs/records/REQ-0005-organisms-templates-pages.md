@@ -17,6 +17,14 @@ Organisms (Site Header, Modal Dialog with blurred backdrop and focus containment
 - When a keyboard user focuses its labelled region
 - Then the table scrolls inside that region, the page itself does not scroll sideways, and header and cell semantics stay intact
 
+- Given a Popover with a heading
+- When the user activates its close control
+- Then the Popover closes, focus returns to the trigger, and the close is reported once
+
+- Given a Modal Dialog, Drawer or Toast
+- When the user activates its close control
+- Then the close is reported once
+
 - Given a Data Table or Catalog Grid that is loading or has no items
 - When it is rendered
 - Then it shows a loading placeholder or an empty message in place of its items
