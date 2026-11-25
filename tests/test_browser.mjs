@@ -361,6 +361,43 @@ async function main() {
     assert.equal(btnCheck.disAria, 'true');
     assert.equal(btnCheck.busyAria, 'true');
 
+    // Values set before connection are shown and stay readable after edits (REQ-0004)
+    const fields = await cdp.eval(`['ui-field', 'ui-search-bar'].map((tag) => {
+      const run = (init) => {
+        const el = document.createElement(tag);
+        init(el);
+        document.body.append(el);
+        const native = el.shadowRoot.querySelector('ui-input').shadowRoot.querySelector('input');
+        const shown = native.value;
+        native.value = 'edited';
+        native.dispatchEvent(new Event('input', { bubbles: true }));
+        const read = el.value;
+        el.remove();
+        return shown + '>' + read;
+      };
+      return [run((el) => el.setAttribute('value', 'before')), run((el) => { el.value = 'before'; })];
+    })`);
+    assert.deepEqual(fields, [['before>edited', 'before>edited'], ['before>edited', 'before>edited']]);
+
+    // Tooltips are not clipped by a toolbar and stay in the viewport (REQ-0003)
+    const tips = await cdp.eval(`['top', 'bottom', 'left', 'right'].flatMap((placement) => ['0', 'calc(100% - 4rem)'].map((left) => {
+      const bar = document.createElement('ui-toolbar');
+      bar.style.cssText = 'position:fixed;top:0;left:' + left;
+      bar.innerHTML = '<ui-tooltip text="A fairly long tooltip label" placement="' + placement + '"><ui-button aria-label="x">x</ui-button></ui-tooltip>';
+      document.body.append(bar);
+      const tip = bar.firstChild;
+      const bubble = tip.shadowRoot.querySelector('.bubble');
+      tip.show();
+      const r = bubble.getBoundingClientRect();
+      const hit = tip.shadowRoot.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2) === bubble;
+      const inside = r.left >= 0 && r.top >= 0 && r.right <= innerWidth && r.bottom <= innerHeight;
+      tip.hide();
+      const closed = !bubble.matches(':popover-open');
+      bar.remove();
+      return hit && inside && closed;
+    }))`);
+    assert.deepEqual(tips, Array(8).fill(true), 'Tooltip bubbles must be visible and inside the viewport');
+
     // 7. Verify prefers-reduced-motion suppresses skeleton shimmer (REQ-0002)
     await cdp.send('Emulation.setEmulatedMedia', {
       features: [{ name: 'prefers-reduced-motion', value: 'reduce' }],

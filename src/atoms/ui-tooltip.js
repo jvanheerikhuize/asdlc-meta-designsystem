@@ -12,9 +12,12 @@ TEMPLATE.innerHTML = `
     }
 
     .bubble {
-      position: absolute;
+      position: fixed;
+      inset: auto;
+      margin: 0;
+      box-sizing: border-box;
       z-index: 60;
-      max-width: 16rem;
+      max-width: min(16rem, calc(100vw - 1rem));
       width: max-content;
       padding: var(--space-1, 0.25rem) var(--space-2, 0.5rem);
       border-radius: var(--radius-sm, 0.375rem);
@@ -36,31 +39,6 @@ TEMPLATE.innerHTML = `
       visibility: visible;
     }
 
-    :host(:not([placement])) .bubble,
-    :host([placement="top"]) .bubble {
-      bottom: calc(100% + 6px);
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    :host([placement="bottom"]) .bubble {
-      top: calc(100% + 6px);
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    :host([placement="right"]) .bubble {
-      left: calc(100% + 6px);
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    :host([placement="left"]) .bubble {
-      right: calc(100% + 6px);
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
     @media (prefers-reduced-motion: reduce) {
       .bubble {
         transition: none;
@@ -68,18 +46,21 @@ TEMPLATE.innerHTML = `
     }
   </style>
   <slot></slot>
-  <span class="bubble" part="tooltip" role="tooltip"></span>
+  <span class="bubble" part="tooltip" role="tooltip" popover="manual"></span>
 `;
 
 /**
  * Accessible tooltip Atom satisfying WCAG 1.4.13 (dismissible via Escape,
- * hoverable over tooltip content, persistent while focused or hovered).
+ * hoverable over tooltip content, persistent while focused or hovered). The bubble
+ * lives in the Top Layer, so ancestors that clip their content do not cut it off.
  */
 export class UiTooltip extends HTMLElement {
   static observedAttributes = ['text', 'placement', 'open'];
 
   #bubble;
   #hideTimer = null;
+  #tracking = false;
+  #position = () => this.#place();
   #onKeyDown = (event) => {
     if (event.key === 'Escape' && this.hasAttribute('open')) {
       this.hide();
@@ -91,6 +72,7 @@ export class UiTooltip extends HTMLElement {
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(TEMPLATE.content.cloneNode(true));
     this.#bubble = shadow.querySelector('.bubble');
+    if (typeof this.#bubble.showPopover !== 'function') this.#bubble.removeAttribute('popover');
 
     this.addEventListener('mouseenter', () => this.show());
     this.addEventListener('mouseleave', () => this.#scheduleHide());
@@ -110,6 +92,7 @@ export class UiTooltip extends HTMLElement {
   disconnectedCallback() {
     document.removeEventListener('keydown', this.#onKeyDown);
     if (this.#hideTimer) clearTimeout(this.#hideTimer);
+    this.#track(false);
   }
 
   attributeChangedCallback() {
@@ -141,6 +124,50 @@ export class UiTooltip extends HTMLElement {
   #sync() {
     if (!this.#bubble) return;
     this.#bubble.textContent = this.getAttribute('text') || '';
+    if (!this.isConnected) return;
+    const open = this.hasAttribute('open');
+    if (this.#bubble.hasAttribute('popover') && this.#bubble.matches(':popover-open') !== open) {
+      if (open) this.#bubble.showPopover();
+      else this.#bubble.hidePopover();
+    }
+    this.#track(open);
+    if (open) this.#place();
+  }
+
+  #track(on) {
+    if (on === this.#tracking) return;
+    this.#tracking = on;
+    const method = on ? 'addEventListener' : 'removeEventListener';
+    window[method]('scroll', this.#position, { capture: true, passive: true });
+    window[method]('resize', this.#position);
+  }
+
+  #place() {
+    const gap = 6;
+    const edge = 8;
+    const host = this.getBoundingClientRect();
+    const { width, height } = this.#bubble.getBoundingClientRect();
+    const fits = {
+      top: host.top - gap - height >= edge,
+      bottom: host.bottom + gap + height <= window.innerHeight - edge,
+      left: host.left - gap - width >= edge,
+      right: host.right + gap + width <= window.innerWidth - edge,
+    };
+    const opposite = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
+    let side = this.getAttribute('placement');
+    if (!(side in opposite)) side = 'top';
+    if (!fits[side] && fits[opposite[side]]) side = opposite[side];
+
+    let left = host.left + (host.width - width) / 2;
+    let top = host.top + (host.height - height) / 2;
+    if (side === 'top') top = host.top - gap - height;
+    if (side === 'bottom') top = host.bottom + gap;
+    if (side === 'left') left = host.left - gap - width;
+    if (side === 'right') left = host.right + gap;
+    left = Math.max(edge, Math.min(left, window.innerWidth - width - edge));
+    top = Math.max(edge, Math.min(top, window.innerHeight - height - edge));
+    this.#bubble.style.left = `${left}px`;
+    this.#bubble.style.top = `${top}px`;
   }
 }
 

@@ -6,7 +6,7 @@ because: [FCT-0001, FCT-0007]
 ---
 
 ## Statement
-Foundational Atoms (Button, Text Input, Label, Badge, Icon, and Loading Skeleton) MUST encapsulate their internal presentation, inherit global design tokens, reflect state changes via declared attributes (such as disabled, variant, size, busy, pressed, or a maximum text length), emit standard interaction events, and expose visible keyboard focus rings and accessible roles.
+Foundational Atoms (Button, Text Input, Label, Badge, Icon, Tooltip, and Loading Skeleton) MUST encapsulate their internal presentation, inherit global design tokens, reflect state changes via declared attributes (such as disabled, variant, size, busy, pressed, or a maximum text length), emit standard interaction events, and expose visible keyboard focus rings and accessible roles.
 
 ## Acceptance
 - Given a Button Atom in a disabled or busy state
@@ -20,3 +20,7 @@ Foundational Atoms (Button, Text Input, Label, Badge, Icon, and Loading Skeleton
 - Given a Text Input Atom with a maximum length
 - When a user types past that length
 - Then the extra characters are not accepted
+
+- Given a Tooltip Atom inside a container that clips its content
+- When the tooltip opens
+- Then its whole label is visible within the viewport
