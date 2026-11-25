@@ -4,7 +4,7 @@ title: Composed Molecules, Organisms, Templates, and Showcase Pages
 status: active
 tier: feature
 depends_on: [SPC-0001]
-requirements: [REQ-0004, REQ-0005]
+requirements: [REQ-0004, REQ-0005, REQ-0008]
 ---
 
 ## Purpose

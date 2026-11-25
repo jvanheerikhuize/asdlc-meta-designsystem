@@ -1,8 +1,8 @@
 ---
 id: REQ-0008
 title: Callout, Code Block and Media Card use Atoms for the text they show
-status: provisional
-because: [FCT-0010, FCT-0012]
+status: active
+because: [FCT-0010, FCT-0012, FCT-0013]
 ---
 
 ## Statement
