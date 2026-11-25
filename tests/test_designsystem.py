@@ -257,6 +257,36 @@ class DesignSystemTest(unittest.TestCase):
                 self.assertIn(field, entry, f"{tag} missing {field} in catalog.json")
             self.assertIn(f"<{tag}>", catalog_md)
 
+        # The catalog follows the six tiers in all its forms.
+        tiers = {t["id"]: t for t in catalog["tiers"]}
+        self.assertEqual(list(tiers), catalog["architecture"]["tiers"])
+        self.assertEqual([t["order"] for t in catalog["tiers"]], [1, 2, 3, 4, 5, 6])
+        self.assertEqual(tiers["tokens"]["members"], list(catalog["tokens"]))
+        self.assertEqual(set(catalog["tokenGroups"]), set(catalog["tokens"]))
+        self.assertEqual(tiers["pages"]["members"], [p["id"] for p in catalog["pages"]])
+        showcase = (ROOT / "showcase" / "index.html").read_text(encoding="utf-8")
+        page_html = re.sub(r"<article.*?</article>", "", showcase, flags=re.S)  # without the specimens
+        for page in catalog["pages"]:
+            self.assertEqual(page["templates"], [t for t in tiers["templates"]["members"] if re.search(rf"<{t}\b", page_html)])
+        md_sections = {m[1].lower(): m[2] for m in re.finditer(r"^## \d\. (\w+).*?$(.*?)(?=^## |\Z)", catalog_md, re.M | re.S)}
+        self.assertEqual(list(md_sections), list(tiers))
+        html_sections = {m[1]: m[2] for m in re.finditer(r'<section class="tier" id="(\w+)"(.*?)</section>', showcase, re.S)}
+        self.assertEqual(list(html_sections), list(tiers))
+        for tier, path, src in _component_sources():
+            entry = documented_tags[path.stem]
+            composes = (_composed_tags(src) | set(re.findall(r"createElement\('(ui-[a-z-]+)'\)", src))) - {path.stem}
+            self.assertEqual(entry["composes"], sorted(composes), path.stem)
+            self.assertEqual(entry["tier"], tier)
+            self.assertIn(path.stem, tiers[tier]["members"])
+            for tag in composes:
+                self.assertIn(documented_tags[tag]["tier"], tiers[tier]["mayUse"])
+            cell = ", ".join(f"`{t}`" for t in entry["composes"]) or "—"
+            self.assertIn(f"| `<{path.stem}>` | {cell} |", md_sections[tier])
+        for tier in ("atoms", "molecules", "organisms", "templates"):
+            self.assertEqual(tiers[tier]["members"], [c["tag"] for c in catalog["components"] if c["tier"] == tier])
+            self.assertEqual(tiers[tier]["members"], re.findall(r"^\| `<([a-z-]+)>` ", md_sections[tier], re.M))
+            self.assertEqual(tiers[tier]["members"], re.findall(r'<article [^>]*data-id="([a-z-]+)"', html_sections[tier]))
+
         if os.environ.get("CI") != "true":
             skill_path = Path.home() / ".agents" / "skills" / "asdlc-design-system" / "SKILL.md"
             self.assertTrue(skill_path.is_file(), f"Missing global skill at {skill_path}")

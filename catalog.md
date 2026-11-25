@@ -1,4 +1,4 @@
-# ASDLC Design System Catalog (`SPC-0001`)
+# ASDLC Design System Catalog
 
 Zero-build, Lumen-inspired vanilla Web Components and CSS Custom Property tokens.
 Machine-readable source of truth: [`catalog.json`](catalog.json).
@@ -46,7 +46,18 @@ flowchart RL
 
 Templates take components only through slots, so they import none.
 
-## Design Tokens (`src/tokens/tokens.css`)
+| Tier | Purpose | May use | Members |
+| :--- | :--- | :--- | :--- |
+| 1. Tokens | Named values that nothing renders. The only place for raw colors, lengths, layers and durations. | — | 158 tokens in 16 groups |
+| 2. Atoms | One foundational HTML element each, with local state only. | tokens | 17 |
+| 3. Molecules | One to three kinds of atom for one task. | tokens, atoms | 11 |
+| 4. Organisms | Self-contained regions with their own choreography, such as focus, loading and empty states. | tokens, atoms, molecules | 7 |
+| 5. Templates | Content-agnostic skeletons with named slots and responsive placement. | tokens | 4 |
+| 6. Pages | Templates filled with real data. They live in consumers, not in the shared package. | tokens, atoms, molecules, organisms, templates | 1 |
+
+## 1. Tokens (`src/tokens/`)
+
+Named values that nothing renders. The only place for raw colors, lengths, layers and durations.
 
 | Group | Tokens | Dark (`:root`) | Light (`[data-theme="light"]`) |
 | :--- | :--- | :--- | :--- |
@@ -66,62 +77,79 @@ Templates take components only through slots, so they import none.
 | Layers | `--z-floating`, `--z-tray`, `--z-panel`, `--z-header`, `--z-tooltip` | `10`, `12`, `15`, `20`, `60` | same |
 | Effects | `--opacity-disabled`, `--opacity-muted`, `--frost-sm`, `--frost-md` | `0.55`, `0.7`, `8px`, `12px` | same |
 
-## Atoms (`src/atoms/`)
+## 2. Atoms (`src/atoms/`)
 
-| Tag | Attributes | Slots | Events | Parts |
-| :--- | :--- | :--- | :--- | :--- |
-| `<ui-button>` | `variant` (`primary`\|`secondary`\|`surface`\|`ghost`\|`danger`), `size` (`sm`\|`md`\|`lg`), `disabled`, `busy`, `type`, `aria-label`, `aria-pressed` (`true`\|`false`, controlled by the owner), `aria-expanded`, `aria-haspopup` | default | `ui-press` | `button` |
-| `<ui-input>` | `type`, `value`, `placeholder`, `disabled`, `readonly`, `required`, `invalid`, `name`, `maxlength`, `aria-label` | — | `ui-input`, `ui-change` | `input` |
-| `<ui-label>` | `for`, `required`, `size` (`md`\|`sm`) | default | — | `label` |
-| `<ui-badge>` | `variant` (`neutral`\|`accent`\|`info`\|`success`\|`warning`), `size` (`sm`\|`md`) | default | — | `badge` |
-| `<ui-icon>` | `name` (`search`, `sun`, `moon`, `check`, `alert`, `info`, `arrow-right`, `arrow-left`, `sparkles`, `code`, `layers`, `external`, `plus`, `minus`, `close`, `undo`, `redo`, `trash`, `download`, `upload`, `route`, `compass`, `pin`, `flag`, `anchor`, `waves`, `scissors`, `settings`, `chevron-down`, `chevron-up`, `eye`, `eye-off`, `sidebar`), `size` (`sm`\|`md`\|`lg`), `label` | — | — | `icon` |
-| `<ui-skeleton>` | `variant` (`text`\|`rect`\|`circle`), `width`, `height`, `lines` | — | — | `skeleton` |
-| `<ui-chip>` | `pressed`, `disabled`, `variant` (`default`\|`accent`) | default | `ui-toggle` | `chip` |
-| `<ui-progress>` | `value`, `max`, `variant` (`success`\|`accent`\|`warning`\|`danger`), `segments` (JSON), `aria-label` | — | — | `track`, `fill`, `segment` |
-| `<ui-textarea>` | `value`, `placeholder`, `rows`, `disabled`, `readonly`, `required`, `invalid`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `textarea` |
-| `<ui-select>` | `options` (JSON array), `value`, `disabled`, `invalid`, `name`, `aria-label` | — | `ui-change` | `wrapper`, `select`, `chevron` |
-| `<ui-dot>` | `status` (`done`\|`wait`\|`bad`\|`info`\|`off`), `label` | — | — | `dot` |
-| `<ui-checkbox>` | `checked`, `disabled`, `indeterminate`, `name`, `value`, `aria-label` | default | `ui-change` | `label`, `checkbox` |
-| `<ui-slider>` | `min`, `max`, `step`, `value`, `disabled`, `variant` (`accent`\|`success`\|`warning`\|`neutral`), `name`, `aria-label`, `aria-valuetext` | — | `ui-input`, `ui-change` | `track`, `slider` |
-| `<ui-switch>` | `checked`, `disabled`, `size` (`sm`\|`md`), `name`, `value`, `aria-label` | default | `ui-change` | `label`, `switch`, `thumb` |
-| `<ui-tooltip>` | `text`, `placement` (`top`\|`bottom`\|`left`\|`right`), `open` | default | — | `tooltip` |
-| `<ui-surface>` | `variant` (`base`\|`elevated`\|`card`\|`glass`), `elevation`, `padding`, `radius`, `accent`, `interactive` | default | `ui-press` | `surface` |
-| `<ui-divider>` | `orientation` (`horizontal`\|`vertical`) | — | — | `divider` |
+One foundational HTML element each, with local state only.
 
-## Molecules (`src/molecules/`)
+| Tag | Composes | Attributes | Slots | Events | Parts |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `<ui-badge>` | — | `variant` (`neutral`\|`accent`\|`info`\|`success`\|`warning`), `size` (`sm`\|`md`) | default | — | `badge` |
+| `<ui-button>` | — | `variant` (`primary`\|`secondary`\|`surface`\|`ghost`\|`danger`), `size` (`sm`\|`md`\|`lg`), `disabled`, `busy`, `type`, `aria-label`, `aria-pressed` (`true`\|`false`, controlled by the owner), `aria-expanded`, `aria-haspopup` | default | `ui-press` | `button` |
+| `<ui-checkbox>` | — | `checked`, `disabled`, `indeterminate`, `name`, `value`, `aria-label` | default | `ui-change` | `label`, `checkbox` |
+| `<ui-chip>` | — | `pressed`, `disabled`, `variant` (`default`\|`accent`) | default | `ui-toggle` | `chip` |
+| `<ui-divider>` | — | `orientation` (`horizontal`\|`vertical`) | — | — | `divider` |
+| `<ui-dot>` | — | `status` (`done`\|`wait`\|`bad`\|`info`\|`off`), `label` | — | — | `dot` |
+| `<ui-icon>` | — | `name` (`search`, `sun`, `moon`, `check`, `alert`, `info`, `arrow-right`, `arrow-left`, `sparkles`, `code`, `layers`, `external`, `plus`, `minus`, `close`, `undo`, `redo`, `trash`, `download`, `upload`, `route`, `compass`, `pin`, `flag`, `anchor`, `waves`, `scissors`, `settings`, `chevron-down`, `chevron-up`, `eye`, `eye-off`, `sidebar`), `size` (`sm`\|`md`\|`lg`), `label` | — | — | `icon` |
+| `<ui-input>` | — | `type`, `value`, `placeholder`, `disabled`, `readonly`, `required`, `invalid`, `name`, `maxlength`, `aria-label` | — | `ui-input`, `ui-change` | `input` |
+| `<ui-label>` | — | `for`, `required`, `size` (`md`\|`sm`) | default | — | `label` |
+| `<ui-progress>` | — | `value`, `max`, `variant` (`success`\|`accent`\|`warning`\|`danger`), `segments` (JSON), `aria-label` | — | — | `track`, `fill`, `segment` |
+| `<ui-select>` | — | `options` (JSON array), `value`, `disabled`, `invalid`, `name`, `aria-label` | — | `ui-change` | `wrapper`, `select`, `chevron` |
+| `<ui-skeleton>` | — | `variant` (`text`\|`rect`\|`circle`), `width`, `height`, `lines` | — | — | `skeleton` |
+| `<ui-slider>` | — | `min`, `max`, `step`, `value`, `disabled`, `variant` (`accent`\|`success`\|`warning`\|`neutral`), `name`, `aria-label`, `aria-valuetext` | — | `ui-input`, `ui-change` | `track`, `slider` |
+| `<ui-surface>` | — | `variant` (`base`\|`elevated`\|`card`\|`glass`), `elevation`, `padding`, `radius`, `accent`, `interactive` | default | `ui-press` | `surface` |
+| `<ui-switch>` | — | `checked`, `disabled`, `size` (`sm`\|`md`), `name`, `value`, `aria-label` | default | `ui-change` | `label`, `switch`, `thumb` |
+| `<ui-textarea>` | — | `value`, `placeholder`, `rows`, `disabled`, `readonly`, `required`, `invalid`, `name`, `aria-label` | — | `ui-input`, `ui-change` | `textarea` |
+| `<ui-tooltip>` | — | `text`, `placement` (`top`\|`bottom`\|`left`\|`right`), `open` | default | — | `tooltip` |
 
-| Tag | Attributes | Slots | Events | Parts |
-| :--- | :--- | :--- | :--- | :--- |
-| `<ui-field>` | `label`, `name`, `value`, `placeholder`, `type`, `required`, `invalid`, `disabled`, `hint`, `error` | — | `ui-input`, `ui-change` | `label`, `input`, `hint` |
-| `<ui-search-bar>` | `value`, `placeholder`, `button-label`, `aria-label`, `disabled`, `clearable`, `clear-label`, `compact` | — | `ui-search`, `ui-input` | `bar`, `input`, `button`, `clear` |
-| `<ui-media-card>` | `card-id`, `title`, `subtitle`, `badge`, `badge-variant`, `meta` | default | `ui-select` | `card`, `badge`, `title`, `subtitle`, `meta` |
-| `<ui-stat-tile>` | `value`, `label`, `status`, `variant` (`neutral`\|`accent`\|`success`\|`warning`\|`danger`) | — | — | `tile`, `value`, `dot`, `label` |
-| `<ui-callout>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `dismissible`, `close-label` | default | `ui-close` | `callout`, `icon`, `title`, `body`, `close` |
-| `<ui-code-block>` | `language` | default | `ui-copy` | `container`, `header`, `language`, `copy-button`, `pre` |
-| `<ui-toolbar>` | `orientation` (`horizontal`\|`vertical`), `variant` (`inline`\|`floating`), `aria-label`, `aria-controls` | default | `ui-navigate` | `toolbar` |
-| `<ui-tabs>` | `tabs` (JSON array), `value`, `full-width`, `aria-label` | default, `<tab-id>` | `ui-change` | `tablist`, `tab`, `panel` |
-| `<ui-panel-header>` | `title`, `heading-id`, `close-label` | `actions` | `ui-close` | `header`, `title`, `close` |
-| `<ui-empty-state>` | `text`, `icon` | default | — | `container`, `body`, `text` |
-| `<ui-theme-toggle>` | `theme` (`dark`\|`light`) | — | `ui-theme-change` | `theme-button` |
+## 3. Molecules (`src/molecules/`)
 
-## Organisms (`src/organisms/`)
+One to three kinds of atom for one task.
 
-| Tag | Attributes | Slots | Events | Parts |
-| :--- | :--- | :--- | :--- | :--- |
-| `<ui-navbar>` | `theme` (`dark`\|`light`) | `brand`, `nav`, `search`, `actions` | `ui-theme-change` | `header`, `theme-button` |
-| `<ui-modal>` | `title`, `open` | default, `footer` | `ui-open`, `ui-close` | `dialog`, `title`, `close`, `body`, `footer` |
-| `<ui-catalog-grid>` | `loading`, `empty`, `empty-text` | default | — | `skeletons`, `grid`, `empty` |
-| `<ui-popover>` | `open`, `placement` (`bottom-start`\|`bottom-end`\|`top-start`\|`top-end`), `aria-label` | `trigger`, default | `ui-open`, `ui-close` | `trigger`, `panel` |
-| `<ui-drawer>` | `title`, `side` (`left`\|`right`\|`bottom`), `mode` (`docked`\|`modal`\|`auto`), `open` | default, `footer` | `ui-open`, `ui-close` | `panel`, `dialog`, `sheet`, `header`, `title`, `close`, `body`, `footer` |
-| `<ui-toast>` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `callout` |
-| `<ui-table>` | `aria-label`, `loading`, `empty`, `empty-text` | default (native `<table>`) | — | `scroll`, `skeleton`, `empty` |
+| Tag | Composes | Attributes | Slots | Events | Parts |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `<ui-callout>` | `ui-button`, `ui-icon`, `ui-surface` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `dismissible`, `close-label` | default | `ui-close` | `callout`, `icon`, `title`, `body`, `close` |
+| `<ui-code-block>` | `ui-button`, `ui-icon`, `ui-surface` | `language` | default | `ui-copy` | `container`, `header`, `language`, `copy-button`, `pre` |
+| `<ui-empty-state>` | `ui-icon`, `ui-surface` | `text`, `icon` | default | — | `container`, `body`, `text` |
+| `<ui-field>` | `ui-input`, `ui-label` | `label`, `name`, `value`, `placeholder`, `type`, `required`, `invalid`, `disabled`, `hint`, `error` | — | `ui-input`, `ui-change` | `label`, `input`, `hint` |
+| `<ui-media-card>` | `ui-badge`, `ui-icon`, `ui-surface` | `card-id`, `title`, `subtitle`, `badge`, `badge-variant`, `meta` | default | `ui-select` | `card`, `badge`, `title`, `subtitle`, `meta` |
+| `<ui-panel-header>` | `ui-button`, `ui-icon` | `title`, `heading-id`, `close-label` | `actions` | `ui-close` | `header`, `title`, `close` |
+| `<ui-search-bar>` | `ui-button`, `ui-icon`, `ui-input` | `value`, `placeholder`, `button-label`, `aria-label`, `disabled`, `clearable`, `clear-label`, `compact` | — | `ui-search`, `ui-input` | `bar`, `input`, `button`, `clear` |
+| `<ui-stat-tile>` | `ui-dot`, `ui-surface` | `value`, `label`, `status`, `variant` (`neutral`\|`accent`\|`success`\|`warning`\|`danger`) | — | — | `tile`, `value`, `dot`, `label` |
+| `<ui-tabs>` | `ui-button`, `ui-surface` | `tabs` (JSON array), `value`, `full-width`, `aria-label` | default, `<tab-id>` | `ui-change` | `tablist`, `tab`, `panel` |
+| `<ui-theme-toggle>` | `ui-button`, `ui-icon` | `theme` (`dark`\|`light`) | — | `ui-theme-change` | `theme-button` |
+| `<ui-toolbar>` | `ui-surface` | `orientation` (`horizontal`\|`vertical`), `variant` (`inline`\|`floating`), `aria-label`, `aria-controls` | default | `ui-navigate` | `toolbar` |
 
-## Templates (`src/templates/`)
+## 4. Organisms (`src/organisms/`)
 
-| Tag | Attributes | Slots | Events | Parts |
-| :--- | :--- | :--- | :--- | :--- |
-| `<page-shell>` | — | `header`, default, `footer` | — | `main`, `footer` |
-| `<catalog-layout>` | — | `hero`, `toolbar`, `grid`, `modal` | — | `hero`, `toolbar`, `grid` |
-| `<detail-layout>` | — | default, `aside` | — | `grid`, `main`, `aside` |
-| `<workspace-layout>` | `aside-side` (`left`\|`right`) | `header`, `aside`, default, `floating`, `bottom` | — | `header`, `body`, `aside`, `main`, `canvas`, `floating`, `bottom` |
+Self-contained regions with their own choreography, such as focus, loading and empty states.
 
+| Tag | Composes | Attributes | Slots | Events | Parts |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `<ui-catalog-grid>` | `ui-empty-state`, `ui-skeleton` | `loading`, `empty`, `empty-text` | default | — | `skeletons`, `grid`, `empty` |
+| `<ui-drawer>` | `ui-divider`, `ui-panel-header`, `ui-surface` | `title`, `side` (`left`\|`right`\|`bottom`), `mode` (`docked`\|`modal`\|`auto`), `open` | default, `footer` | `ui-open`, `ui-close` | `panel`, `dialog`, `sheet`, `header`, `title`, `close`, `body`, `footer` |
+| `<ui-modal>` | `ui-divider`, `ui-panel-header`, `ui-surface` | `title`, `open` | default, `footer` | `ui-open`, `ui-close` | `dialog`, `title`, `close`, `body`, `footer` |
+| `<ui-navbar>` | `ui-surface`, `ui-theme-toggle` | `theme` (`dark`\|`light`) | `brand`, `nav`, `search`, `actions` | `ui-theme-change` | `header`, `theme-button` |
+| `<ui-popover>` | `ui-surface` | `open`, `placement` (`bottom-start`\|`bottom-end`\|`top-start`\|`top-end`), `aria-label` | `trigger`, default | `ui-open`, `ui-close` | `trigger`, `panel` |
+| `<ui-table>` | `ui-empty-state`, `ui-skeleton` | `aria-label`, `loading`, `empty`, `empty-text` | default (native `<table>`) | — | `scroll`, `skeleton`, `empty` |
+| `<ui-toast>` | `ui-callout` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `open`, `duration` | default | `ui-close` | `callout` |
+
+## 5. Templates (`src/templates/`)
+
+Content-agnostic skeletons with named slots and responsive placement.
+
+| Tag | Composes | Attributes | Slots | Events | Parts |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `<catalog-layout>` | — | — | `hero`, `toolbar`, `grid`, `modal` | — | `hero`, `toolbar`, `grid` |
+| `<detail-layout>` | — | — | default, `aside` | — | `grid`, `main`, `aside` |
+| `<page-shell>` | — | — | `header`, default, `footer` | — | `main`, `footer` |
+| `<workspace-layout>` | — | `aside-side` (`left`\|`right`) | `header`, `aside`, default, `floating`, `bottom` | — | `header`, `body`, `aside`, `main`, `canvas`, `floating`, `bottom` |
+
+## 6. Pages (`showcase/`)
+
+Templates filled with real data. They live in consumers, not in the shared package.
+
+| Page | Templates | Where |
+| :--- | :--- | :--- |
+| Showcase | `<catalog-layout>`, `<page-shell>` | [`showcase/index.html`](showcase/index.html) ([live](https://jvanheerikhuize.github.io/asdlc-meta-designsystem/)) |
+
+To build a page in a consumer, pick a template, fill its slots with organisms, molecules and atoms, and supply the data, state and routing there.

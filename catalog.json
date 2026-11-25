@@ -70,6 +70,213 @@
     "default": "dark (:root)",
     "light": "[data-theme=\"light\"]"
   },
+  "tiers": [
+    {
+      "id": "tokens",
+      "order": 1,
+      "title": "Tokens",
+      "summary": "Named values that nothing renders. The only place for raw colors, lengths, layers and durations.",
+      "mayUse": [],
+      "path": "src/tokens/",
+      "shared": true,
+      "members": [
+        "primitives",
+        "canvasAndSurfaces",
+        "ambientGlow",
+        "borders",
+        "foreground",
+        "accents",
+        "typography",
+        "spacing",
+        "radii",
+        "borderWidths",
+        "shadows",
+        "motion",
+        "sizes",
+        "layout",
+        "layers",
+        "effects"
+      ]
+    },
+    {
+      "id": "atoms",
+      "order": 2,
+      "title": "Atoms",
+      "summary": "One foundational HTML element each, with local state only.",
+      "mayUse": [
+        "tokens"
+      ],
+      "path": "src/atoms/",
+      "shared": true,
+      "members": [
+        "ui-badge",
+        "ui-button",
+        "ui-checkbox",
+        "ui-chip",
+        "ui-divider",
+        "ui-dot",
+        "ui-icon",
+        "ui-input",
+        "ui-label",
+        "ui-progress",
+        "ui-select",
+        "ui-skeleton",
+        "ui-slider",
+        "ui-surface",
+        "ui-switch",
+        "ui-textarea",
+        "ui-tooltip"
+      ]
+    },
+    {
+      "id": "molecules",
+      "order": 3,
+      "title": "Molecules",
+      "summary": "One to three kinds of atom for one task.",
+      "mayUse": [
+        "tokens",
+        "atoms"
+      ],
+      "path": "src/molecules/",
+      "shared": true,
+      "members": [
+        "ui-callout",
+        "ui-code-block",
+        "ui-empty-state",
+        "ui-field",
+        "ui-media-card",
+        "ui-panel-header",
+        "ui-search-bar",
+        "ui-stat-tile",
+        "ui-tabs",
+        "ui-theme-toggle",
+        "ui-toolbar"
+      ]
+    },
+    {
+      "id": "organisms",
+      "order": 4,
+      "title": "Organisms",
+      "summary": "Self-contained regions with their own choreography, such as focus, loading and empty states.",
+      "mayUse": [
+        "tokens",
+        "atoms",
+        "molecules"
+      ],
+      "path": "src/organisms/",
+      "shared": true,
+      "members": [
+        "ui-catalog-grid",
+        "ui-drawer",
+        "ui-modal",
+        "ui-navbar",
+        "ui-popover",
+        "ui-table",
+        "ui-toast"
+      ]
+    },
+    {
+      "id": "templates",
+      "order": 5,
+      "title": "Templates",
+      "summary": "Content-agnostic skeletons with named slots and responsive placement.",
+      "mayUse": [
+        "tokens"
+      ],
+      "path": "src/templates/",
+      "shared": true,
+      "members": [
+        "catalog-layout",
+        "detail-layout",
+        "page-shell",
+        "workspace-layout"
+      ]
+    },
+    {
+      "id": "pages",
+      "order": 6,
+      "title": "Pages",
+      "summary": "Templates filled with real data. They live in consumers, not in the shared package.",
+      "mayUse": [
+        "tokens",
+        "atoms",
+        "molecules",
+        "organisms",
+        "templates"
+      ],
+      "path": "showcase/",
+      "shared": false,
+      "members": [
+        "showcase"
+      ]
+    }
+  ],
+  "tokenGroups": {
+    "primitives": {
+      "title": "Primitive palette",
+      "summary": "Raw colors. Only semantic tokens may use them."
+    },
+    "canvasAndSurfaces": {
+      "title": "Canvas and surfaces",
+      "summary": "Page and panel backgrounds."
+    },
+    "ambientGlow": {
+      "title": "Ambient glow",
+      "summary": "Page background highlights."
+    },
+    "borders": {
+      "title": "Borders and focus",
+      "summary": "Hairlines and the focus ring."
+    },
+    "foreground": {
+      "title": "Foreground",
+      "summary": "Text colors by importance."
+    },
+    "accents": {
+      "title": "Accents",
+      "summary": "Brand and status colors."
+    },
+    "typography": {
+      "title": "Typography",
+      "summary": "Font stacks, sizes, weights, line heights and tracking."
+    },
+    "spacing": {
+      "title": "Spacing",
+      "summary": "Gaps and padding."
+    },
+    "radii": {
+      "title": "Radii",
+      "summary": "Corner rounding."
+    },
+    "borderWidths": {
+      "title": "Border and focus widths",
+      "summary": "Line thickness and focus offset."
+    },
+    "shadows": {
+      "title": "Shadows",
+      "summary": "Elevation."
+    },
+    "motion": {
+      "title": "Motion",
+      "summary": "Durations and easing. Durations are 0 with reduced motion."
+    },
+    "sizes": {
+      "title": "Control sizes",
+      "summary": "Heights, icons and parts of controls."
+    },
+    "layout": {
+      "title": "Layout",
+      "summary": "Panel and content sizes."
+    },
+    "layers": {
+      "title": "Layers",
+      "summary": "Stacking order."
+    },
+    "effects": {
+      "title": "Effects",
+      "summary": "Opacity and blur."
+    }
+  },
   "tokens": {
     "primitives": [
       {
@@ -526,6 +733,36 @@
         "value": "2px"
       }
     ],
+    "borderWidths": [
+      {
+        "name": "--border-width",
+        "value": "1px"
+      },
+      {
+        "name": "--border-width-strong",
+        "value": "2px"
+      },
+      {
+        "name": "--border-width-thumb",
+        "value": "2.5px"
+      },
+      {
+        "name": "--border-width-accent",
+        "value": "4px"
+      },
+      {
+        "name": "--focus-width",
+        "value": "2px"
+      },
+      {
+        "name": "--focus-offset",
+        "value": "2px"
+      },
+      {
+        "name": "--focus-offset-wide",
+        "value": "4px"
+      }
+    ],
     "shadows": [
       {
         "name": "--shadow-sm",
@@ -573,36 +810,6 @@
         "name": "--duration-spin",
         "value": "650ms",
         "reducedMotion": "0ms"
-      }
-    ],
-    "borderWidths": [
-      {
-        "name": "--border-width",
-        "value": "1px"
-      },
-      {
-        "name": "--border-width-strong",
-        "value": "2px"
-      },
-      {
-        "name": "--border-width-thumb",
-        "value": "2.5px"
-      },
-      {
-        "name": "--border-width-accent",
-        "value": "4px"
-      },
-      {
-        "name": "--focus-width",
-        "value": "2px"
-      },
-      {
-        "name": "--focus-offset",
-        "value": "2px"
-      },
-      {
-        "name": "--focus-offset-wide",
-        "value": "4px"
       }
     ],
     "sizes": [
@@ -804,11 +1011,50 @@
   },
   "components": [
     {
+      "tag": "ui-badge",
+      "tier": "atoms",
+      "module": "src/atoms/ui-badge.js",
+      "className": "UiBadge",
+      "description": "Status and metadata pill badge Atom.",
+      "composes": [],
+      "attributes": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "neutral",
+            "accent",
+            "info",
+            "success",
+            "warning"
+          ],
+          "default": "neutral"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md"
+          ],
+          "default": "sm"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "badge"
+      ],
+      "accessibility": "Non-interactive inline status indicator; pair with clear text content.",
+      "example": "<ui-badge variant=\"success\">active</ui-badge>"
+    },
+    {
       "tag": "ui-button",
       "tier": "atoms",
       "module": "src/atoms/ui-button.js",
       "className": "UiButton",
       "description": "Interactive button Atom encapsulating native <button> with variant, size, disabled, and busy states.",
+      "composes": [],
       "attributes": {
         "variant": {
           "type": "enum",
@@ -900,11 +1146,236 @@
       "example": "<ui-button variant=\"primary\" size=\"md\">Save Changes</ui-button>"
     },
     {
+      "tag": "ui-checkbox",
+      "tier": "atoms",
+      "module": "src/atoms/ui-checkbox.js",
+      "className": "UiCheckbox",
+      "description": "Checkbox Atom encapsulating native <input type='checkbox'> with checked, disabled, and indeterminate states.",
+      "composes": [],
+      "attributes": {
+        "checked": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "indeterminate": {
+          "type": "boolean",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "default": ""
+        },
+        "value": {
+          "type": "string",
+          "default": "on"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-change",
+          "detail": {
+            "checked": "boolean",
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "label",
+        "checkbox"
+      ],
+      "accessibility": "Uses delegatesFocus: true over native <input type='checkbox'> wrapped in <label>.",
+      "example": "<ui-checkbox value=\"FCT-0001\" checked>FCT-0001</ui-checkbox>"
+    },
+    {
+      "tag": "ui-chip",
+      "tier": "atoms",
+      "module": "src/atoms/ui-chip.js",
+      "className": "UiChip",
+      "description": "Toggleable filter pill Atom with pressed state and ui-toggle event.",
+      "composes": [],
+      "attributes": {
+        "pressed": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "default",
+            "accent"
+          ],
+          "default": "default"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-toggle",
+          "detail": {
+            "pressed": "boolean"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "chip"
+      ],
+      "accessibility": "Uses delegatesFocus: true over native <button> with aria-pressed synchronization.",
+      "example": "<ui-chip pressed>active</ui-chip>"
+    },
+    {
+      "tag": "ui-divider",
+      "tier": "atoms",
+      "module": "src/atoms/ui-divider.js",
+      "className": "UiDivider",
+      "description": "Hairline separator Atom supporting horizontal and vertical orientations.",
+      "composes": [],
+      "attributes": {
+        "orientation": {
+          "type": "enum",
+          "values": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "divider"
+      ],
+      "accessibility": "Exposes role='separator' with aria-orientation='horizontal' or 'vertical'.",
+      "example": "<ui-divider orientation=\"horizontal\"></ui-divider>"
+    },
+    {
+      "tag": "ui-dot",
+      "tier": "atoms",
+      "module": "src/atoms/ui-dot.js",
+      "className": "UiDot",
+      "description": "Semantic status dot Atom (done, wait, bad, info, off).",
+      "composes": [],
+      "attributes": {
+        "status": {
+          "type": "enum",
+          "values": [
+            "done",
+            "wait",
+            "bad",
+            "info",
+            "off"
+          ],
+          "default": "off"
+        },
+        "label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "dot"
+      ],
+      "accessibility": "Decorative (aria-hidden='true') by default; sets role='img' and aria-label when label is provided.",
+      "example": "<ui-dot status=\"done\" label=\"Verified\"></ui-dot>"
+    },
+    {
+      "tag": "ui-icon",
+      "tier": "atoms",
+      "module": "src/atoms/ui-icon.js",
+      "className": "UiIcon",
+      "description": "Vector icon Atom rendering 33 built-in SVG glyphs with decorative or labelled ARIA semantics.",
+      "composes": [],
+      "attributes": {
+        "name": {
+          "type": "enum",
+          "values": [
+            "search",
+            "sun",
+            "moon",
+            "check",
+            "alert",
+            "info",
+            "arrow-right",
+            "arrow-left",
+            "sparkles",
+            "code",
+            "layers",
+            "external",
+            "plus",
+            "minus",
+            "close",
+            "undo",
+            "redo",
+            "trash",
+            "download",
+            "upload",
+            "route",
+            "compass",
+            "pin",
+            "flag",
+            "anchor",
+            "waves",
+            "scissors",
+            "settings",
+            "chevron-down",
+            "chevron-up",
+            "eye",
+            "eye-off",
+            "sidebar"
+          ],
+          "default": "sparkles"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "icon"
+      ],
+      "accessibility": "Decorative by default (aria-hidden='true'). When label is provided, exposes role='img' and aria-label.",
+      "example": "<ui-icon name=\"sparkles\" size=\"md\" label=\"Featured\"></ui-icon>"
+    },
+    {
       "tag": "ui-input",
       "tier": "atoms",
       "module": "src/atoms/ui-input.js",
       "className": "UiInput",
       "description": "Text input Atom encapsulating native <input> with reactive value and validation state.",
+      "composes": [],
       "attributes": {
         "type": {
           "type": "string",
@@ -978,6 +1449,7 @@
       "module": "src/atoms/ui-label.js",
       "className": "UiLabel",
       "description": "Form label Atom with optical cap-height alignment and optional required indicator.",
+      "composes": [],
       "attributes": {
         "for": {
           "type": "string",
@@ -1007,561 +1479,12 @@
       "example": "<ui-label for=\"email\" required>Email Address</ui-label>"
     },
     {
-      "tag": "ui-badge",
-      "tier": "atoms",
-      "module": "src/atoms/ui-badge.js",
-      "className": "UiBadge",
-      "description": "Status and metadata pill badge Atom.",
-      "attributes": {
-        "variant": {
-          "type": "enum",
-          "values": [
-            "neutral",
-            "accent",
-            "info",
-            "success",
-            "warning"
-          ],
-          "default": "neutral"
-        },
-        "size": {
-          "type": "enum",
-          "values": [
-            "sm",
-            "md"
-          ],
-          "default": "sm"
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [],
-      "parts": [
-        "badge"
-      ],
-      "accessibility": "Non-interactive inline status indicator; pair with clear text content.",
-      "example": "<ui-badge variant=\"success\">active</ui-badge>"
-    },
-    {
-      "tag": "ui-icon",
-      "tier": "atoms",
-      "module": "src/atoms/ui-icon.js",
-      "className": "UiIcon",
-      "description": "Vector icon Atom rendering 33 built-in SVG glyphs with decorative or labelled ARIA semantics.",
-      "attributes": {
-        "name": {
-          "type": "enum",
-          "values": [
-            "search",
-            "sun",
-            "moon",
-            "check",
-            "alert",
-            "info",
-            "arrow-right",
-            "arrow-left",
-            "sparkles",
-            "code",
-            "layers",
-            "external",
-            "plus",
-            "minus",
-            "close",
-            "undo",
-            "redo",
-            "trash",
-            "download",
-            "upload",
-            "route",
-            "compass",
-            "pin",
-            "flag",
-            "anchor",
-            "waves",
-            "scissors",
-            "settings",
-            "chevron-down",
-            "chevron-up",
-            "eye",
-            "eye-off",
-            "sidebar"
-          ],
-          "default": "sparkles"
-        },
-        "size": {
-          "type": "enum",
-          "values": [
-            "sm",
-            "md",
-            "lg"
-          ],
-          "default": "md"
-        },
-        "label": {
-          "type": "string",
-          "default": null
-        }
-      },
-      "slots": [],
-      "events": [],
-      "parts": [
-        "icon"
-      ],
-      "accessibility": "Decorative by default (aria-hidden='true'). When label is provided, exposes role='img' and aria-label.",
-      "example": "<ui-icon name=\"sparkles\" size=\"md\" label=\"Featured\"></ui-icon>"
-    },
-    {
-      "tag": "ui-skeleton",
-      "tier": "atoms",
-      "module": "src/atoms/ui-skeleton.js",
-      "className": "UiSkeleton",
-      "description": "Loading placeholder Atom with shimmer animation and reduced-motion static fallback.",
-      "attributes": {
-        "variant": {
-          "type": "enum",
-          "values": [
-            "text",
-            "rect",
-            "circle"
-          ],
-          "default": "text"
-        },
-        "width": {
-          "type": "string",
-          "default": "100%"
-        },
-        "height": {
-          "type": "string",
-          "default": "1rem"
-        },
-        "lines": {
-          "type": "number",
-          "default": 1
-        }
-      },
-      "slots": [],
-      "events": [],
-      "parts": [
-        "skeleton"
-      ],
-      "accessibility": "Sets aria-busy='true' on the host and aria-hidden='true' on visual shimmer bones; disables shimmer under prefers-reduced-motion: reduce.",
-      "example": "<ui-skeleton variant=\"text\" lines=\"3\"></ui-skeleton>"
-    },
-    {
-      "tag": "ui-field",
-      "tier": "molecules",
-      "module": "src/molecules/ui-field.js",
-      "className": "UiField",
-      "description": "Form field Molecule composing <ui-label>, <ui-input>, and hint/error text.",
-      "attributes": {
-        "label": {
-          "type": "string",
-          "default": ""
-        },
-        "name": {
-          "type": "string",
-          "default": ""
-        },
-        "value": {
-          "type": "string",
-          "default": ""
-        },
-        "placeholder": {
-          "type": "string",
-          "default": ""
-        },
-        "type": {
-          "type": "string",
-          "default": "text"
-        },
-        "required": {
-          "type": "boolean",
-          "default": false
-        },
-        "invalid": {
-          "type": "boolean",
-          "default": false
-        },
-        "disabled": {
-          "type": "boolean",
-          "default": false
-        },
-        "hint": {
-          "type": "string",
-          "default": ""
-        },
-        "error": {
-          "type": "string",
-          "default": ""
-        }
-      },
-      "slots": [],
-      "events": [
-        {
-          "name": "ui-input",
-          "detail": {
-            "value": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        },
-        {
-          "name": "ui-change",
-          "detail": {
-            "value": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "label",
-        "input",
-        "hint"
-      ],
-      "accessibility": "Forwards label to aria-label on inner <ui-input> and exposes .value JS property. Form-associated like ui-input.",
-      "example": "<ui-field label=\"Project\" placeholder=\"asdlc-meta-designsystem\" required></ui-field>"
-    },
-    {
-      "tag": "ui-search-bar",
-      "tier": "molecules",
-      "module": "src/molecules/ui-search-bar.js",
-      "className": "UiSearchBar",
-      "description": "Search bar Molecule composing <ui-input>, <ui-button>, and <ui-icon>.",
-      "attributes": {
-        "value": {
-          "type": "string",
-          "default": ""
-        },
-        "placeholder": {
-          "type": "string",
-          "default": "Search…"
-        },
-        "button-label": {
-          "type": "string",
-          "default": "Search"
-        },
-        "aria-label": {
-          "type": "string",
-          "default": "Search"
-        },
-        "disabled": {
-          "type": "boolean",
-          "default": false
-        },
-        "clearable": {
-          "type": "boolean",
-          "default": false
-        },
-        "clear-label": {
-          "type": "string",
-          "default": "Clear search"
-        },
-        "compact": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "slots": [],
-      "events": [
-        {
-          "name": "ui-search",
-          "detail": {
-            "query": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        },
-        {
-          "name": "ui-input",
-          "detail": {
-            "value": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "bar",
-        "input",
-        "button",
-        "clear"
-      ],
-      "accessibility": "Wraps controls in role='search' and emits ui-search on Enter or button activation. With clearable, a labelled clear button or Escape empties the query, emits ui-input once and keeps focus in the input. Does not emit ui-change on clear.",
-      "example": "<ui-search-bar placeholder=\"Filter catalog…\"></ui-search-bar>"
-    },
-    {
-      "tag": "ui-media-card",
-      "tier": "molecules",
-      "module": "src/molecules/ui-media-card.js",
-      "className": "UiMediaCard",
-      "description": "Interactive translucent catalog/poster card Molecule composing <ui-badge> and <ui-icon>.",
-      "attributes": {
-        "card-id": {
-          "type": "string",
-          "default": ""
-        },
-        "title": {
-          "type": "string",
-          "default": ""
-        },
-        "subtitle": {
-          "type": "string",
-          "default": ""
-        },
-        "badge": {
-          "type": "string",
-          "default": ""
-        },
-        "badge-variant": {
-          "type": "enum",
-          "values": [
-            "neutral",
-            "accent",
-            "info",
-            "success",
-            "warning"
-          ],
-          "default": "neutral"
-        },
-        "meta": {
-          "type": "string",
-          "default": ""
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-select",
-          "detail": {
-            "id": "string",
-            "title": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "card",
-        "badge",
-        "title",
-        "subtitle",
-        "meta"
-      ],
-      "accessibility": "Uses native <button> with delegatesFocus: true and visible :focus-visible outline.",
-      "example": "<ui-media-card card-id=\"item-1\" title=\"Token Set\" subtitle=\"Dark-first palette\" badge=\"active\" badge-variant=\"success\"></ui-media-card>"
-    },
-    {
-      "tag": "ui-navbar",
-      "tier": "organisms",
-      "module": "src/organisms/ui-navbar.js",
-      "className": "UiNavbar",
-      "description": "Sticky frosted-glass site header Organism with a composed theme toggle.",
-      "attributes": {
-        "theme": {
-          "type": "enum",
-          "values": [
-            "dark",
-            "light"
-          ],
-          "default": "dark"
-        }
-      },
-      "slots": [
-        "brand",
-        "nav",
-        "search",
-        "actions"
-      ],
-      "events": [
-        {
-          "name": "ui-theme-change",
-          "detail": {
-            "theme": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "header",
-        "theme-button"
-      ],
-      "accessibility": "Wraps navigation slot in <nav aria-label='Primary'>.",
-      "example": "<ui-navbar><a slot=\"brand\" href=\"./\">ASDLC</a></ui-navbar>"
-    },
-    {
-      "tag": "ui-modal",
-      "tier": "organisms",
-      "module": "src/organisms/ui-modal.js",
-      "className": "UiModal",
-      "description": "Modal dialog Organism built on native <dialog> with blurred backdrop and focus restoration.",
-      "attributes": {
-        "title": {
-          "type": "string",
-          "default": ""
-        },
-        "open": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "slots": [
-        "default",
-        "footer"
-      ],
-      "events": [
-        {
-          "name": "ui-open",
-          "detail": {},
-          "bubbles": true,
-          "composed": true
-        },
-        {
-          "name": "ui-close",
-          "detail": {
-            "reason": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "dialog",
-        "title",
-        "close",
-        "body",
-        "footer"
-      ],
-      "accessibility": "Uses native <dialog>.showModal() for top-layer focus containment, Escape/backdrop dismissal, and focus restoration to the triggering element.",
-      "example": "<ui-modal title=\"Item Details\"><p>Details here.</p></ui-modal>"
-    },
-    {
-      "tag": "ui-catalog-grid",
-      "tier": "organisms",
-      "module": "src/organisms/ui-catalog-grid.js",
-      "className": "UiCatalogGrid",
-      "description": "Responsive grid Organism for <ui-media-card> items with loading skeletons and empty state.",
-      "attributes": {
-        "loading": {
-          "type": "boolean",
-          "default": false
-        },
-        "empty": {
-          "type": "boolean",
-          "default": false
-        },
-        "empty-text": {
-          "type": "string",
-          "default": "No matching items."
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [],
-      "parts": [
-        "skeletons",
-        "grid",
-        "empty"
-      ],
-      "accessibility": "Renders responsive CSS grid with clear empty-state text.",
-      "example": "<ui-catalog-grid empty-text=\"No matches\"></ui-catalog-grid>"
-    },
-    {
-      "tag": "page-shell",
-      "tier": "templates",
-      "module": "src/templates/page-shell.js",
-      "className": "PageShell",
-      "description": "Full-page structural Template with header, main, and footer slots.",
-      "attributes": {},
-      "slots": [
-        "header",
-        "default",
-        "footer"
-      ],
-      "events": [],
-      "parts": [
-        "main",
-        "footer"
-      ],
-      "accessibility": "Provides semantic <main> and <footer> landmarks.",
-      "example": "<page-shell><ui-navbar slot=\"header\"></ui-navbar><p>Content</p></page-shell>"
-    },
-    {
-      "tag": "catalog-layout",
-      "tier": "templates",
-      "module": "src/templates/catalog-layout.js",
-      "className": "CatalogLayout",
-      "description": "Catalog browser Template arranging hero, toolbar, grid, and modal slots.",
-      "attributes": {},
-      "slots": [
-        "hero",
-        "toolbar",
-        "grid",
-        "modal"
-      ],
-      "events": [],
-      "parts": [
-        "hero",
-        "toolbar",
-        "grid"
-      ],
-      "accessibility": "Structures catalog sections in semantic <section> landmarks.",
-      "example": "<catalog-layout><div slot=\"hero\">...</div><ui-catalog-grid slot=\"grid\"></ui-catalog-grid></catalog-layout>"
-    },
-    {
-      "tag": "ui-chip",
-      "tier": "atoms",
-      "module": "src/atoms/ui-chip.js",
-      "className": "UiChip",
-      "description": "Toggleable filter pill Atom with pressed state and ui-toggle event.",
-      "attributes": {
-        "pressed": {
-          "type": "boolean",
-          "default": false
-        },
-        "disabled": {
-          "type": "boolean",
-          "default": false
-        },
-        "variant": {
-          "type": "enum",
-          "values": [
-            "default",
-            "accent"
-          ],
-          "default": "default"
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-toggle",
-          "detail": {
-            "pressed": "boolean"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "chip"
-      ],
-      "accessibility": "Uses delegatesFocus: true over native <button> with aria-pressed synchronization.",
-      "example": "<ui-chip pressed>active</ui-chip>"
-    },
-    {
       "tag": "ui-progress",
       "tier": "atoms",
       "module": "src/atoms/ui-progress.js",
       "className": "UiProgress",
       "description": "Progress/readiness bar Atom with semantic color variants.",
+      "composes": [],
       "attributes": {
         "value": {
           "type": "number",
@@ -1602,80 +1525,12 @@
       "example": "<ui-progress value=\"80\" aria-label=\"Readiness\"></ui-progress>"
     },
     {
-      "tag": "ui-textarea",
-      "tier": "atoms",
-      "module": "src/atoms/ui-textarea.js",
-      "className": "UiTextarea",
-      "description": "Multi-line text input Atom encapsulating native <textarea>.",
-      "attributes": {
-        "value": {
-          "type": "string",
-          "default": ""
-        },
-        "placeholder": {
-          "type": "string",
-          "default": ""
-        },
-        "rows": {
-          "type": "number",
-          "default": 3
-        },
-        "disabled": {
-          "type": "boolean",
-          "default": false
-        },
-        "readonly": {
-          "type": "boolean",
-          "default": false
-        },
-        "required": {
-          "type": "boolean",
-          "default": false
-        },
-        "invalid": {
-          "type": "boolean",
-          "default": false
-        },
-        "name": {
-          "type": "string",
-          "default": ""
-        },
-        "aria-label": {
-          "type": "string",
-          "default": null
-        }
-      },
-      "slots": [],
-      "events": [
-        {
-          "name": "ui-input",
-          "detail": {
-            "value": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        },
-        {
-          "name": "ui-change",
-          "detail": {
-            "value": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "textarea"
-      ],
-      "accessibility": "Uses delegatesFocus: true over native <textarea> and syncs aria-invalid.",
-      "example": "<ui-textarea aria-label=\"Statement\" rows=\"3\" placeholder=\"Describe behaviour…\"></ui-textarea>"
-    },
-    {
       "tag": "ui-select",
       "tier": "atoms",
       "module": "src/atoms/ui-select.js",
       "className": "UiSelect",
       "description": "Native <select> Atom driven by JSON options attribute/property.",
+      "composes": [],
       "attributes": {
         "options": {
           "type": "json",
@@ -1722,249 +1577,42 @@
       "example": "<ui-select aria-label=\"Status\" options='[\"open\",\"active\"]'></ui-select>"
     },
     {
-      "tag": "ui-dot",
+      "tag": "ui-skeleton",
       "tier": "atoms",
-      "module": "src/atoms/ui-dot.js",
-      "className": "UiDot",
-      "description": "Semantic status dot Atom (done, wait, bad, info, off).",
+      "module": "src/atoms/ui-skeleton.js",
+      "className": "UiSkeleton",
+      "description": "Loading placeholder Atom with shimmer animation and reduced-motion static fallback.",
+      "composes": [],
       "attributes": {
-        "status": {
+        "variant": {
           "type": "enum",
           "values": [
-            "done",
-            "wait",
-            "bad",
-            "info",
-            "off"
+            "text",
+            "rect",
+            "circle"
           ],
-          "default": "off"
+          "default": "text"
         },
-        "label": {
+        "width": {
           "type": "string",
-          "default": null
+          "default": "100%"
+        },
+        "height": {
+          "type": "string",
+          "default": "1rem"
+        },
+        "lines": {
+          "type": "number",
+          "default": 1
         }
       },
       "slots": [],
       "events": [],
       "parts": [
-        "dot"
+        "skeleton"
       ],
-      "accessibility": "Decorative (aria-hidden='true') by default; sets role='img' and aria-label when label is provided.",
-      "example": "<ui-dot status=\"done\" label=\"Verified\"></ui-dot>"
-    },
-    {
-      "tag": "ui-stat-tile",
-      "tier": "molecules",
-      "module": "src/molecules/ui-stat-tile.js",
-      "className": "UiStatTile",
-      "description": "KPI metric tile Molecule displaying value, label, and optional <ui-dot>.",
-      "attributes": {
-        "value": {
-          "type": "string",
-          "default": "0"
-        },
-        "label": {
-          "type": "string",
-          "default": ""
-        },
-        "status": {
-          "type": "enum",
-          "values": [
-            "done",
-            "wait",
-            "bad",
-            "info",
-            "off"
-          ],
-          "default": null
-        },
-        "variant": {
-          "type": "enum",
-          "values": [
-            "neutral",
-            "accent",
-            "success",
-            "warning",
-            "danger"
-          ],
-          "default": "neutral"
-        }
-      },
-      "slots": [],
-      "events": [],
-      "parts": [
-        "tile",
-        "value",
-        "dot",
-        "label"
-      ],
-      "accessibility": "Renders semantic <strong> metric value paired with descriptive label text.",
-      "example": "<ui-stat-tile value=\"23\" label=\"Records\" status=\"done\" variant=\"success\"></ui-stat-tile>"
-    },
-    {
-      "tag": "ui-callout",
-      "tier": "molecules",
-      "module": "src/molecules/ui-callout.js",
-      "className": "UiCallout",
-      "description": "Left-accented status/action banner Molecule composing <ui-surface>, <ui-icon>, and optional dismiss <ui-button>.",
-      "attributes": {
-        "variant": {
-          "type": "enum",
-          "values": [
-            "info",
-            "success",
-            "warning",
-            "danger"
-          ],
-          "default": "info"
-        },
-        "title": {
-          "type": "string",
-          "default": ""
-        },
-        "dismissible": {
-          "type": "boolean",
-          "default": false
-        },
-        "elevation": {
-          "type": "enum",
-          "values": [
-            "none",
-            "sm",
-            "md",
-            "lg"
-          ],
-          "default": "none"
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-dismiss",
-          "detail": null,
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "callout",
-        "icon",
-        "title",
-        "body",
-        "dismiss"
-      ],
-      "accessibility": "Uses role='note' with semantic variant icon.",
-      "example": "<ui-callout variant=\"warning\" title=\"Open Question\">Needs clarification.</ui-callout>"
-    },
-    {
-      "tag": "ui-code-block",
-      "tier": "molecules",
-      "module": "src/molecules/ui-code-block.js",
-      "className": "UiCodeBlock",
-      "description": "Monospace code preview Molecule composing <ui-button> and <ui-icon> for clipboard copy.",
-      "attributes": {
-        "language": {
-          "type": "string",
-          "default": "html"
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-copy",
-          "detail": {
-            "text": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "container",
-        "header",
-        "language",
-        "copy-button",
-        "pre"
-      ],
-      "accessibility": "Provides accessible Copy button with aria-label and visual confirmation state.",
-      "example": "<ui-code-block language=\"html\">&lt;ui-badge&gt;active&lt;/ui-badge&gt;</ui-code-block>"
-    },
-    {
-      "tag": "ui-checkbox",
-      "tier": "atoms",
-      "module": "src/atoms/ui-checkbox.js",
-      "className": "UiCheckbox",
-      "description": "Checkbox Atom encapsulating native <input type='checkbox'> with checked, disabled, and indeterminate states.",
-      "attributes": {
-        "checked": {
-          "type": "boolean",
-          "default": false
-        },
-        "disabled": {
-          "type": "boolean",
-          "default": false
-        },
-        "indeterminate": {
-          "type": "boolean",
-          "default": false
-        },
-        "name": {
-          "type": "string",
-          "default": ""
-        },
-        "value": {
-          "type": "string",
-          "default": "on"
-        },
-        "aria-label": {
-          "type": "string",
-          "default": null
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-change",
-          "detail": {
-            "checked": "boolean",
-            "value": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "label",
-        "checkbox"
-      ],
-      "accessibility": "Uses delegatesFocus: true over native <input type='checkbox'> wrapped in <label>.",
-      "example": "<ui-checkbox value=\"FCT-0001\" checked>FCT-0001</ui-checkbox>"
-    },
-    {
-      "tag": "detail-layout",
-      "tier": "templates",
-      "module": "src/templates/detail-layout.js",
-      "className": "DetailLayout",
-      "description": "Two-column detail Template pairing primary content with a metadata sidebar.",
-      "attributes": {},
-      "slots": [
-        "default",
-        "aside"
-      ],
-      "events": [],
-      "parts": [
-        "grid",
-        "main",
-        "aside"
-      ],
-      "accessibility": "Uses semantic <aside> landmark for secondary metadata.",
-      "example": "<detail-layout><article>Main</article><dl slot=\"aside\">Meta</dl></detail-layout>"
+      "accessibility": "Sets aria-busy='true' on the host and aria-hidden='true' on visual shimmer bones; disables shimmer under prefers-reduced-motion: reduce.",
+      "example": "<ui-skeleton variant=\"text\" lines=\"3\"></ui-skeleton>"
     },
     {
       "tag": "ui-slider",
@@ -1972,6 +1620,7 @@
       "module": "src/atoms/ui-slider.js",
       "className": "UiSlider",
       "description": "Range slider Atom encapsulating native <input type='range'> for timeline scrubbing, volume, and numeric controls.",
+      "composes": [],
       "attributes": {
         "min": {
           "type": "number",
@@ -2043,441 +1692,12 @@
       "example": "<ui-slider min=\"0\" max=\"100\" value=\"64\" aria-label=\"Volume\"></ui-slider>"
     },
     {
-      "tag": "ui-switch",
-      "tier": "atoms",
-      "module": "src/atoms/ui-switch.js",
-      "className": "UiSwitch",
-      "description": "Boolean toggle switch Atom exposing role='switch' and aria-checked semantics.",
-      "attributes": {
-        "checked": {
-          "type": "boolean",
-          "default": false
-        },
-        "disabled": {
-          "type": "boolean",
-          "default": false
-        },
-        "size": {
-          "type": "enum",
-          "values": [
-            "sm",
-            "md"
-          ],
-          "default": "md"
-        },
-        "name": {
-          "type": "string",
-          "default": ""
-        },
-        "value": {
-          "type": "string",
-          "default": "on"
-        },
-        "aria-label": {
-          "type": "string",
-          "default": null
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-change",
-          "detail": {
-            "checked": "boolean",
-            "value": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "label",
-        "switch",
-        "thumb"
-      ],
-      "accessibility": "Uses delegatesFocus: true over native <button type='button' role='switch'> with aria-checked, aria-disabled, and reduced-motion transitions.",
-      "example": "<ui-switch checked aria-label=\"Nautical seamarks\">Nautical seamarks</ui-switch>"
-    },
-    {
-      "tag": "ui-tooltip",
-      "tier": "atoms",
-      "module": "src/atoms/ui-tooltip.js",
-      "className": "UiTooltip",
-      "description": "Accessible tooltip Atom wrapping a trigger control and rendering a WCAG 1.4.13 compliant floating label.",
-      "attributes": {
-        "text": {
-          "type": "string",
-          "default": ""
-        },
-        "placement": {
-          "type": "enum",
-          "values": [
-            "top",
-            "bottom",
-            "left",
-            "right"
-          ],
-          "default": "top"
-        },
-        "open": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [],
-      "parts": [
-        "tooltip"
-      ],
-      "accessibility": "Exposes role='tooltip'; dismissible via Escape without moving focus, hoverable over tooltip bubble, and persistent while focused or hovered. Renders in the Top Layer, flips and stays inside the viewport.",
-      "example": "<ui-tooltip text=\"Undo last edit\" placement=\"bottom\"><ui-button variant=\"ghost\" size=\"sm\" aria-label=\"Undo last edit\"><ui-icon name=\"undo\"></ui-icon></ui-button></ui-tooltip>"
-    },
-    {
-      "tag": "ui-toolbar",
-      "tier": "molecules",
-      "module": "src/molecules/ui-toolbar.js",
-      "className": "UiToolbar",
-      "description": "Composite toolbar Molecule grouping action controls into a single tab stop with roving arrow-key navigation.",
-      "attributes": {
-        "orientation": {
-          "type": "enum",
-          "values": [
-            "horizontal",
-            "vertical"
-          ],
-          "default": "horizontal"
-        },
-        "variant": {
-          "type": "enum",
-          "values": [
-            "inline",
-            "floating"
-          ],
-          "default": "inline"
-        },
-        "aria-label": {
-          "type": "string",
-          "default": "Toolbar"
-        },
-        "aria-controls": {
-          "type": "string",
-          "default": null
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-navigate",
-          "detail": {
-            "index": "number"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "toolbar"
-      ],
-      "accessibility": "Exposes role='toolbar' with native focusgroup='toolbar wrap' plus automatic roving tabindex fallback (ArrowLeft/Right, ArrowUp/Down when vertical, Home, End).",
-      "example": "<ui-toolbar variant=\"floating\" aria-label=\"Map tools\"><ui-button variant=\"ghost\" size=\"sm\" aria-label=\"Undo\"><ui-icon name=\"undo\"></ui-icon></ui-button><ui-button variant=\"ghost\" size=\"sm\" aria-label=\"Redo\"><ui-icon name=\"redo\"></ui-icon></ui-button></ui-toolbar>"
-    },
-    {
-      "tag": "ui-tabs",
-      "tier": "molecules",
-      "module": "src/molecules/ui-tabs.js",
-      "className": "UiTabs",
-      "description": "Accessible WAI-ARIA tablist Molecule switching named content slots or a dynamic tabpanel.",
-      "attributes": {
-        "tabs": {
-          "type": "json",
-          "default": "[]"
-        },
-        "value": {
-          "type": "string",
-          "default": ""
-        },
-        "aria-label": {
-          "type": "string",
-          "default": "Section tabs"
-        },
-        "full-width": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "slots": [
-        "default",
-        "<tab-id>"
-      ],
-      "events": [
-        {
-          "name": "ui-change",
-          "detail": {
-            "value": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "tablist",
-        "tab",
-        "panel"
-      ],
-      "accessibility": "Exposes role='tablist', role='tab' (aria-selected, roving tabindex, ArrowLeft/Right/Home/End), and role='tabpanel' linked via aria-labelledby.",
-      "example": "<ui-tabs tabs='[{\"id\":\"stages\",\"label\":\"Stages\"},{\"id\":\"surfaces\",\"label\":\"Surfaces\"}]' value=\"stages\"><div slot=\"stages\">Day 1</div><div slot=\"surfaces\">Asphalt 60%</div></ui-tabs>"
-    },
-    {
-      "tag": "ui-toast",
-      "tier": "organisms",
-      "module": "src/organisms/ui-toast.js",
-      "className": "UiToast",
-      "description": "Notification lifecycle Organism wrapping <ui-callout dismissible> with auto-dismiss timer (paused on hover/focus) and polite screen-reader announcement.",
-      "attributes": {
-        "variant": {
-          "type": "enum",
-          "values": [
-            "info",
-            "success",
-            "warning",
-            "danger"
-          ],
-          "default": "info"
-        },
-        "title": {
-          "type": "string",
-          "default": ""
-        },
-        "open": {
-          "type": "boolean",
-          "default": false
-        },
-        "duration": {
-          "type": "number",
-          "default": 0
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-close",
-          "detail": {
-            "reason": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "callout"
-      ],
-      "accessibility": "Exposes role='region' with keyboard-focusable dismiss button, announces via ariaNotify() or polite live region without stealing focus, and pauses timer while hovered or focused.",
-      "example": "<ui-toast variant=\"success\" title=\"Course exported\" open>Saved Veluwe Loop.fit</ui-toast>"
-    },
-    {
-      "tag": "ui-table",
-      "tier": "organisms",
-      "module": "src/organisms/ui-table.js",
-      "className": "UiTable",
-      "description": "Data table Organism styling a slotted native <table> and scrolling it inside a labelled region.",
-      "attributes": {
-        "aria-label": {
-          "type": "string",
-          "default": "Table"
-        },
-        "loading": {
-          "type": "boolean",
-          "default": false
-        },
-        "empty": {
-          "type": "boolean",
-          "default": false
-        },
-        "empty-text": {
-          "type": "string",
-          "default": "No rows."
-        }
-      },
-      "slots": [
-        "default"
-      ],
-      "events": [],
-      "parts": [
-        "scroll",
-        "skeleton",
-        "empty"
-      ],
-      "accessibility": "Keeps native table semantics, wraps the table in a labelled region and makes that region a keyboard stop only while it overflows.",
-      "example": "<ui-table aria-label=\"Repositories\"><table><thead><tr><th scope=\"col\">Name</th></tr></thead><tbody><tr><td>lumen</td></tr></tbody></table></ui-table>"
-    },
-    {
-      "tag": "ui-popover",
-      "tier": "organisms",
-      "module": "src/organisms/ui-popover.js",
-      "className": "UiPopover",
-      "description": "Viewport-aware anchored flyout Organism built on native Popover API (`popover='auto'`) for layer switchers and context panels.",
-      "attributes": {
-        "open": {
-          "type": "boolean",
-          "default": false
-        },
-        "placement": {
-          "type": "enum",
-          "values": [
-            "bottom-start",
-            "bottom-end",
-            "top-start",
-            "top-end"
-          ],
-          "default": "bottom-start"
-        },
-        "aria-label": {
-          "type": "string",
-          "default": null
-        }
-      },
-      "slots": [
-        "trigger",
-        "default"
-      ],
-      "events": [
-        {
-          "name": "ui-open",
-          "detail": null,
-          "bubbles": true,
-          "composed": true
-        },
-        {
-          "name": "ui-close",
-          "detail": null,
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "trigger",
-        "panel"
-      ],
-      "accessibility": "Uses native Top Layer popover='auto' with Escape/light-dismiss, viewport collision flipping, and aria-expanded synchronization on the slotted trigger.",
-      "example": "<ui-popover aria-label=\"Map layers\"><ui-button slot=\"trigger\" variant=\"secondary\" size=\"sm\">Layers</ui-button><div>Basemaps</div></ui-popover>"
-    },
-    {
-      "tag": "ui-drawer",
-      "tier": "organisms",
-      "module": "src/organisms/ui-drawer.js",
-      "className": "UiDrawer",
-      "description": "Responsive collapsible side/bottom drawer Organism supporting docked workspace panels, modal <dialog> sheets, and viewport-auto mode.",
-      "attributes": {
-        "title": {
-          "type": "string",
-          "default": ""
-        },
-        "side": {
-          "type": "enum",
-          "values": [
-            "left",
-            "right",
-            "bottom"
-          ],
-          "default": "left"
-        },
-        "mode": {
-          "type": "enum",
-          "values": [
-            "docked",
-            "modal",
-            "auto"
-          ],
-          "default": "docked"
-        },
-        "open": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "slots": [
-        "default",
-        "footer"
-      ],
-      "events": [
-        {
-          "name": "ui-open",
-          "detail": null,
-          "bubbles": true,
-          "composed": true
-        },
-        {
-          "name": "ui-close",
-          "detail": {
-            "reason": "string"
-          },
-          "bubbles": true,
-          "composed": true
-        }
-      ],
-      "parts": [
-        "panel",
-        "dialog",
-        "sheet",
-        "header",
-        "title",
-        "close",
-        "body",
-        "footer"
-      ],
-      "accessibility": "Renders non-modal <aside> landmark when docked and native <dialog>.showModal() with backdrop/Escape dismissal and focus restoration when modal or < 1024px in auto mode.",
-      "example": "<ui-drawer title=\"Tour Library\" side=\"left\" mode=\"auto\" open><p>Saved routes</p></ui-drawer>"
-    },
-    {
-      "tag": "workspace-layout",
-      "tier": "templates",
-      "module": "src/templates/workspace-layout.js",
-      "className": "WorkspaceLayout",
-      "description": "Full-viewport (`100dvh`, `overflow: hidden`) canvas application shell Template with header, side drawer, full-bleed canvas, floating HUD overlay, and bottom tray slots.",
-      "attributes": {
-        "aside-side": {
-          "type": "enum",
-          "values": [
-            "left",
-            "right"
-          ],
-          "default": "left"
-        }
-      },
-      "slots": [
-        "header",
-        "aside",
-        "default",
-        "floating",
-        "bottom"
-      ],
-      "events": [],
-      "parts": [
-        "header",
-        "body",
-        "aside",
-        "main",
-        "canvas",
-        "floating",
-        "bottom"
-      ],
-      "accessibility": "Exposes semantic <header>, <aside>, <main>, and <section> landmarks while keeping floating HUD overlays pointer-transparent outside slotted controls.",
-      "example": "<workspace-layout><ui-navbar slot=\"header\"></ui-navbar><div id=\"map\"></div><ui-toolbar slot=\"floating\" variant=\"floating\"></ui-toolbar></workspace-layout>"
-    },
-    {
       "tag": "ui-surface",
       "tier": "atoms",
       "module": "src/atoms/ui-surface.js",
       "className": "UiSurface",
       "description": "Foundational container Atom providing consistent surface backgrounds, hairline borders, radii, padding, elevation shadows, left-accent stripes, and interactive card states.",
+      "composes": [],
       "attributes": {
         "variant": {
           "type": "enum",
@@ -2561,28 +1781,451 @@
       "example": "<ui-surface variant=\"elevated\" padding=\"md\" radius=\"lg\">Content</ui-surface>"
     },
     {
-      "tag": "ui-divider",
+      "tag": "ui-switch",
       "tier": "atoms",
-      "module": "src/atoms/ui-divider.js",
-      "className": "UiDivider",
-      "description": "Hairline separator Atom supporting horizontal and vertical orientations.",
+      "module": "src/atoms/ui-switch.js",
+      "className": "UiSwitch",
+      "description": "Boolean toggle switch Atom exposing role='switch' and aria-checked semantics.",
+      "composes": [],
       "attributes": {
-        "orientation": {
+        "checked": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "size": {
           "type": "enum",
           "values": [
-            "horizontal",
-            "vertical"
+            "sm",
+            "md"
           ],
-          "default": "horizontal"
+          "default": "md"
+        },
+        "name": {
+          "type": "string",
+          "default": ""
+        },
+        "value": {
+          "type": "string",
+          "default": "on"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-change",
+          "detail": {
+            "checked": "boolean",
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "label",
+        "switch",
+        "thumb"
+      ],
+      "accessibility": "Uses delegatesFocus: true over native <button type='button' role='switch'> with aria-checked, aria-disabled, and reduced-motion transitions.",
+      "example": "<ui-switch checked aria-label=\"Nautical seamarks\">Nautical seamarks</ui-switch>"
+    },
+    {
+      "tag": "ui-textarea",
+      "tier": "atoms",
+      "module": "src/atoms/ui-textarea.js",
+      "className": "UiTextarea",
+      "description": "Multi-line text input Atom encapsulating native <textarea>.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": ""
+        },
+        "placeholder": {
+          "type": "string",
+          "default": ""
+        },
+        "rows": {
+          "type": "number",
+          "default": 3
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "readonly": {
+          "type": "boolean",
+          "default": false
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "invalid": {
+          "type": "boolean",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "default": ""
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
         }
       },
       "slots": [],
+      "events": [
+        {
+          "name": "ui-input",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-change",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "textarea"
+      ],
+      "accessibility": "Uses delegatesFocus: true over native <textarea> and syncs aria-invalid.",
+      "example": "<ui-textarea aria-label=\"Statement\" rows=\"3\" placeholder=\"Describe behaviour…\"></ui-textarea>"
+    },
+    {
+      "tag": "ui-tooltip",
+      "tier": "atoms",
+      "module": "src/atoms/ui-tooltip.js",
+      "className": "UiTooltip",
+      "description": "Accessible tooltip Atom wrapping a trigger control and rendering a WCAG 1.4.13 compliant floating label.",
+      "composes": [],
+      "attributes": {
+        "text": {
+          "type": "string",
+          "default": ""
+        },
+        "placement": {
+          "type": "enum",
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          "default": "top"
+        },
+        "open": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [
+        "default"
+      ],
       "events": [],
       "parts": [
-        "divider"
+        "tooltip"
       ],
-      "accessibility": "Exposes role='separator' with aria-orientation='horizontal' or 'vertical'.",
-      "example": "<ui-divider orientation=\"horizontal\"></ui-divider>"
+      "accessibility": "Exposes role='tooltip'; dismissible via Escape without moving focus, hoverable over tooltip bubble, and persistent while focused or hovered. Renders in the Top Layer, flips and stays inside the viewport.",
+      "example": "<ui-tooltip text=\"Undo last edit\" placement=\"bottom\"><ui-button variant=\"ghost\" size=\"sm\" aria-label=\"Undo last edit\"><ui-icon name=\"undo\"></ui-icon></ui-button></ui-tooltip>"
+    },
+    {
+      "tag": "ui-callout",
+      "tier": "molecules",
+      "module": "src/molecules/ui-callout.js",
+      "className": "UiCallout",
+      "description": "Left-accented status/action banner Molecule composing <ui-surface>, <ui-icon>, and optional dismiss <ui-button>.",
+      "composes": [
+        "ui-button",
+        "ui-icon",
+        "ui-surface"
+      ],
+      "attributes": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "info",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "info"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "dismissible": {
+          "type": "boolean",
+          "default": false
+        },
+        "elevation": {
+          "type": "enum",
+          "values": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "none"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-dismiss",
+          "detail": null,
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "callout",
+        "icon",
+        "title",
+        "body",
+        "dismiss"
+      ],
+      "accessibility": "Uses role='note' with semantic variant icon.",
+      "example": "<ui-callout variant=\"warning\" title=\"Open Question\">Needs clarification.</ui-callout>"
+    },
+    {
+      "tag": "ui-code-block",
+      "tier": "molecules",
+      "module": "src/molecules/ui-code-block.js",
+      "className": "UiCodeBlock",
+      "description": "Monospace code preview Molecule composing <ui-button> and <ui-icon> for clipboard copy.",
+      "composes": [
+        "ui-button",
+        "ui-icon",
+        "ui-surface"
+      ],
+      "attributes": {
+        "language": {
+          "type": "string",
+          "default": "html"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-copy",
+          "detail": {
+            "text": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "container",
+        "header",
+        "language",
+        "copy-button",
+        "pre"
+      ],
+      "accessibility": "Provides accessible Copy button with aria-label and visual confirmation state.",
+      "example": "<ui-code-block language=\"html\">&lt;ui-badge&gt;active&lt;/ui-badge&gt;</ui-code-block>"
+    },
+    {
+      "tag": "ui-empty-state",
+      "tier": "molecules",
+      "module": "src/molecules/ui-empty-state.js",
+      "className": "UiEmptyState",
+      "description": "Empty-state Molecule with an icon, a message and an optional slotted action.",
+      "composes": [
+        "ui-icon",
+        "ui-surface"
+      ],
+      "attributes": {
+        "text": {
+          "type": "string",
+          "default": "No matching items."
+        },
+        "icon": {
+          "type": "string",
+          "default": "search"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "container",
+        "body",
+        "text"
+      ],
+      "accessibility": "Decorative icon; the message is plain text.",
+      "example": "<ui-empty-state text=\"No tours yet.\"></ui-empty-state>"
+    },
+    {
+      "tag": "ui-field",
+      "tier": "molecules",
+      "module": "src/molecules/ui-field.js",
+      "className": "UiField",
+      "description": "Form field Molecule composing <ui-label>, <ui-input>, and hint/error text.",
+      "composes": [
+        "ui-input",
+        "ui-label"
+      ],
+      "attributes": {
+        "label": {
+          "type": "string",
+          "default": ""
+        },
+        "name": {
+          "type": "string",
+          "default": ""
+        },
+        "value": {
+          "type": "string",
+          "default": ""
+        },
+        "placeholder": {
+          "type": "string",
+          "default": ""
+        },
+        "type": {
+          "type": "string",
+          "default": "text"
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "invalid": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "hint": {
+          "type": "string",
+          "default": ""
+        },
+        "error": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "slots": [],
+      "events": [
+        {
+          "name": "ui-input",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-change",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "label",
+        "input",
+        "hint"
+      ],
+      "accessibility": "Forwards label to aria-label on inner <ui-input> and exposes .value JS property. Form-associated like ui-input.",
+      "example": "<ui-field label=\"Project\" placeholder=\"asdlc-meta-designsystem\" required></ui-field>"
+    },
+    {
+      "tag": "ui-media-card",
+      "tier": "molecules",
+      "module": "src/molecules/ui-media-card.js",
+      "className": "UiMediaCard",
+      "description": "Interactive translucent catalog/poster card Molecule composing <ui-badge> and <ui-icon>.",
+      "composes": [
+        "ui-badge",
+        "ui-icon",
+        "ui-surface"
+      ],
+      "attributes": {
+        "card-id": {
+          "type": "string",
+          "default": ""
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "default": ""
+        },
+        "badge": {
+          "type": "string",
+          "default": ""
+        },
+        "badge-variant": {
+          "type": "enum",
+          "values": [
+            "neutral",
+            "accent",
+            "info",
+            "success",
+            "warning"
+          ],
+          "default": "neutral"
+        },
+        "meta": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-select",
+          "detail": {
+            "id": "string",
+            "title": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "card",
+        "badge",
+        "title",
+        "subtitle",
+        "meta"
+      ],
+      "accessibility": "Uses native <button> with delegatesFocus: true and visible :focus-visible outline.",
+      "example": "<ui-media-card card-id=\"item-1\" title=\"Token Set\" subtitle=\"Dark-first palette\" badge=\"active\" badge-variant=\"success\"></ui-media-card>"
     },
     {
       "tag": "ui-panel-header",
@@ -2590,6 +2233,10 @@
       "module": "src/molecules/ui-panel-header.js",
       "className": "UiPanelHeader",
       "description": "Reusable panel header bar Molecule composing a title heading, actions slot, and close <ui-button>/<ui-icon>.",
+      "composes": [
+        "ui-button",
+        "ui-icon"
+      ],
       "attributes": {
         "title": {
           "type": "string",
@@ -2624,32 +2271,180 @@
       "example": "<ui-panel-header title=\"Elevation Profile\" close-label=\"Close panel\"></ui-panel-header>"
     },
     {
-      "tag": "ui-empty-state",
+      "tag": "ui-search-bar",
       "tier": "molecules",
-      "module": "src/molecules/ui-empty-state.js",
-      "className": "UiEmptyState",
-      "description": "Empty-state Molecule with an icon, a message and an optional slotted action.",
+      "module": "src/molecules/ui-search-bar.js",
+      "className": "UiSearchBar",
+      "description": "Search bar Molecule composing <ui-input>, <ui-button>, and <ui-icon>.",
+      "composes": [
+        "ui-button",
+        "ui-icon",
+        "ui-input"
+      ],
       "attributes": {
-        "text": {
+        "value": {
           "type": "string",
-          "default": "No matching items."
+          "default": ""
         },
-        "icon": {
+        "placeholder": {
           "type": "string",
-          "default": "search"
+          "default": "Search…"
+        },
+        "button-label": {
+          "type": "string",
+          "default": "Search"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": "Search"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "clearable": {
+          "type": "boolean",
+          "default": false
+        },
+        "clear-label": {
+          "type": "string",
+          "default": "Clear search"
+        },
+        "compact": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [],
+      "events": [
+        {
+          "name": "ui-search",
+          "detail": {
+            "query": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-input",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "bar",
+        "input",
+        "button",
+        "clear"
+      ],
+      "accessibility": "Wraps controls in role='search' and emits ui-search on Enter or button activation. With clearable, a labelled clear button or Escape empties the query, emits ui-input once and keeps focus in the input. Does not emit ui-change on clear.",
+      "example": "<ui-search-bar placeholder=\"Filter catalog…\"></ui-search-bar>"
+    },
+    {
+      "tag": "ui-stat-tile",
+      "tier": "molecules",
+      "module": "src/molecules/ui-stat-tile.js",
+      "className": "UiStatTile",
+      "description": "KPI metric tile Molecule displaying value, label, and optional <ui-dot>.",
+      "composes": [
+        "ui-dot",
+        "ui-surface"
+      ],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": "0"
+        },
+        "label": {
+          "type": "string",
+          "default": ""
+        },
+        "status": {
+          "type": "enum",
+          "values": [
+            "done",
+            "wait",
+            "bad",
+            "info",
+            "off"
+          ],
+          "default": null
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "neutral",
+            "accent",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "neutral"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "tile",
+        "value",
+        "dot",
+        "label"
+      ],
+      "accessibility": "Renders semantic <strong> metric value paired with descriptive label text.",
+      "example": "<ui-stat-tile value=\"23\" label=\"Records\" status=\"done\" variant=\"success\"></ui-stat-tile>"
+    },
+    {
+      "tag": "ui-tabs",
+      "tier": "molecules",
+      "module": "src/molecules/ui-tabs.js",
+      "className": "UiTabs",
+      "description": "Accessible WAI-ARIA tablist Molecule switching named content slots or a dynamic tabpanel.",
+      "composes": [
+        "ui-button",
+        "ui-surface"
+      ],
+      "attributes": {
+        "tabs": {
+          "type": "json",
+          "default": "[]"
+        },
+        "value": {
+          "type": "string",
+          "default": ""
+        },
+        "aria-label": {
+          "type": "string",
+          "default": "Section tabs"
+        },
+        "full-width": {
+          "type": "boolean",
+          "default": false
         }
       },
       "slots": [
-        "default"
+        "default",
+        "<tab-id>"
       ],
-      "events": [],
+      "events": [
+        {
+          "name": "ui-change",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
       "parts": [
-        "container",
-        "body",
-        "text"
+        "tablist",
+        "tab",
+        "panel"
       ],
-      "accessibility": "Decorative icon; the message is plain text.",
-      "example": "<ui-empty-state text=\"No tours yet.\"></ui-empty-state>"
+      "accessibility": "Exposes role='tablist', role='tab' (aria-selected, roving tabindex, ArrowLeft/Right/Home/End), and role='tabpanel' linked via aria-labelledby.",
+      "example": "<ui-tabs tabs='[{\"id\":\"stages\",\"label\":\"Stages\"},{\"id\":\"surfaces\",\"label\":\"Surfaces\"}]' value=\"stages\"><div slot=\"stages\">Day 1</div><div slot=\"surfaces\">Asphalt 60%</div></ui-tabs>"
     },
     {
       "tag": "ui-theme-toggle",
@@ -2657,6 +2452,10 @@
       "module": "src/molecules/ui-theme-toggle.js",
       "className": "UiThemeToggle",
       "description": "Theme toggle Molecule. It reports the choice; the page applies it.",
+      "composes": [
+        "ui-button",
+        "ui-icon"
+      ],
       "attributes": {
         "theme": {
           "type": "enum",
@@ -2683,6 +2482,523 @@
       ],
       "accessibility": "Native button labelled 'Toggle color theme'.",
       "example": "<ui-theme-toggle theme=\"dark\"></ui-theme-toggle>"
+    },
+    {
+      "tag": "ui-toolbar",
+      "tier": "molecules",
+      "module": "src/molecules/ui-toolbar.js",
+      "className": "UiToolbar",
+      "description": "Composite toolbar Molecule grouping action controls into a single tab stop with roving arrow-key navigation.",
+      "composes": [
+        "ui-surface"
+      ],
+      "attributes": {
+        "orientation": {
+          "type": "enum",
+          "values": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "inline",
+            "floating"
+          ],
+          "default": "inline"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": "Toolbar"
+        },
+        "aria-controls": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-navigate",
+          "detail": {
+            "index": "number"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "toolbar"
+      ],
+      "accessibility": "Exposes role='toolbar' with native focusgroup='toolbar wrap' plus automatic roving tabindex fallback (ArrowLeft/Right, ArrowUp/Down when vertical, Home, End).",
+      "example": "<ui-toolbar variant=\"floating\" aria-label=\"Map tools\"><ui-button variant=\"ghost\" size=\"sm\" aria-label=\"Undo\"><ui-icon name=\"undo\"></ui-icon></ui-button><ui-button variant=\"ghost\" size=\"sm\" aria-label=\"Redo\"><ui-icon name=\"redo\"></ui-icon></ui-button></ui-toolbar>"
+    },
+    {
+      "tag": "ui-catalog-grid",
+      "tier": "organisms",
+      "module": "src/organisms/ui-catalog-grid.js",
+      "className": "UiCatalogGrid",
+      "description": "Responsive grid Organism for <ui-media-card> items with loading skeletons and empty state.",
+      "composes": [
+        "ui-empty-state",
+        "ui-skeleton"
+      ],
+      "attributes": {
+        "loading": {
+          "type": "boolean",
+          "default": false
+        },
+        "empty": {
+          "type": "boolean",
+          "default": false
+        },
+        "empty-text": {
+          "type": "string",
+          "default": "No matching items."
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "skeletons",
+        "grid",
+        "empty"
+      ],
+      "accessibility": "Renders responsive CSS grid with clear empty-state text.",
+      "example": "<ui-catalog-grid empty-text=\"No matches\"></ui-catalog-grid>"
+    },
+    {
+      "tag": "ui-drawer",
+      "tier": "organisms",
+      "module": "src/organisms/ui-drawer.js",
+      "className": "UiDrawer",
+      "description": "Responsive collapsible side/bottom drawer Organism supporting docked workspace panels, modal <dialog> sheets, and viewport-auto mode.",
+      "composes": [
+        "ui-divider",
+        "ui-panel-header",
+        "ui-surface"
+      ],
+      "attributes": {
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "side": {
+          "type": "enum",
+          "values": [
+            "left",
+            "right",
+            "bottom"
+          ],
+          "default": "left"
+        },
+        "mode": {
+          "type": "enum",
+          "values": [
+            "docked",
+            "modal",
+            "auto"
+          ],
+          "default": "docked"
+        },
+        "open": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [
+        "default",
+        "footer"
+      ],
+      "events": [
+        {
+          "name": "ui-open",
+          "detail": null,
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-close",
+          "detail": {
+            "reason": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "panel",
+        "dialog",
+        "sheet",
+        "header",
+        "title",
+        "close",
+        "body",
+        "footer"
+      ],
+      "accessibility": "Renders non-modal <aside> landmark when docked and native <dialog>.showModal() with backdrop/Escape dismissal and focus restoration when modal or < 1024px in auto mode.",
+      "example": "<ui-drawer title=\"Tour Library\" side=\"left\" mode=\"auto\" open><p>Saved routes</p></ui-drawer>"
+    },
+    {
+      "tag": "ui-modal",
+      "tier": "organisms",
+      "module": "src/organisms/ui-modal.js",
+      "className": "UiModal",
+      "description": "Modal dialog Organism built on native <dialog> with blurred backdrop and focus restoration.",
+      "composes": [
+        "ui-divider",
+        "ui-panel-header",
+        "ui-surface"
+      ],
+      "attributes": {
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "open": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [
+        "default",
+        "footer"
+      ],
+      "events": [
+        {
+          "name": "ui-open",
+          "detail": {},
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-close",
+          "detail": {
+            "reason": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "dialog",
+        "title",
+        "close",
+        "body",
+        "footer"
+      ],
+      "accessibility": "Uses native <dialog>.showModal() for top-layer focus containment, Escape/backdrop dismissal, and focus restoration to the triggering element.",
+      "example": "<ui-modal title=\"Item Details\"><p>Details here.</p></ui-modal>"
+    },
+    {
+      "tag": "ui-navbar",
+      "tier": "organisms",
+      "module": "src/organisms/ui-navbar.js",
+      "className": "UiNavbar",
+      "description": "Sticky frosted-glass site header Organism with a composed theme toggle.",
+      "composes": [
+        "ui-surface",
+        "ui-theme-toggle"
+      ],
+      "attributes": {
+        "theme": {
+          "type": "enum",
+          "values": [
+            "dark",
+            "light"
+          ],
+          "default": "dark"
+        }
+      },
+      "slots": [
+        "brand",
+        "nav",
+        "search",
+        "actions"
+      ],
+      "events": [
+        {
+          "name": "ui-theme-change",
+          "detail": {
+            "theme": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "header",
+        "theme-button"
+      ],
+      "accessibility": "Wraps navigation slot in <nav aria-label='Primary'>.",
+      "example": "<ui-navbar><a slot=\"brand\" href=\"./\">ASDLC</a></ui-navbar>"
+    },
+    {
+      "tag": "ui-popover",
+      "tier": "organisms",
+      "module": "src/organisms/ui-popover.js",
+      "className": "UiPopover",
+      "description": "Viewport-aware anchored flyout Organism built on native Popover API (`popover='auto'`) for layer switchers and context panels.",
+      "composes": [
+        "ui-surface"
+      ],
+      "attributes": {
+        "open": {
+          "type": "boolean",
+          "default": false
+        },
+        "placement": {
+          "type": "enum",
+          "values": [
+            "bottom-start",
+            "bottom-end",
+            "top-start",
+            "top-end"
+          ],
+          "default": "bottom-start"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "trigger",
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-open",
+          "detail": null,
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-close",
+          "detail": null,
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "trigger",
+        "panel"
+      ],
+      "accessibility": "Uses native Top Layer popover='auto' with Escape/light-dismiss, viewport collision flipping, and aria-expanded synchronization on the slotted trigger.",
+      "example": "<ui-popover aria-label=\"Map layers\"><ui-button slot=\"trigger\" variant=\"secondary\" size=\"sm\">Layers</ui-button><div>Basemaps</div></ui-popover>"
+    },
+    {
+      "tag": "ui-table",
+      "tier": "organisms",
+      "module": "src/organisms/ui-table.js",
+      "className": "UiTable",
+      "description": "Data table Organism styling a slotted native <table> and scrolling it inside a labelled region.",
+      "composes": [
+        "ui-empty-state",
+        "ui-skeleton"
+      ],
+      "attributes": {
+        "aria-label": {
+          "type": "string",
+          "default": "Table"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": false
+        },
+        "empty": {
+          "type": "boolean",
+          "default": false
+        },
+        "empty-text": {
+          "type": "string",
+          "default": "No rows."
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "scroll",
+        "skeleton",
+        "empty"
+      ],
+      "accessibility": "Keeps native table semantics, wraps the table in a labelled region and makes that region a keyboard stop only while it overflows.",
+      "example": "<ui-table aria-label=\"Repositories\"><table><thead><tr><th scope=\"col\">Name</th></tr></thead><tbody><tr><td>lumen</td></tr></tbody></table></ui-table>"
+    },
+    {
+      "tag": "ui-toast",
+      "tier": "organisms",
+      "module": "src/organisms/ui-toast.js",
+      "className": "UiToast",
+      "description": "Notification lifecycle Organism wrapping <ui-callout dismissible> with auto-dismiss timer (paused on hover/focus) and polite screen-reader announcement.",
+      "composes": [
+        "ui-callout"
+      ],
+      "attributes": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "info",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "info"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "open": {
+          "type": "boolean",
+          "default": false
+        },
+        "duration": {
+          "type": "number",
+          "default": 0
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-close",
+          "detail": {
+            "reason": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "callout"
+      ],
+      "accessibility": "Exposes role='region' with keyboard-focusable dismiss button, announces via ariaNotify() or polite live region without stealing focus, and pauses timer while hovered or focused.",
+      "example": "<ui-toast variant=\"success\" title=\"Course exported\" open>Saved Veluwe Loop.fit</ui-toast>"
+    },
+    {
+      "tag": "catalog-layout",
+      "tier": "templates",
+      "module": "src/templates/catalog-layout.js",
+      "className": "CatalogLayout",
+      "description": "Catalog browser Template arranging hero, toolbar, grid, and modal slots.",
+      "composes": [],
+      "attributes": {},
+      "slots": [
+        "hero",
+        "toolbar",
+        "grid",
+        "modal"
+      ],
+      "events": [],
+      "parts": [
+        "hero",
+        "toolbar",
+        "grid"
+      ],
+      "accessibility": "Structures catalog sections in semantic <section> landmarks.",
+      "example": "<catalog-layout><div slot=\"hero\">...</div><ui-catalog-grid slot=\"grid\"></ui-catalog-grid></catalog-layout>"
+    },
+    {
+      "tag": "detail-layout",
+      "tier": "templates",
+      "module": "src/templates/detail-layout.js",
+      "className": "DetailLayout",
+      "description": "Two-column detail Template pairing primary content with a metadata sidebar.",
+      "composes": [],
+      "attributes": {},
+      "slots": [
+        "default",
+        "aside"
+      ],
+      "events": [],
+      "parts": [
+        "grid",
+        "main",
+        "aside"
+      ],
+      "accessibility": "Uses semantic <aside> landmark for secondary metadata.",
+      "example": "<detail-layout><article>Main</article><dl slot=\"aside\">Meta</dl></detail-layout>"
+    },
+    {
+      "tag": "page-shell",
+      "tier": "templates",
+      "module": "src/templates/page-shell.js",
+      "className": "PageShell",
+      "description": "Full-page structural Template with header, main, and footer slots.",
+      "composes": [],
+      "attributes": {},
+      "slots": [
+        "header",
+        "default",
+        "footer"
+      ],
+      "events": [],
+      "parts": [
+        "main",
+        "footer"
+      ],
+      "accessibility": "Provides semantic <main> and <footer> landmarks.",
+      "example": "<page-shell><ui-navbar slot=\"header\"></ui-navbar><p>Content</p></page-shell>"
+    },
+    {
+      "tag": "workspace-layout",
+      "tier": "templates",
+      "module": "src/templates/workspace-layout.js",
+      "className": "WorkspaceLayout",
+      "description": "Full-viewport (`100dvh`, `overflow: hidden`) canvas application shell Template with header, side drawer, full-bleed canvas, floating HUD overlay, and bottom tray slots.",
+      "composes": [],
+      "attributes": {
+        "aside-side": {
+          "type": "enum",
+          "values": [
+            "left",
+            "right"
+          ],
+          "default": "left"
+        }
+      },
+      "slots": [
+        "header",
+        "aside",
+        "default",
+        "floating",
+        "bottom"
+      ],
+      "events": [],
+      "parts": [
+        "header",
+        "body",
+        "aside",
+        "main",
+        "canvas",
+        "floating",
+        "bottom"
+      ],
+      "accessibility": "Exposes semantic <header>, <aside>, <main>, and <section> landmarks while keeping floating HUD overlays pointer-transparent outside slotted controls.",
+      "example": "<workspace-layout><ui-navbar slot=\"header\"></ui-navbar><div id=\"map\"></div><ui-toolbar slot=\"floating\" variant=\"floating\"></ui-toolbar></workspace-layout>"
+    }
+  ],
+  "pages": [
+    {
+      "id": "showcase",
+      "title": "Showcase",
+      "description": "The live catalog: every token and component, by tier. Reads its facts from catalog.json.",
+      "path": "showcase/index.html",
+      "url": "https://jvanheerikhuize.github.io/asdlc-meta-designsystem/",
+      "templates": [
+        "catalog-layout",
+        "page-shell"
+      ]
     }
   ]
 }
