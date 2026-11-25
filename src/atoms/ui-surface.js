@@ -31,7 +31,7 @@ TEMPLATE.innerHTML = `
     :host([variant="elevated"]) .surface { --_bg: var(--color-surface-elevated); }
     :host([variant="card"]) .surface { --_bg: var(--color-card); }
     :host([variant="glass"]) .surface {
-      --_bg: color-mix(in srgb, var(--color-surface) 84%, transparent);
+      --_bg: var(--color-surface-glass);
       --_border: var(--color-border-hover);
       backdrop-filter: blur(var(--frost-md));
     }
@@ -63,7 +63,7 @@ TEMPLATE.innerHTML = `
       appearance: none;
       font: inherit;
       text-align: left;
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
     }
 
     button.surface:hover {

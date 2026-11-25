@@ -18,7 +18,7 @@ TEMPLATE.innerHTML = `
       font-size: var(--text-sm);
       line-height: var(--leading-normal);
       color: var(--color-fg);
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       user-select: none;
     }
 
@@ -34,7 +34,7 @@ TEMPLATE.innerHTML = `
       border-radius: var(--radius-full);
       border: var(--border-width) solid var(--color-border-hover);
       background: var(--color-card-hover);
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       flex-shrink: 0;
       transition:
         background-color var(--duration-fast) var(--ease-standard),
@@ -85,7 +85,7 @@ TEMPLATE.innerHTML = `
     :host([disabled]) .wrap,
     :host([disabled]) button {
       opacity: var(--opacity-disabled);
-      cursor: not-allowed;
+      cursor: var(--cursor-disabled);
     }
 
     @media (prefers-reduced-motion: reduce) {

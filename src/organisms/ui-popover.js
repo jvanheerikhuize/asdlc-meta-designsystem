@@ -1,4 +1,5 @@
 import '../atoms/ui-surface.js';
+import '../molecules/ui-panel-header.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -32,6 +33,14 @@ TEMPLATE.innerHTML = `
       display: none;
     }
 
+    .body {
+      padding: var(--space-3);
+    }
+
+    ui-panel-header:not([hidden]) + .body {
+      padding-top: 0;
+    }
+
     .panel:not([popover])[hidden] {
       display: none;
     }
@@ -40,22 +49,24 @@ TEMPLATE.innerHTML = `
     <slot name="trigger"></slot>
   </span>
   <div class="panel" part="panel" popover="auto">
-    <ui-surface variant="base" elevation="lg" radius="lg" padding="sm">
-      <slot></slot>
+    <ui-surface variant="base" elevation="lg" radius="lg" padding="none">
+      <ui-panel-header hidden></ui-panel-header>
+      <div class="body" part="body"><slot></slot></div>
     </ui-surface>
   </div>
 `;
 
 /**
- * Viewport-aware anchored flyout Organism composing <ui-surface> inside native
- * Top Layer `popover="auto"` with collision flipping and `aria-expanded` sync.
+ * Viewport-aware anchored flyout Organism composing <ui-surface> and an optional
+ * <ui-panel-header> inside native Top Layer `popover="auto"` with collision flipping and `aria-expanded` sync.
  */
 export class UiPopover extends HTMLElement {
-  static observedAttributes = ['open', 'placement', 'aria-label'];
+  static observedAttributes = ['open', 'placement', 'aria-label', 'heading'];
 
   #triggerSlot;
   #triggerWrap;
   #panel;
+  #header;
   #supportsPopover;
   #notifiedOpen = false;
 
@@ -66,6 +77,12 @@ export class UiPopover extends HTMLElement {
     this.#triggerSlot = shadow.querySelector('slot[name="trigger"]');
     this.#triggerWrap = shadow.querySelector('.trigger-wrap');
     this.#panel = shadow.querySelector('.panel');
+    this.#header = shadow.querySelector('ui-panel-header');
+    this.#header.addEventListener('ui-close', (e) => {
+      e.stopPropagation(); // reported once, by the popover
+      this.closePopover();
+      this.#triggerSlot.assignedElements({ flatten: true })[0]?.focus();
+    });
     this.#supportsPopover = typeof this.#panel.showPopover === 'function';
 
     if (!this.#supportsPopover) {
@@ -108,7 +125,7 @@ export class UiPopover extends HTMLElement {
   }
 
   attributeChangedCallback(name) {
-    if (name === 'aria-label') this.#syncLabel();
+    if (name === 'aria-label' || name === 'heading') this.#syncLabel();
     if (name === 'open') {
       if (this.hasAttribute('open')) this.openPopover();
       else this.closePopover();
@@ -198,7 +215,10 @@ export class UiPopover extends HTMLElement {
 
   #syncLabel() {
     if (!this.#panel) return;
-    const label = this.getAttribute('aria-label');
+    const heading = this.getAttribute('heading');
+    this.#header.hidden = !heading;
+    this.#header.setAttribute('title', heading || '');
+    const label = this.getAttribute('aria-label') || heading;
     if (label) this.#panel.setAttribute('aria-label', label);
     else this.#panel.removeAttribute('aria-label');
   }

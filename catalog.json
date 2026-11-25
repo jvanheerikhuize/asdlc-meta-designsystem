@@ -580,6 +580,10 @@
         "value": "rgba(9, 9, 11, 0.16)"
       },
       {
+        "name": "--palette-ink-a18",
+        "value": "rgba(9, 9, 11, 0.18)"
+      },
+      {
         "name": "--palette-ink-a24",
         "value": "rgba(9, 9, 11, 0.24)"
       },
@@ -610,6 +614,10 @@
       {
         "name": "--palette-ink-900",
         "value": "#111116"
+      },
+      {
+        "name": "--palette-ink-900-a84",
+        "value": "rgba(17, 17, 22, 0.84)"
       },
       {
         "name": "--palette-ink-950",
@@ -864,8 +872,16 @@
         "value": "rgba(244, 63, 94, 0.16)"
       },
       {
+        "name": "--palette-rose-500-a18",
+        "value": "rgba(244, 63, 94, 0.18)"
+      },
+      {
         "name": "--palette-rose-500-a20",
         "value": "rgba(244, 63, 94, 0.20)"
+      },
+      {
+        "name": "--palette-rose-500-a28",
+        "value": "rgba(244, 63, 94, 0.28)"
       },
       {
         "name": "--palette-rose-500-a32",
@@ -874,6 +890,10 @@
       {
         "name": "--palette-rose-500-a40",
         "value": "rgba(244, 63, 94, 0.40)"
+      },
+      {
+        "name": "--palette-rose-500-a50",
+        "value": "rgba(244, 63, 94, 0.50)"
       },
       {
         "name": "--palette-rose-600",
@@ -896,8 +916,20 @@
         "value": "rgba(225, 29, 72, 0.16)"
       },
       {
+        "name": "--palette-rose-600-a18",
+        "value": "rgba(225, 29, 72, 0.18)"
+      },
+      {
+        "name": "--palette-rose-600-a28",
+        "value": "rgba(225, 29, 72, 0.28)"
+      },
+      {
         "name": "--palette-rose-600-a40",
         "value": "rgba(225, 29, 72, 0.40)"
+      },
+      {
+        "name": "--palette-rose-600-a50",
+        "value": "rgba(225, 29, 72, 0.50)"
       },
       {
         "name": "--palette-rose-700",
@@ -1156,6 +1188,10 @@
         "value": "rgba(255, 255, 255, 0.80)"
       },
       {
+        "name": "--palette-white-a84",
+        "value": "rgba(255, 255, 255, 0.84)"
+      },
+      {
         "name": "--palette-zinc-50",
         "value": "#fafafa"
       },
@@ -1328,6 +1364,12 @@
         "dark": "rgba(255, 255, 255, 0.08)",
         "light": "rgba(9, 9, 11, 0.06)",
         "role": "Loading placeholder"
+      },
+      {
+        "name": "--color-surface-glass",
+        "dark": "rgba(17, 17, 22, 0.84)",
+        "light": "rgba(255, 255, 255, 0.84)",
+        "role": "Frosted surface"
       }
     ],
     "ambientGlow": [
@@ -1422,6 +1464,12 @@
         "dark": "rgba(255, 255, 255, 0.08)",
         "light": "rgba(9, 9, 11, 0.10)",
         "role": "Line between items"
+      },
+      {
+        "name": "--color-border-field",
+        "dark": "rgba(255, 255, 255, 0.16)",
+        "light": "rgba(9, 9, 11, 0.18)",
+        "role": "Border of a text field"
       }
     ],
     "foreground": [
@@ -1830,6 +1878,24 @@
         "dark": "#d4d4d8",
         "light": "#3f3f46",
         "role": "Neutral: text on the tinted background"
+      },
+      {
+        "name": "--color-accent-pressed-border",
+        "dark": "rgba(244, 63, 94, 0.50)",
+        "light": "rgba(225, 29, 72, 0.50)",
+        "role": "Accent: border of a toggle that is on"
+      },
+      {
+        "name": "--color-accent-pressed-hover",
+        "dark": "rgba(244, 63, 94, 0.28)",
+        "light": "rgba(225, 29, 72, 0.28)",
+        "role": "Accent: hovered toggle that is on"
+      },
+      {
+        "name": "--color-accent-pressed",
+        "dark": "rgba(244, 63, 94, 0.18)",
+        "light": "rgba(225, 29, 72, 0.18)",
+        "role": "Accent: toggle that is on"
       }
     ],
     "data": [
@@ -3267,6 +3333,10 @@
       {
         "name": "--pad-cell",
         "value": "0.5rem 0.75rem"
+      },
+      {
+        "name": "--size-spinner-inline",
+        "value": "0.875em"
       }
     ],
     "layout": [
@@ -5450,6 +5520,7 @@
       "className": "UiPopover",
       "description": "Viewport-aware anchored flyout Organism built on native Popover API (`popover='auto'`) for layer switchers and context panels.",
       "composes": [
+        "ui-panel-header",
         "ui-surface"
       ],
       "attributes": {
@@ -5468,6 +5539,10 @@
           "default": "bottom-start"
         },
         "aria-label": {
+          "type": "string",
+          "default": null
+        },
+        "heading": {
           "type": "string",
           "default": null
         }
@@ -5492,9 +5567,10 @@
       ],
       "parts": [
         "trigger",
-        "panel"
+        "panel",
+        "body"
       ],
-      "accessibility": "Uses native Top Layer popover='auto' with Escape/light-dismiss, viewport collision flipping, and aria-expanded synchronization on the slotted trigger.",
+      "accessibility": "Uses native Top Layer popover='auto' with Escape/light-dismiss, viewport collision flipping, and aria-expanded synchronization on the slotted trigger. An optional heading labels the panel and adds a close button that returns focus to the trigger.",
       "example": "<ui-popover aria-label=\"Map layers\"><ui-button slot=\"trigger\" variant=\"secondary\" size=\"sm\">Layers</ui-button><div>Basemaps</div></ui-popover>"
     },
     {

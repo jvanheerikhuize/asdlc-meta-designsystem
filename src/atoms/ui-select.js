@@ -28,10 +28,10 @@ TEMPLATE.innerHTML = `
       line-height: var(--leading-control);
       color: var(--color-fg);
       background: var(--color-surface);
-      border: var(--border-width) solid color-mix(in srgb, var(--color-border-hover) 75%, transparent);
+      border: var(--border-width) solid var(--color-border-field);
       border-radius: var(--radius-md);
       padding: 0 var(--control-md) 0 var(--space-3);
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       transition:
         border-color var(--duration-fast) var(--ease-standard),
         background-color var(--duration-fast) var(--ease-standard),
@@ -84,7 +84,7 @@ TEMPLATE.innerHTML = `
       option {
         padding: var(--space-2) var(--space-3);
         border-radius: var(--radius-sm);
-        cursor: pointer;
+        cursor: var(--cursor-interactive);
       }
 
       option:hover,
@@ -122,7 +122,7 @@ TEMPLATE.innerHTML = `
     :host([disabled]) select,
     :host([disabled]) .chevron {
       opacity: var(--opacity-disabled);
-      cursor: not-allowed;
+      cursor: var(--cursor-disabled);
     }
 
     @media (prefers-reduced-motion: reduce) {

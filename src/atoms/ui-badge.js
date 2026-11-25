@@ -34,26 +34,26 @@ TEMPLATE.innerHTML = `
 
     :host([variant="accent"]) span {
       color: var(--color-accent);
-      border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
-      background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+      border-color: var(--color-accent-border);
+      background: var(--color-accent-subtle);
     }
 
     :host([variant="info"]) span {
       color: var(--color-info);
-      border-color: color-mix(in srgb, var(--color-info) 35%, transparent);
-      background: color-mix(in srgb, var(--color-info) 12%, transparent);
+      border-color: var(--color-info-border);
+      background: var(--color-info-subtle);
     }
 
     :host([variant="success"]) span {
       color: var(--color-success);
-      border-color: color-mix(in srgb, var(--color-success) 35%, transparent);
-      background: color-mix(in srgb, var(--color-success) 12%, transparent);
+      border-color: var(--color-success-border);
+      background: var(--color-success-subtle);
     }
 
     :host([variant="warning"]) span {
       color: var(--color-warning);
-      border-color: color-mix(in srgb, var(--color-warning) 35%, transparent);
-      background: color-mix(in srgb, var(--color-warning) 12%, transparent);
+      border-color: var(--color-warning-border);
+      background: var(--color-warning-subtle);
     }
   </style>
   <span part="badge"><slot></slot></span>

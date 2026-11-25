@@ -40,12 +40,7 @@ TEMPLATE.innerHTML = `
       position: absolute;
       inset: 0;
       transform: translateX(-100%);
-      background: linear-gradient(
-        90deg,
-        transparent,
-        var(--color-card-hover),
-        transparent
-      );
+      background: var(--gradient-shimmer);
       animation: ui-shimmer var(--duration-shimmer) infinite;
     }
 

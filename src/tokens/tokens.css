@@ -68,6 +68,7 @@
   --palette-ink-a06: rgba(9, 9, 11, 0.06);
   --palette-ink-a10: rgba(9, 9, 11, 0.10);
   --palette-ink-a16: rgba(9, 9, 11, 0.16);
+  --palette-ink-a18: rgba(9, 9, 11, 0.18);
   --palette-ink-a24: rgba(9, 9, 11, 0.24);
   --palette-ink-a32: rgba(9, 9, 11, 0.32);
   --palette-ink-a48: rgba(9, 9, 11, 0.48);
@@ -76,6 +77,7 @@
   --palette-ink-a80: rgba(9, 9, 11, 0.80);
   --palette-ink-800: #18181f;
   --palette-ink-900: #111116;
+  --palette-ink-900-a84: rgba(17, 17, 22, 0.84);
   --palette-ink-950: #08080b;
   --palette-ink-975: #09090b;
   --palette-lime-50: #f7fee7;
@@ -139,15 +141,21 @@
   --palette-rose-500: #f43f5e;
   --palette-rose-500-a12: rgba(244, 63, 94, 0.12);
   --palette-rose-500-a16: rgba(244, 63, 94, 0.16);
+  --palette-rose-500-a18: rgba(244, 63, 94, 0.18);
   --palette-rose-500-a20: rgba(244, 63, 94, 0.20);
+  --palette-rose-500-a28: rgba(244, 63, 94, 0.28);
   --palette-rose-500-a32: rgba(244, 63, 94, 0.32);
   --palette-rose-500-a40: rgba(244, 63, 94, 0.40);
+  --palette-rose-500-a50: rgba(244, 63, 94, 0.50);
   --palette-rose-600: #e11d48;
   --palette-rose-600-a08: rgba(225, 29, 72, 0.08);
   --palette-rose-600-a10: rgba(225, 29, 72, 0.10);
   --palette-rose-600-a14: rgba(225, 29, 72, 0.14);
   --palette-rose-600-a16: rgba(225, 29, 72, 0.16);
+  --palette-rose-600-a18: rgba(225, 29, 72, 0.18);
+  --palette-rose-600-a28: rgba(225, 29, 72, 0.28);
   --palette-rose-600-a40: rgba(225, 29, 72, 0.40);
+  --palette-rose-600-a50: rgba(225, 29, 72, 0.50);
   --palette-rose-700: #be123c;
   --palette-rose-800: #9f1239;
   --palette-rose-900: #881337;
@@ -212,6 +220,7 @@
   --palette-white-a48: rgba(255, 255, 255, 0.48);
   --palette-white-a64: rgba(255, 255, 255, 0.64);
   --palette-white-a80: rgba(255, 255, 255, 0.80);
+  --palette-white-a84: rgba(255, 255, 255, 0.84);
   --palette-zinc-50: #fafafa;
   --palette-zinc-100: #f4f4f5;
   --palette-zinc-200: #e4e4e7;
@@ -401,6 +410,7 @@
   --color-drop-target: var(--palette-sky-400-a16);
   --color-scrim-soft: var(--palette-black-a50);
   --color-glass: var(--palette-white-a08);
+  --color-surface-glass: var(--palette-ink-900-a84);
   --color-skeleton: var(--palette-white-a08);
 
   /* Ambient Glow */
@@ -416,6 +426,7 @@
   --color-border-inverse: var(--palette-ink-a24);
   --color-border-selected: var(--palette-rose-500);
   --color-divider: var(--palette-white-a08);
+  --color-border-field: var(--palette-white-a16);
 
   /* Foreground */
   --color-fg-disabled: var(--palette-zinc-600);
@@ -467,6 +478,9 @@
   --color-accent-subtle-hover: var(--palette-rose-500-a20);
   --color-accent-border: var(--palette-rose-500-a40);
   --color-accent-text: var(--palette-rose-400);
+  --color-accent-pressed: var(--palette-rose-500-a18);
+  --color-accent-pressed-hover: var(--palette-rose-500-a28);
+  --color-accent-pressed-border: var(--palette-rose-500-a50);
   --color-neutral: var(--palette-zinc-400);
   --color-neutral-hover: var(--palette-zinc-300);
   --color-neutral-active: var(--palette-zinc-200);
@@ -714,6 +728,7 @@
   --size-track-lg: 0.625rem;
   --size-scrollbar: 0.625rem;
   --size-spinner: 1.25rem;
+  --size-spinner-inline: 0.875em;
   --size-handle: 2rem;
   --size-marker: 1.5rem;
   --size-textarea-min: 5rem;
@@ -877,6 +892,7 @@
   --color-drop-target: var(--palette-sky-700-a10);
   --color-scrim-soft: var(--palette-ink-a32);
   --color-glass: var(--palette-white-a64);
+  --color-surface-glass: var(--palette-white-a84);
   --color-skeleton: var(--palette-ink-a06);
 
   /* Ambient Glow */
@@ -892,6 +908,7 @@
   --color-border-inverse: var(--palette-white-a22);
   --color-border-selected: var(--palette-rose-600);
   --color-divider: var(--palette-ink-a10);
+  --color-border-field: var(--palette-ink-a18);
 
   /* Foreground */
   --color-fg-disabled: var(--palette-zinc-400);
@@ -943,6 +960,9 @@
   --color-accent-subtle-hover: var(--palette-rose-600-a14);
   --color-accent-border: var(--palette-rose-600-a40);
   --color-accent-text: var(--palette-rose-700);
+  --color-accent-pressed: var(--palette-rose-600-a18);
+  --color-accent-pressed-hover: var(--palette-rose-600-a28);
+  --color-accent-pressed-border: var(--palette-rose-600-a50);
   --color-neutral: var(--palette-zinc-600);
   --color-neutral-hover: var(--palette-zinc-700);
   --color-neutral-active: var(--palette-zinc-800);

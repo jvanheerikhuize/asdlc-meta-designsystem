@@ -25,7 +25,7 @@ TEMPLATE.innerHTML = `
       border: var(--border-width) solid var(--color-border);
       background: var(--color-surface);
       color: var(--color-fg-secondary);
-      cursor: pointer;
+      cursor: var(--cursor-interactive);
       user-select: none;
       white-space: nowrap;
       transition:
@@ -47,7 +47,7 @@ TEMPLATE.innerHTML = `
 
     :host([variant="accent"]) button {
       color: var(--color-accent);
-      border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+      border-color: var(--color-accent-pressed-border);
     }
 
     :host([variant="accent"][pressed]) button {
@@ -63,7 +63,7 @@ TEMPLATE.innerHTML = `
 
     :host([disabled]) button {
       opacity: var(--opacity-disabled);
-      cursor: not-allowed;
+      cursor: var(--cursor-disabled);
     }
 
     @media (prefers-reduced-motion: reduce) {
