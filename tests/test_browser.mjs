@@ -80,6 +80,22 @@ class CdpClient {
   }
 }
 
+async function until(cdp, expression, timeoutMs = 10000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    if (await cdp.eval(expression).catch(() => false)) return;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  throw new Error(`Timed out waiting for ${expression}`);
+}
+
+async function stop(child) {
+  if (!child || child.exitCode !== null || child.signalCode !== null) return;
+  const exited = new Promise((resolve) => child.once('exit', resolve));
+  child.kill('SIGKILL');
+  await exited;
+}
+
 async function main() {
   const userDataDir = mkdtempSync(join(tmpdir(), 'asdlc-ds-chrome-'));
   const server = spawn('python3', ['-m', 'http.server', String(PORT), '-d', join(ROOT, 'site')], {
@@ -131,7 +147,7 @@ async function main() {
     assert.equal(dash.callouts >= 1, true);
 
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/specs/#/capture/requirement` });
-    await new Promise((r) => setTimeout(r, 400));
+    await until(cdp, `document.querySelector('ui-code-block')?.shadowRoot && document.querySelectorAll('ui-chip').length >= 5`);
     const cap = await cdp.eval(`(() => ({
       chips: document.querySelectorAll('ui-chip').length,
       checkboxes: document.querySelectorAll('ui-checkbox').length,
@@ -143,7 +159,7 @@ async function main() {
 
     // 2. Verify Primary Showcase (/) and link to ./specs/ (REQ-0007)
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/` });
-    await new Promise((r) => setTimeout(r, 600));
+    await until(cdp, `location.pathname === '/' && document.readyState === 'complete' && ['ui-table', 'workspace-layout'].every((t) => document.querySelector(t)?.shadowRoot)`);
     const showcase = await cdp.eval(`(() => {
       const tags = [
         'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',
@@ -414,10 +430,20 @@ async function main() {
     assert.deepEqual(cdp.pageErrors, [], `Page errors: ${cdp.pageErrors.join('; ')}`);
     console.log('ALL_BROWSER_CHECKS_PASSED');
   } finally {
-    if (cdp) cdp.close();
-    if (chrome) chrome.kill('SIGKILL');
-    server.kill('SIGKILL');
-    rmSync(userDataDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
+    if (cdp) {
+      // A clean shutdown lets Chrome's child processes finish writing the profile.
+      const exited = new Promise((resolve) => chrome.once('exit', resolve));
+      cdp.send('Browser.close').catch(() => {});
+      await Promise.race([exited, new Promise((r) => setTimeout(r, 3000))]);
+      cdp.close();
+    }
+    await Promise.all([stop(chrome), stop(server)]);
+    try {
+      rmSync(userDataDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+    } catch (err) {
+      // Chrome's child processes may still write here. An error thrown in finally would replace the test result.
+      console.warn(`Could not remove ${userDataDir}: ${err.message}`);
+    }
   }
 }
 
