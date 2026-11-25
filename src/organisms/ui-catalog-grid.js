@@ -1,3 +1,4 @@
+import '../atoms/ui-grid.js';
 import '../atoms/ui-skeleton.js';
 import '../molecules/ui-empty-state.js';
 
@@ -11,31 +12,20 @@ TEMPLATE.innerHTML = `
     :host([hidden]) {
       display: none;
     }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(var(--layout-card-min), 1fr));
-      gap: var(--space-4);
-    }
-
-    .items[hidden],
-    .skeletons[hidden] {
-      display: none;
-    }
   </style>
-  <div class="grid skeletons" part="skeletons" hidden>
+  <ui-grid class="skeletons" exportparts="grid: skeletons" min="card" hidden>
     <ui-skeleton variant="rect" height="var(--size-skeleton-card)"></ui-skeleton>
     <ui-skeleton variant="rect" height="var(--size-skeleton-card)"></ui-skeleton>
     <ui-skeleton variant="rect" height="var(--size-skeleton-card)"></ui-skeleton>
-  </div>
-  <div class="grid items" part="grid">
+  </ui-grid>
+  <ui-grid class="items" exportparts="grid" min="card">
     <slot></slot>
-  </div>
+  </ui-grid>
   <ui-empty-state class="empty" part="empty" hidden></ui-empty-state>
 `;
 
 /**
- * Responsive catalog grid Organism with loading skeleton and empty-state support.
+ * Responsive catalog grid Organism composing <ui-grid>, with loading skeleton and empty-state support.
  */
 export class UiCatalogGrid extends HTMLElement {
   static observedAttributes = ['loading', 'empty-text', 'empty'];

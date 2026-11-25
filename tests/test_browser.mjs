@@ -261,7 +261,7 @@ async function main() {
       host.setAttribute('aria-label', 'Probe');
       host.innerHTML = '<table><thead><tr><th scope="col">A</th></tr></thead><tbody><tr><td>b</td></tr></tbody></table>';
       document.body.prepend(host);
-      const scroll = host.shadowRoot.querySelector('[part="scroll"]');
+      const scroll = host.shadowRoot.querySelector('ui-scroll').shadowRoot.querySelector('.scroll');
       const settle = () => new Promise((r) => setTimeout(r, 200));
       await settle();
       const narrow = scroll.getAttribute('tabindex');
@@ -435,6 +435,39 @@ async function main() {
       hrefs: [null, null, './specs/'], rel: 'noopener', embed: false, skip: 'skip-here', moved: true, scroll: [true, false],
       text: ['59.1 km', '5', 'Nov 25, 2026', '-12%', '99+'], toggle: [1, true], tags: ['h4', 'span'], menuDisabled: true, trend: true,
     });
+
+    // Organisms use atoms for scrolling and announcements (REQ-0005)
+    const organismCheck = await cdp.eval(`(async () => {
+      const wait = (ms = 250) => new Promise((r) => setTimeout(r, ms));
+      const box = document.createElement('div');
+      box.innerHTML = '<ui-drawer title="Docked" mode="docked" open style="position: fixed; inset: 0 auto 0 0; height: 300px"><div class="c" style="height: 20px">a</div></ui-drawer>'
+        + '<ui-drawer title="Sheet" mode="modal"><div class="c" style="height: 20px">a</div></ui-drawer><ui-toast title="Saved" open>Tour stored</ui-toast>';
+      document.body.append(box);
+      const [docked, sheet, toast] = box.children;
+      const visible = (el) => [...el.shadowRoot.querySelectorAll('.body')].find((b) => b.checkVisibility()).shadowRoot.querySelector('.scroll');
+      const out = {};
+      sheet.setAttribute('open', '');
+      for (const [name, el] of [['docked', docked], ['sheet', sheet]]) {
+        await wait();
+        const scroll = visible(el);
+        const short = scroll.getAttribute('tabindex');
+        el.querySelector('.c').style.height = '100%';
+        const fills = el.querySelector('.c').clientHeight > 100;
+        el.querySelector('.c').style.height = '3000px';
+        await wait();
+        out[name] = [fills, short, scroll.getAttribute('tabindex'), scroll.getAttribute('aria-label'), scroll.scrollHeight > scroll.clientHeight,
+          scroll.getBoundingClientRect().bottom <= (name === 'docked' ? 300 : innerHeight)];
+      }
+      sheet.close();
+      toast.ariaNotify = undefined;
+      toast.removeAttribute('open');
+      toast.show();
+      await wait();
+      out.live = toast.shadowRoot.querySelector('ui-live').shadowRoot.querySelector('[aria-live]').textContent;
+      box.remove();
+      return out;
+    })()`);
+    assert.deepEqual(organismCheck, { docked: [true, null, '0', 'Docked', true, true], sheet: [true, null, '0', 'Sheet', true, true], live: 'Saved: Tour stored' });
 
     // Text atoms in molecules (REQ-0008)
     const textCheck = await cdp.eval(`(async () => {

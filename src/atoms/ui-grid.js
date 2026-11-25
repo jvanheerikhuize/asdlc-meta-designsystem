@@ -46,6 +46,10 @@ TEMPLATE.innerHTML = `
     :host([min="lg"]) .grid {
       grid-template-columns: repeat(auto-fill, minmax(min(var(--panel-menu-max), 100%), 1fr));
     }
+
+    :host([min="card"]) .grid {
+      grid-template-columns: repeat(auto-fill, minmax(min(var(--layout-card-min), 100%), 1fr));
+    }
   </style>
   <div class="grid" part="grid"><slot></slot></div>
 `;

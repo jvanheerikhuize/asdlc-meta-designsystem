@@ -1,5 +1,6 @@
 import '../atoms/ui-surface.js';
 import '../atoms/ui-divider.js';
+import '../atoms/ui-cluster.js';
 import '../molecules/ui-panel-header.js';
 
 const TEMPLATE = document.createElement('template');
@@ -39,10 +40,7 @@ TEMPLATE.innerHTML = `
       color: var(--color-fg-secondary);
     }
 
-    .foot {
-      display: flex;
-      justify-content: flex-end;
-      gap: var(--space-2);
+    .foot::part(cluster) {
       padding: var(--space-3) var(--space-5);
     }
   </style>
@@ -54,16 +52,16 @@ TEMPLATE.innerHTML = `
         <slot></slot>
       </div>
       <ui-divider></ui-divider>
-      <div class="foot" part="footer">
+      <ui-cluster class="foot" exportparts="cluster: footer" justify="end">
         <slot name="footer"></slot>
-      </div>
+      </ui-cluster>
     </ui-surface>
   </dialog>
 `;
 
 /**
  * Accessible modal dialog Organism composing <ui-surface>, <ui-panel-header>,
- * and <ui-divider> inside native <dialog>.showModal().
+ * <ui-divider>, and <ui-cluster> inside native <dialog>.showModal().
  */
 export class UiModal extends HTMLElement {
   static observedAttributes = ['title', 'open'];

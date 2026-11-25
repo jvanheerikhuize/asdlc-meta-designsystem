@@ -1,4 +1,5 @@
 import '../atoms/ui-surface.js';
+import '../atoms/ui-cluster.js';
 import '../molecules/ui-theme-toggle.js';
 
 const TEMPLATE = document.createElement('template');
@@ -24,14 +25,6 @@ TEMPLATE.innerHTML = `
       padding: var(--space-3) var(--space-6);
     }
 
-    .left,
-    .right {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      flex-wrap: wrap;
-    }
-
     .search-slot {
       flex: 1 1 var(--layout-search-min);
       max-width: var(--layout-search-max);
@@ -39,26 +32,26 @@ TEMPLATE.innerHTML = `
   </style>
   <ui-surface variant="glass" radius="none" padding="none">
     <header part="header">
-      <div class="left">
+      <ui-cluster gap="md">
         <slot name="brand"></slot>
         <nav aria-label="Primary">
           <slot name="nav"></slot>
         </nav>
-      </div>
+      </ui-cluster>
       <div class="search-slot">
         <slot name="search"></slot>
       </div>
-      <div class="right">
+      <ui-cluster gap="md">
         <slot name="actions"></slot>
         <ui-theme-toggle id="theme-btn" exportparts="theme-button"></ui-theme-toggle>
-      </div>
+      </ui-cluster>
     </header>
   </ui-surface>
 `;
 
 /**
- * Sticky frosted-glass site header Organism composing <ui-surface variant="glass">
- * and <ui-theme-toggle>, whose ui-theme-change event passes through.
+ * Sticky frosted-glass site header Organism composing <ui-surface variant="glass">,
+ * <ui-cluster>, and <ui-theme-toggle>, whose ui-theme-change event passes through.
  */
 export class UiNavbar extends HTMLElement {
   static observedAttributes = ['theme'];
