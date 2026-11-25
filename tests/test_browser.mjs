@@ -160,6 +160,9 @@ async function main() {
     // 2. Verify Primary Showcase (/) and link to ./specs/ (REQ-0007)
     await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/` });
     await until(cdp, `location.pathname === '/' && document.readyState === 'complete' && ['ui-table', 'workspace-layout'].every((t) => document.querySelector(t)?.shadowRoot)`);
+    // The token fonts are actually loaded, not only named (REQ-0002)
+    await until(cdp, `['Geist', 'Geist Mono', 'Bricolage Grotesque'].every((family) =>
+      [...document.fonts].some((f) => f.status === 'loaded' && f.family.replace(/"/g, '') === family))`);
     const showcase = await cdp.eval(`(() => {
       const tags = [
         'ui-button', 'ui-input', 'ui-label', 'ui-badge', 'ui-icon', 'ui-skeleton',

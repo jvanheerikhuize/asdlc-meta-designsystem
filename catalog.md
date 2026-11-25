@@ -20,7 +20,7 @@ Declare `Design-System: asdlc-meta-designsystem@latest` (auto-updating default) 
 ```
 
 - `ensureTokens(doc = document)` (exported from `src/index.js`) idempotently injects `<link rel="stylesheet" href=".../tokens.css">` if not already present.
-- `tokens.css` defines custom properties only; it does not reset `body` styles or bundle `@font-face` files.
+- `tokens.css` defines custom properties only; it does not reset `body` styles or bundle `@font-face` files. Load the fonts in the page itself: `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap">`.
 - **MkDocs Material Adapter (`src/tokens/mkdocs-theme.css`):** For MkDocs Material documentation/wiki sites, include both `.../src/tokens/tokens.css` and `.../src/tokens/mkdocs-theme.css` in `extra_css` (and set `palette` default to `slate`) to bridge `--md-*` theme variables to ASDLC `--color-*` and `--font-*` tokens.
 - Theme switching: dark mode is the default on `:root`; set `data-theme="light"` on `<html>` (or an ancestor) for light mode.
 - **Shadow DOM Notes:** `<ui-button>` aligns slotted `<ui-icon>` and text with `inline-flex` + `gap` and `<ui-icon>` inherits `currentColor`. `<ui-input>` exposes a live `.value` JS property in addition to `ui-input`/`ui-change` events. In `SPC-0001`, Atoms do not implement `ElementInternals` form association (`formAssociated`) or cross-shadow `<label for>` bridging, so always pair `<ui-input>` with `aria-label` and handle `ui-press` in JS. `<ui-skeleton lines>` applies only when `variant="text"`.
