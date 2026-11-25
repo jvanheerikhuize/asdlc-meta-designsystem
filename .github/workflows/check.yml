@@ -24,3 +24,22 @@ jobs:
           curl -fsSL "https://jvanheerikhuize.github.io/asdlc-meta-specs/${VER}/tools/spec.py" -o /tmp/spec.py
           python3 /tmp/spec.py --root . check --strict --verify tests
           python3 -m unittest discover -s tests -v
+
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: pip install -r requirements.txt
+      - name: Assemble the site and run the headless Chrome tests
+        run: |
+          VER=$(grep -i '^Spec-Blueprint:' TECH_STACK.md | sed -E 's/.*asdlc-meta-specs@([A-Za-z0-9._-]+).*/\1/' || true)
+          BASE_URL="https://jvanheerikhuize.github.io/asdlc-meta-specs/${VER:-latest}"
+          curl -fsSL "${BASE_URL}/tools/spec.py" -o /tmp/spec.py
+          bash scripts/build-site.sh /tmp/spec.py "$BASE_URL"
+          node tests/test_browser.mjs
