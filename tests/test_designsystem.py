@@ -97,6 +97,8 @@ class DesignSystemTest(unittest.TestCase):
     def test_six_tier_boundaries(self):  # REQ-0001
         package = {p.name for p in (ROOT / "src").iterdir()}
         self.assertEqual(package, {"index.js", "tokens", "atoms", "molecules", "organisms", "templates"})
+        catalog = json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))
+        text_atoms = {c["tag"] for c in catalog["components"] if c.get("textOnly")}
         for tier, path, src in _component_sources():
             imports = set(re.findall(r"^import .*?['\"]\.\./[a-z]+/([a-z-]+)\.js['\"]", src, re.M))
             composed = _composed_tags(src)
@@ -110,9 +112,11 @@ class DesignSystemTest(unittest.TestCase):
                     self.assertFalse(imports)
                 if tier == "molecules":
                     atoms = {t for t in composed if (ROOT / "src/atoms" / f"{t}.js").is_file()}
-                    if path.stem not in ("ui-callout", "ui-code-block", "ui-media-card"):  # QST-0004
-                        self.assertNotRegex(src, r"<(?:h[1-6]|p|strong|small|code|a|input|button|select|textarea|img)[ >]", "an atom covers this element")
-                    self.assertTrue(1 <= len(atoms) <= 3, f"one to three kinds of atom, got {sorted(atoms)}")
+                    # REQ-0008
+                    self.assertNotRegex(src, r"<(?:h[1-6]|p|strong|small|code|a|input|button|select|textarea|img)[ >]", "an atom covers this element")
+                    self.assertTrue(atoms, "a molecule must compose atoms")
+                    counted = atoms - text_atoms
+                    self.assertLessEqual(len(counted), 3, f"at most three kinds besides text atoms, got {sorted(counted)}")
                 if tier == "organisms":
                     molecules = {t for t in composed if (ROOT / "src/molecules" / f"{t}.js").is_file()}
                     self.assertTrue(molecules, "an organism must compose at least one molecule")

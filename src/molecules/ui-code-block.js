@@ -1,6 +1,8 @@
 import '../atoms/ui-surface.js';
 import '../atoms/ui-button.js';
 import '../atoms/ui-icon.js';
+import '../atoms/ui-code.js';
+import '../atoms/ui-text.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -19,38 +21,30 @@ TEMPLATE.innerHTML = `
       justify-content: space-between;
       gap: var(--space-2);
       padding: var(--space-2) var(--space-3);
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      color: var(--color-fg-muted);
       border-block-end: var(--border-width) solid var(--color-border);
     }
 
     pre {
       margin: 0;
       padding: var(--space-3);
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      line-height: var(--leading-normal);
-      color: var(--color-fg-secondary);
       overflow-x: auto;
-      white-space: pre-wrap;
     }
   </style>
   <ui-surface part="container" variant="elevated" padding="none" radius="md">
     <div class="head" part="header">
-      <span class="lang" part="language"></span>
+      <ui-text class="lang" exportparts="text: language" variant="mono" tone="muted"></ui-text>
       <ui-button id="copy-btn" part="copy-button" variant="ghost" size="sm" aria-label="Copy code">
         <ui-icon id="copy-icon" name="code" size="sm"></ui-icon>
         <span id="copy-label">Copy</span>
       </ui-button>
     </div>
-    <pre part="pre"><code><slot></slot></code></pre>
+    <pre part="pre"><ui-code variant="block"><slot></slot></ui-code></pre>
   </ui-surface>
 `;
 
 /**
  * Monospace code/record preview Molecule composing <ui-surface>,
- * <ui-button> and <ui-icon> for copy-to-clipboard.
+ * <ui-text>, <ui-code>, <ui-button> and <ui-icon> for copy-to-clipboard.
  */
 export class UiCodeBlock extends HTMLElement {
   static observedAttributes = ['language'];

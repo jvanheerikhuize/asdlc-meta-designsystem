@@ -1,6 +1,8 @@
 import '../atoms/ui-surface.js';
 import '../atoms/ui-badge.js';
 import '../atoms/ui-icon.js';
+import '../atoms/ui-heading.js';
+import '../atoms/ui-text.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -27,32 +29,8 @@ TEMPLATE.innerHTML = `
       gap: var(--space-2);
     }
 
-    .title {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      font-weight: var(--weight-bold);
-      line-height: var(--leading-tight);
-      color: var(--color-fg);
-    }
-
     .subtitle {
-      margin: 0;
-      font-family: var(--font-sans);
-      font-size: var(--text-sm);
-      line-height: var(--leading-normal);
-      color: var(--color-fg-secondary);
       flex: 1;
-    }
-
-    .foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-2);
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      color: var(--color-fg-muted);
     }
   </style>
   <ui-surface part="card" variant="card" padding="lg" radius="lg" interactive>
@@ -61,16 +39,17 @@ TEMPLATE.innerHTML = `
         <ui-badge part="badge"></ui-badge>
         <ui-icon name="arrow-right" size="sm"></ui-icon>
       </div>
-      <h3 class="title" part="title"></h3>
-      <p class="subtitle" part="subtitle"></p>
+      <ui-heading class="title" exportparts="heading: title" level="3" size="h4"></ui-heading>
+      <ui-text class="subtitle" exportparts="text: subtitle" variant="small" tone="secondary"></ui-text>
       <slot></slot>
-      <div class="foot" part="meta"></div>
+      <ui-text class="foot" exportparts="text: meta" variant="mono" tone="muted"></ui-text>
     </div>
   </ui-surface>
 `;
 
 /**
- * Interactive catalog/media card Molecule composing <ui-surface>, <ui-badge>, and <ui-icon>.
+ * Interactive catalog/media card Molecule composing <ui-surface>, <ui-badge>, <ui-icon>,
+ * <ui-heading> and <ui-text>.
  * Emits `ui-select` with `{ id, title }` on activation.
  */
 export class UiMediaCard extends HTMLElement {

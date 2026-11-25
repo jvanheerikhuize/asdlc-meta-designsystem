@@ -593,11 +593,13 @@
   --type-body: var(--weight-regular) var(--text-md)/var(--leading-normal) var(--font-sans);
   --type-body-strong: var(--weight-semibold) var(--text-md)/var(--leading-normal) var(--font-sans);
   --type-small: var(--weight-regular) var(--text-sm)/var(--leading-normal) var(--font-sans);
+  --type-small-strong: var(--weight-bold) var(--text-sm)/var(--leading-tight) var(--font-sans);
   --type-label: var(--weight-medium) var(--text-sm)/var(--leading-control) var(--font-sans);
   --type-button: var(--weight-semibold) var(--text-sm)/var(--leading-none) var(--font-sans);
   --type-caption: var(--weight-regular) var(--text-xs)/var(--leading-normal) var(--font-sans);
   --type-overline: var(--weight-semibold) var(--text-xs)/var(--leading-normal) var(--font-mono);
   --type-code: var(--weight-regular) var(--text-sm)/var(--leading-normal) var(--font-mono);
+  --type-code-small: var(--weight-regular) var(--text-xs)/var(--leading-normal) var(--font-mono);
   --type-stat: var(--weight-bold) var(--text-2xl)/var(--leading-snug) var(--font-display);
   --type-quote: var(--weight-regular) var(--text-lg)/var(--leading-relaxed) var(--font-serif);
 

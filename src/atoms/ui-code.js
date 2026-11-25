@@ -19,6 +19,22 @@ TEMPLATE.innerHTML = `
       overflow-wrap: anywhere;
     }
 
+    :host([variant="block"]:not([hidden])) {
+      display: block;
+      white-space: normal;
+    }
+
+    :host([variant="block"]) code {
+      display: block;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: var(--type-code-small);
+      color: var(--color-fg-secondary);
+      white-space: pre-wrap;
+      overflow-wrap: normal;
+    }
+
     :host([tone="accent"]) code {
       color: var(--color-code-keyword);
     }
@@ -27,7 +43,7 @@ TEMPLATE.innerHTML = `
 `;
 
 /**
- * Inline code Atom.
+ * Code Atom, inline or as a block.
  */
 export class UiCode extends HTMLElement {
   constructor() {

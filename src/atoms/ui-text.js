@@ -31,6 +31,14 @@ TEMPLATE.innerHTML = `
       font: var(--type-small);
     }
 
+    :host([variant="small-strong"]) .text {
+      font: var(--type-small-strong);
+    }
+
+    :host([variant="mono"]) .text {
+      font: var(--type-code-small);
+    }
+
     :host([variant="label"]) .text {
       font: var(--type-label);
     }
