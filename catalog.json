@@ -24,6 +24,56 @@
     "UiTooltip",
     "UiSurface",
     "UiDivider",
+    "UiAbbr",
+    "UiArrow",
+    "UiAudio",
+    "UiAvatar",
+    "UiCenter",
+    "UiCluster",
+    "UiCode",
+    "UiColorInput",
+    "UiCounter",
+    "UiDisclosure",
+    "UiEmbed",
+    "UiFieldset",
+    "UiFileInput",
+    "UiGlow",
+    "UiGrid",
+    "UiHandle",
+    "UiHeading",
+    "UiHint",
+    "UiImage",
+    "UiKbd",
+    "UiLink",
+    "UiList",
+    "UiLive",
+    "UiMark",
+    "UiMarker",
+    "UiMenuItem",
+    "UiMeter",
+    "UiNavLink",
+    "UiNumber",
+    "UiNumberInput",
+    "UiOutput",
+    "UiQuote",
+    "UiRadio",
+    "UiRating",
+    "UiRatio",
+    "UiRing",
+    "UiScrim",
+    "UiScroll",
+    "UiSkipLink",
+    "UiSpacer",
+    "UiSparkline",
+    "UiSpinner",
+    "UiStack",
+    "UiStepMarker",
+    "UiSwatch",
+    "UiText",
+    "UiTime",
+    "UiTrend",
+    "UiVideo",
+    "UiVisuallyHidden",
     "UiField",
     "UiSearchBar",
     "UiMediaCard",
@@ -33,6 +83,8 @@
     "UiToolbar",
     "UiTabs",
     "UiPanelHeader",
+    "UiEmptyState",
+    "UiThemeToggle",
     "UiNavbar",
     "UiModal",
     "UiCatalogGrid",
@@ -121,23 +173,73 @@
       "path": "src/atoms/",
       "shared": true,
       "members": [
+        "ui-abbr",
+        "ui-arrow",
+        "ui-audio",
+        "ui-avatar",
         "ui-badge",
         "ui-button",
+        "ui-center",
         "ui-checkbox",
         "ui-chip",
+        "ui-cluster",
+        "ui-code",
+        "ui-color-input",
+        "ui-counter",
+        "ui-disclosure",
         "ui-divider",
         "ui-dot",
+        "ui-embed",
+        "ui-fieldset",
+        "ui-file-input",
+        "ui-glow",
+        "ui-grid",
+        "ui-handle",
+        "ui-heading",
+        "ui-hint",
         "ui-icon",
+        "ui-image",
         "ui-input",
+        "ui-kbd",
         "ui-label",
+        "ui-link",
+        "ui-list",
+        "ui-live",
+        "ui-mark",
+        "ui-marker",
+        "ui-menu-item",
+        "ui-meter",
+        "ui-nav-link",
+        "ui-number",
+        "ui-number-input",
+        "ui-output",
         "ui-progress",
+        "ui-quote",
+        "ui-radio",
+        "ui-rating",
+        "ui-ratio",
+        "ui-ring",
+        "ui-scrim",
+        "ui-scroll",
         "ui-select",
         "ui-skeleton",
+        "ui-skip-link",
         "ui-slider",
+        "ui-spacer",
+        "ui-sparkline",
+        "ui-spinner",
+        "ui-stack",
+        "ui-step-marker",
         "ui-surface",
+        "ui-swatch",
         "ui-switch",
+        "ui-text",
         "ui-textarea",
-        "ui-tooltip"
+        "ui-time",
+        "ui-tooltip",
+        "ui-trend",
+        "ui-video",
+        "ui-visually-hidden"
       ]
     },
     {
@@ -3785,6 +3887,152 @@
   },
   "components": [
     {
+      "tag": "ui-abbr",
+      "tier": "atoms",
+      "module": "src/atoms/ui-abbr.js",
+      "className": "UiAbbr",
+      "description": "Abbreviation Atom that names its full form.",
+      "composes": [],
+      "attributes": {
+        "full": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "abbr"
+      ],
+      "accessibility": "Native <abbr>; also write the full form in the text once.",
+      "example": "<ui-abbr full=\"Points of interest\">POIs</ui-abbr>"
+    },
+    {
+      "tag": "ui-arrow",
+      "tier": "atoms",
+      "module": "src/atoms/ui-arrow.js",
+      "className": "UiArrow",
+      "description": "Pointer triangle Atom for bubbles and panels.",
+      "composes": [],
+      "attributes": {
+        "direction": {
+          "type": "enum",
+          "values": [
+            "up",
+            "down",
+            "left",
+            "right"
+          ],
+          "default": "up"
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "surface",
+            "inverse",
+            "accent"
+          ],
+          "default": "surface"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "arrow"
+      ],
+      "accessibility": "Decorative.",
+      "example": "<ui-arrow direction=\"down\" tone=\"inverse\"></ui-arrow>"
+    },
+    {
+      "tag": "ui-audio",
+      "tier": "atoms",
+      "module": "src/atoms/ui-audio.js",
+      "className": "UiAudio",
+      "description": "Audio Atom with native controls and captions.",
+      "composes": [],
+      "attributes": {
+        "src": {
+          "type": "string",
+          "default": null
+        },
+        "captions": {
+          "type": "string",
+          "default": null
+        },
+        "captions-lang": {
+          "type": "string",
+          "default": null
+        },
+        "loop": {
+          "type": "boolean",
+          "default": false
+        },
+        "muted": {
+          "type": "boolean",
+          "default": false
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "audio"
+      ],
+      "accessibility": "Native <audio> with its own controls; never plays by itself.",
+      "example": "<ui-audio aria-label=\"Field recording\"></ui-audio>"
+    },
+    {
+      "tag": "ui-avatar",
+      "tier": "atoms",
+      "module": "src/atoms/ui-avatar.js",
+      "className": "UiAvatar",
+      "description": "Avatar Atom: a picture, or initials when there is none.",
+      "composes": [],
+      "attributes": {
+        "src": {
+          "type": "string",
+          "default": null
+        },
+        "name": {
+          "type": "string",
+          "default": null
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md"
+        },
+        "shape": {
+          "type": "enum",
+          "values": [
+            "round",
+            "square"
+          ],
+          "default": "round"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "avatar",
+        "image",
+        "initials"
+      ],
+      "accessibility": "role=\"img\" named after the person or thing.",
+      "example": "<ui-avatar name=\"Ada Lovelace\"></ui-avatar>"
+    },
+    {
       "tag": "ui-badge",
       "tier": "atoms",
       "module": "src/atoms/ui-badge.js",
@@ -3920,6 +4168,35 @@
       "example": "<ui-button variant=\"primary\" size=\"md\">Save Changes</ui-button>"
     },
     {
+      "tag": "ui-center",
+      "tier": "atoms",
+      "module": "src/atoms/ui-center.js",
+      "className": "UiCenter",
+      "description": "Centering layout Atom with a readable or page width.",
+      "composes": [],
+      "attributes": {
+        "width": {
+          "type": "enum",
+          "values": [
+            "prose",
+            "form",
+            "content",
+            "full"
+          ],
+          "default": "prose"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "center"
+      ],
+      "accessibility": "No semantics.",
+      "example": "<ui-center width=\"form\"><div>Form</div></ui-center>"
+    },
+    {
       "tag": "ui-checkbox",
       "tier": "atoms",
       "module": "src/atoms/ui-checkbox.js",
@@ -4018,6 +4295,217 @@
       "example": "<ui-chip pressed>active</ui-chip>"
     },
     {
+      "tag": "ui-cluster",
+      "tier": "atoms",
+      "module": "src/atoms/ui-cluster.js",
+      "className": "UiCluster",
+      "description": "Horizontal layout Atom that wraps.",
+      "composes": [],
+      "attributes": {
+        "gap": {
+          "type": "enum",
+          "values": [
+            "none",
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "sm"
+        },
+        "justify": {
+          "type": "enum",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "between"
+          ],
+          "default": "start"
+        },
+        "align": {
+          "type": "enum",
+          "values": [
+            "center",
+            "start",
+            "end",
+            "baseline"
+          ],
+          "default": "center"
+        },
+        "nowrap": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "cluster"
+      ],
+      "accessibility": "No semantics.",
+      "example": "<ui-cluster justify=\"between\"><div>A</div><div>B</div></ui-cluster>"
+    },
+    {
+      "tag": "ui-code",
+      "tier": "atoms",
+      "module": "src/atoms/ui-code.js",
+      "className": "UiCode",
+      "description": "Inline code Atom.",
+      "composes": [],
+      "attributes": {
+        "tone": {
+          "type": "enum",
+          "values": [
+            "default",
+            "accent"
+          ],
+          "default": "default"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "code"
+      ],
+      "accessibility": "Native <code>.",
+      "example": "<ui-code>npm test</ui-code>"
+    },
+    {
+      "tag": "ui-color-input",
+      "tier": "atoms",
+      "module": "src/atoms/ui-color-input.js",
+      "className": "UiColorInput",
+      "description": "Color picker Atom.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": "#000000"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "default": null
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [
+        {
+          "name": "ui-input",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-change",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "input"
+      ],
+      "accessibility": "Native <input type=\"color\">; form-associated.",
+      "example": "<ui-color-input value=\"#f43f5e\" aria-label=\"Route color\"></ui-color-input>"
+    },
+    {
+      "tag": "ui-counter",
+      "tier": "atoms",
+      "module": "src/atoms/ui-counter.js",
+      "className": "UiCounter",
+      "description": "Count badge Atom.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": "0"
+        },
+        "max": {
+          "type": "number",
+          "default": 99
+        },
+        "label": {
+          "type": "string",
+          "default": null
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "neutral",
+            "danger"
+          ],
+          "default": "accent"
+        },
+        "show-zero": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "counter"
+      ],
+      "accessibility": "With a label it reads as \"5 unread\".",
+      "example": "<ui-counter value=\"120\" label=\"unread\"></ui-counter>"
+    },
+    {
+      "tag": "ui-disclosure",
+      "tier": "atoms",
+      "module": "src/atoms/ui-disclosure.js",
+      "className": "UiDisclosure",
+      "description": "Disclosure Atom: a native details element.",
+      "composes": [],
+      "attributes": {
+        "summary": {
+          "type": "string",
+          "default": null
+        },
+        "open": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-toggle",
+          "detail": {
+            "open": "boolean"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "details",
+        "summary",
+        "body"
+      ],
+      "accessibility": "Native <details> and <summary>.",
+      "example": "<ui-disclosure summary=\"Surfaces\">Asphalt, gravel</ui-disclosure>"
+    },
+    {
       "tag": "ui-divider",
       "tier": "atoms",
       "module": "src/atoms/ui-divider.js",
@@ -4073,6 +4561,342 @@
       ],
       "accessibility": "Decorative (aria-hidden='true') by default; sets role='img' and aria-label when label is provided.",
       "example": "<ui-dot status=\"done\" label=\"Verified\"></ui-dot>"
+    },
+    {
+      "tag": "ui-embed",
+      "tier": "atoms",
+      "module": "src/atoms/ui-embed.js",
+      "className": "UiEmbed",
+      "description": "Embedded page Atom, sandboxed by default.",
+      "composes": [],
+      "attributes": {
+        "src": {
+          "type": "string",
+          "default": null
+        },
+        "label": {
+          "type": "string",
+          "default": null
+        },
+        "sandbox": {
+          "type": "string",
+          "default": "allow-scripts"
+        },
+        "ratio": {
+          "type": "enum",
+          "values": [
+            "square",
+            "photo",
+            "classic",
+            "video",
+            "wide",
+            "poster",
+            "portrait"
+          ],
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "frame",
+        "embed"
+      ],
+      "accessibility": "Native <iframe> with a title; only http and https.",
+      "example": "<ui-embed src=\"https://example.com\" label=\"Example\"></ui-embed>"
+    },
+    {
+      "tag": "ui-fieldset",
+      "tier": "atoms",
+      "module": "src/atoms/ui-fieldset.js",
+      "className": "UiFieldset",
+      "description": "Group Atom: a native fieldset with a legend.",
+      "composes": [],
+      "attributes": {
+        "legend": {
+          "type": "string",
+          "default": null
+        },
+        "kind": {
+          "type": "enum",
+          "values": [
+            "group",
+            "radio"
+          ],
+          "default": "group"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "fieldset",
+        "legend"
+      ],
+      "accessibility": "Native <fieldset> and <legend>; kind=\"radio\" makes it a radiogroup.",
+      "example": "<ui-fieldset legend=\"Sport\" kind=\"radio\"><ui-radio name=\"s\">Hiking</ui-radio></ui-fieldset>"
+    },
+    {
+      "tag": "ui-file-input",
+      "tier": "atoms",
+      "module": "src/atoms/ui-file-input.js",
+      "className": "UiFileInput",
+      "description": "File picker Atom.",
+      "composes": [],
+      "attributes": {
+        "accept": {
+          "type": "string",
+          "default": null
+        },
+        "multiple": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "default": null
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [
+        {
+          "name": "ui-change",
+          "detail": {
+            "files": "File[]"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "input"
+      ],
+      "accessibility": "Native <input type=\"file\">; form-associated.",
+      "example": "<ui-file-input accept=\".gpx\" aria-label=\"Import GPX\"></ui-file-input>"
+    },
+    {
+      "tag": "ui-glow",
+      "tier": "atoms",
+      "module": "src/atoms/ui-glow.js",
+      "className": "UiGlow",
+      "description": "Decorative glow Atom.",
+      "composes": [],
+      "attributes": {
+        "tone": {
+          "type": "enum",
+          "values": [
+            "rose",
+            "amber",
+            "sky",
+            "emerald",
+            "violet"
+          ],
+          "default": "rose"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "glow"
+      ],
+      "accessibility": "Decorative; the parent must be positioned.",
+      "example": "<ui-glow tone=\"sky\"></ui-glow>"
+    },
+    {
+      "tag": "ui-grid",
+      "tier": "atoms",
+      "module": "src/atoms/ui-grid.js",
+      "className": "UiGrid",
+      "description": "Grid layout Atom with as many columns as fit.",
+      "composes": [],
+      "attributes": {
+        "min": {
+          "type": "enum",
+          "values": [
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "sm"
+        },
+        "gap": {
+          "type": "enum",
+          "values": [
+            "none",
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "grid"
+      ],
+      "accessibility": "No semantics.",
+      "example": "<ui-grid min=\"xs\"><div>A</div><div>B</div></ui-grid>"
+    },
+    {
+      "tag": "ui-handle",
+      "tier": "atoms",
+      "module": "src/atoms/ui-handle.js",
+      "className": "UiHandle",
+      "description": "Drag handle Atom for resizing or sorting. It reports movement; the owner applies it.",
+      "composes": [],
+      "attributes": {
+        "orientation": {
+          "type": "enum",
+          "values": [
+            "vertical",
+            "horizontal"
+          ],
+          "default": "vertical"
+        },
+        "value": {
+          "type": "string",
+          "default": null
+        },
+        "min": {
+          "type": "number",
+          "default": null
+        },
+        "max": {
+          "type": "number",
+          "default": null
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "aria-label": {
+          "type": "string",
+          "default": "Resize"
+        }
+      },
+      "slots": [],
+      "events": [
+        {
+          "name": "ui-move",
+          "detail": {
+            "dx": "number",
+            "dy": "number",
+            "source": "pointer|keyboard"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "handle"
+      ],
+      "accessibility": "Focusable role=\"separator\" with arrow keys; set value, min and max.",
+      "example": "<ui-handle value=\"50\" min=\"0\" max=\"100\" aria-label=\"Resize panel\"></ui-handle>"
+    },
+    {
+      "tag": "ui-heading",
+      "tier": "atoms",
+      "module": "src/atoms/ui-heading.js",
+      "className": "UiHeading",
+      "description": "Heading Atom: a native heading whose level and visual size are independent.",
+      "composes": [],
+      "attributes": {
+        "level": {
+          "type": "enum",
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "default": "2"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "display",
+            "h1",
+            "h2",
+            "h3",
+            "h4"
+          ],
+          "default": null
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "default",
+            "secondary",
+            "muted",
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "danger",
+            "inverse"
+          ],
+          "default": "default"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "heading"
+      ],
+      "accessibility": "Native <h1> to <h6>; keep levels in document order and use size for looks.",
+      "example": "<ui-heading level=\"2\" size=\"h3\">Section</ui-heading>"
+    },
+    {
+      "tag": "ui-hint",
+      "tier": "atoms",
+      "module": "src/atoms/ui-hint.js",
+      "className": "UiHint",
+      "description": "Help or validation text Atom for a control.",
+      "composes": [],
+      "attributes": {
+        "tone": {
+          "type": "enum",
+          "values": [
+            "neutral",
+            "error",
+            "success",
+            "warning"
+          ],
+          "default": "neutral"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "hint"
+      ],
+      "accessibility": "Plain text; give the control the same text as its description.",
+      "example": "<ui-hint tone=\"error\">Enter a name.</ui-hint>"
     },
     {
       "tag": "ui-icon",
@@ -4142,6 +4966,72 @@
       ],
       "accessibility": "Decorative by default (aria-hidden='true'). When label is provided, exposes role='img' and aria-label.",
       "example": "<ui-icon name=\"sparkles\" size=\"md\" label=\"Featured\"></ui-icon>"
+    },
+    {
+      "tag": "ui-image",
+      "tier": "atoms",
+      "module": "src/atoms/ui-image.js",
+      "className": "UiImage",
+      "description": "Image Atom with an aspect ratio and a text fallback.",
+      "composes": [],
+      "attributes": {
+        "src": {
+          "type": "string",
+          "default": null
+        },
+        "alt": {
+          "type": "string",
+          "default": null
+        },
+        "ratio": {
+          "type": "enum",
+          "values": [
+            "square",
+            "photo",
+            "classic",
+            "video",
+            "wide",
+            "poster",
+            "portrait"
+          ],
+          "default": null
+        },
+        "fit": {
+          "type": "enum",
+          "values": [
+            "cover",
+            "contain"
+          ],
+          "default": "cover"
+        },
+        "radius": {
+          "type": "enum",
+          "values": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "loading": {
+          "type": "enum",
+          "values": [
+            "lazy",
+            "eager"
+          ],
+          "default": "lazy"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "frame",
+        "image",
+        "fallback"
+      ],
+      "accessibility": "Native <img>; alt is required, and shown when the image cannot load.",
+      "example": "<ui-image src=\"map.png\" alt=\"Route map\" ratio=\"video\"></ui-image>"
     },
     {
       "tag": "ui-input",
@@ -4218,6 +5108,33 @@
       "example": "<ui-input type=\"email\" placeholder=\"name@example.com\" required></ui-input>"
     },
     {
+      "tag": "ui-kbd",
+      "tier": "atoms",
+      "module": "src/atoms/ui-kbd.js",
+      "className": "UiKbd",
+      "description": "Keyboard key Atom.",
+      "composes": [],
+      "attributes": {
+        "size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md"
+          ],
+          "default": "md"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "key"
+      ],
+      "accessibility": "Native <kbd>.",
+      "example": "<ui-kbd>Ctrl</ui-kbd>"
+    },
+    {
       "tag": "ui-label",
       "tier": "atoms",
       "module": "src/atoms/ui-label.js",
@@ -4251,6 +5168,454 @@
       ],
       "accessibility": "Renders a native <label> inside Shadow DOM; marks the visual asterisk aria-hidden='true'.",
       "example": "<ui-label for=\"email\" required>Email Address</ui-label>"
+    },
+    {
+      "tag": "ui-link",
+      "tier": "atoms",
+      "module": "src/atoms/ui-link.js",
+      "className": "UiLink",
+      "description": "Link Atom: a native anchor. External links get a safe rel.",
+      "composes": [],
+      "attributes": {
+        "href": {
+          "type": "string",
+          "default": null
+        },
+        "target": {
+          "type": "string",
+          "default": null
+        },
+        "rel": {
+          "type": "string",
+          "default": null
+        },
+        "download": {
+          "type": "string",
+          "default": null
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "inline",
+            "quiet",
+            "standalone"
+          ],
+          "default": "inline"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "link"
+      ],
+      "accessibility": "Native <a>; a destination that would run code is dropped.",
+      "example": "<ui-link href=\"./specs/\">Specifications</ui-link>"
+    },
+    {
+      "tag": "ui-list",
+      "tier": "atoms",
+      "module": "src/atoms/ui-list.js",
+      "className": "UiList",
+      "description": "List Atom around native list items.",
+      "composes": [],
+      "attributes": {
+        "type": {
+          "type": "enum",
+          "values": [
+            "bullet",
+            "number",
+            "none"
+          ],
+          "default": "bullet"
+        },
+        "gap": {
+          "type": "enum",
+          "values": [
+            "xs",
+            "sm",
+            "md"
+          ],
+          "default": "sm"
+        }
+      },
+      "slots": [
+        "default (native <li>)"
+      ],
+      "events": [],
+      "parts": [
+        "list"
+      ],
+      "accessibility": "Native list with role=\"list\", so unstyled lists stay lists.",
+      "example": "<ui-list><li>Plan</li><li>Ride</li></ui-list>"
+    },
+    {
+      "tag": "ui-live",
+      "tier": "atoms",
+      "module": "src/atoms/ui-live.js",
+      "className": "UiLive",
+      "description": "Announcement Atom: an invisible live region.",
+      "composes": [],
+      "attributes": {
+        "assertive": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "live"
+      ],
+      "accessibility": "aria-live region; call announce(message).",
+      "example": "<ui-live></ui-live>"
+    },
+    {
+      "tag": "ui-mark",
+      "tier": "atoms",
+      "module": "src/atoms/ui-mark.js",
+      "className": "UiMark",
+      "description": "Highlighted text Atom, such as a search match.",
+      "composes": [],
+      "attributes": {
+        "active": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "mark"
+      ],
+      "accessibility": "Native <mark>.",
+      "example": "<ui-mark>match</ui-mark>"
+    },
+    {
+      "tag": "ui-marker",
+      "tier": "atoms",
+      "module": "src/atoms/ui-marker.js",
+      "className": "UiMarker",
+      "description": "Map marker Atom.",
+      "composes": [],
+      "attributes": {
+        "label": {
+          "type": "string",
+          "default": null
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "danger",
+            "neutral"
+          ],
+          "default": "accent"
+        },
+        "selected": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "marker"
+      ],
+      "accessibility": "role=\"img\" with a label.",
+      "example": "<ui-marker label=\"Start\" variant=\"success\">S</ui-marker>"
+    },
+    {
+      "tag": "ui-menu-item",
+      "tier": "atoms",
+      "module": "src/atoms/ui-menu-item.js",
+      "className": "UiMenuItem",
+      "description": "Menu item Atom.",
+      "composes": [],
+      "attributes": {
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "default",
+            "danger"
+          ],
+          "default": "default"
+        },
+        "checked": {
+          "type": "enum",
+          "values": [
+            "true",
+            "false"
+          ],
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-press",
+          "detail": null,
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "item"
+      ],
+      "accessibility": "role=\"menuitem\", or menuitemcheckbox when checked is \"true\" or \"false\". The owner supplies role=\"menu\".",
+      "example": "<ui-menu-item>Rename</ui-menu-item>"
+    },
+    {
+      "tag": "ui-meter",
+      "tier": "atoms",
+      "module": "src/atoms/ui-meter.js",
+      "className": "UiMeter",
+      "description": "Meter Atom for a measurement within a known range.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": "0"
+        },
+        "min": {
+          "type": "number",
+          "default": 0
+        },
+        "max": {
+          "type": "number",
+          "default": 100
+        },
+        "low": {
+          "type": "number",
+          "default": null
+        },
+        "high": {
+          "type": "number",
+          "default": null
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "auto"
+          ],
+          "default": "accent"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "track",
+        "fill"
+      ],
+      "accessibility": "role=\"meter\" with its value and range.",
+      "example": "<ui-meter value=\"72\" variant=\"auto\" aria-label=\"Battery\"></ui-meter>"
+    },
+    {
+      "tag": "ui-nav-link",
+      "tier": "atoms",
+      "module": "src/atoms/ui-nav-link.js",
+      "className": "UiNavLink",
+      "description": "Navigation link Atom with a current state.",
+      "composes": [],
+      "attributes": {
+        "href": {
+          "type": "string",
+          "default": null
+        },
+        "current": {
+          "type": "boolean",
+          "default": false
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "link"
+      ],
+      "accessibility": "Native <a> with aria-current=\"page\".",
+      "example": "<ui-nav-link href=\"#atoms\" current>Atoms</ui-nav-link>"
+    },
+    {
+      "tag": "ui-number",
+      "tier": "atoms",
+      "module": "src/atoms/ui-number.js",
+      "className": "UiNumber",
+      "description": "Formatted number Atom.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": null
+        },
+        "format": {
+          "type": "enum",
+          "values": [
+            "decimal",
+            "percent",
+            "currency",
+            "unit",
+            "compact"
+          ],
+          "default": "decimal"
+        },
+        "currency": {
+          "type": "string",
+          "default": null
+        },
+        "unit": {
+          "type": "string",
+          "default": null
+        },
+        "digits": {
+          "type": "number",
+          "default": null
+        },
+        "locale": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "number"
+      ],
+      "accessibility": "Native <data> with the raw value.",
+      "example": "<ui-number value=\"59.1\" format=\"unit\" unit=\"kilometer\" locale=\"en\"></ui-number>"
+    },
+    {
+      "tag": "ui-number-input",
+      "tier": "atoms",
+      "module": "src/atoms/ui-number-input.js",
+      "className": "UiNumberInput",
+      "description": "Number input Atom with minimum, maximum and step.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": null
+        },
+        "min": {
+          "type": "number",
+          "default": null
+        },
+        "max": {
+          "type": "number",
+          "default": null
+        },
+        "step": {
+          "type": "number",
+          "default": null
+        },
+        "placeholder": {
+          "type": "string",
+          "default": null
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "readonly": {
+          "type": "boolean",
+          "default": false
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "invalid": {
+          "type": "boolean",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "default": null
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [
+        {
+          "name": "ui-input",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-change",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "input"
+      ],
+      "accessibility": "Native <input type=\"number\">; form-associated.",
+      "example": "<ui-number-input min=\"1\" max=\"30\" value=\"3\" aria-label=\"Days\"></ui-number-input>"
+    },
+    {
+      "tag": "ui-output",
+      "tier": "atoms",
+      "module": "src/atoms/ui-output.js",
+      "className": "UiOutput",
+      "description": "Result Atom: a native output that announces changes.",
+      "composes": [],
+      "attributes": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "inline",
+            "stat"
+          ],
+          "default": "inline"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "output"
+      ],
+      "accessibility": "Native <output>, a polite live region.",
+      "example": "<ui-output>59.1 km</ui-output>"
     },
     {
       "tag": "ui-progress",
@@ -4297,6 +5662,284 @@
       ],
       "accessibility": "Exposes role='progressbar' with aria-valuenow, aria-valuemin, and aria-valuemax.",
       "example": "<ui-progress value=\"80\" aria-label=\"Readiness\"></ui-progress>"
+    },
+    {
+      "tag": "ui-quote",
+      "tier": "atoms",
+      "module": "src/atoms/ui-quote.js",
+      "className": "UiQuote",
+      "description": "Quotation Atom with an optional source.",
+      "composes": [],
+      "attributes": {
+        "cite": {
+          "type": "string",
+          "default": null
+        },
+        "source": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "quote",
+        "source"
+      ],
+      "accessibility": "Native <blockquote> and <cite>.",
+      "example": "<ui-quote source=\"Brad Frost\">Build systems, not pages.</ui-quote>"
+    },
+    {
+      "tag": "ui-radio",
+      "tier": "atoms",
+      "module": "src/atoms/ui-radio.js",
+      "className": "UiRadio",
+      "description": "Radio button Atom. Radios with the same name in one form or view form a group.",
+      "composes": [],
+      "attributes": {
+        "checked": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "default": null
+        },
+        "value": {
+          "type": "string",
+          "default": "on"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [
+        {
+          "name": "ui-change",
+          "detail": {
+            "checked": "boolean",
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "label",
+        "radio"
+      ],
+      "accessibility": "Native <input type=\"radio\">; one keyboard stop per group, arrow keys move and select. Wrap the group in a labelled radiogroup.",
+      "example": "<ui-radio name=\"sport\" value=\"hike\" checked>Hiking</ui-radio>"
+    },
+    {
+      "tag": "ui-rating",
+      "tier": "atoms",
+      "module": "src/atoms/ui-rating.js",
+      "className": "UiRating",
+      "description": "Star rating Atom.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": "0"
+        },
+        "max": {
+          "type": "number",
+          "default": 5
+        },
+        "readonly": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "default": null
+        },
+        "aria-label": {
+          "type": "string",
+          "default": "Rating"
+        }
+      },
+      "slots": [],
+      "events": [
+        {
+          "name": "ui-input",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        },
+        {
+          "name": "ui-change",
+          "detail": {
+            "value": "string"
+          },
+          "bubbles": true,
+          "composed": true
+        }
+      ],
+      "parts": [
+        "rating"
+      ],
+      "accessibility": "Native range input with \"3 of 5\" as its value text; an image with a label when read-only.",
+      "example": "<ui-rating value=\"3\" aria-label=\"Scenery\"></ui-rating>"
+    },
+    {
+      "tag": "ui-ratio",
+      "tier": "atoms",
+      "module": "src/atoms/ui-ratio.js",
+      "className": "UiRatio",
+      "description": "Aspect ratio Atom that keeps its content in proportion.",
+      "composes": [],
+      "attributes": {
+        "ratio": {
+          "type": "enum",
+          "values": [
+            "square",
+            "photo",
+            "classic",
+            "video",
+            "wide",
+            "poster",
+            "portrait"
+          ],
+          "default": "video"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "frame"
+      ],
+      "accessibility": "No semantics.",
+      "example": "<ui-ratio ratio=\"wide\"><div>21 by 9</div></ui-ratio>"
+    },
+    {
+      "tag": "ui-ring",
+      "tier": "atoms",
+      "module": "src/atoms/ui-ring.js",
+      "className": "UiRing",
+      "description": "Circular progress Atom; without a value it is indeterminate.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": null
+        },
+        "max": {
+          "type": "number",
+          "default": 100
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "accent"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": "Progress"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "ring"
+      ],
+      "accessibility": "role=\"progressbar\".",
+      "example": "<ui-ring value=\"65\" aria-label=\"Upload\"></ui-ring>"
+    },
+    {
+      "tag": "ui-scrim",
+      "tier": "atoms",
+      "module": "src/atoms/ui-scrim.js",
+      "className": "UiScrim",
+      "description": "Overlay Atom that dims what is behind it.",
+      "composes": [],
+      "attributes": {
+        "tone": {
+          "type": "enum",
+          "values": [
+            "default",
+            "soft",
+            "media"
+          ],
+          "default": "default"
+        },
+        "contained": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "scrim"
+      ],
+      "accessibility": "Decorative; the owner traps focus and handles dismissal.",
+      "example": "<ui-scrim contained tone=\"media\"></ui-scrim>"
+    },
+    {
+      "tag": "ui-scroll",
+      "tier": "atoms",
+      "module": "src/atoms/ui-scroll.js",
+      "className": "UiScroll",
+      "description": "Scroll area Atom that is a keyboard stop only while it overflows.",
+      "composes": [],
+      "attributes": {
+        "axis": {
+          "type": "enum",
+          "values": [
+            "y",
+            "x",
+            "both"
+          ],
+          "default": "y"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": "Scrollable"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "scroll"
+      ],
+      "accessibility": "Labelled region, focusable only while it overflows.",
+      "example": "<ui-scroll aria-label=\"Log\"><div>Long content</div></ui-scroll>"
     },
     {
       "tag": "ui-select",
@@ -4389,6 +6032,29 @@
       "example": "<ui-skeleton variant=\"text\" lines=\"3\"></ui-skeleton>"
     },
     {
+      "tag": "ui-skip-link",
+      "tier": "atoms",
+      "module": "src/atoms/ui-skip-link.js",
+      "className": "UiSkipLink",
+      "description": "Skip link Atom, visible only while focused.",
+      "composes": [],
+      "attributes": {
+        "target": {
+          "type": "string",
+          "default": "#main"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "link"
+      ],
+      "accessibility": "First focusable element of a page; moves focus to the target.",
+      "example": "<ui-skip-link target=\"#main\"></ui-skip-link>"
+    },
+    {
       "tag": "ui-slider",
       "tier": "atoms",
       "module": "src/atoms/ui-slider.js",
@@ -4464,6 +6130,181 @@
       ],
       "accessibility": "Uses delegatesFocus: true over native <input type='range'> with aria-label and aria-valuetext forwarding.",
       "example": "<ui-slider min=\"0\" max=\"100\" value=\"64\" aria-label=\"Volume\"></ui-slider>"
+    },
+    {
+      "tag": "ui-spacer",
+      "tier": "atoms",
+      "module": "src/atoms/ui-spacer.js",
+      "className": "UiSpacer",
+      "description": "Empty space Atom: a fixed step, or all remaining space.",
+      "composes": [],
+      "attributes": {
+        "size": {
+          "type": "enum",
+          "values": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md"
+        },
+        "grow": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "space"
+      ],
+      "accessibility": "Hidden from assistive technology.",
+      "example": "<ui-spacer size=\"lg\"></ui-spacer>"
+    },
+    {
+      "tag": "ui-sparkline",
+      "tier": "atoms",
+      "module": "src/atoms/ui-sparkline.js",
+      "className": "UiSparkline",
+      "description": "Sparkline Atom: a tiny line chart.",
+      "composes": [],
+      "attributes": {
+        "values": {
+          "type": "string",
+          "default": null
+        },
+        "label": {
+          "type": "string",
+          "default": null
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "accent"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "chart",
+        "line"
+      ],
+      "accessibility": "role=\"img\" with a summary of the values.",
+      "example": "<ui-sparkline values=\"3 5 4 8 6 9\" label=\"Distance per day\"></ui-sparkline>"
+    },
+    {
+      "tag": "ui-spinner",
+      "tier": "atoms",
+      "module": "src/atoms/ui-spinner.js",
+      "className": "UiSpinner",
+      "description": "Loading spinner Atom.",
+      "composes": [],
+      "attributes": {
+        "label": {
+          "type": "string",
+          "default": "Loading"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "spinner"
+      ],
+      "accessibility": "role=\"status\" with a label.",
+      "example": "<ui-spinner label=\"Loading route\"></ui-spinner>"
+    },
+    {
+      "tag": "ui-stack",
+      "tier": "atoms",
+      "module": "src/atoms/ui-stack.js",
+      "className": "UiStack",
+      "description": "Vertical layout Atom with even spacing.",
+      "composes": [],
+      "attributes": {
+        "gap": {
+          "type": "enum",
+          "values": [
+            "none",
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md"
+        },
+        "align": {
+          "type": "enum",
+          "values": [
+            "stretch",
+            "start",
+            "center",
+            "end"
+          ],
+          "default": "stretch"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "stack"
+      ],
+      "accessibility": "No semantics.",
+      "example": "<ui-stack gap=\"sm\"><div>A</div><div>B</div></ui-stack>"
+    },
+    {
+      "tag": "ui-step-marker",
+      "tier": "atoms",
+      "module": "src/atoms/ui-step-marker.js",
+      "className": "UiStepMarker",
+      "description": "Numbered step marker Atom.",
+      "composes": [],
+      "attributes": {
+        "number": {
+          "type": "number",
+          "default": 1
+        },
+        "state": {
+          "type": "enum",
+          "values": [
+            "todo",
+            "current",
+            "done",
+            "error"
+          ],
+          "default": "todo"
+        },
+        "label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "marker"
+      ],
+      "accessibility": "role=\"img\" named \"Step 2, done\".",
+      "example": "<ui-step-marker number=\"2\" state=\"current\"></ui-step-marker>"
     },
     {
       "tag": "ui-surface",
@@ -4555,6 +6396,49 @@
       "example": "<ui-surface variant=\"elevated\" padding=\"md\" radius=\"lg\">Content</ui-surface>"
     },
     {
+      "tag": "ui-swatch",
+      "tier": "atoms",
+      "module": "src/atoms/ui-swatch.js",
+      "className": "UiSwatch",
+      "description": "Color swatch or legend key Atom.",
+      "composes": [],
+      "attributes": {
+        "color": {
+          "type": "string",
+          "default": null
+        },
+        "label": {
+          "type": "string",
+          "default": null
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "shape": {
+          "type": "enum",
+          "values": [
+            "square",
+            "round",
+            "line"
+          ],
+          "default": "square"
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "swatch"
+      ],
+      "accessibility": "Hidden unless it has a label.",
+      "example": "<ui-swatch color=\"var(--color-data-1)\" label=\"Asphalt\"></ui-swatch>"
+    },
+    {
       "tag": "ui-switch",
       "tier": "atoms",
       "module": "src/atoms/ui-switch.js",
@@ -4612,6 +6496,75 @@
       ],
       "accessibility": "Uses delegatesFocus: true over native <button type='button' role='switch'> with aria-checked, aria-disabled, and reduced-motion transitions.",
       "example": "<ui-switch checked aria-label=\"Nautical seamarks\">Nautical seamarks</ui-switch>"
+    },
+    {
+      "tag": "ui-text",
+      "tier": "atoms",
+      "module": "src/atoms/ui-text.js",
+      "className": "UiText",
+      "description": "Text Atom: a paragraph or inline run in one of the text styles.",
+      "composes": [],
+      "attributes": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "lead",
+            "body",
+            "strong",
+            "small",
+            "label",
+            "caption",
+            "overline",
+            "stat"
+          ],
+          "default": "body"
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "default",
+            "secondary",
+            "muted",
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "danger",
+            "inverse"
+          ],
+          "default": "default"
+        },
+        "inline": {
+          "type": "boolean",
+          "default": false
+        },
+        "truncate": {
+          "type": "boolean",
+          "default": false
+        },
+        "lines": {
+          "type": "number",
+          "default": null
+        },
+        "align": {
+          "type": "enum",
+          "values": [
+            "start",
+            "center",
+            "end"
+          ],
+          "default": "start"
+        }
+      },
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "text"
+      ],
+      "accessibility": "Native <p>, or <span> when inline.",
+      "example": "<ui-text variant=\"lead\">A short introduction.</ui-text>"
     },
     {
       "tag": "ui-textarea",
@@ -4684,6 +6637,41 @@
       "example": "<ui-textarea aria-label=\"Statement\" rows=\"3\" placeholder=\"Describe behaviour…\"></ui-textarea>"
     },
     {
+      "tag": "ui-time",
+      "tier": "atoms",
+      "module": "src/atoms/ui-time.js",
+      "className": "UiTime",
+      "description": "Date and time Atom, formatted for a locale or relative to now.",
+      "composes": [],
+      "attributes": {
+        "datetime": {
+          "type": "string",
+          "default": null
+        },
+        "format": {
+          "type": "enum",
+          "values": [
+            "date",
+            "time",
+            "datetime",
+            "relative"
+          ],
+          "default": "date"
+        },
+        "locale": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "time"
+      ],
+      "accessibility": "Native <time> with a machine-readable datetime.",
+      "example": "<ui-time datetime=\"2026-11-25\" locale=\"en\"></ui-time>"
+    },
+    {
       "tag": "ui-tooltip",
       "tier": "atoms",
       "module": "src/atoms/ui-tooltip.js",
@@ -4719,6 +6707,111 @@
       ],
       "accessibility": "Exposes role='tooltip'; dismissible via Escape without moving focus, hoverable over tooltip bubble, and persistent while focused or hovered. Renders in the Top Layer, flips and stays inside the viewport.",
       "example": "<ui-tooltip text=\"Undo last edit\" placement=\"bottom\"><ui-button variant=\"ghost\" size=\"sm\" aria-label=\"Undo last edit\"><ui-icon name=\"undo\"></ui-icon></ui-button></ui-tooltip>"
+    },
+    {
+      "tag": "ui-trend",
+      "tier": "atoms",
+      "module": "src/atoms/ui-trend.js",
+      "className": "UiTrend",
+      "description": "Trend Atom: a signed change with a direction.",
+      "composes": [],
+      "attributes": {
+        "value": {
+          "type": "string",
+          "default": "0"
+        },
+        "format": {
+          "type": "enum",
+          "values": [
+            "decimal",
+            "percent"
+          ],
+          "default": "decimal"
+        },
+        "digits": {
+          "type": "number",
+          "default": null
+        },
+        "locale": {
+          "type": "string",
+          "default": null
+        },
+        "invert": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "trend",
+        "value"
+      ],
+      "accessibility": "The sign is in the text, so color and arrow are not the only cue.",
+      "example": "<ui-trend value=\"0.12\" format=\"percent\" locale=\"en\"></ui-trend>"
+    },
+    {
+      "tag": "ui-video",
+      "tier": "atoms",
+      "module": "src/atoms/ui-video.js",
+      "className": "UiVideo",
+      "description": "Video Atom with native controls and captions.",
+      "composes": [],
+      "attributes": {
+        "src": {
+          "type": "string",
+          "default": null
+        },
+        "poster": {
+          "type": "string",
+          "default": null
+        },
+        "captions": {
+          "type": "string",
+          "default": null
+        },
+        "captions-lang": {
+          "type": "string",
+          "default": null
+        },
+        "loop": {
+          "type": "boolean",
+          "default": false
+        },
+        "muted": {
+          "type": "boolean",
+          "default": false
+        },
+        "aria-label": {
+          "type": "string",
+          "default": null
+        }
+      },
+      "slots": [],
+      "events": [],
+      "parts": [
+        "video"
+      ],
+      "accessibility": "Native <video> with its own controls; never plays by itself.",
+      "example": "<ui-video aria-label=\"Route flyover\"></ui-video>"
+    },
+    {
+      "tag": "ui-visually-hidden",
+      "tier": "atoms",
+      "module": "src/atoms/ui-visually-hidden.js",
+      "className": "UiVisuallyHidden",
+      "description": "Text Atom for assistive technology only.",
+      "composes": [],
+      "attributes": {},
+      "slots": [
+        "default"
+      ],
+      "events": [],
+      "parts": [
+        "text"
+      ],
+      "accessibility": "Read by assistive technology, not shown.",
+      "example": "<ui-visually-hidden>Opens in a new tab</ui-visually-hidden>"
     },
     {
       "tag": "ui-callout",
