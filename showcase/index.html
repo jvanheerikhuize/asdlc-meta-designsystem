@@ -40,827 +40,846 @@
       </div>
       <h1>Design System Catalog &amp; Visual Reference</h1>
       <p>
-        Overview, live rendered specimens, and copyable implementation contracts for humans and coding agents. Zero external runtime dependencies.
+        Every token and component, from tier 1 (Tokens) to tier 6 (Pages). A tier may only use the tiers below it. Each specimen links to what it is made of and where it is used.
       </p>
       <pre><code>&lt;link rel="stylesheet" href="./src/tokens/tokens.css"&gt;
 &lt;script type="module" src="./src/index.js"&gt;&lt;/script&gt;</code></pre>
     </section>
 
-    <section aria-labelledby="tokens-heading">
-      <h2 id="tokens-heading" class="section-title">Design Tokens</h2>
-      <div class="swatches">
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-bg)"></div><span>--color-bg</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-surface)"></div><span>--color-surface</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-surface-elevated)"></div><span>--color-surface-elevated</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-card)"></div><span>--color-card</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-fg)"></div><span>--color-fg</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-fg-secondary)"></div><span>--color-fg-secondary</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-fg-muted)"></div><span>--color-fg-muted</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-accent)"></div><span>--color-accent</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-info)"></div><span>--color-info</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-success)"></div><span>--color-success</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-warning)"></div><span>--color-warning</span><span class="swatch-meta"></span></div>
-        <div class="swatch"><div class="swatch-chip" style="background: var(--color-danger)"></div><span>--color-danger</span><span class="swatch-meta"></span></div>
+    <catalog-layout id="catalog">
+      <div slot="toolbar" class="row" id="tier-filters" role="group" aria-label="Tier">
+        <ui-button class="tier-btn" data-tier="all" variant="primary" size="sm" aria-pressed="true">All tiers</ui-button>
+        <ui-button class="tier-btn" data-tier="tokens" variant="secondary" size="sm" aria-pressed="false">Tokens</ui-button>
+        <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm" aria-pressed="false">Atoms</ui-button>
+        <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm" aria-pressed="false">Molecules</ui-button>
+        <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm" aria-pressed="false">Organisms</ui-button>
+        <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm" aria-pressed="false">Templates</ui-button>
+        <ui-button class="tier-btn" data-tier="pages" variant="secondary" size="sm" aria-pressed="false">Pages</ui-button>
       </div>
+      <span slot="toolbar" class="muted" id="catalog-count" role="status"></span>
 
-      <div class="type-scale">
-        <div class="type-row">
-          <span style="font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700;">Display Heading (Bricolage Grotesque)</span>
-          <span class="type-token">--font-display · --text-2xl</span>
-        </div>
-        <div class="type-row">
-          <span style="font-family: var(--font-sans); font-size: var(--text-md);">Body Copy (Geist / system-ui)</span>
-          <span class="type-token">--font-sans · --text-md</span>
-        </div>
-        <div class="type-row">
-          <span style="font-family: var(--font-mono); font-size: var(--text-sm);">Monospace Token &amp; Tag Labels (Geist Mono)</span>
-          <span class="type-token">--font-mono · --text-sm</span>
-        </div>
-      </div>
-    </section>
+      <div slot="grid" class="tiers" id="specimen-grid">
+        <section class="tier" id="tokens" data-tier="tokens" aria-labelledby="tokens-heading">
+          <header class="tier-head">
+            <h2 id="tokens-heading" class="section-title">1. Tokens</h2>
+            <p class="specimen-desc" data-tier-summary></p>
+            <p class="muted" data-tier-uses></p>
+          </header>
+          <div class="specimen-grid">
+          </div>
+        </section>
 
-    <section aria-labelledby="catalog-heading">
-      <h2 id="catalog-heading" class="section-title">Component Catalog</h2>
-      <catalog-layout>
-        <div slot="toolbar" class="row" style="width: 100%; justify-content: space-between;">
-          <div class="row" id="tier-filters">
-            <ui-button class="tier-btn" data-tier="all" variant="primary" size="sm">All Tiers</ui-button>
-            <ui-button class="tier-btn" data-tier="atoms" variant="secondary" size="sm">Atoms</ui-button>
-            <ui-button class="tier-btn" data-tier="molecules" variant="secondary" size="sm">Molecules</ui-button>
-            <ui-button class="tier-btn" data-tier="organisms" variant="secondary" size="sm">Organisms</ui-button>
-            <ui-button class="tier-btn" data-tier="templates" variant="secondary" size="sm">Templates</ui-button>
-          </div>
-          <span class="muted" id="catalog-count"></span>
-        </div>
-
-        <div slot="grid" class="specimen-grid" id="specimen-grid">
-        <!-- ATOMS -->
-        <article class="specimen" data-tier="atoms" data-id="ui-button">
-          <div class="specimen-head">
-            <h3>&lt;ui-button&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Interactive button with variant, size, disabled, and busy states.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-button variant="primary" size="sm">Primary</ui-button>
-              <ui-button variant="secondary" size="sm">Secondary</ui-button>
-              <ui-button variant="ghost" size="sm">Ghost</ui-button>
-              <ui-button variant="danger" size="sm">Danger</ui-button>
-            </div>
-            <div class="row">
-              <ui-button id="btn-disabled" size="sm" disabled>Disabled</ui-button>
-              <ui-button id="btn-busy" size="sm" busy>Busy</ui-button>
-            </div>
-          </div>
-          <pre><code>&lt;ui-button variant="primary" size="md"&gt;Save&lt;/ui-button&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-press</span>
-            <ui-button class="inspect-btn" data-component="ui-button" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-input">
-          <div class="specimen-head">
-            <h3>&lt;ui-input&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Encapsulated text input with reactive value and invalid/disabled states.</p>
-          <div class="preview">
-            <ui-input placeholder="Default input" aria-label="Default input"></ui-input>
-            <ui-input value="Invalid value" invalid aria-label="Invalid input"></ui-input>
-            <ui-input value="Disabled input" disabled aria-label="Disabled input"></ui-input>
-          </div>
-          <pre><code>&lt;ui-input aria-label="Name" placeholder="Enter value…"&gt;&lt;/ui-input&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">events: ui-input, ui-change</span>
-            <ui-button class="inspect-btn" data-component="ui-input" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-label">
-          <div class="specimen-head">
-            <h3>&lt;ui-label&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Optical cap-height aligned form label with optional required indicator.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-label>Standard Label</ui-label>
-              <ui-label required>Required Label</ui-label>
-              <ui-label size="sm">Small Label</ui-label>
-            </div>
-          </div>
-          <pre><code>&lt;ui-label for="email" required&gt;Email&lt;/ui-label&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">part: label</span>
-            <ui-button class="inspect-btn" data-component="ui-label" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-badge">
-          <div class="specimen-head">
-            <h3>&lt;ui-badge&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Status and metadata pill badge with five semantic variants.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-badge variant="neutral">neutral</ui-badge>
-              <ui-badge variant="accent">accent</ui-badge>
-              <ui-badge variant="info">info</ui-badge>
-              <ui-badge variant="success">success</ui-badge>
-              <ui-badge variant="warning">warning</ui-badge>
-            </div>
-          </div>
-          <pre><code>&lt;ui-badge variant="success"&gt;active&lt;/ui-badge&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">sizes: sm, md</span>
-            <ui-button class="inspect-btn" data-component="ui-badge" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-icon">
-          <div class="specimen-head">
-            <h3>&lt;ui-icon&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">33 built-in vector icons with decorative or labelled ARIA semantics.</p>
-          <div class="preview">
-            <div class="icon-grid">
-              <div class="icon-cell"><ui-icon name="search" size="md"></ui-icon>search</div>
-              <div class="icon-cell"><ui-icon name="sun" size="md"></ui-icon>sun</div>
-              <div class="icon-cell"><ui-icon name="moon" size="md"></ui-icon>moon</div>
-              <div class="icon-cell"><ui-icon name="check" size="md"></ui-icon>check</div>
-              <div class="icon-cell"><ui-icon name="alert" size="md"></ui-icon>alert</div>
-              <div class="icon-cell"><ui-icon name="info" size="md"></ui-icon>info</div>
-              <div class="icon-cell"><ui-icon name="arrow-right" size="md"></ui-icon>arrow-right</div>
-              <div class="icon-cell"><ui-icon name="arrow-left" size="md"></ui-icon>arrow-left</div>
-              <div class="icon-cell"><ui-icon name="sparkles" size="md"></ui-icon>sparkles</div>
-              <div class="icon-cell"><ui-icon name="code" size="md"></ui-icon>code</div>
-              <div class="icon-cell"><ui-icon name="layers" size="md"></ui-icon>layers</div>
-              <div class="icon-cell"><ui-icon name="external" size="md"></ui-icon>external</div>
-              <div class="icon-cell"><ui-icon name="plus" size="md"></ui-icon>plus</div>
-              <div class="icon-cell"><ui-icon name="minus" size="md"></ui-icon>minus</div>
-              <div class="icon-cell"><ui-icon name="close" size="md"></ui-icon>close</div>
-              <div class="icon-cell"><ui-icon name="undo" size="md"></ui-icon>undo</div>
-              <div class="icon-cell"><ui-icon name="redo" size="md"></ui-icon>redo</div>
-              <div class="icon-cell"><ui-icon name="trash" size="md"></ui-icon>trash</div>
-              <div class="icon-cell"><ui-icon name="download" size="md"></ui-icon>download</div>
-              <div class="icon-cell"><ui-icon name="upload" size="md"></ui-icon>upload</div>
-              <div class="icon-cell"><ui-icon name="route" size="md"></ui-icon>route</div>
-              <div class="icon-cell"><ui-icon name="compass" size="md"></ui-icon>compass</div>
-              <div class="icon-cell"><ui-icon name="pin" size="md"></ui-icon>pin</div>
-              <div class="icon-cell"><ui-icon name="flag" size="md"></ui-icon>flag</div>
-              <div class="icon-cell"><ui-icon name="anchor" size="md"></ui-icon>anchor</div>
-              <div class="icon-cell"><ui-icon name="waves" size="md"></ui-icon>waves</div>
-              <div class="icon-cell"><ui-icon name="scissors" size="md"></ui-icon>scissors</div>
-              <div class="icon-cell"><ui-icon name="settings" size="md"></ui-icon>settings</div>
-              <div class="icon-cell"><ui-icon name="chevron-down" size="md"></ui-icon>chevron-down</div>
-              <div class="icon-cell"><ui-icon name="chevron-up" size="md"></ui-icon>chevron-up</div>
-              <div class="icon-cell"><ui-icon name="eye" size="md"></ui-icon>eye</div>
-              <div class="icon-cell"><ui-icon name="eye-off" size="md"></ui-icon>eye-off</div>
-              <div class="icon-cell"><ui-icon name="sidebar" size="md"></ui-icon>sidebar</div>
-            </div>
-          </div>
-          <pre><code>&lt;ui-icon name="sparkles" size="md" label="Featured"&gt;&lt;/ui-icon&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">33 built-in glyphs</span>
-            <ui-button class="inspect-btn" data-component="ui-icon" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-skeleton">
-          <div class="specimen-head">
-            <h3>&lt;ui-skeleton&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Shimmer loading placeholder with reduced-motion static fallback.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-skeleton variant="circle" width="2.25rem" height="2.25rem"></ui-skeleton>
-              <div style="flex: 1"><ui-skeleton variant="text" lines="2"></ui-skeleton></div>
-            </div>
-            <ui-skeleton variant="rect" height="3rem"></ui-skeleton>
-          </div>
-          <pre><code>&lt;ui-skeleton variant="text" lines="3"&gt;&lt;/ui-skeleton&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">variants: text, rect, circle</span>
-            <ui-button class="inspect-btn" data-component="ui-skeleton" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-chip">
-          <div class="specimen-head">
-            <h3>&lt;ui-chip&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Toggleable filter pill with pressed state and ui-toggle event.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-chip id="demo-chip" pressed>active</ui-chip>
-              <ui-chip>provisional</ui-chip>
-              <ui-chip variant="accent" pressed>filter</ui-chip>
-              <ui-chip disabled>disabled</ui-chip>
-            </div>
-          </div>
-          <pre><code>&lt;ui-chip pressed&gt;active&lt;/ui-chip&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-toggle</span>
-            <ui-button class="inspect-btn" data-component="ui-chip" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-progress">
-          <div class="specimen-head">
-            <h3>&lt;ui-progress&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Progress/readiness bar with semantic color variants.</p>
-          <div class="preview">
-            <ui-progress value="80" aria-label="Skeleton readiness"></ui-progress>
-            <ui-progress value="45" variant="warning" aria-label="Warning progress"></ui-progress>
-            <ui-progress value="25" variant="accent" aria-label="Accent progress"></ui-progress>
-          </div>
-          <pre><code>&lt;ui-progress value="80" aria-label="Readiness"&gt;&lt;/ui-progress&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">role: progressbar</span>
-            <ui-button class="inspect-btn" data-component="ui-progress" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-textarea">
-          <div class="specimen-head">
-            <h3>&lt;ui-textarea&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Multi-line text input encapsulating native &lt;textarea&gt;.</p>
-          <div class="preview">
-            <ui-textarea rows="2" placeholder="Describe system behaviour…" aria-label="Statement"></ui-textarea>
-          </div>
-          <pre><code>&lt;ui-textarea aria-label="Statement" rows="3"&gt;&lt;/ui-textarea&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">events: ui-input, ui-change</span>
-            <ui-button class="inspect-btn" data-component="ui-textarea" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-select">
-          <div class="specimen-head">
-            <h3>&lt;ui-select&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Native &lt;select&gt; driven by JSON options attribute/property.</p>
-          <div class="preview">
-            <ui-select aria-label="Record status" options='["open","provisional","active"]' value="active"></ui-select>
-          </div>
-          <pre><code>&lt;ui-select aria-label="Status" options='["open","active"]'&gt;&lt;/ui-select&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-change</span>
-            <ui-button class="inspect-btn" data-component="ui-select" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-dot">
-          <div class="specimen-head">
-            <h3>&lt;ui-dot&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Semantic status dot (done, wait, bad, info, off).</p>
-          <div class="preview">
-            <div class="row">
-              <ui-dot status="done" label="Done"></ui-dot>
-              <ui-dot status="wait" label="Waiting"></ui-dot>
-              <ui-dot status="bad" label="Broken"></ui-dot>
-              <ui-dot status="info" label="Info"></ui-dot>
-              <ui-dot status="off" label="Inactive"></ui-dot>
-            </div>
-          </div>
-          <pre><code>&lt;ui-dot status="done" label="Verified"&gt;&lt;/ui-dot&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">5 status tones</span>
-            <ui-button class="inspect-btn" data-component="ui-dot" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-checkbox">
-          <div class="specimen-head">
-            <h3>&lt;ui-checkbox&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Checkbox encapsulating native &lt;input type="checkbox"&gt; for multi-select lists.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-checkbox value="FCT-0001" checked>FCT-0001</ui-checkbox>
-              <ui-checkbox value="FCT-0007">FCT-0007</ui-checkbox>
-              <ui-checkbox value="locked" disabled>Disabled</ui-checkbox>
-            </div>
-          </div>
-          <pre><code>&lt;ui-checkbox value="FCT-0001" checked&gt;FCT-0001&lt;/ui-checkbox&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-change</span>
-            <ui-button class="inspect-btn" data-component="ui-checkbox" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-slider">
-          <div class="specimen-head">
-            <h3>&lt;ui-slider&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Range slider encapsulating native &lt;input type="range"&gt; for timeline scrubbers and volume.</p>
-          <div class="preview">
-            <ui-slider min="0" max="100" value="64" aria-label="Seek timeline"></ui-slider>
-            <ui-slider min="0" max="1" step="0.05" value="0.8" variant="neutral" aria-label="Volume"></ui-slider>
-          </div>
-          <pre><code>&lt;ui-slider min="0" max="100" value="64" aria-label="Volume"&gt;&lt;/ui-slider&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">events: ui-input, ui-change</span>
-            <ui-button class="inspect-btn" data-component="ui-slider" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-
-        <article class="specimen" data-tier="atoms" data-id="ui-switch">
-          <div class="specimen-head">
-            <h3>&lt;ui-switch&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Accessible role="switch" toggle control for live map and view overlays.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-switch id="demo-switch" checked>Nautical seamarks</ui-switch>
-              <ui-switch size="sm">Contours</ui-switch>
-              <ui-switch disabled>Disabled</ui-switch>
-            </div>
-          </div>
-          <pre><code>&lt;ui-switch checked&gt;Nautical seamarks&lt;/ui-switch&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-change</span>
-            <ui-button class="inspect-btn" data-component="ui-switch" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-tooltip">
-          <div class="specimen-head">
-            <h3>&lt;ui-tooltip&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">WCAG 1.4.13 tooltip bubble (Escape-dismissible, hoverable, focus-aware).</p>
-          <div class="preview">
-            <div class="row">
-              <ui-tooltip id="demo-tooltip" text="Undo last waypoint" placement="top">
-                <ui-button variant="secondary" size="sm" aria-label="Undo last waypoint"><ui-icon name="undo" size="sm"></ui-icon> Hover / Focus</ui-button>
-              </ui-tooltip>
-            </div>
-          </div>
-          <pre><code>&lt;ui-tooltip text="Undo"&gt;&lt;ui-button aria-label="Undo"&gt;...&lt;/ui-button&gt;&lt;/ui-tooltip&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">role: tooltip</span>
-            <ui-button class="inspect-btn" data-component="ui-tooltip" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-
-        <article class="specimen" data-tier="atoms" data-id="ui-surface">
-          <div class="specimen-head">
-            <h3>&lt;ui-surface&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Foundational container Atom unifying surface backgrounds, borders, radii, padding, shadows, and interactive cards.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-surface variant="elevated" padding="sm" radius="md">Elevated</ui-surface>
-              <ui-surface variant="glass" padding="sm" radius="md" elevation="md">Glass</ui-surface>
-              <ui-surface variant="card" padding="sm" radius="md" accent="success">Accent</ui-surface>
-            </div>
-          </div>
-          <pre><code>&lt;ui-surface variant="elevated" padding="md" radius="lg"&gt;...&lt;/ui-surface&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-press (when interactive)</span>
-            <ui-button class="inspect-btn" data-component="ui-surface" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="atoms" data-id="ui-divider">
-          <div class="specimen-head">
-            <h3>&lt;ui-divider&gt;</h3>
-            <ui-badge variant="accent">atoms</ui-badge>
-          </div>
-          <p class="specimen-desc">Hairline role="separator" Atom supporting horizontal and vertical layouts.</p>
-          <div class="preview">
-            <ui-divider></ui-divider>
-            <div class="row"><span>Left</span><ui-divider orientation="vertical"></ui-divider><span>Right</span></div>
-          </div>
-          <pre><code>&lt;ui-divider orientation="vertical"&gt;&lt;/ui-divider&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">role: separator</span>
-            <ui-button class="inspect-btn" data-component="ui-divider" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <!-- MOLECULES -->
-        <article class="specimen" data-tier="molecules" data-id="ui-empty-state">
-          <div class="specimen-head">
-            <h3>&lt;ui-empty-state&gt;</h3>
-            <ui-badge variant="accent">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Message for a region without items, with an optional action.</p>
-          <div class="preview">
-            <ui-empty-state text="No tours yet."></ui-empty-state>
-          </div>
-          <pre><code>&lt;ui-empty-state text="No tours yet."&gt;&lt;/ui-empty-state&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">slots: default</span>
-            <ui-button class="inspect-btn" data-component="ui-empty-state" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-theme-toggle">
-          <div class="specimen-head">
-            <h3>&lt;ui-theme-toggle&gt;</h3>
-            <ui-badge variant="accent">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Button that switches between dark and light and reports the choice.</p>
-          <div class="preview">
-            <ui-theme-toggle theme="dark"></ui-theme-toggle>
-          </div>
-          <pre><code>&lt;ui-theme-toggle theme="dark"&gt;&lt;/ui-theme-toggle&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-theme-change</span>
-            <ui-button class="inspect-btn" data-component="ui-theme-toggle" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-field">
-          <div class="specimen-head">
-            <h3>&lt;ui-field&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Form field composing &lt;ui-label&gt;, &lt;ui-input&gt;, and hint/error text.</p>
-          <div class="preview">
-            <ui-field label="Repository" placeholder="asdlc-meta-designsystem" hint="Lowercase kebab-case" required></ui-field>
-            <ui-field label="Slug" value="Invalid Slug" invalid error="Spaces are not allowed."></ui-field>
-          </div>
-          <pre><code>&lt;ui-field label="Repository" required hint="Kebab-case"&gt;&lt;/ui-field&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">events: ui-input, ui-change</span>
-            <ui-button class="inspect-btn" data-component="ui-field" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-search-bar">
-          <div class="specimen-head">
-            <h3>&lt;ui-search-bar&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Search bar composing &lt;ui-input&gt;, &lt;ui-button&gt;, and search icon.</p>
-          <div class="preview">
-            <ui-search-bar placeholder="Search records…" button-label="Search"></ui-search-bar>
-            <ui-search-bar compact clearable placeholder="Filter records…" aria-label="Filter records" value="REQ"></ui-search-bar>
-          </div>
-          <pre><code>&lt;ui-search-bar placeholder="Search…"&gt;&lt;/ui-search-bar&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-search</span>
-            <ui-button class="inspect-btn" data-component="ui-search-bar" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-media-card">
-          <div class="specimen-head">
-            <h3>&lt;ui-media-card&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Interactive translucent catalog card with keyboard focus ring.</p>
-          <div class="preview">
-            <ui-media-card card-id="sample" title="Lumen Token Set" subtitle="Dark-first obsidian surfaces and rose accents." badge="active" badge-variant="success" meta="WCAG AA"></ui-media-card>
-          </div>
-          <pre><code>&lt;ui-media-card card-id="1" title="Title" badge="active"&gt;&lt;/ui-media-card&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-select</span>
-            <ui-button class="inspect-btn" data-component="ui-media-card" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-stat-tile">
-          <div class="specimen-head">
-            <h3>&lt;ui-stat-tile&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">KPI metric tile displaying value, label, and optional &lt;ui-dot&gt;.</p>
-          <div class="preview">
-            <div class="row">
-              <ui-stat-tile value="23" label="Records" status="done" variant="success"></ui-stat-tile>
-              <ui-stat-tile value="1" label="Open QST" status="wait" variant="warning"></ui-stat-tile>
-            </div>
-          </div>
-          <pre><code>&lt;ui-stat-tile value="23" label="Records" status="done"&gt;&lt;/ui-stat-tile&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">composes: ui-dot</span>
-            <ui-button class="inspect-btn" data-component="ui-stat-tile" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-callout">
-          <div class="specimen-head">
-            <h3>&lt;ui-callout&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Left-accented status/action banner composing &lt;ui-icon&gt;.</p>
-          <div class="preview">
-            <ui-callout variant="success" title="All Checks Passing">Strict spec graph and browser checks succeeded.</ui-callout>
-            <ui-callout variant="warning" title="Open Assumption">ASM-0003 awaits external repo validation.</ui-callout>
-          </div>
-          <pre><code>&lt;ui-callout variant="info" title="Note"&gt;Details here.&lt;/ui-callout&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">composes: ui-icon</span>
-            <ui-button class="inspect-btn" data-component="ui-callout" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-code-block">
-          <div class="specimen-head">
-            <h3>&lt;ui-code-block&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Monospace code preview composing &lt;ui-button&gt; and &lt;ui-icon&gt; for copy.</p>
-          <div class="preview">
-            <ui-code-block language="html">&lt;ui-badge variant="success"&gt;active&lt;/ui-badge&gt;</ui-code-block>
-          </div>
-          <pre><code>&lt;ui-code-block language="html"&gt;...&lt;/ui-code-block&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-copy</span>
-            <ui-button class="inspect-btn" data-component="ui-code-block" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-
-        <article class="specimen" data-tier="molecules" data-id="ui-toolbar">
-          <div class="specimen-head">
-            <h3>&lt;ui-toolbar&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Frosted or inline role="toolbar" with single-tab-stop roving arrow-key focus.</p>
-          <div class="preview">
-            <ui-toolbar id="demo-toolbar" variant="floating" aria-label="Route actions">
-              <ui-button variant="ghost" size="sm" aria-label="Undo"><ui-icon name="undo" size="sm"></ui-icon></ui-button>
-              <ui-button variant="ghost" size="sm" aria-label="Redo"><ui-icon name="redo" size="sm"></ui-icon></ui-button>
-              <span role="separator" aria-orientation="vertical"></span>
-              <ui-button variant="ghost" size="sm" aria-label="Split stage"><ui-icon name="scissors" size="sm"></ui-icon></ui-button>
-              <ui-button variant="ghost" size="sm" aria-label="Download FIT"><ui-icon name="download" size="sm"></ui-icon></ui-button>
-            </ui-toolbar>
-          </div>
-          <pre><code>&lt;ui-toolbar variant="floating" aria-label="Actions"&gt;...&lt;/ui-toolbar&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-navigate</span>
-            <ui-button class="inspect-btn" data-component="ui-toolbar" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-tabs">
-          <div class="specimen-head">
-            <h3>&lt;ui-tabs&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Accessible WAI-ARIA tablist Molecule with roving keyboard navigation.</p>
-          <div class="preview">
-            <ui-tabs id="demo-tabs" tabs='[{"id":"stages","label":"Stages"},{"id":"surfaces","label":"Surfaces"},{"id":"pois","label":"POIs"}]' value="stages" aria-label="Tour views">
-              <div slot="stages" class="muted">Day 1 · 42.5 km · +610 m</div>
-              <div slot="surfaces" class="muted">Asphalt 58% · Gravel 42%</div>
-              <div slot="pois" class="muted">2 buoys · 1 cafe</div>
-            </ui-tabs>
-          </div>
-          <pre><code>&lt;ui-tabs tabs='[{"id":"a","label":"Tab A"}]' value="a"&gt;...&lt;/ui-tabs&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-change</span>
-            <ui-button class="inspect-btn" data-component="ui-tabs" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="organisms" data-id="ui-toast">
-          <div class="specimen-head">
-            <h3>&lt;ui-toast&gt;</h3>
-            <ui-badge variant="success">organisms</ui-badge>
-          </div>
-          <p class="specimen-desc">Non-modal status notification with polite screen-reader announcement and dismiss control.</p>
-          <div class="preview">
-            <ui-toast id="demo-toast" variant="success" title="Course exported" open>Veluwe Gravel - Day 1.fit ready.</ui-toast>
-          </div>
-          <pre><code>&lt;ui-toast variant="success" title="Saved" open&gt;Ready.&lt;/ui-toast&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-close</span>
-            <ui-button class="inspect-btn" data-component="ui-toast" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-
-        <article class="specimen" data-tier="organisms" data-id="ui-table">
-          <div class="specimen-head">
-            <h3>&lt;ui-table&gt;</h3>
-            <ui-badge variant="success">organisms</ui-badge>
-          </div>
-          <p class="specimen-desc">Native data table with token styling, scrolled inside a labelled region.</p>
-          <div class="preview">
-            <ui-table aria-label="Stages"><table>
-              <thead><tr><th scope="col">Stage</th><th scope="col">Distance</th><th scope="col">Surface</th></tr></thead>
-              <tbody><tr><td>Day 1</td><td>64 km</td><td>Gravel</td></tr><tr><td>Day 2</td><td>71 km</td><td>Paved</td></tr></tbody>
-            </table></ui-table>
-          </div>
-          <pre><code>&lt;ui-table aria-label="Stages"&gt;&lt;table&gt;…&lt;/table&gt;&lt;/ui-table&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">part: scroll</span>
-            <ui-button class="inspect-btn" data-component="ui-table" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="molecules" data-id="ui-panel-header">
-          <div class="specimen-head">
-            <h3>&lt;ui-panel-header&gt;</h3>
-            <ui-badge variant="info">molecules</ui-badge>
-          </div>
-          <p class="specimen-desc">Panel header bar Molecule composing heading, actions slot, and close &lt;ui-button&gt;/&lt;ui-icon&gt;.</p>
-          <div class="preview">
-            <ui-surface variant="elevated" padding="none" radius="md">
-              <ui-panel-header title="Stage Details" close-label="Close details"></ui-panel-header>
-            </ui-surface>
-          </div>
-          <pre><code>&lt;ui-panel-header title="Details"&gt;&lt;/ui-panel-header&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-close</span>
-            <ui-button class="inspect-btn" data-component="ui-panel-header" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <!-- ORGANISMS -->
-        <article class="specimen" data-tier="organisms" data-id="ui-navbar">
-          <div class="specimen-head">
-            <h3>&lt;ui-navbar&gt;</h3>
-            <ui-badge variant="success">organisms</ui-badge>
-          </div>
-          <p class="specimen-desc">Sticky frosted-glass site header with brand, nav, search, and theme toggle.</p>
-          <div class="preview">
-            <span class="muted">Rendered at the top of this page with brand, nav, search, and theme switcher.</span>
-          </div>
-          <pre><code>&lt;ui-navbar&gt;&lt;a slot="brand" href="./"&gt;App&lt;/a&gt;&lt;/ui-navbar&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">event: ui-theme-change</span>
-            <ui-button class="inspect-btn" data-component="ui-navbar" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="organisms" data-id="ui-modal">
-          <div class="specimen-head">
-            <h3>&lt;ui-modal&gt;</h3>
-            <ui-badge variant="success">organisms</ui-badge>
-          </div>
-          <p class="specimen-desc">Native &lt;dialog&gt; modal with blurred backdrop and focus restoration.</p>
-          <div class="preview">
-            <span class="muted">Click any "Inspect Contract" button to preview &lt;ui-modal&gt; with backdrop blur and Escape/focus-restore.</span>
-          </div>
-          <pre><code>&lt;ui-modal title="Details"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/ui-modal&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">events: ui-open, ui-close</span>
-            <ui-button class="inspect-btn" data-component="ui-modal" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-        <article class="specimen" data-tier="organisms" data-id="ui-catalog-grid">
-          <div class="specimen-head">
-            <h3>&lt;ui-catalog-grid&gt;</h3>
-            <ui-badge variant="success">organisms</ui-badge>
-          </div>
-          <p class="specimen-desc">Responsive grid with loading skeletons and empty-state fallback.</p>
-          <div class="preview">
-            <ui-catalog-grid empty empty-text="Empty state preview (empty attribute)"></ui-catalog-grid>
-          </div>
-          <pre><code>&lt;ui-catalog-grid empty-text="No matches."&gt;&lt;/ui-catalog-grid&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">attrs: loading, empty</span>
-            <ui-button class="inspect-btn" data-component="ui-catalog-grid" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
-
-
-        <article class="specimen" data-tier="organisms" data-id="ui-popover">
-          <div class="specimen-head">
-            <h3>&lt;ui-popover&gt;</h3>
-            <ui-badge variant="success">organisms</ui-badge>
-          </div>
-          <p class="specimen-desc">Viewport-aware Top Layer popover flyout for compact layer switchers and context menus.</p>
-          <div class="preview">
-            <ui-popover id="demo-popover" aria-label="Layer options">
-              <ui-button id="demo-popover-btn" slot="trigger" variant="secondary" size="sm"><ui-icon name="layers" size="sm"></ui-icon> Map Layers</ui-button>
-              <div style="display: grid; gap: 0.5rem;">
-                <ui-switch checked size="sm">Waymarked Hiking</ui-switch>
-                <ui-switch checked size="sm">OpenSeaMap Buoys</ui-switch>
+        <section class="tier" id="atoms" data-tier="atoms" aria-labelledby="atoms-heading">
+          <header class="tier-head">
+            <h2 id="atoms-heading" class="section-title">2. Atoms</h2>
+            <p class="specimen-desc" data-tier-summary></p>
+            <p class="muted" data-tier-uses></p>
+          </header>
+          <div class="specimen-grid">
+            <article class="specimen" data-tier="atoms" id="ui-badge" data-id="ui-badge">
+              <div class="specimen-head">
+                <h3>&lt;ui-badge&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
               </div>
-            </ui-popover>
-          </div>
-          <pre><code>&lt;ui-popover&gt;&lt;ui-button slot="trigger"&gt;Layers&lt;/ui-button&gt;...&lt;/ui-popover&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">events: ui-open, ui-close</span>
-            <ui-button class="inspect-btn" data-component="ui-popover" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-badge variant="neutral">neutral</ui-badge>
+                  <ui-badge variant="accent">accent</ui-badge>
+                  <ui-badge variant="info">info</ui-badge>
+                  <ui-badge variant="success">success</ui-badge>
+                  <ui-badge variant="warning">warning</ui-badge>
+                </div>
+              </div>
+              <pre><code>&lt;ui-badge variant="success"&gt;active&lt;/ui-badge&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">sizes: sm, md</span>
+                <ui-button class="inspect-btn" data-component="ui-badge" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
 
-        <article class="specimen" data-tier="organisms" data-id="ui-drawer">
-          <div class="specimen-head">
-            <h3>&lt;ui-drawer&gt;</h3>
-            <ui-badge variant="success">organisms</ui-badge>
-          </div>
-          <p class="specimen-desc">Collapsible side/bottom drawer supporting docked workspace panels and modal mobile sheets.</p>
-          <div class="preview">
-            <ui-drawer id="demo-drawer" title="Elevation Profile" side="bottom" mode="docked" open style="--drawer-height: 10rem;">
-              <span class="muted">+480 m ascent · -480 m descent · 1.5 m hysteresis</span>
-            </ui-drawer>
-          </div>
-          <pre><code>&lt;ui-drawer title="Library" side="left" mode="auto" open&gt;...&lt;/ui-drawer&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">events: ui-open, ui-close</span>
-            <ui-button class="inspect-btn" data-component="ui-drawer" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
+            <article class="specimen" data-tier="atoms" id="ui-button" data-id="ui-button">
+              <div class="specimen-head">
+                <h3>&lt;ui-button&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-button variant="primary" size="sm">Primary</ui-button>
+                  <ui-button variant="secondary" size="sm">Secondary</ui-button>
+                  <ui-button variant="ghost" size="sm">Ghost</ui-button>
+                  <ui-button variant="danger" size="sm">Danger</ui-button>
+                </div>
+                <div class="row">
+                  <ui-button id="btn-disabled" size="sm" disabled>Disabled</ui-button>
+                  <ui-button id="btn-busy" size="sm" busy>Busy</ui-button>
+                </div>
+              </div>
+              <pre><code>&lt;ui-button variant="primary" size="md"&gt;Save&lt;/ui-button&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-press</span>
+                <ui-button class="inspect-btn" data-component="ui-button" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
 
-        <!-- TEMPLATES -->
-        <article class="specimen" data-tier="templates" data-id="page-shell">
-          <div class="specimen-head">
-            <h3>&lt;page-shell&gt;</h3>
-            <ui-badge variant="warning">templates</ui-badge>
-          </div>
-          <p class="specimen-desc">Full-page structural blueprint with header, main, and footer slots.</p>
-          <div class="preview">
-            <span class="muted">Provides the outer header/main/footer landmark structure of this page.</span>
-          </div>
-          <pre><code>&lt;page-shell&gt;&lt;ui-navbar slot="header"&gt;&lt;/ui-navbar&gt;...&lt;/page-shell&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">slots: header, default, footer</span>
-            <ui-button class="inspect-btn" data-component="page-shell" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
+            <article class="specimen" data-tier="atoms" id="ui-checkbox" data-id="ui-checkbox">
+              <div class="specimen-head">
+                <h3>&lt;ui-checkbox&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-checkbox value="FCT-0001" checked>FCT-0001</ui-checkbox>
+                  <ui-checkbox value="FCT-0007">FCT-0007</ui-checkbox>
+                  <ui-checkbox value="locked" disabled>Disabled</ui-checkbox>
+                </div>
+              </div>
+              <pre><code>&lt;ui-checkbox value="FCT-0001" checked&gt;FCT-0001&lt;/ui-checkbox&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-change</span>
+                <ui-button class="inspect-btn" data-component="ui-checkbox" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
 
-        <article class="specimen" data-tier="templates" data-id="catalog-layout">
-          <div class="specimen-head">
-            <h3>&lt;catalog-layout&gt;</h3>
-            <ui-badge variant="warning">templates</ui-badge>
-          </div>
-          <p class="specimen-desc">Catalog browser blueprint arranging hero, toolbar, grid, and modal slots.</p>
-          <div class="preview">
-            <span class="muted">Structural layout wrapper for hero, filter toolbar, grid, and modal slots.</span>
-          </div>
-          <pre><code>&lt;catalog-layout&gt;&lt;div slot="hero"&gt;...&lt;/div&gt;&lt;/catalog-layout&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">slots: hero, toolbar, grid, modal</span>
-            <ui-button class="inspect-btn" data-component="catalog-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
+            <article class="specimen" data-tier="atoms" id="ui-chip" data-id="ui-chip">
+              <div class="specimen-head">
+                <h3>&lt;ui-chip&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-chip id="demo-chip" pressed>active</ui-chip>
+                  <ui-chip>provisional</ui-chip>
+                  <ui-chip variant="accent" pressed>filter</ui-chip>
+                  <ui-chip disabled>disabled</ui-chip>
+                </div>
+              </div>
+              <pre><code>&lt;ui-chip pressed&gt;active&lt;/ui-chip&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-toggle</span>
+                <ui-button class="inspect-btn" data-component="ui-chip" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
 
-        <article class="specimen" data-tier="templates" data-id="detail-layout">
-          <div class="specimen-head">
-            <h3>&lt;detail-layout&gt;</h3>
-            <ui-badge variant="warning">templates</ui-badge>
-          </div>
-          <p class="specimen-desc">Two-column detail Template pairing primary prose with a metadata sidebar.</p>
-          <div class="preview">
-            <detail-layout>
-              <span class="muted">Primary content</span>
-              <span slot="aside" class="muted">Metadata aside</span>
-            </detail-layout>
-          </div>
-          <pre><code>&lt;detail-layout&gt;&lt;article&gt;...&lt;/article&gt;&lt;dl slot="aside"&gt;...&lt;/dl&gt;&lt;/detail-layout&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">slots: default, aside</span>
-            <ui-button class="inspect-btn" data-component="detail-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
-          </div>
-        </article>
+            <article class="specimen" data-tier="atoms" id="ui-divider" data-id="ui-divider">
+              <div class="specimen-head">
+                <h3>&lt;ui-divider&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-divider></ui-divider>
+                <div class="row"><span>Left</span><ui-divider orientation="vertical"></ui-divider><span>Right</span></div>
+              </div>
+              <pre><code>&lt;ui-divider orientation="vertical"&gt;&lt;/ui-divider&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">role: separator</span>
+                <ui-button class="inspect-btn" data-component="ui-divider" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
 
-        <article class="specimen" data-tier="templates" data-id="workspace-layout">
-          <div class="specimen-head">
-            <h3>&lt;workspace-layout&gt;</h3>
-            <ui-badge variant="warning">templates</ui-badge>
+            <article class="specimen" data-tier="atoms" id="ui-dot" data-id="ui-dot">
+              <div class="specimen-head">
+                <h3>&lt;ui-dot&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-dot status="done" label="Done"></ui-dot>
+                  <ui-dot status="wait" label="Waiting"></ui-dot>
+                  <ui-dot status="bad" label="Broken"></ui-dot>
+                  <ui-dot status="info" label="Info"></ui-dot>
+                  <ui-dot status="off" label="Inactive"></ui-dot>
+                </div>
+              </div>
+              <pre><code>&lt;ui-dot status="done" label="Verified"&gt;&lt;/ui-dot&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">5 status tones</span>
+                <ui-button class="inspect-btn" data-component="ui-dot" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-icon" data-id="ui-icon">
+              <div class="specimen-head">
+                <h3>&lt;ui-icon&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="icon-grid">
+                  <div class="icon-cell"><ui-icon name="search" size="md"></ui-icon>search</div>
+                  <div class="icon-cell"><ui-icon name="sun" size="md"></ui-icon>sun</div>
+                  <div class="icon-cell"><ui-icon name="moon" size="md"></ui-icon>moon</div>
+                  <div class="icon-cell"><ui-icon name="check" size="md"></ui-icon>check</div>
+                  <div class="icon-cell"><ui-icon name="alert" size="md"></ui-icon>alert</div>
+                  <div class="icon-cell"><ui-icon name="info" size="md"></ui-icon>info</div>
+                  <div class="icon-cell"><ui-icon name="arrow-right" size="md"></ui-icon>arrow-right</div>
+                  <div class="icon-cell"><ui-icon name="arrow-left" size="md"></ui-icon>arrow-left</div>
+                  <div class="icon-cell"><ui-icon name="sparkles" size="md"></ui-icon>sparkles</div>
+                  <div class="icon-cell"><ui-icon name="code" size="md"></ui-icon>code</div>
+                  <div class="icon-cell"><ui-icon name="layers" size="md"></ui-icon>layers</div>
+                  <div class="icon-cell"><ui-icon name="external" size="md"></ui-icon>external</div>
+                  <div class="icon-cell"><ui-icon name="plus" size="md"></ui-icon>plus</div>
+                  <div class="icon-cell"><ui-icon name="minus" size="md"></ui-icon>minus</div>
+                  <div class="icon-cell"><ui-icon name="close" size="md"></ui-icon>close</div>
+                  <div class="icon-cell"><ui-icon name="undo" size="md"></ui-icon>undo</div>
+                  <div class="icon-cell"><ui-icon name="redo" size="md"></ui-icon>redo</div>
+                  <div class="icon-cell"><ui-icon name="trash" size="md"></ui-icon>trash</div>
+                  <div class="icon-cell"><ui-icon name="download" size="md"></ui-icon>download</div>
+                  <div class="icon-cell"><ui-icon name="upload" size="md"></ui-icon>upload</div>
+                  <div class="icon-cell"><ui-icon name="route" size="md"></ui-icon>route</div>
+                  <div class="icon-cell"><ui-icon name="compass" size="md"></ui-icon>compass</div>
+                  <div class="icon-cell"><ui-icon name="pin" size="md"></ui-icon>pin</div>
+                  <div class="icon-cell"><ui-icon name="flag" size="md"></ui-icon>flag</div>
+                  <div class="icon-cell"><ui-icon name="anchor" size="md"></ui-icon>anchor</div>
+                  <div class="icon-cell"><ui-icon name="waves" size="md"></ui-icon>waves</div>
+                  <div class="icon-cell"><ui-icon name="scissors" size="md"></ui-icon>scissors</div>
+                  <div class="icon-cell"><ui-icon name="settings" size="md"></ui-icon>settings</div>
+                  <div class="icon-cell"><ui-icon name="chevron-down" size="md"></ui-icon>chevron-down</div>
+                  <div class="icon-cell"><ui-icon name="chevron-up" size="md"></ui-icon>chevron-up</div>
+                  <div class="icon-cell"><ui-icon name="eye" size="md"></ui-icon>eye</div>
+                  <div class="icon-cell"><ui-icon name="eye-off" size="md"></ui-icon>eye-off</div>
+                  <div class="icon-cell"><ui-icon name="sidebar" size="md"></ui-icon>sidebar</div>
+                </div>
+              </div>
+              <pre><code>&lt;ui-icon name="sparkles" size="md" label="Featured"&gt;&lt;/ui-icon&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">33 built-in glyphs</span>
+                <ui-button class="inspect-btn" data-component="ui-icon" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-input" data-id="ui-input">
+              <div class="specimen-head">
+                <h3>&lt;ui-input&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-input placeholder="Default input" aria-label="Default input"></ui-input>
+                <ui-input value="Invalid value" invalid aria-label="Invalid input"></ui-input>
+                <ui-input value="Disabled input" disabled aria-label="Disabled input"></ui-input>
+              </div>
+              <pre><code>&lt;ui-input aria-label="Name" placeholder="Enter value…"&gt;&lt;/ui-input&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">events: ui-input, ui-change</span>
+                <ui-button class="inspect-btn" data-component="ui-input" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-label" data-id="ui-label">
+              <div class="specimen-head">
+                <h3>&lt;ui-label&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-label>Standard Label</ui-label>
+                  <ui-label required>Required Label</ui-label>
+                  <ui-label size="sm">Small Label</ui-label>
+                </div>
+              </div>
+              <pre><code>&lt;ui-label for="email" required&gt;Email&lt;/ui-label&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">part: label</span>
+                <ui-button class="inspect-btn" data-component="ui-label" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-progress" data-id="ui-progress">
+              <div class="specimen-head">
+                <h3>&lt;ui-progress&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-progress value="80" aria-label="Skeleton readiness"></ui-progress>
+                <ui-progress value="45" variant="warning" aria-label="Warning progress"></ui-progress>
+                <ui-progress value="25" variant="accent" aria-label="Accent progress"></ui-progress>
+              </div>
+              <pre><code>&lt;ui-progress value="80" aria-label="Readiness"&gt;&lt;/ui-progress&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">role: progressbar</span>
+                <ui-button class="inspect-btn" data-component="ui-progress" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-select" data-id="ui-select">
+              <div class="specimen-head">
+                <h3>&lt;ui-select&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-select aria-label="Record status" options='["open","provisional","active"]' value="active"></ui-select>
+              </div>
+              <pre><code>&lt;ui-select aria-label="Status" options='["open","active"]'&gt;&lt;/ui-select&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-change</span>
+                <ui-button class="inspect-btn" data-component="ui-select" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-skeleton" data-id="ui-skeleton">
+              <div class="specimen-head">
+                <h3>&lt;ui-skeleton&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-skeleton variant="circle" width="2.25rem" height="2.25rem"></ui-skeleton>
+                  <div style="flex: 1"><ui-skeleton variant="text" lines="2"></ui-skeleton></div>
+                </div>
+                <ui-skeleton variant="rect" height="3rem"></ui-skeleton>
+              </div>
+              <pre><code>&lt;ui-skeleton variant="text" lines="3"&gt;&lt;/ui-skeleton&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">variants: text, rect, circle</span>
+                <ui-button class="inspect-btn" data-component="ui-skeleton" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-slider" data-id="ui-slider">
+              <div class="specimen-head">
+                <h3>&lt;ui-slider&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-slider min="0" max="100" value="64" aria-label="Seek timeline"></ui-slider>
+                <ui-slider min="0" max="1" step="0.05" value="0.8" variant="neutral" aria-label="Volume"></ui-slider>
+              </div>
+              <pre><code>&lt;ui-slider min="0" max="100" value="64" aria-label="Volume"&gt;&lt;/ui-slider&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">events: ui-input, ui-change</span>
+                <ui-button class="inspect-btn" data-component="ui-slider" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-surface" data-id="ui-surface">
+              <div class="specimen-head">
+                <h3>&lt;ui-surface&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-surface variant="elevated" padding="sm" radius="md">Elevated</ui-surface>
+                  <ui-surface variant="glass" padding="sm" radius="md" elevation="md">Glass</ui-surface>
+                  <ui-surface variant="card" padding="sm" radius="md" accent="success">Accent</ui-surface>
+                </div>
+              </div>
+              <pre><code>&lt;ui-surface variant="elevated" padding="md" radius="lg"&gt;...&lt;/ui-surface&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-press (when interactive)</span>
+                <ui-button class="inspect-btn" data-component="ui-surface" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-switch" data-id="ui-switch">
+              <div class="specimen-head">
+                <h3>&lt;ui-switch&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-switch id="demo-switch" checked>Nautical seamarks</ui-switch>
+                  <ui-switch size="sm">Contours</ui-switch>
+                  <ui-switch disabled>Disabled</ui-switch>
+                </div>
+              </div>
+              <pre><code>&lt;ui-switch checked&gt;Nautical seamarks&lt;/ui-switch&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-change</span>
+                <ui-button class="inspect-btn" data-component="ui-switch" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-textarea" data-id="ui-textarea">
+              <div class="specimen-head">
+                <h3>&lt;ui-textarea&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-textarea rows="2" placeholder="Describe system behaviour…" aria-label="Statement"></ui-textarea>
+              </div>
+              <pre><code>&lt;ui-textarea aria-label="Statement" rows="3"&gt;&lt;/ui-textarea&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">events: ui-input, ui-change</span>
+                <ui-button class="inspect-btn" data-component="ui-textarea" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="atoms" id="ui-tooltip" data-id="ui-tooltip">
+              <div class="specimen-head">
+                <h3>&lt;ui-tooltip&gt;</h3>
+                <ui-badge variant="accent">atoms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-tooltip id="demo-tooltip" text="Undo last waypoint" placement="top">
+                    <ui-button variant="secondary" size="sm" aria-label="Undo last waypoint"><ui-icon name="undo" size="sm"></ui-icon> Hover / Focus</ui-button>
+                  </ui-tooltip>
+                </div>
+              </div>
+              <pre><code>&lt;ui-tooltip text="Undo"&gt;&lt;ui-button aria-label="Undo"&gt;...&lt;/ui-button&gt;&lt;/ui-tooltip&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">role: tooltip</span>
+                <ui-button class="inspect-btn" data-component="ui-tooltip" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
           </div>
-          <p class="specimen-desc">Full-viewport (100dvh) canvas shell with header, docked aside, floating HUD, and bottom tray slots.</p>
-          <div class="preview">
-            <div style="height: 9rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden;">
-              <workspace-layout style="height: 100%;">
-                <div slot="aside" style="padding: 0.5rem; border-right: 1px solid var(--color-border);" class="muted">Aside</div>
-                <div style="display: grid; place-items: center; height: 100%;" class="muted">Canvas</div>
-                <div slot="bottom" style="padding: 0.35rem 0.5rem; border-top: 1px solid var(--color-border);" class="muted">Bottom tray</div>
-              </workspace-layout>
-            </div>
+        </section>
+
+        <section class="tier" id="molecules" data-tier="molecules" aria-labelledby="molecules-heading">
+          <header class="tier-head">
+            <h2 id="molecules-heading" class="section-title">3. Molecules</h2>
+            <p class="specimen-desc" data-tier-summary></p>
+            <p class="muted" data-tier-uses></p>
+          </header>
+          <div class="specimen-grid">
+            <article class="specimen" data-tier="molecules" id="ui-callout" data-id="ui-callout">
+              <div class="specimen-head">
+                <h3>&lt;ui-callout&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-callout variant="success" title="All Checks Passing">Strict spec graph and browser checks succeeded.</ui-callout>
+                <ui-callout variant="warning" title="Open Assumption">ASM-0003 awaits external repo validation.</ui-callout>
+              </div>
+              <pre><code>&lt;ui-callout variant="info" title="Note"&gt;Details here.&lt;/ui-callout&gt;</code></pre>
+              <div class="specimen-foot">
+                <span></span>
+                <ui-button class="inspect-btn" data-component="ui-callout" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-code-block" data-id="ui-code-block">
+              <div class="specimen-head">
+                <h3>&lt;ui-code-block&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-code-block language="html">&lt;ui-badge variant="success"&gt;active&lt;/ui-badge&gt;</ui-code-block>
+              </div>
+              <pre><code>&lt;ui-code-block language="html"&gt;...&lt;/ui-code-block&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-copy</span>
+                <ui-button class="inspect-btn" data-component="ui-code-block" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-empty-state" data-id="ui-empty-state">
+              <div class="specimen-head">
+                <h3>&lt;ui-empty-state&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-empty-state text="No tours yet."></ui-empty-state>
+              </div>
+              <pre><code>&lt;ui-empty-state text="No tours yet."&gt;&lt;/ui-empty-state&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">slots: default</span>
+                <ui-button class="inspect-btn" data-component="ui-empty-state" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-field" data-id="ui-field">
+              <div class="specimen-head">
+                <h3>&lt;ui-field&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-field label="Repository" placeholder="asdlc-meta-designsystem" hint="Lowercase kebab-case" required></ui-field>
+                <ui-field label="Slug" value="Invalid Slug" invalid error="Spaces are not allowed."></ui-field>
+              </div>
+              <pre><code>&lt;ui-field label="Repository" required hint="Kebab-case"&gt;&lt;/ui-field&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">events: ui-input, ui-change</span>
+                <ui-button class="inspect-btn" data-component="ui-field" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-media-card" data-id="ui-media-card">
+              <div class="specimen-head">
+                <h3>&lt;ui-media-card&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-media-card card-id="sample" title="Lumen Token Set" subtitle="Dark-first obsidian surfaces and rose accents." badge="active" badge-variant="success" meta="WCAG AA"></ui-media-card>
+              </div>
+              <pre><code>&lt;ui-media-card card-id="1" title="Title" badge="active"&gt;&lt;/ui-media-card&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-select</span>
+                <ui-button class="inspect-btn" data-component="ui-media-card" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-panel-header" data-id="ui-panel-header">
+              <div class="specimen-head">
+                <h3>&lt;ui-panel-header&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-surface variant="elevated" padding="none" radius="md">
+                  <ui-panel-header title="Stage Details" close-label="Close details"></ui-panel-header>
+                </ui-surface>
+              </div>
+              <pre><code>&lt;ui-panel-header title="Details"&gt;&lt;/ui-panel-header&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-close</span>
+                <ui-button class="inspect-btn" data-component="ui-panel-header" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-search-bar" data-id="ui-search-bar">
+              <div class="specimen-head">
+                <h3>&lt;ui-search-bar&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-search-bar placeholder="Search records…" button-label="Search"></ui-search-bar>
+                <ui-search-bar compact clearable placeholder="Filter records…" aria-label="Filter records" value="REQ"></ui-search-bar>
+              </div>
+              <pre><code>&lt;ui-search-bar placeholder="Search…"&gt;&lt;/ui-search-bar&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-search</span>
+                <ui-button class="inspect-btn" data-component="ui-search-bar" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-stat-tile" data-id="ui-stat-tile">
+              <div class="specimen-head">
+                <h3>&lt;ui-stat-tile&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div class="row">
+                  <ui-stat-tile value="23" label="Records" status="done" variant="success"></ui-stat-tile>
+                  <ui-stat-tile value="1" label="Open QST" status="wait" variant="warning"></ui-stat-tile>
+                </div>
+              </div>
+              <pre><code>&lt;ui-stat-tile value="23" label="Records" status="done"&gt;&lt;/ui-stat-tile&gt;</code></pre>
+              <div class="specimen-foot">
+                <span></span>
+                <ui-button class="inspect-btn" data-component="ui-stat-tile" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-tabs" data-id="ui-tabs">
+              <div class="specimen-head">
+                <h3>&lt;ui-tabs&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-tabs id="demo-tabs" tabs='[{"id":"stages","label":"Stages"},{"id":"surfaces","label":"Surfaces"},{"id":"pois","label":"POIs"}]' value="stages" aria-label="Tour views">
+                  <div slot="stages" class="muted">Day 1 · 42.5 km · +610 m</div>
+                  <div slot="surfaces" class="muted">Asphalt 58% · Gravel 42%</div>
+                  <div slot="pois" class="muted">2 buoys · 1 cafe</div>
+                </ui-tabs>
+              </div>
+              <pre><code>&lt;ui-tabs tabs='[{"id":"a","label":"Tab A"}]' value="a"&gt;...&lt;/ui-tabs&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-change</span>
+                <ui-button class="inspect-btn" data-component="ui-tabs" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-theme-toggle" data-id="ui-theme-toggle">
+              <div class="specimen-head">
+                <h3>&lt;ui-theme-toggle&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-theme-toggle theme="dark"></ui-theme-toggle>
+              </div>
+              <pre><code>&lt;ui-theme-toggle theme="dark"&gt;&lt;/ui-theme-toggle&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-theme-change</span>
+                <ui-button class="inspect-btn" data-component="ui-theme-toggle" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="molecules" id="ui-toolbar" data-id="ui-toolbar">
+              <div class="specimen-head">
+                <h3>&lt;ui-toolbar&gt;</h3>
+                <ui-badge variant="info">molecules</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-toolbar id="demo-toolbar" variant="floating" aria-label="Route actions">
+                  <ui-button variant="ghost" size="sm" aria-label="Undo"><ui-icon name="undo" size="sm"></ui-icon></ui-button>
+                  <ui-button variant="ghost" size="sm" aria-label="Redo"><ui-icon name="redo" size="sm"></ui-icon></ui-button>
+                  <span role="separator" aria-orientation="vertical"></span>
+                  <ui-button variant="ghost" size="sm" aria-label="Split stage"><ui-icon name="scissors" size="sm"></ui-icon></ui-button>
+                  <ui-button variant="ghost" size="sm" aria-label="Download FIT"><ui-icon name="download" size="sm"></ui-icon></ui-button>
+                </ui-toolbar>
+              </div>
+              <pre><code>&lt;ui-toolbar variant="floating" aria-label="Actions"&gt;...&lt;/ui-toolbar&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-navigate</span>
+                <ui-button class="inspect-btn" data-component="ui-toolbar" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
           </div>
-          <pre><code>&lt;workspace-layout&gt;&lt;ui-navbar slot="header"&gt;&lt;/ui-navbar&gt;&lt;div id="map"&gt;&lt;/div&gt;&lt;/workspace-layout&gt;</code></pre>
-          <div class="specimen-foot">
-            <span class="muted">slots: header, aside, default, floating, bottom</span>
-            <ui-button class="inspect-btn" data-component="workspace-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
+        </section>
+
+        <section class="tier" id="organisms" data-tier="organisms" aria-labelledby="organisms-heading">
+          <header class="tier-head">
+            <h2 id="organisms-heading" class="section-title">4. Organisms</h2>
+            <p class="specimen-desc" data-tier-summary></p>
+            <p class="muted" data-tier-uses></p>
+          </header>
+          <div class="specimen-grid">
+            <article class="specimen" data-tier="organisms" id="ui-catalog-grid" data-id="ui-catalog-grid">
+              <div class="specimen-head">
+                <h3>&lt;ui-catalog-grid&gt;</h3>
+                <ui-badge variant="success">organisms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-catalog-grid empty empty-text="Empty state preview (empty attribute)"></ui-catalog-grid>
+              </div>
+              <pre><code>&lt;ui-catalog-grid empty-text="No matches."&gt;&lt;/ui-catalog-grid&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">attrs: loading, empty</span>
+                <ui-button class="inspect-btn" data-component="ui-catalog-grid" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="organisms" id="ui-drawer" data-id="ui-drawer">
+              <div class="specimen-head">
+                <h3>&lt;ui-drawer&gt;</h3>
+                <ui-badge variant="success">organisms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-drawer id="demo-drawer" title="Elevation Profile" side="bottom" mode="docked" open style="--drawer-height: 10rem;">
+                  <span class="muted">+480 m ascent · -480 m descent · 1.5 m hysteresis</span>
+                </ui-drawer>
+              </div>
+              <pre><code>&lt;ui-drawer title="Library" side="left" mode="auto" open&gt;...&lt;/ui-drawer&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">events: ui-open, ui-close</span>
+                <ui-button class="inspect-btn" data-component="ui-drawer" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="organisms" id="ui-modal" data-id="ui-modal">
+              <div class="specimen-head">
+                <h3>&lt;ui-modal&gt;</h3>
+                <ui-badge variant="success">organisms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <span class="muted">Click any "Inspect Contract" button to preview &lt;ui-modal&gt; with backdrop blur and Escape/focus-restore.</span>
+              </div>
+              <pre><code>&lt;ui-modal title="Details"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/ui-modal&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">events: ui-open, ui-close</span>
+                <ui-button class="inspect-btn" data-component="ui-modal" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="organisms" id="ui-navbar" data-id="ui-navbar">
+              <div class="specimen-head">
+                <h3>&lt;ui-navbar&gt;</h3>
+                <ui-badge variant="success">organisms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <span class="muted">Rendered at the top of this page with brand, nav, search, and theme switcher.</span>
+              </div>
+              <pre><code>&lt;ui-navbar&gt;&lt;a slot="brand" href="./"&gt;App&lt;/a&gt;&lt;/ui-navbar&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-theme-change</span>
+                <ui-button class="inspect-btn" data-component="ui-navbar" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="organisms" id="ui-popover" data-id="ui-popover">
+              <div class="specimen-head">
+                <h3>&lt;ui-popover&gt;</h3>
+                <ui-badge variant="success">organisms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-popover id="demo-popover" aria-label="Layer options">
+                  <ui-button id="demo-popover-btn" slot="trigger" variant="secondary" size="sm"><ui-icon name="layers" size="sm"></ui-icon> Map Layers</ui-button>
+                  <div style="display: grid; gap: 0.5rem;">
+                    <ui-switch checked size="sm">Waymarked Hiking</ui-switch>
+                    <ui-switch checked size="sm">OpenSeaMap Buoys</ui-switch>
+                  </div>
+                </ui-popover>
+              </div>
+              <pre><code>&lt;ui-popover&gt;&lt;ui-button slot="trigger"&gt;Layers&lt;/ui-button&gt;...&lt;/ui-popover&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">events: ui-open, ui-close</span>
+                <ui-button class="inspect-btn" data-component="ui-popover" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="organisms" id="ui-table" data-id="ui-table">
+              <div class="specimen-head">
+                <h3>&lt;ui-table&gt;</h3>
+                <ui-badge variant="success">organisms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-table aria-label="Stages"><table>
+                  <thead><tr><th scope="col">Stage</th><th scope="col">Distance</th><th scope="col">Surface</th></tr></thead>
+                  <tbody><tr><td>Day 1</td><td>64 km</td><td>Gravel</td></tr><tr><td>Day 2</td><td>71 km</td><td>Paved</td></tr></tbody>
+                </table></ui-table>
+              </div>
+              <pre><code>&lt;ui-table aria-label="Stages"&gt;&lt;table&gt;…&lt;/table&gt;&lt;/ui-table&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">part: scroll</span>
+                <ui-button class="inspect-btn" data-component="ui-table" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="organisms" id="ui-toast" data-id="ui-toast">
+              <div class="specimen-head">
+                <h3>&lt;ui-toast&gt;</h3>
+                <ui-badge variant="success">organisms</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <ui-toast id="demo-toast" variant="success" title="Course exported" open>Veluwe Gravel - Day 1.fit ready.</ui-toast>
+              </div>
+              <pre><code>&lt;ui-toast variant="success" title="Saved" open&gt;Ready.&lt;/ui-toast&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">event: ui-close</span>
+                <ui-button class="inspect-btn" data-component="ui-toast" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
           </div>
-        </article>
+        </section>
+
+        <section class="tier" id="templates" data-tier="templates" aria-labelledby="templates-heading">
+          <header class="tier-head">
+            <h2 id="templates-heading" class="section-title">5. Templates</h2>
+            <p class="specimen-desc" data-tier-summary></p>
+            <p class="muted" data-tier-uses></p>
+          </header>
+          <div class="specimen-grid">
+            <article class="specimen" data-tier="templates" id="catalog-layout" data-id="catalog-layout">
+              <div class="specimen-head">
+                <h3>&lt;catalog-layout&gt;</h3>
+                <ui-badge variant="warning">templates</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <span class="muted">Structural layout wrapper for hero, filter toolbar, grid, and modal slots.</span>
+              </div>
+              <pre><code>&lt;catalog-layout&gt;&lt;div slot="hero"&gt;...&lt;/div&gt;&lt;/catalog-layout&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">slots: hero, toolbar, grid, modal</span>
+                <ui-button class="inspect-btn" data-component="catalog-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="templates" id="detail-layout" data-id="detail-layout">
+              <div class="specimen-head">
+                <h3>&lt;detail-layout&gt;</h3>
+                <ui-badge variant="warning">templates</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <detail-layout>
+                  <span class="muted">Primary content</span>
+                  <span slot="aside" class="muted">Metadata aside</span>
+                </detail-layout>
+              </div>
+              <pre><code>&lt;detail-layout&gt;&lt;article&gt;...&lt;/article&gt;&lt;dl slot="aside"&gt;...&lt;/dl&gt;&lt;/detail-layout&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">slots: default, aside</span>
+                <ui-button class="inspect-btn" data-component="detail-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="templates" id="page-shell" data-id="page-shell">
+              <div class="specimen-head">
+                <h3>&lt;page-shell&gt;</h3>
+                <ui-badge variant="warning">templates</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <span class="muted">Provides the outer header/main/footer landmark structure of this page.</span>
+              </div>
+              <pre><code>&lt;page-shell&gt;&lt;ui-navbar slot="header"&gt;&lt;/ui-navbar&gt;...&lt;/page-shell&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">slots: header, default, footer</span>
+                <ui-button class="inspect-btn" data-component="page-shell" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+            <article class="specimen" data-tier="templates" id="workspace-layout" data-id="workspace-layout">
+              <div class="specimen-head">
+                <h3>&lt;workspace-layout&gt;</h3>
+                <ui-badge variant="warning">templates</ui-badge>
+              </div>
+              <p class="specimen-desc"></p>
+              <div class="preview">
+                <div style="height: 9rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden;">
+                  <workspace-layout style="height: 100%;">
+                    <div slot="aside" style="padding: 0.5rem; border-right: 1px solid var(--color-border);" class="muted">Aside</div>
+                    <div style="display: grid; place-items: center; height: 100%;" class="muted">Canvas</div>
+                    <div slot="bottom" style="padding: 0.35rem 0.5rem; border-top: 1px solid var(--color-border);" class="muted">Bottom tray</div>
+                  </workspace-layout>
+                </div>
+              </div>
+              <pre><code>&lt;workspace-layout&gt;&lt;ui-navbar slot="header"&gt;&lt;/ui-navbar&gt;&lt;div id="map"&gt;&lt;/div&gt;&lt;/workspace-layout&gt;</code></pre>
+              <div class="specimen-foot">
+                <span class="muted">slots: header, aside, default, floating, bottom</span>
+                <ui-button class="inspect-btn" data-component="workspace-layout" variant="secondary" size="sm">Inspect Contract</ui-button>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <section class="tier" id="pages" data-tier="pages" aria-labelledby="pages-heading">
+          <header class="tier-head">
+            <h2 id="pages-heading" class="section-title">6. Pages</h2>
+            <p class="specimen-desc" data-tier-summary></p>
+            <p class="muted" data-tier-uses></p>
+          </header>
+          <div class="specimen-grid">
+          </div>
+        </section>
+
+        <ui-empty-state id="catalog-empty" text="Nothing in the catalog matches." hidden></ui-empty-state>
       </div>
-      </catalog-layout>
-    </section>
+    </catalog-layout>
 
     <ui-modal id="detail-modal" title="Component Contract">
       <dl class="contract-dl">
         <div><dt>Tier</dt><dd id="contract-tier"></dd></div>
+        <div><dt>Composes</dt><dd id="contract-composes"></dd></div>
+        <div><dt>Used by</dt><dd id="contract-used"></dd></div>
         <div><dt>Attributes</dt><dd id="contract-attrs"></dd></div>
         <div><dt>Slots</dt><dd id="contract-slots"></dd></div>
         <div><dt>Events</dt><dd id="contract-events"></dd></div>

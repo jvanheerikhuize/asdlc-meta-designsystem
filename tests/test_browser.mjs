@@ -319,6 +319,35 @@ async function main() {
     assert.deepEqual(searchCheck.visibleIds, ['ui-modal']);
 
 
+    // 5a. The catalog is built up by tier, with links between relatives (REQ-0006)
+    const tiersCheck = await cdp.eval(`(async () => {
+      const wait = () => new Promise((r) => setTimeout(r, 100));
+      const catalog = await fetch('./catalog.json').then((r) => r.json());
+      const shownTiers = () => [...document.querySelectorAll('.tier')].filter((n) => !n.hidden).map((n) => n.id);
+      const press = (tier) => document.querySelector('.tier-btn[data-tier="' + tier + '"]').shadowRoot.querySelector('button').click();
+      const filtered = shownTiers();
+      location.hash = '#ui-button';
+      await wait();
+      const afterLink = shownTiers();
+      const top = document.getElementById('ui-button').getBoundingClientRect().top;
+      press('tokens');
+      const tokensOnly = [shownTiers().join(), document.getElementById('catalog-count').textContent];
+      const tokenRows = document.querySelectorAll('.token').length === Object.values(catalog.tokens).flat().length;
+      press('all');
+      const ids = [...document.querySelectorAll('[id]')].map((n) => n.id);
+      const broken = [...document.querySelectorAll('.relations a')].filter((a) => !document.querySelector(a.getAttribute('href'))).length;
+      const usedBy = [...document.querySelectorAll('#ui-theme-toggle .relations')].map((n) => n.textContent);
+      const result = { filtered, afterLink, linkVisible: top >= 0 && top < innerHeight, tokensOnly, tokenRows, duplicateIds: ids.length - new Set(ids).size, broken, usedBy };
+      history.replaceState(null, '', location.pathname);
+      scrollTo(0, 0);
+      return result;
+    })()`);
+    const allTiers = ['tokens', 'atoms', 'molecules', 'organisms', 'templates', 'pages'];
+    assert.deepEqual(tiersCheck, {
+      filtered: ['organisms'], afterLink: allTiers, linkVisible: true, tokensOnly: ['tokens', '16 token groups'], tokenRows: true,
+      duplicateIds: 0, broken: 0, usedBy: ['Composes ui-button, ui-icon', 'Used by ui-navbar'],
+    });
+
     // 5b. Verify new workspace primitives (ui-switch, ui-tabs, ui-popover, ui-drawer, ui-toolbar, ui-toast)
     const primitivesCheck = await cdp.eval(`(() => {
       // Clear catalog filter so all specimens are visible
