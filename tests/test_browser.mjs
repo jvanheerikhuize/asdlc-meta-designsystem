@@ -113,10 +113,16 @@ async function main() {
       '--disable-gpu',
       `--remote-debugging-port=${cdpPort}`,
       `--user-data-dir=${userDataDir}`,
+      '--no-first-run',
       'about:blank',
-    ], { stdio: 'ignore' });
+    ], { stdio: ['ignore', 'ignore', 'pipe'] });
+    let chromeLog = '';
+    chrome.stderr.on('data', (chunk) => { chromeLog = (chromeLog + chunk).slice(-4000); });
 
-    const targets = await waitForJson(`http://127.0.0.1:${cdpPort}/json`);
+    // Chrome can take long to start on a shared CI runner.
+    const targets = await waitForJson(`http://127.0.0.1:${cdpPort}/json`, 45000).catch((err) => {
+      throw new Error(`${err.message}; Chrome exit code ${chrome.exitCode}, output:\n${chromeLog}`);
+    });
     const pageTarget = targets.find((t) => t.type === 'page') || targets[0];
     cdp = new CdpClient(pageTarget.webSocketDebuggerUrl);
     await cdp.ready();
