@@ -2565,6 +2565,11 @@
         "role": "Group title"
       },
       {
+        "name": "--type-h5",
+        "value": "700 1rem/1.2 'Bricolage Grotesque', 'Geist', system-ui, sans-serif",
+        "role": "Panel title"
+      },
+      {
         "name": "--type-lead",
         "value": "400 1.125rem/1.5 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         "role": "Introduction"
@@ -4839,7 +4844,8 @@
             "h1",
             "h2",
             "h3",
-            "h4"
+            "h4",
+            "h5"
           ],
           "default": null
         },
@@ -6923,7 +6929,8 @@
       "description": "Empty-state Molecule with an icon, a message and an optional slotted action.",
       "composes": [
         "ui-icon",
-        "ui-surface"
+        "ui-surface",
+        "ui-text"
       ],
       "attributes": {
         "text": {
@@ -6954,6 +6961,7 @@
       "className": "UiField",
       "description": "Form field Molecule composing <ui-label>, <ui-input>, and hint/error text.",
       "composes": [
+        "ui-hint",
         "ui-input",
         "ui-label"
       ],
@@ -7102,6 +7110,7 @@
       "description": "Reusable panel header bar Molecule composing a title heading, actions slot, and close <ui-button>/<ui-icon>.",
       "composes": [
         "ui-button",
+        "ui-heading",
         "ui-icon"
       ],
       "attributes": {
@@ -7134,7 +7143,7 @@
         "title",
         "close"
       ],
-      "accessibility": "Exposes semantic <h2> title and accessible close <ui-button> with <ui-icon name='close'>.",
+      "accessibility": "Exposes <h2> title (<ui-heading>) and accessible close <ui-button> with <ui-icon name='close'>.",
       "example": "<ui-panel-header title=\"Elevation Profile\" close-label=\"Close panel\"></ui-panel-header>"
     },
     {
@@ -7218,7 +7227,8 @@
       "description": "KPI metric tile Molecule displaying value, label, and optional <ui-dot>.",
       "composes": [
         "ui-dot",
-        "ui-surface"
+        "ui-surface",
+        "ui-text"
       ],
       "attributes": {
         "value": {
@@ -7260,7 +7270,7 @@
         "dot",
         "label"
       ],
-      "accessibility": "Renders semantic <strong> metric value paired with descriptive label text.",
+      "accessibility": "Plain text: the value, then its label.",
       "example": "<ui-stat-tile value=\"23\" label=\"Records\" status=\"done\" variant=\"success\"></ui-stat-tile>"
     },
     {

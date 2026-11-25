@@ -49,6 +49,10 @@ TEMPLATE.innerHTML = `
       font: var(--type-h4);
     }
 
+    :host([size="h5"]) .heading {
+      font: var(--type-h5);
+    }
+
     :host([tone="secondary"]) .heading {
       color: var(--color-fg-secondary);
     }

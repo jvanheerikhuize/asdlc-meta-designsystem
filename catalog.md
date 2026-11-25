@@ -48,7 +48,7 @@ Templates take components only through slots, so they import none.
 
 | Tier | Purpose | May use | Members |
 | :--- | :--- | :--- | :--- |
-| 1. Tokens | Named values that nothing renders. The only place for raw colors, lengths, layers and durations. | — | 738 tokens in 28 groups |
+| 1. Tokens | Named values that nothing renders. The only place for raw colors, lengths, layers and durations. | — | 739 tokens in 28 groups |
 | 2. Atoms | One foundational HTML element each, with local state only. | tokens | 67 |
 | 3. Molecules | One to three kinds of atom for one task. | tokens, atoms | 11 |
 | 4. Organisms | Self-contained regions with their own choreography, such as focus, loading and empty states. | tokens, atoms, molecules | 7 |
@@ -74,7 +74,7 @@ Values for both themes and the role of each token are in `catalog.json`. Use the
 | Code | Syntax and diff colors. | `--color-code-bg`, `--color-code-fg`, `--color-code-comment`, `--color-code-keyword`, `--color-code-string`, `--color-code-number`, `--color-code-function`, `--color-code-type`, `--color-code-variable`, `--color-code-operator`, `--color-code-tag`, `--color-code-attribute`, `--color-code-inserted`, `--color-code-inserted-bg`, `--color-code-deleted`, `--color-code-deleted-bg`, `--color-code-line-active`, `--color-code-gutter` |
 | Gradients | Background images made from themed colors. | `--gradient-accent`, `--gradient-cool`, `--gradient-surface`, `--gradient-fade-up`, `--gradient-fade-down`, `--gradient-media-scrim`, `--gradient-shimmer`, `--gradient-ambient`, `--gradient-data-seq`, `--gradient-data-div` |
 | Typography | Font stacks, sizes, weights, line heights and tracking. | `--font-sans`, `--font-display`, `--font-mono`, `--text-xs`, `--text-sm`, `--text-md`, `--text-lg`, `--text-xl`, `--text-2xl`, `--leading-tight`, `--leading-normal`, `--weight-medium`, `--weight-semibold`, `--weight-bold`, `--leading-none`, `--leading-snug`, `--leading-control`, `--tracking-label`, `--font-serif`, `--font-emoji`, `--text-2xs`, `--text-3xl`, `--text-4xl`, `--text-5xl`, `--text-6xl`, `--text-fluid-lg`, `--text-fluid-xl`, `--text-fluid-2xl`, `--text-fluid-3xl`, `--weight-light`, `--weight-regular`, `--weight-extrabold`, `--weight-black`, `--leading-relaxed`, `--leading-loose`, `--tracking-display`, `--tracking-heading`, `--tracking-body`, `--tracking-caps`, `--numeric-tabular`, `--numeric-proportional`, `--numeric-slashed`, `--measure-narrow`, `--measure-prose`, `--measure-wide`, `--underline-offset`, `--underline-thickness` |
-| Text styles | Complete values for the font property. | `--type-display`, `--type-h1`, `--type-h2`, `--type-h3`, `--type-h4`, `--type-lead`, `--type-body`, `--type-body-strong`, `--type-small`, `--type-label`, `--type-button`, `--type-caption`, `--type-overline`, `--type-code`, `--type-stat`, `--type-quote` |
+| Text styles | Complete values for the font property. | `--type-display`, `--type-h1`, `--type-h2`, `--type-h3`, `--type-h4`, `--type-h5`, `--type-lead`, `--type-body`, `--type-body-strong`, `--type-small`, `--type-label`, `--type-button`, `--type-caption`, `--type-overline`, `--type-code`, `--type-stat`, `--type-quote` |
 | Spacing | Gaps and padding. | `--space-1`, `--space-2`, `--space-3`, `--space-4`, `--space-5`, `--space-6`, `--space-8`, `--space-10`, `--space-12`, `--space-0-5`, `--space-0`, `--space-px`, `--space-1-5`, `--space-2-5`, `--space-3-5`, `--space-7`, `--space-9`, `--space-14`, `--space-16`, `--space-20`, `--space-24`, `--space-32`, `--space-40`, `--space-fluid-sm`, `--space-fluid-md`, `--space-fluid-lg`, `--space-fluid-xl` |
 | Spacing roles | Spacing by purpose. Prefer these in pages. | `--inset-xs`, `--inset-sm`, `--inset-md`, `--inset-lg`, `--inset-xl`, `--stack-xs`, `--stack-sm`, `--stack-md`, `--stack-lg`, `--stack-xl`, `--cluster-xs`, `--cluster-sm`, `--cluster-md`, `--cluster-lg`, `--gutter`, `--section-gap` |
 | Radii | Corner rounding. | `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-xl`, `--radius-full`, `--radius-xs`, `--radius-none`, `--radius-2xl`, `--radius-3xl`, `--radius-control`, `--radius-card`, `--radius-panel`, `--radius-tag` |
@@ -120,7 +120,7 @@ One foundational HTML element each, with local state only.
 | `<ui-glow>` | — | `tone` (`rose`\|`amber`\|`sky`\|`emerald`\|`violet`) | — | — | `glow` |
 | `<ui-grid>` | — | `min` (`xs`\|`sm`\|`md`\|`lg`), `gap` (`none`\|`xs`\|`sm`\|`md`\|`lg`\|`xl`) | default | — | `grid` |
 | `<ui-handle>` | — | `orientation` (`vertical`\|`horizontal`), `value`, `min`, `max`, `disabled`, `aria-label` | — | `ui-move` | `handle` |
-| `<ui-heading>` | — | `level` (`1`\|`2`\|`3`\|`4`\|`5`\|`6`), `size` (`display`\|`h1`\|`h2`\|`h3`\|`h4`), `tone` (`default`\|`secondary`\|`muted`\|`accent`\|`info`\|`success`\|`warning`\|`danger`\|`inverse`) | default | — | `heading` |
+| `<ui-heading>` | — | `level` (`1`\|`2`\|`3`\|`4`\|`5`\|`6`), `size` (`display`\|`h1`\|`h2`\|`h3`\|`h4`\|`h5`), `tone` (`default`\|`secondary`\|`muted`\|`accent`\|`info`\|`success`\|`warning`\|`danger`\|`inverse`) | default | — | `heading` |
 | `<ui-hint>` | — | `tone` (`neutral`\|`error`\|`success`\|`warning`) | default | — | `hint` |
 | `<ui-icon>` | — | `name` (`search`, `sun`, `moon`, `check`, `alert`, `info`, `arrow-right`, `arrow-left`, `sparkles`, `code`, `layers`, `external`, `plus`, `minus`, `close`, `undo`, `redo`, `trash`, `download`, `upload`, `route`, `compass`, `pin`, `flag`, `anchor`, `waves`, `scissors`, `settings`, `chevron-down`, `chevron-up`, `eye`, `eye-off`, `sidebar`), `size` (`sm`\|`md`\|`lg`), `label` | — | — | `icon` |
 | `<ui-image>` | — | `src`, `alt`, `ratio` (`square`\|`photo`\|`classic`\|`video`\|`wide`\|`poster`\|`portrait`), `fit` (`cover`\|`contain`), `radius` (`none`\|`sm`\|`md`\|`lg`), `loading` (`lazy`\|`eager`) | — | — | `frame`, `image`, `fallback` |
@@ -174,12 +174,12 @@ One to three kinds of atom for one task.
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `<ui-callout>` | `ui-button`, `ui-icon`, `ui-surface` | `variant` (`info`\|`success`\|`warning`\|`danger`), `title`, `dismissible`, `close-label` | default | `ui-close` | `callout`, `icon`, `title`, `body`, `close` |
 | `<ui-code-block>` | `ui-button`, `ui-icon`, `ui-surface` | `language` | default | `ui-copy` | `container`, `header`, `language`, `copy-button`, `pre` |
-| `<ui-empty-state>` | `ui-icon`, `ui-surface` | `text`, `icon` | default | — | `container`, `body`, `text` |
-| `<ui-field>` | `ui-input`, `ui-label` | `label`, `name`, `value`, `placeholder`, `type`, `required`, `invalid`, `disabled`, `hint`, `error` | — | `ui-input`, `ui-change` | `label`, `input`, `hint` |
+| `<ui-empty-state>` | `ui-icon`, `ui-surface`, `ui-text` | `text`, `icon` | default | — | `container`, `body`, `text` |
+| `<ui-field>` | `ui-hint`, `ui-input`, `ui-label` | `label`, `name`, `value`, `placeholder`, `type`, `required`, `invalid`, `disabled`, `hint`, `error` | — | `ui-input`, `ui-change` | `label`, `input`, `hint` |
 | `<ui-media-card>` | `ui-badge`, `ui-icon`, `ui-surface` | `card-id`, `title`, `subtitle`, `badge`, `badge-variant`, `meta` | default | `ui-select` | `card`, `badge`, `title`, `subtitle`, `meta` |
-| `<ui-panel-header>` | `ui-button`, `ui-icon` | `title`, `heading-id`, `close-label` | `actions` | `ui-close` | `header`, `title`, `close` |
+| `<ui-panel-header>` | `ui-button`, `ui-heading`, `ui-icon` | `title`, `heading-id`, `close-label` | `actions` | `ui-close` | `header`, `title`, `close` |
 | `<ui-search-bar>` | `ui-button`, `ui-icon`, `ui-input` | `value`, `placeholder`, `button-label`, `aria-label`, `disabled`, `clearable`, `clear-label`, `compact` | — | `ui-search`, `ui-input` | `bar`, `input`, `button`, `clear` |
-| `<ui-stat-tile>` | `ui-dot`, `ui-surface` | `value`, `label`, `status`, `variant` (`neutral`\|`accent`\|`success`\|`warning`\|`danger`) | — | — | `tile`, `value`, `dot`, `label` |
+| `<ui-stat-tile>` | `ui-dot`, `ui-surface`, `ui-text` | `value`, `label`, `status`, `variant` (`neutral`\|`accent`\|`success`\|`warning`\|`danger`) | — | — | `tile`, `value`, `dot`, `label` |
 | `<ui-tabs>` | `ui-button`, `ui-surface` | `tabs` (JSON array), `value`, `full-width`, `aria-label` | default, `<tab-id>` | `ui-change` | `tablist`, `tab`, `panel` |
 | `<ui-theme-toggle>` | `ui-button`, `ui-icon` | `theme` (`dark`\|`light`) | — | `ui-theme-change` | `theme-button` |
 | `<ui-toolbar>` | `ui-surface` | `orientation` (`horizontal`\|`vertical`), `variant` (`inline`\|`floating`), `aria-label`, `aria-controls` | default | `ui-navigate` | `toolbar` |

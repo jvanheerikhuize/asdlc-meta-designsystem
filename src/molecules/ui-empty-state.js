@@ -1,5 +1,6 @@
 import '../atoms/ui-surface.js';
 import '../atoms/ui-icon.js';
+import '../atoms/ui-text.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -32,14 +33,14 @@ TEMPLATE.innerHTML = `
   <ui-surface part="container">
     <div class="body" part="body">
       <ui-icon name="search" size="lg"></ui-icon>
-      <span class="text" part="text"></span>
+      <ui-text class="text" exportparts="text" variant="small" tone="muted" align="center"></ui-text>
       <slot></slot>
     </div>
   </ui-surface>
 `;
 
 /**
- * Empty-state Molecule composing <ui-surface> and <ui-icon> with a message and an optional slotted action.
+ * Empty-state Molecule composing <ui-surface>, <ui-icon> and <ui-text> with a message and an optional slotted action.
  */
 export class UiEmptyState extends HTMLElement {
   static observedAttributes = ['text', 'icon'];

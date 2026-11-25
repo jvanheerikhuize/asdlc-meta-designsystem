@@ -1,5 +1,6 @@
 import '../atoms/ui-surface.js';
 import '../atoms/ui-dot.js';
+import '../atoms/ui-text.js';
 
 const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
@@ -18,41 +19,26 @@ TEMPLATE.innerHTML = `
       gap: var(--space-1);
     }
 
-    .val {
-      font-family: var(--font-display);
-      font-size: var(--text-2xl);
-      font-weight: var(--weight-bold);
-      line-height: var(--leading-snug);
-      color: var(--color-fg);
-    }
-
     .label-row {
       display: flex;
       align-items: center;
       gap: var(--space-2);
-      font-family: var(--font-sans);
-      font-size: var(--text-xs);
-      color: var(--color-fg-secondary);
     }
 
-    :host([variant="accent"]) .val { color: var(--color-accent); }
-    :host([variant="success"]) .val { color: var(--color-success); }
-    :host([variant="warning"]) .val { color: var(--color-warning); }
-    :host([variant="danger"]) .val { color: var(--color-danger); }
   </style>
   <ui-surface part="tile" variant="card" padding="md" radius="lg">
     <div class="inner">
-      <strong class="val" part="value"></strong>
+      <ui-text class="val" exportparts="text: value" variant="stat"></ui-text>
       <div class="label-row">
         <ui-dot part="dot" hidden></ui-dot>
-        <span class="lbl" part="label"></span>
+        <ui-text class="lbl" exportparts="text: label" variant="caption" tone="secondary"></ui-text>
       </div>
     </div>
   </ui-surface>
 `;
 
 /**
- * KPI metric tile Molecule composing <ui-surface> and <ui-dot>.
+ * KPI metric tile Molecule composing <ui-surface>, <ui-dot> and <ui-text>.
  */
 export class UiStatTile extends HTMLElement {
   static observedAttributes = ['value', 'label', 'status', 'variant'];
@@ -81,6 +67,7 @@ export class UiStatTile extends HTMLElement {
   #sync() {
     if (!this.#val || !this.#lbl || !this.#dot) return;
     this.#val.textContent = this.getAttribute('value') || '0';
+    this.#val.setAttribute('tone', this.getAttribute('variant')?.replace('neutral', 'default') || 'default');
     this.#lbl.textContent = this.getAttribute('label') || '';
     const status = this.getAttribute('status');
     if (status) {

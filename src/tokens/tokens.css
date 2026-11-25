@@ -588,6 +588,7 @@
   --type-h2: var(--weight-bold) var(--text-2xl)/var(--leading-tight) var(--font-display);
   --type-h3: var(--weight-bold) var(--text-xl)/var(--leading-tight) var(--font-display);
   --type-h4: var(--weight-semibold) var(--text-lg)/var(--leading-tight) var(--font-display);
+  --type-h5: var(--weight-bold) var(--text-md)/var(--leading-tight) var(--font-display);
   --type-lead: var(--weight-regular) var(--text-lg)/var(--leading-normal) var(--font-sans);
   --type-body: var(--weight-regular) var(--text-md)/var(--leading-normal) var(--font-sans);
   --type-body-strong: var(--weight-semibold) var(--text-md)/var(--leading-normal) var(--font-sans);
